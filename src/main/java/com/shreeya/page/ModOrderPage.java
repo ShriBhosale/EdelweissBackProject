@@ -16,8 +16,11 @@ public class ModOrderPage extends SeleniumCoder {
 	private WebElement enterPriceTextField;
 	private WebElement cnsRadioButton;
 	private WebElement OptionalFieldsLabel;
+	
+	OrderDetail detail;
 
 	public WebDriver modExecution(TestDataModel model, WebDriver driver) throws InterruptedException {
+		detail=new OrderDetail();
 		Thread.sleep(17000);
 		modifyLink = driver
 				.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a"));
@@ -44,6 +47,8 @@ public class ModOrderPage extends SeleniumCoder {
 		Thread.sleep(2000);
 		confirmButton = driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
+		Thread.sleep(5000);
+		detail.printElement(driver);
 		return driver;
 	}
 

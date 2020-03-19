@@ -112,4 +112,14 @@ public class SeleniumCoder {
 		return element;
 
 	}
+	
+	public String fetchTextFromElement(WebElement element) {
+		String elementText="no element text";
+		try {
+			elementText=element.getAttribute("innerHTML");
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return  element.getAttribute("innerHTML");
+	}
 }

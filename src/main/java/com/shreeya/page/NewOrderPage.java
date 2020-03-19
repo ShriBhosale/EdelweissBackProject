@@ -20,11 +20,12 @@ public class NewOrderPage extends SeleniumCoder {
 	private WebElement confirmButton;
 	private WebElement nseLink;
 	
-	
+	OrderDetail detail;
 	
 	
 
 	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver) throws InterruptedException {
+		detail=new OrderDetail();
 		System.out.println("New Order execution Started.........");
 		Thread.sleep(20000);
 		placeOrderTextField=driver.findElement(By.xpath("//*[@id='tocsearch']"));
@@ -57,6 +58,9 @@ public class NewOrderPage extends SeleniumCoder {
 		Thread.sleep(2000);
 		confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
+		
+		Thread.sleep(5000);
+		detail.printElement(driver);
 		return driver;
 	}
 
