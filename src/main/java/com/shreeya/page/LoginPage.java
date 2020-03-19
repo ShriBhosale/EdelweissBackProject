@@ -46,7 +46,7 @@ public class LoginPage extends SeleniumCoder{
 		//buyAndSellButton=driver.findElement(By.xpath("//a[text()='Buy/Sell']"));
 		buyAndSellButton=fluentWaitMethod(driver, "//a[text()='Buy/Sell']");
 		clickElement(buyAndSellButton);
-		 Thread.sleep(3000); 
+		 Thread.sleep(4000); 
 		//userIdTextField=driver.findElement(By.id("userID"));
 		userIdTextField=fluentWaitMethodID(driver, "userID");
 		sendKey(userIdTextField,"60003800");

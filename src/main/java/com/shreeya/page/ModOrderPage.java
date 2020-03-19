@@ -1,10 +1,13 @@
 package com.shreeya.page;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.shreeya.model.TestDataModel;
+import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.SeleniumCoder;
 
 public class ModOrderPage extends SeleniumCoder {
@@ -19,7 +22,7 @@ public class ModOrderPage extends SeleniumCoder {
 	
 	OrderDetail detail;
 
-	public WebDriver modExecution(TestDataModel model, WebDriver driver) throws InterruptedException {
+	public WebDriver modExecution(TestDataModel model, WebDriver driver,ExtendReporter report) throws InterruptedException, IOException {
 		detail=new OrderDetail();
 		Thread.sleep(17000);
 		modifyLink = driver
@@ -48,7 +51,8 @@ public class ModOrderPage extends SeleniumCoder {
 		confirmButton = driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		Thread.sleep(5000);
-		detail.printElement(driver);
+		report.logsPrinter(detail.orderDetailProvider(driver));
+		report.addScreenshotMethod(driver);
 		return driver;
 	}
 

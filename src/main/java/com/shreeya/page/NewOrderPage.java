@@ -1,10 +1,13 @@
 package com.shreeya.page;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.shreeya.model.TestDataModel;
+import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.SeleniumCoder;
 
 public class NewOrderPage extends SeleniumCoder {
@@ -24,7 +27,7 @@ public class NewOrderPage extends SeleniumCoder {
 	
 	
 
-	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver) throws InterruptedException {
+	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,ExtendReporter report) throws InterruptedException, IOException {
 		detail=new OrderDetail();
 		System.out.println("New Order execution Started.........");
 		Thread.sleep(20000);
@@ -39,7 +42,7 @@ public class NewOrderPage extends SeleniumCoder {
 		buyButton=driver.findElement(By.xpath("//a[text()='Buy']"));
 		clickElement(buyButton);
 		}
-		Thread.sleep(4000);
+		Thread.sleep(6000);
 		noOfSharesTextField=driver.findElement(By.xpath("//input[@placeholder='No. of Shares']"));
 		sendKey(noOfSharesTextField,model.getQty());
 		Thread.sleep(3000);
@@ -60,7 +63,8 @@ public class NewOrderPage extends SeleniumCoder {
 		clickElement(confirmButton);
 		
 		Thread.sleep(5000);
-		detail.printElement(driver);
+		report.logsPrinter(detail.orderDetailProvider(driver));
+		report.addScreenshotMethod(driver);
 		return driver;
 	}
 

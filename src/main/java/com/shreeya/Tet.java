@@ -1,22 +1,29 @@
 package com.shreeya;
 
+import java.util.ArrayList;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.HtmlReporter;
+
 public class Tet {
 	
-	static String abc="Order Number: <span data-ng-bind=\"orderlog.ordID\" class=\"ng-binding\">200319000000082</span>";
-	
-	public static String nestIdProvider(String strForNestId) {
-		String arr[]=strForNestId.split(">");
-		String [] nestIdArray=arr[1].split("<");
-		for(String a:nestIdArray) {
-			System.out.println(a);
-			System.out.println("====================================");
-		}
-		return nestIdArray[0];
-	}
-	
 	public static void main(String[] args) {
-		System.out.println("Executin is started...........");
-		String nest=nestIdProvider(abc);
-		System.out.println("ans  ========> "+nest);
+		System.out.println("Exectuion is started...........");
+		ExtendReporter reporter=new  ExtendReporter();
+		ArrayList<String> lsit=new ArrayList<String>();
+		lsit.add("abc");
+		lsit.add("xys");
+		int i=1;
+		while(i<=3){
+		reporter.testCreation("Test no "+i);
+		reporter.logsPrinter(lsit);
+		i++;
+		}
+		reporter.logFlush();
 	}
+	
 }

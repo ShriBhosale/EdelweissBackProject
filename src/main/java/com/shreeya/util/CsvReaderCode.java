@@ -7,6 +7,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.shreeya.model.TestDataModel;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -18,10 +19,15 @@ public class CsvReaderCode {
 	static Iterator<TestDataModel> csvTestDataModelIterator;
 	static TestDataModel model;
 
-	public Iterator<TestDataModel> responseGenerator() throws IllegalStateException, InstantiationException,
-			IllegalAccessException, CsvRequiredFieldEmptyException, IOException {
+	public Iterator<TestDataModel> responseGenerator() {
 
-		CSVReader reader = new CSVReader(new FileReader("E:\\EdelweissProject\\TestData\\LoginData.txt"), '\t');
+		CSVReader reader = null;
+		try {
+			reader = new CSVReader(new FileReader("E:\\EdelweissProject\\TestData\\LoginData.txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		CsvToBean<TestDataModel> csvToBean = new CsvToBeanBuilder(reader).withType(TestDataModel.class).build();
 
