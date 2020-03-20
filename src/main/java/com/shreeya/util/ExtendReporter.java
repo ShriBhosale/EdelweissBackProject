@@ -23,7 +23,7 @@ public class ExtendReporter {
 	
 	public  ExtendReporter() {
 		helperObject=new HelperCode();
-		htmlextent = new ExtentHtmlReporter("E:\\EdelweissProject\\Reports\\"+helperObject.timeStampGenerator()+".html");
+		htmlextent = new ExtentHtmlReporter("E:\\EdelweissProject\\Reports\\Report"+helperObject.timeStampGenerator()+".html");
 		report = new ExtentReports();
 		report.attachReporter(htmlextent);
 		
