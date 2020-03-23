@@ -6,7 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
+import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.SeleniumCoder;
 
@@ -27,25 +29,26 @@ public class NewOrderPage extends SeleniumCoder {
 	
 	
 
-	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,ExtendReporter report) throws InterruptedException, IOException {
+	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,ExtendReporter report,int orderNo,CSVWriter writer) throws InterruptedException, IOException {
+		CsvReaderCode csvReader=new CsvReaderCode();
 		detail=new OrderDetail();
 		System.out.println("New Order execution Started.........");
-		Thread.sleep(20000);
+		Thread.sleep(40000);
 		placeOrderTextField=driver.findElement(By.xpath("//*[@id='tocsearch']"));
 		sendKey(placeOrderTextField,"Tide Water oil ltd");
-		Thread.sleep(10000);
+		Thread.sleep(30000);
 		nseLink=driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]"));
 		clickElement(nseLink);
 		//downErrorKeyEnter(placeOrderTextField);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
 		buyButton=driver.findElement(By.xpath("//a[text()='Buy']"));
 		clickElement(buyButton);
 		}
-		Thread.sleep(6000);
+		Thread.sleep(7000);
 		noOfSharesTextField=driver.findElement(By.xpath("//input[@placeholder='No. of Shares']"));
 		sendKey(noOfSharesTextField,model.getQty());
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 		enterPriceTextField=driver.findElement(By.xpath("//input[@placeholder='Enter Price']"));
 		sendKey(enterPriceTextField, model.getOrderPrice());
 		Thread.sleep(3000);
@@ -55,16 +58,20 @@ public class NewOrderPage extends SeleniumCoder {
 		}
 		OptionalFieldsLabel=driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]"));
 		clickElement(OptionalFieldsLabel);
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		placeOrderButton=driver.findElement(By.xpath("//input[@value ='Place Order']"));
 		clickElement(placeOrderButton);
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		
 		Thread.sleep(5000);
-		report.logsPrinter(detail.orderDetailProvider(driver));
+		String [] orderDetailArray=detail.orderDetailProvider(driver,"New");
+		orderDetailArray[0]=String.valueOf(orderNo);
+		orderDetailArray[1]="New";
+		report.reportGenerator(orderDetailArray);
 		report.addScreenshotMethod(driver);
+		csvReader.WriteFile(orderDetailArray,writer);
 		return driver;
 	}
 

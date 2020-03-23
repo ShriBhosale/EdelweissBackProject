@@ -54,6 +54,20 @@ public class ExtendReporter {
 		}
 	}
 	
+	public void reportGenerator(String [] orderDetailArray) {
+		test.log(Status.INFO, "Action : "+orderDetailArray[1]);
+		test.log(Status.INFO, "Status : "+orderDetailArray[2]);
+		test.log(Status.INFO, "Order Action :: "+orderDetailArray[3]);
+		test.log(Status.INFO, "Trading Symbol :: "+orderDetailArray[4]);
+		test.log(Status.INFO, "Product Type :: "+orderDetailArray[5]);
+		test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
+		test.log(Status.INFO, "Order Type :: "+orderDetailArray[7]);
+		test.log(Status.INFO, "User id :: "+orderDetailArray[8]);
+		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);
+		test.log(Status.INFO, "Validity :: "+orderDetailArray[10]);
+		test.log(Status.INFO, "Nest Id :: "+orderDetailArray[11]);
+	}
+	
 	public void logFlush() {
 		report.flush();
 		

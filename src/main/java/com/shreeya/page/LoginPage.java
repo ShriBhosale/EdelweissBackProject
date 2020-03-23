@@ -1,10 +1,14 @@
 package com.shreeya.page;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.opencsv.CSVWriter;
+import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.SeleniumCoder;
 
 public class LoginPage extends SeleniumCoder{
@@ -33,7 +37,7 @@ public class LoginPage extends SeleniumCoder{
 		
 	}
 	
-	public WebDriver loginExecution() throws InterruptedException {
+	public WebDriver loginExecution(CSVWriter writer) throws InterruptedException, IOException {
 		driver=browserLaunch();
 		
 		//popupButton=driver.findElement(By.xpath("//button[text()='No thanks']"));
@@ -77,6 +81,7 @@ public class LoginPage extends SeleniumCoder{
 		}else {
 			//closePopupButton=driver.findElement(By.xpath("//span[text()='×']"));
 		}
+		headerInExcel(writer);
 		return driver;
 	}
 	
@@ -90,6 +95,12 @@ public class LoginPage extends SeleniumCoder{
 		Thread.sleep(3000);
 		logoutlink=driver.findElement(By.xpath("//a[text()=' Logout']"));
 		logoutlink.click();
+	}
+	
+	public void headerInExcel(CSVWriter writer) throws IOException {
+		CsvReaderCode reader=new CsvReaderCode();
+		String [] excelArray= {"Id","Action","Status","Order Action","Trading Symbol","Product Type","Order Price","Order Type","User id","Exchange","Validity","Nest Id"};
+		reader.WriteFile(excelArray,writer);
 	}
 	
 	

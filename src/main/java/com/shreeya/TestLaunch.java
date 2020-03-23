@@ -8,6 +8,7 @@ import org.testng.Reporter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.page.CxlOrderPage;
@@ -27,10 +28,12 @@ public class TestLaunch {
 	LoginPage login;
 	ExtendReporter reporter;
 	String [] orderDetailArray;
+	CSVWriter writer;
 
 	
-	public  TestLaunch() {
+	public  TestLaunch() throws IOException {
 		coder = new CsvReaderCode();
+		writer=coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
 		login = new LoginPage();
 		reporter=new ExtendReporter();
@@ -38,28 +41,29 @@ public class TestLaunch {
 	
 	
 	public void Execution() throws InterruptedException, IOException {
-		driver = login.loginExecution();
+		driver = login.loginExecution(writer);
 		int orderNo=0;
 		while (csvTestDataModelIterator.hasNext()) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
-			reporter.testCreation(model.getAction()+"_"+orderNo);
+			reporter.testCreation("Order Place "+orderNo);
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
 				NewOrderPage newOrder = new NewOrderPage();
-				driver=newOrder.newOrderExecution(model,driver,reporter);
+				driver=newOrder.newOrderExecution(model,driver,reporter,orderNo,writer);
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
 				System.out.println("Action :: "+model.getAction());
 				ModOrderPage modOrder = new ModOrderPage();
-				driver=modOrder.modExecution(model,driver,reporter);
+				driver=modOrder.modExecution(model,driver,reporter,orderNo,writer);
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
 				System.out.println("Action :: "+model.getAction());
 				CxlOrderPage cxlOrder = new CxlOrderPage();
-				cxlOrder.cxlExecution(driver,reporter);
+				cxlOrder.cxlExecution(driver,reporter,orderNo,writer);
 			}
 		}
 		login.logout(driver);
 		reporter.logFlush();
+		coder.closeWriteFile(writer);
 	}
 
 	public static void main(String[] args) throws InterruptedException, IOException {
