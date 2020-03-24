@@ -10,13 +10,20 @@ import org.testng.annotations.Test;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.HelperCode;
 
 
 public class Tet {
-	
+	static ExtendReporter report;
 	public static void main(String[] args) throws IOException {
-		ApacheCode code=new ApacheCode();
-		code.closeExcelWriting();
+		String [] arr= {"shreeya","priyanka","pravina","apurva"};
+	 report=new ExtendReporter();
+	report.testCreation("abc");
+	report.report(arr);
+	report.tearDown("PASS");
+	report.logFlush();
+	
+				
 	}
 	
 }

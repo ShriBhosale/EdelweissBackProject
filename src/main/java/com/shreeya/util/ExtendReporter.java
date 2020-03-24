@@ -20,15 +20,37 @@ public class ExtendReporter {
 	public static ExtentReports report = null;
 	public static ExtentTest test = null;
 	HelperCode helperObject;
+	private String reportPathString;
 	
 	public  ExtendReporter() {
 		helperObject=new HelperCode();
-		htmlextent = new ExtentHtmlReporter("E:\\EdelweissProject\\Reports\\Report"+helperObject.timeStampGenerator()+".html");
+		reportPathString="E:\\EdelweissProject\\Reports\\Report"+helperObject.timeStampGenerator()+".html";
+		setReportPathString(reportPathString);
+		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		report = new ExtentReports();
 		report.attachReporter(htmlextent);
 		
 	}
 	
+	public void tearDown(String output) {
+		if(output.equalsIgnoreCase("PASS")) {
+			test.log(Status.PASS,"Test Pass....");
+		}else
+			test.log(Status.FAIL, "Test Fail...");
+	}
+	
+	public String getReportPathString() {
+		return reportPathString;
+	}
+
+
+
+	public void setReportPathString(String reportPathString) {
+		this.reportPathString = reportPathString;
+	}
+
+
+
 	public void testCreation(String testName) {
 		test = report.createTest(testName);
 	}
@@ -66,6 +88,12 @@ public class ExtendReporter {
 		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);
 		test.log(Status.INFO, "Validity :: "+orderDetailArray[10]);
 		test.log(Status.INFO, "Nest Id :: "+orderDetailArray[11]);
+	}
+	
+	public void report(String [] arry) {
+		for(String str:arry) {
+			test.log(Status.INFO, str);
+		}
 	}
 	
 	public void logFlush() {

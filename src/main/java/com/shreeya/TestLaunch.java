@@ -15,6 +15,7 @@ import com.shreeya.page.CxlOrderPage;
 import com.shreeya.page.LoginPage;
 import com.shreeya.page.ModOrderPage;
 import com.shreeya.page.NewOrderPage;
+import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.SeleniumCoder;
@@ -36,34 +37,38 @@ public class TestLaunch {
 		writer=coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
 		login = new LoginPage();
-		reporter=new ExtendReporter();
+		//reporter=new ExtendReporter();
 	}
 	
 	
 	public void Execution() throws InterruptedException, IOException {
+		ApacheCode excelWriter=new ApacheCode();
 		driver = login.loginExecution(writer);
+		
 		int orderNo=0;
 		while (csvTestDataModelIterator.hasNext()) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
-			reporter.testCreation("Order Place "+orderNo);
+			//reporter.testCreation("Order Place "+orderNo);
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
 				NewOrderPage newOrder = new NewOrderPage();
-				driver=newOrder.newOrderExecution(model,driver,reporter,orderNo,writer);
+				driver=newOrder.newOrderExecution(model,driver,orderNo,excelWriter);
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
 				System.out.println("Action :: "+model.getAction());
 				ModOrderPage modOrder = new ModOrderPage();
-				driver=modOrder.modExecution(model,driver,reporter,orderNo,writer);
+				driver=modOrder.modExecution(model,driver,orderNo,excelWriter);
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
 				System.out.println("Action :: "+model.getAction());
 				CxlOrderPage cxlOrder = new CxlOrderPage();
-				cxlOrder.cxlExecution(driver,reporter,orderNo,writer);
+				cxlOrder.cxlExecution(driver,orderNo,excelWriter);
 			}
 		}
 		login.logout(driver);
-		reporter.logFlush();
+		
 		coder.closeWriteFile(writer);
+		excelWriter.closeExcelWriting();
+		//reporter.logFlush();
 	}
 
 	public static void main(String[] args) throws InterruptedException, IOException {

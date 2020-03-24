@@ -8,8 +8,10 @@ import org.openqa.selenium.WebElement;
 
 import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
+import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
 public class ModOrderPage extends SeleniumCoder {
@@ -24,8 +26,9 @@ public class ModOrderPage extends SeleniumCoder {
 	
 	OrderDetail detail;
 
-	public WebDriver modExecution(TestDataModel model, WebDriver driver,ExtendReporter report,int orderNo,CSVWriter writer) throws InterruptedException, IOException {
+	public WebDriver modExecution(TestDataModel model, WebDriver driver,int orderNo,ApacheCode excelWriter) throws InterruptedException, IOException {
 		CsvReaderCode csvReader=new CsvReaderCode();
+		HelperCode helperObject=new HelperCode();
 		detail=new OrderDetail();
 		Thread.sleep(17000);
 		modifyLink = driver
@@ -54,12 +57,14 @@ public class ModOrderPage extends SeleniumCoder {
 		confirmButton = driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		Thread.sleep(5000);
-		String [] orderDetailArray=detail.orderDetailProvider(driver,"Mod");
+		/*String [] orderDetailArray=detail.orderDetailProvider(driver,"Mod");
 		orderDetailArray[0]=String.valueOf(orderNo);
 		orderDetailArray[1]="Mod";
 		report.reportGenerator(orderDetailArray);
 		report.addScreenshotMethod(driver);
-		csvReader.WriteFile(orderDetailArray,writer);
+		csvReader.WriteFile(orderDetailArray,writer);*/
+		
+		helperObject.outputProcessor(driver, "Mod", orderNo, excelWriter);
 		return driver;
 	}
 

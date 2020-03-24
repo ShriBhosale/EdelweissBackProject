@@ -19,11 +19,13 @@ public class ApacheCode {
 	XSSFWorkbook workbook;
 	FileOutputStream out;
 	XSSFSheet sheet;
+	HelperCode helper=new HelperCode();
+	
 
 	public ApacheCode() throws FileNotFoundException {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
-		out = new FileOutputStream(new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\example1.xlsx"));
+		out = new FileOutputStream(new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
 		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id", "Rejection Reason",
 				"ScriptResult", "Report link", "Screenshot link" };
@@ -58,8 +60,39 @@ public class ApacheCode {
 
 	}
 
-	public void excelWriter(String[] orderDetails) {
+	public void excelWriter(String[] orderDetails,int rowNo) {
+		String hyperLinkName="hyperLinkName not found";
+		Row row = sheet.createRow(rowNo);
+		
+		for(int i=0;i<orderDetails.length;i++) {
+		Cell cell = row.createCell(i);
 
+		
+		if(i==14||i==15) {
+		 if(i==14)
+			 hyperLinkName="HtmlReport";
+		 else if(i==15)
+			 hyperLinkName="Screenshot";
+		 cell.setCellValue(hyperLinkName);
+		 Hyperlink href = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
+			href.setAddress("file:///"+pathStrProcces(orderDetails[i]));
+			cell.setHyperlink(href);
+		}else {
+			cell.setCellValue(orderDetails[i]);
+		}
+		
+
+		
+		}
+		
+		
+
+	}
+	
+	public String pathStrProcces(String pathStr) {
+		String pathString=pathStr.replace("\\", "//");
+		System.out.println(pathString);
+		return pathString;
 	}
 
 	public static void main(String[] args) {

@@ -31,10 +31,10 @@ public class LoginPage extends SeleniumCoder{
 	private WebElement logoutOption;
 	private WebElement logoutlink;
 	
-	
+	WebDriver driver1;
 	static Logger log = Logger.getLogger(LoginPage.class.getName());
 	public LoginPage() {
-		
+			
 	}
 	
 	public WebDriver loginExecution(CSVWriter writer) throws InterruptedException, IOException {

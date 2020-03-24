@@ -21,6 +21,7 @@ import com.shreeya.page.LoginPage;
 public class SeleniumCoder {
 
 	static Logger log = Logger.getLogger(SeleniumCoder.class.getName());
+	WebDriver driver=null;
 	public SeleniumCoder() {
 		
 	}
@@ -48,6 +49,7 @@ public class SeleniumCoder {
 		
 		if(element.isEnabled()==true) {
 			element.click();
+			System.out.println("Click "+element);
 		}else {
 			System.out.println("no present");
 		}

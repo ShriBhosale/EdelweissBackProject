@@ -8,8 +8,10 @@ import org.openqa.selenium.WebElement;
 
 import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
+import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
 public class NewOrderPage extends SeleniumCoder {
@@ -29,7 +31,8 @@ public class NewOrderPage extends SeleniumCoder {
 	
 	
 
-	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,ExtendReporter report,int orderNo,CSVWriter writer) throws InterruptedException, IOException {
+	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,int orderNo,ApacheCode excelWriter) throws InterruptedException, IOException {
+		HelperCode helperObject=new HelperCode();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		detail=new OrderDetail();
 		System.out.println("New Order execution Started.........");
@@ -67,12 +70,14 @@ public class NewOrderPage extends SeleniumCoder {
 		clickElement(confirmButton);
 		
 		Thread.sleep(5000);
-		String [] orderDetailArray=detail.orderDetailProvider(driver,"New");
+		/*String [] orderDetailArray=detail.orderDetailProvider(driver,"New");
 		orderDetailArray[0]=String.valueOf(orderNo);
 		orderDetailArray[1]="New";
 		report.reportGenerator(orderDetailArray);
 		report.addScreenshotMethod(driver);
-		csvReader.WriteFile(orderDetailArray,writer);
+		csvReader.WriteFile(orderDetailArray,writer);*/
+		
+		helperObject.outputProcessor(driver, "New", orderNo, excelWriter);
 		return driver;
 	}
 
