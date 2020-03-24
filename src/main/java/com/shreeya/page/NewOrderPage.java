@@ -62,7 +62,8 @@ public class NewOrderPage extends SeleniumCoder {
 		placeOrderButton=driver.findElement(By.xpath("//input[@value ='Place Order']"));
 		clickElement(placeOrderButton);
 		Thread.sleep(3000);
-		confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
+		confirmButton=xpathCreator("xpath","//input[@value='Confirm']",driver);
+		//confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		
 		Thread.sleep(5000);

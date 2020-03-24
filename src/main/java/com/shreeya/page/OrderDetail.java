@@ -31,7 +31,7 @@ public class OrderDetail extends SeleniumCoder{
 	public  String[] orderDetailProvider(WebDriver driver,String action) throws InterruptedException {
 		HelperCode helper=new HelperCode();
 		String [] orderDetailList = {"no id","no Action","no Status","no Order Action","no Trading Symbol","no Product Type","no Order Price","no Order Type","no User id","no Exchange","no Validity","no Nest Id"};
-		
+		Thread.sleep(3000);
 		detailsTab=driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']"));
 		clickElement(detailsTab);
 		Thread.sleep(3000);
