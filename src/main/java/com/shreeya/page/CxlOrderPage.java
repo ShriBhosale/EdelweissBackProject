@@ -21,7 +21,7 @@ public class CxlOrderPage extends SeleniumCoder{
 	 
 	
 	
-	public void cxlExecution(WebDriver driver,int orderNo,ApacheCode excelWriter) throws InterruptedException, IOException {
+	public void cxlExecution(WebDriver driver,int orderNo) throws InterruptedException, IOException {
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
 		detail=new OrderDetail();
@@ -39,7 +39,7 @@ public class CxlOrderPage extends SeleniumCoder{
 		report.addScreenshotMethod(driver);
 		csvReader.WriteFile(orderDetailArray,writer);*/
 		
-		helperObject.outputProcessor(driver, "Mod", orderNo, excelWriter);
+		helperObject.outputProcessor(driver, "Mod", orderNo);
 	}
 
 }

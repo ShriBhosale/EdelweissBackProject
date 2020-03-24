@@ -126,7 +126,7 @@ public class SeleniumCoder {
 		return  element.getAttribute("innerHTML");
 	}
 	
-	public WebElement xpathCreator(String atttributeName,String attributeValue,WebDriver driver) throws IOException {
+	/*public WebElement xpathCreator(String atttributeName,String attributeValue,WebDriver driver) throws IOException {
 		WebElement element=null;
 		ExtendReporter reporter=new ExtendReporter();
 		try {
@@ -138,5 +138,14 @@ public class SeleniumCoder {
 			reporter.captureScreen(driver);
 		}
 		return element;
+	}*/
+	
+	public boolean elementPresentOrNot(WebElement element) {
+		boolean displayFlag=false;
+		if(element.isDisplayed())
+			displayFlag=true;
+		return displayFlag;
+			
+			
 	}
 }

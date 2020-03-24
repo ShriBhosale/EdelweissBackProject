@@ -3,6 +3,7 @@ package com.shreeya.page;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -25,12 +26,19 @@ public class ModOrderPage extends SeleniumCoder {
 	private WebElement OptionalFieldsLabel;
 	
 	OrderDetail detail;
+	private WebElement reinvestLink;
 
-	public WebDriver modExecution(TestDataModel model, WebDriver driver,int orderNo,ApacheCode excelWriter) throws InterruptedException, IOException {
+	public WebDriver modExecution(TestDataModel model, WebDriver driver,int orderNo) throws InterruptedException, IOException {
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
 		detail=new OrderDetail();
 		Thread.sleep(17000);
+		try {
+		reinvestLink=driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a"));
+		}catch(NoSuchElementException e) {
+		
+		}
+		if(!elementPresentOrNot(reinvestLink)) {
 		modifyLink = driver
 				.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a"));
 		clickElement(modifyLink);
@@ -63,8 +71,9 @@ public class ModOrderPage extends SeleniumCoder {
 		report.reportGenerator(orderDetailArray);
 		report.addScreenshotMethod(driver);
 		csvReader.WriteFile(orderDetailArray,writer);*/
+		}
+		helperObject.outputProcessor(driver, "Mod", orderNo);
 		
-		helperObject.outputProcessor(driver, "Mod", orderNo, excelWriter);
 		return driver;
 	}
 

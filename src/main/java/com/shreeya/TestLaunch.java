@@ -24,7 +24,7 @@ public class TestLaunch {
 
 	static WebDriver driver;
 	static Iterator<TestDataModel> csvTestDataModelIterator;
-	static TestDataModel model;
+	static TestDataModel model,testModel;
 	CsvReaderCode coder;
 	LoginPage login;
 	ExtendReporter reporter;
@@ -42,7 +42,7 @@ public class TestLaunch {
 	
 	
 	public void Execution() throws InterruptedException, IOException {
-		ApacheCode excelWriter=new ApacheCode();
+		//ApacheCode excelWriter=new ApacheCode();
 		driver = login.loginExecution(writer);
 		
 		int orderNo=0;
@@ -53,21 +53,23 @@ public class TestLaunch {
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
 				NewOrderPage newOrder = new NewOrderPage();
-				driver=newOrder.newOrderExecution(model,driver,orderNo,excelWriter);
+				driver=newOrder.newOrderExecution(model,driver,orderNo);
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
 				System.out.println("Action :: "+model.getAction());
 				ModOrderPage modOrder = new ModOrderPage();
-				driver=modOrder.modExecution(model,driver,orderNo,excelWriter);
+				driver=modOrder.modExecution(model,driver,orderNo);
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
 				System.out.println("Action :: "+model.getAction());
 				CxlOrderPage cxlOrder = new CxlOrderPage();
-				cxlOrder.cxlExecution(driver,orderNo,excelWriter);
+				cxlOrder.cxlExecution(driver,orderNo);
 			}
+			
+			
 		}
 		login.logout(driver);
 		
 		coder.closeWriteFile(writer);
-		excelWriter.closeExcelWriting();
+		//excelWriter.closeExcelWriting();
 		//reporter.logFlush();
 	}
 

@@ -31,7 +31,7 @@ public class NewOrderPage extends SeleniumCoder {
 	
 	
 
-	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,int orderNo,ApacheCode excelWriter) throws InterruptedException, IOException {
+	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,int orderNo) throws InterruptedException, IOException {
 		HelperCode helperObject=new HelperCode();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		detail=new OrderDetail();
@@ -65,7 +65,7 @@ public class NewOrderPage extends SeleniumCoder {
 		placeOrderButton=driver.findElement(By.xpath("//input[@value ='Place Order']"));
 		clickElement(placeOrderButton);
 		Thread.sleep(3000);
-		confirmButton=xpathCreator("xpath","//input[@value='Confirm']",driver);
+		confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		//confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		
@@ -77,7 +77,7 @@ public class NewOrderPage extends SeleniumCoder {
 		report.addScreenshotMethod(driver);
 		csvReader.WriteFile(orderDetailArray,writer);*/
 		
-		helperObject.outputProcessor(driver, "New", orderNo, excelWriter);
+		helperObject.outputProcessor(driver, "New", orderNo);
 		return driver;
 	}
 

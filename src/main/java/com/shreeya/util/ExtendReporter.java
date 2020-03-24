@@ -22,9 +22,9 @@ public class ExtendReporter {
 	HelperCode helperObject;
 	private String reportPathString;
 	
-	public  ExtendReporter() {
+	public  ExtendReporter(String folderPathString) {
 		helperObject=new HelperCode();
-		reportPathString="E:\\EdelweissProject\\Reports\\Report"+helperObject.timeStampGenerator()+".html";
+		reportPathString=folderPathString+"\\HtmlReport"+helperObject.timeStampGenerator()+".html";
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		report = new ExtentReports();
@@ -55,16 +55,16 @@ public class ExtendReporter {
 		test = report.createTest(testName);
 	}
 	
-	public void addScreenshotMethod(WebDriver driver) throws IOException {
+	/*public void addScreenshotMethod(WebDriver driver) throws IOException {
 		 test.addScreenCaptureFromPath(captureScreen(driver));
 		 
-	}
+	}*/
 	
-	public String captureScreen(WebDriver driver) throws IOException {
+	public String captureScreen(WebDriver driver,String folderPathString) throws IOException {
 		
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
-		String dest ="E:\\EdelweissProject\\Reports\\ScreenShot\\"+helperObject.timeStampGenerator()+".png";
+		String dest =folderPathString+"\\Screenshot"+helperObject.timeStampGenerator()+".png";
 		File target = new File(dest);
 		FileUtils.copyFile(src, target);
 		return dest;
@@ -88,6 +88,7 @@ public class ExtendReporter {
 		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);
 		test.log(Status.INFO, "Validity :: "+orderDetailArray[10]);
 		test.log(Status.INFO, "Nest Id :: "+orderDetailArray[11]);
+		test.log(Status.INFO, "Rejection Reason : "+orderDetailArray[12]);
 	}
 	
 	public void report(String [] arry) {

@@ -17,7 +17,7 @@ public class Tet {
 	static ExtendReporter report;
 	public static void main(String[] args) throws IOException {
 		String [] arr= {"shreeya","priyanka","pravina","apurva"};
-	 report=new ExtendReporter();
+	 report=new ExtendReporter(arr[0]);
 	report.testCreation("abc");
 	report.report(arr);
 	report.tearDown("PASS");

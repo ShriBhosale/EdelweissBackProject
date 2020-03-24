@@ -22,10 +22,10 @@ public class ApacheCode {
 	HelperCode helper=new HelperCode();
 	
 
-	public ApacheCode() throws FileNotFoundException {
+	public ApacheCode(String folderPathString) throws FileNotFoundException {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
-		out = new FileOutputStream(new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
+		out = new FileOutputStream(new File(folderPathString+"\\ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
 		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id", "Rejection Reason",
 				"ScriptResult", "Report link", "Screenshot link" };
@@ -36,6 +36,8 @@ public class ApacheCode {
 			cell.setCellValue(headerArray[i]);
 		}
 	}
+	
+	public ApacheCode() {}
 
 	public void excelFileCreator() throws FileNotFoundException {
 		workbook = new XSSFWorkbook();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -27,6 +28,7 @@ public class OrderDetail extends SeleniumCoder {
 	String text;
 
 	public String[] orderDetailProvider(WebDriver driver, String action) throws InterruptedException {
+		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
 		String[] orderDetailList = { "no id", "no Action", "no Status", "no Order Action", "no Trading Symbol",
 				"no Product Type", "no Order Price", "no Order Type", "no User id", "no Exchange", "no Validity",
@@ -36,8 +38,13 @@ public class OrderDetail extends SeleniumCoder {
 		detailsTab = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']"));
 		clickElement(detailsTab);
 		Thread.sleep(9000);
-		status = driver.findElement(
-				By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding']"));
+		try {
+		status = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding']"));
+		
+		}catch(NoSuchElementException e) {
+			status = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding reject']"));
+			rejectionFlag=true;
+		}
 		orderDetailList[2] = fetchTextFromElement(status);
 		buyAndSell = driver.findElement(
 				By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']"));
@@ -61,6 +68,11 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList[9] = fetchTextFromElement(orderInfoList.get(4));
 
 		orderDetailList[10] = fetchTextFromElement(orderInfoList.get(5));
+		
+		if(rejectionFlag==true) {
+			//orderDetailList[11]=fetchTextFromElement(orderInfoList.get(7));
+			orderDetailList[12]=fetchTextFromElement(orderInfoList.get(6));
+		}
 
 		List<WebElement> listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
 		WebElement abc = listForNestId.get(0);
