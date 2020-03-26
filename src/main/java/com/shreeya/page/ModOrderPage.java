@@ -1,6 +1,7 @@
 package com.shreeya.page;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -27,22 +28,25 @@ public class ModOrderPage extends SeleniumCoder {
 	
 	OrderDetail detail;
 	private WebElement reinvestLink;
+	private boolean rejectFlag=false;
 
-	public WebDriver modExecution(TestDataModel model, WebDriver driver,int orderNo) throws InterruptedException, IOException {
+	public HashMap<WebDriver,String> modExecution(TestDataModel model, WebDriver driver,int orderNo,String newOrderStatus) throws InterruptedException, IOException {
+		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
 		detail=new OrderDetail();
+		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
 		Thread.sleep(17000);
 		try {
 		reinvestLink=driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a"));
 		}catch(NoSuchElementException e) {
 		
 		}
-		if(!elementPresentOrNot(reinvestLink)) {
+		
 		modifyLink = driver
 				.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a"));
 		clickElement(modifyLink);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		noOfSharesTextField = driver.findElement(By.xpath("//input[@placeholder='No. of Shares']"));
 		clearAndSendKey(noOfSharesTextField, model.getQty());
 		Thread.sleep(3000);
@@ -71,10 +75,11 @@ public class ModOrderPage extends SeleniumCoder {
 		report.reportGenerator(orderDetailArray);
 		report.addScreenshotMethod(driver);
 		csvReader.WriteFile(orderDetailArray,writer);*/
-		}
-		helperObject.outputProcessor(driver, "Mod", orderNo);
 		
-		return driver;
+		}
+		String status=helperObject.outputProcessor(driver, "Mod", orderNo,newOrderStatus);
+		mapObject.put(driver, status);
+		return mapObject;
 	}
 
 }

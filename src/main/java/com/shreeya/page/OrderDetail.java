@@ -33,19 +33,33 @@ public class OrderDetail extends SeleniumCoder {
 		String[] orderDetailList = { "no id", "no Action", "no Status", "no Order Action", "no Trading Symbol",
 				"no Product Type", "no Order Price", "no Order Type", "no User id", "no Exchange", "no Validity",
 				"no Nest Id", "Rejection Reason",
-				"ScriptResult", "Report link", "Screenshot link" };
+				"ScriptResult", "Report link", "Screenshot link1" };
 		Thread.sleep(3000);
 		detailsTab = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']"));
 		clickElement(detailsTab);
 		Thread.sleep(9000);
+		if(action.equalsIgnoreCase("Mod")) {
+			List<WebElement> statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
+			for(WebElement statusElement:statusList) {
+				System.out.println(fetchTextFromElement(statusElement));
+			}
+			orderDetailList[2]=fetchTextFromElement(statusList.get(1));
+		}else {
 		try {
 		status = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding']"));
 		
 		}catch(NoSuchElementException e) {
+			try {
 			status = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding reject']"));
 			rejectionFlag=true;
+			}catch(NoSuchElementException e1) {
+				status = driver.findElement(By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding traded']"));
+				rejectionFlag=true;
+			}
 		}
 		orderDetailList[2] = fetchTextFromElement(status);
+		}
+		
 		buyAndSell = driver.findElement(
 				By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']"));
 		orderDetailList[3] = fetchTextFromElement(buyAndSell);
@@ -59,10 +73,17 @@ public class OrderDetail extends SeleniumCoder {
 				By.xpath("//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']"));
 		Thread.sleep(2000);
 		List<WebElement> orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
+		
 
 		orderDetailList[6] = fetchTextFromElement(orderPrice);
-
+		try {
 		orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
+		}catch(IndexOutOfBoundsException e) {
+			clickElement(detailsTab);
+			Thread.sleep(3000);
+			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
+			orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
+		}
 		orderDetailList[8] = fetchTextFromElement(orderInfoList.get(3));
 
 		orderDetailList[9] = fetchTextFromElement(orderInfoList.get(4));

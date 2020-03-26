@@ -1,7 +1,10 @@
 package com.shreeya;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,16 +17,24 @@ import com.shreeya.util.HelperCode;
 
 
 public class Tet {
-	static ExtendReporter report;
-	public static void main(String[] args) throws IOException {
-		String [] arr= {"shreeya","priyanka","pravina","apurva"};
-	 report=new ExtendReporter(arr[0]);
-	report.testCreation("abc");
-	report.report(arr);
-	report.tearDown("PASS");
-	report.logFlush();
+
+	 String name="name not found";
+	 
+	static HashMap<Integer,String> mapObject;
 	
-				
+	public static void main(String[] args) throws FileNotFoundException {
+		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
+				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id", "Rejection Reason",
+				"ScriptResult", "E://EdelweissProject//Reports//Report1584974785157.html", "E://EdelweissProject//Reports//Report1584974785157.html" };
+		Tet t=new Tet();
+		ApacheCode code=new ApacheCode("E:\\EdelweissProject\\TestData");
+		code.excelWriter(headerArray, 1);
+		code.closeExcelWriting();
+		
+		
 	}
+	
+	
+	
 	
 }

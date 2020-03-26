@@ -1,6 +1,7 @@
 package com.shreeya;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,7 @@ import com.shreeya.page.NewOrderPage;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
 public class TestLaunch {
@@ -30,6 +32,8 @@ public class TestLaunch {
 	ExtendReporter reporter;
 	String [] orderDetailArray;
 	CSVWriter writer;
+	private String newOrderStatus;
+	
 
 	
 	public  TestLaunch() throws IOException {
@@ -37,14 +41,18 @@ public class TestLaunch {
 		writer=coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
 		login = new LoginPage();
-		//reporter=new ExtendReporter();
+		
 	}
 	
 	
 	public void Execution() throws InterruptedException, IOException {
 		//ApacheCode excelWriter=new ApacheCode();
+		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
+		HashMap<WebDriver,String> newMapObject=new HashMap<WebDriver,String>();
 		driver = login.loginExecution(writer);
-		
+		HelperCode helperObject=new HelperCode();
+		String timeStamp=helperObject.timeStampGenerator();
+		reporter=new ExtendReporter(timeStamp);
 		int orderNo=0;
 		while (csvTestDataModelIterator.hasNext()) {
 			model = csvTestDataModelIterator.next();
@@ -53,15 +61,28 @@ public class TestLaunch {
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
 				NewOrderPage newOrder = new NewOrderPage();
-				driver=newOrder.newOrderExecution(model,driver,orderNo);
+				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
+				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
+				 
 				System.out.println("Action :: "+model.getAction());
+				/*if(newOrderStatus.equalsIgnoreCase("Open")) {*/
 				ModOrderPage modOrder = new ModOrderPage();
-				driver=modOrder.modExecution(model,driver,orderNo);
+				
+				mapObject=modOrder.modExecution(model,driver,orderNo,newOrderStatus);
+				/*}else {
+					continue;
+				}*/
+				
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
+				newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				System.out.println("Action :: "+model.getAction());
+				/*if(newOrderStatus.equalsIgnoreCase("Open")) {*/
 				CxlOrderPage cxlOrder = new CxlOrderPage();
-				cxlOrder.cxlExecution(driver,orderNo);
+				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus);
+				/*}else {
+					continue;
+				}*/
 			}
 			
 			

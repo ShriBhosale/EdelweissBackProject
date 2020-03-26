@@ -1,6 +1,7 @@
 package com.shreeya.page;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,9 +22,12 @@ public class CxlOrderPage extends SeleniumCoder{
 	 
 	
 	
-	public void cxlExecution(WebDriver driver,int orderNo) throws InterruptedException, IOException {
+	public HashMap<WebDriver, String> cxlExecution(WebDriver driver,int orderNo,String newOrderStatus) throws InterruptedException, IOException {
+		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
+		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
+		
 		detail=new OrderDetail();
 		Thread.sleep(17000);
 		cxlLink=driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a"));
@@ -38,8 +42,10 @@ public class CxlOrderPage extends SeleniumCoder{
 		report.reportGenerator(orderDetailArray);
 		report.addScreenshotMethod(driver);
 		csvReader.WriteFile(orderDetailArray,writer);*/
-		
-		helperObject.outputProcessor(driver, "Mod", orderNo);
+		}
+		String status=helperObject.outputProcessor(driver, "CXL", orderNo,newOrderStatus);
+		mapObject.put(driver, status);
+		return mapObject;
 	}
 
 }

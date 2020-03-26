@@ -50,10 +50,10 @@ public class LoginPage extends SeleniumCoder{
 		//buyAndSellButton=driver.findElement(By.xpath("//a[text()='Buy/Sell']"));
 		buyAndSellButton=fluentWaitMethod(driver, "//a[text()='Buy/Sell']");
 		clickElement(buyAndSellButton);
-		 Thread.sleep(4000); 
+		 Thread.sleep(5000); 
 		//userIdTextField=driver.findElement(By.id("userID"));
 		userIdTextField=fluentWaitMethodID(driver, "userID");
-		sendKey(userIdTextField,"60003800");
+		clearAndSendKey(userIdTextField,"60003800");
 		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
 		proceedButton=fluentWaitMethod(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
@@ -64,7 +64,7 @@ public class LoginPage extends SeleniumCoder{
 		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
 		proceedButton=fluentWaitMethod(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
-		 Thread.sleep(5000); 
+		 Thread.sleep(7000); 
 		//yobTextField=driver.findElement(By.id("ans"));
 		yobTextField=fluentWaitMethodID(driver, "ans");
 		sendKey(yobTextField, "2000");

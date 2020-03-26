@@ -101,6 +101,11 @@ public class ExtendReporter {
 		report.flush();
 		
 	}
+
+	public void errroMsg() {
+		test.log(Status.INFO, "New order reject...");
+		
+	}
 	
 
 }

@@ -1,6 +1,7 @@
 package com.shreeya.page;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -31,14 +32,15 @@ public class NewOrderPage extends SeleniumCoder {
 	
 	
 
-	public WebDriver newOrderExecution(TestDataModel model,WebDriver driver,int orderNo) throws InterruptedException, IOException {
+	public HashMap newOrderExecution(TestDataModel model,WebDriver driver,int orderNo) throws InterruptedException, IOException {
+		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		HelperCode helperObject=new HelperCode();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		detail=new OrderDetail();
 		System.out.println("New Order execution Started.........");
-		Thread.sleep(40000);
+		Thread.sleep(30000);
 		placeOrderTextField=driver.findElement(By.xpath("//*[@id='tocsearch']"));
-		sendKey(placeOrderTextField,"Tide Water oil ltd");
+		sendKey(placeOrderTextField,model.getScript());
 		Thread.sleep(30000);
 		nseLink=driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]"));
 		clickElement(nseLink);
@@ -77,8 +79,9 @@ public class NewOrderPage extends SeleniumCoder {
 		report.addScreenshotMethod(driver);
 		csvReader.WriteFile(orderDetailArray,writer);*/
 		
-		helperObject.outputProcessor(driver, "New", orderNo);
-		return driver;
+		String status=helperObject.outputProcessor(driver, "New", orderNo,"No Status");
+		mapObject.put(driver, status);
+		return mapObject;
 	}
 
 }

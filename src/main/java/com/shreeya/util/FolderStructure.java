@@ -3,7 +3,7 @@ package com.shreeya.util;
 import java.io.File;
 
 public class FolderStructure {
-	String timeStamp;
+	static String timeStamp;
 
 	public String[] reportFolderCreator(int orderNo) {
 		System.out.println("abc");
