@@ -12,6 +12,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
@@ -27,8 +29,12 @@ public class SeleniumCoder {
 	}
 	
 	public WebDriver browserLaunch() {
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--incognito");
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
-		WebDriver driver=new ChromeDriver();
+		WebDriver driver=new ChromeDriver(capabilities);
 		driver.manage().window().maximize();
 		driver.get("https://ewuat.edelbusiness.in");
 		
@@ -140,10 +146,17 @@ public class SeleniumCoder {
 		return element;
 	}*/
 	
-	public boolean elementPresentOrNot(WebElement element) {
+	public boolean elementPresentOrNot(WebDriver driver,String xpathString,String attributeForXpath) {
 		boolean displayFlag=false;
+		WebElement element = null;
+		try {
+			if(attributeForXpath.equalsIgnoreCase("xpath"))
+				element=driver.findElement(By.xpath(xpathString));
 		if(element.isDisplayed())
 			displayFlag=true;
+		}catch(NoSuchElementException e) {
+			System.out.println(e);
+		}
 		return displayFlag;
 			
 			

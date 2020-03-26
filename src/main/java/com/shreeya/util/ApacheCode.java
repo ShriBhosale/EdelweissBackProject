@@ -27,8 +27,8 @@ public class ApacheCode {
 		sheet = workbook.createSheet("Orders Details");
 		out = new FileOutputStream(new File(folderPathString+"\\ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
 		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
-				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id", "Rejection Reason",
-				"ScriptResult", "Report link", "Screenshot link" };
+				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty", "Rejection Reason",
+				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 		Row row = sheet.createRow(0);
 		for (int i = 0; i < headerArray.length; i++) {
 
@@ -70,10 +70,10 @@ public class ApacheCode {
 		Cell cell = row.createCell(i);
 
 		
-		if(i==14||i==15) {
-		 if(i==14)
+		if(i==15||i==16) {
+		 if(i==15)
 			 hyperLinkName="HtmlReport";
-		 else if(i==15)
+		 else if(i==16)
 			 hyperLinkName="Screenshot";
 		 cell.setCellValue(hyperLinkName);
 		 Hyperlink href = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);

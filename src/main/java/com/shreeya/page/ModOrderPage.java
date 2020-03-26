@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.util.ApacheCode;
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
@@ -31,27 +32,33 @@ public class ModOrderPage extends SeleniumCoder {
 	private boolean rejectFlag=false;
 
 	public HashMap<WebDriver,String> modExecution(TestDataModel model, WebDriver driver,int orderNo,String newOrderStatus) throws InterruptedException, IOException {
+		
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
+		ConfigReader configReader=new ConfigReader();
+		boolean amoFlag=Boolean.getBoolean(configReader.configReader("amoFlag"));
 		detail=new OrderDetail();
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
-		Thread.sleep(17000);
+		Thread.sleep(7000);
 		try {
 		reinvestLink=driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a"));
 		}catch(NoSuchElementException e) {
 		
 		}
 		
-		modifyLink = driver
-				.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a"));
+		modifyLink = driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a"));
 		clickElement(modifyLink);
 		Thread.sleep(5000);
+		if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
 		noOfSharesTextField = driver.findElement(By.xpath("//input[@placeholder='No. of Shares']"));
-		clearAndSendKey(noOfSharesTextField, model.getQty());
+		clearAndSendKey(noOfSharesTextField, model.getQtyMod());
+		}
 		Thread.sleep(3000);
+		if(model.getScenario().equalsIgnoreCase("Modification Price")) {
 		enterPriceTextField = driver.findElement(By.xpath("//input[@placeholder='Enter Price']"));
-		clearAndSendKey(enterPriceTextField, model.getOrderPrice());
+		clearAndSendKey(enterPriceTextField, model.getOrderPriceMod());
+		}
 		Thread.sleep(3000);
 		if (model.getProductType().equalsIgnoreCase("CNC")) {
 
@@ -63,6 +70,7 @@ public class ModOrderPage extends SeleniumCoder {
 		OptionalFieldsLabel = driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]"));
 		clickElement(OptionalFieldsLabel);
 		Thread.sleep(2000);
+		detail.amoCheckbox(amoFlag, driver);
 		placeOrderButton = driver.findElement(By.xpath("//input[@value ='Place Order']"));
 		clickElement(placeOrderButton);
 		Thread.sleep(2000);
@@ -77,7 +85,7 @@ public class ModOrderPage extends SeleniumCoder {
 		csvReader.WriteFile(orderDetailArray,writer);*/
 		
 		}
-		String status=helperObject.outputProcessor(driver, "Mod", orderNo,newOrderStatus);
+		String status=helperObject.outputProcessor(driver, "Mod", orderNo,newOrderStatus,model);
 		mapObject.put(driver, status);
 		return mapObject;
 	}

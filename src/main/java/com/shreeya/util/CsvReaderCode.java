@@ -47,7 +47,7 @@ public class CsvReaderCode {
 
 		CSVReader reader = null;
 		try {
-			reader = new CSVReader(new FileReader("E:\\EdelweissProject\\TestData\\LoginData.txt"), '\t');
+			reader = new CSVReader(new FileReader("E:\\EdelweissProject\\TestData\\ScenarioData.txt"), '\t');
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
