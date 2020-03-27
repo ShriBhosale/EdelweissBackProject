@@ -47,6 +47,7 @@ public class CsvReaderCode {
 		ConfigReader configReader=new ConfigReader();
 		String testDataPath=configReader.configReader("TestData");
 		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
 		try {
 			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
 		} catch (FileNotFoundException e) {
