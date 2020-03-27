@@ -41,41 +41,41 @@ public class LoginPage extends SeleniumCoder{
 		driver=browserLaunch();
 		
 		//popupButton=driver.findElement(By.xpath("//button[text()='No thanks']"));
-		popupButton=fluentWaitMethod(driver, "//button[text()='No thanks']");
+		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
 		clickElement(popupButton);
 		//loginButton=driver.findElement(By.xpath("//span[text()='Login']"));
-		loginButton=fluentWaitMethod(driver, "//span[text()='Login']");
+		loginButton=fluentWaitCodeXpath(driver, "//span[text()='Login']");
 		clickElement(loginButton);
 		
 		//buyAndSellButton=driver.findElement(By.xpath("//a[text()='Buy/Sell']"));
-		buyAndSellButton=fluentWaitMethod(driver, "//a[text()='Buy/Sell']");
+		buyAndSellButton=fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']");
 		clickElement(buyAndSellButton);
-		 Thread.sleep(5000); 
+		 /*Thread.sleep(5000); */
 		//userIdTextField=driver.findElement(By.id("userID"));
-		userIdTextField=fluentWaitMethodID(driver, "userID");
+		userIdTextField=fluentWaitCodeId(driver, "userID");
 		clearAndSendKey(userIdTextField,"60003800");
 		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
-		proceedButton=fluentWaitMethod(driver, "//button[text()='Proceed']");
+		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
-		 Thread.sleep(8000); 
+		// Thread.sleep(8000); 
 		//passwordTextField=driver.findElement(By.id("password"));
-		passwordTextField=fluentWaitMethodID(driver, "password");
+		passwordTextField=fluentWaitCodeId(driver, "password");
 		sendKey(passwordTextField, "abc123");
 		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
-		proceedButton=fluentWaitMethod(driver, "//button[text()='Proceed']");
+		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
-		 Thread.sleep(7000); 
+		 //Thread.sleep(7000); 
 		//yobTextField=driver.findElement(By.id("ans"));
-		yobTextField=fluentWaitMethodID(driver, "ans");
+		yobTextField=fluentWaitCodeId(driver, "ans");
 		sendKey(yobTextField, "2000");
 		//continueButton=driver.findElement(By.xpath("//button[text()='Continue']"));
-		continueButton=fluentWaitMethod(driver, "//button[text()='Continue']");
+		continueButton=fluentWaitCodeXpath(driver,"//button[text()='Continue']");
 		clickElement(continueButton);
-		 Thread.sleep(15000); 
+		 //Thread.sleep(15000); 
 		if(noLoginProccess==false) {
-		notNowButton=driver.findElement(By.xpath("//a[text()='Not now']"));
+		notNowButton=fluentWaitCodeXpath(driver,"//a[text()='Not now']");
 		clickElement(notNowButton);
-			 Thread.sleep(5000); 
+			// Thread.sleep(5000); 
 		popupOkButton=driver.findElement(By.xpath("//button[text()='Ok']"));
 		clickElement(popupOkButton);
 		}else {
@@ -86,14 +86,17 @@ public class LoginPage extends SeleniumCoder{
 	}
 	
 	public void logout(WebDriver driver) throws InterruptedException {
-		Thread.sleep(3000);
-		closeButton=driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[1]/a"));
+		/*Thread.sleep(3000);*/
+		closeButton=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[1]/a");
 		closeButton.click();
 		Thread.sleep(3000);
-		logoutOption=driver.findElement(By.xpath("//*[@id=\"caUser\"]/span[1]"));
+		logoutOption=fluentWaitCodeXpath(driver,"//*[@id='caUser']/span[1]");
+		
 		logoutOption.click();
-		Thread.sleep(3000);
-		logoutlink=driver.findElement(By.xpath("//a[text()=' Logout']"));
+		
+		
+		/*Thread.sleep(3000);*/
+		logoutlink=fluentWaitCodeXpath(driver,"//a[text()=' Logout']");
 		logoutlink.click();
 	}
 	

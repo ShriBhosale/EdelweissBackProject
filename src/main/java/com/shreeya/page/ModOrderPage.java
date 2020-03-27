@@ -37,46 +37,46 @@ public class ModOrderPage extends SeleniumCoder {
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
 		ConfigReader configReader=new ConfigReader();
-		boolean amoFlag=Boolean.getBoolean(configReader.configReader("amoFlag"));
+		String amoFlag=configReader.configReader("amoFlag");
 		detail=new OrderDetail();
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
-		Thread.sleep(7000);
+		//Thread.sleep(7000);
 		try {
-		reinvestLink=driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a"));
+		reinvestLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a");
 		}catch(NoSuchElementException e) {
 		
 		}
 		
-		modifyLink = driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a"));
+		modifyLink =fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a");
 		clickElement(modifyLink);
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
-		noOfSharesTextField = driver.findElement(By.xpath("//input[@placeholder='No. of Shares']"));
+		noOfSharesTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
 		clearAndSendKey(noOfSharesTextField, model.getQtyMod());
 		}
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 		if(model.getScenario().equalsIgnoreCase("Modification Price")) {
-		enterPriceTextField = driver.findElement(By.xpath("//input[@placeholder='Enter Price']"));
+		enterPriceTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
 		clearAndSendKey(enterPriceTextField, model.getOrderPriceMod());
 		}
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 		if (model.getProductType().equalsIgnoreCase("CNC")) {
 
-			cnsRadioButton = driver.findElement(By.xpath("//label[text()='Delivery CNC']"));
+			cnsRadioButton =fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
 			if (cnsRadioButton.isDisplayed() == false)
 				clickElement(cnsRadioButton);
 		}
 
-		OptionalFieldsLabel = driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]"));
+		OptionalFieldsLabel =fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
 		clickElement(OptionalFieldsLabel);
-		Thread.sleep(2000);
+		//Thread.sleep(2000);
 		detail.amoCheckbox(amoFlag, driver);
-		placeOrderButton = driver.findElement(By.xpath("//input[@value ='Place Order']"));
+		placeOrderButton =fluentWaitCodeXpath(driver,"//input[@value ='Place Order']");
 		clickElement(placeOrderButton);
-		Thread.sleep(2000);
-		confirmButton = driver.findElement(By.xpath("//input[@value='Confirm']"));
+		//Thread.sleep(2000);
+		confirmButton =fluentWaitCodeXpath(driver,"//input[@value='Confirm']");
 		clickElement(confirmButton);
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		/*String [] orderDetailArray=detail.orderDetailProvider(driver,"Mod");
 		orderDetailArray[0]=String.valueOf(orderNo);
 		orderDetailArray[1]="Mod";

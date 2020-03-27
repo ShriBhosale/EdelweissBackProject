@@ -41,59 +41,54 @@ public class NewOrderPage extends SeleniumCoder {
 	
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		ConfigReader configReader=new ConfigReader();
-		boolean amoFlag=Boolean.getBoolean(configReader.configReader("amoFlag"));
+		String amoFlag=configReader.configReader("amoFlag");
 		HelperCode helperObject=new HelperCode();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		OrderDetail orderDetail=new OrderDetail();
 		detail=new OrderDetail();
-		Thread.sleep(7000);
+		//Thread.sleep(7000);
 		System.out.println("New Order execution Started.........");
 		if(orderNo!=1) {
-			placeOrderButon=driver.findElement(By.xpath("//a[text()='Place Order']"));
+			placeOrderButon=fluentWaitCodeXpath(driver,"//a[text()='Place Order']");
 			clickElement(placeOrderButon);
 		}
 	
-		placeOrderTextField=driver.findElement(By.xpath("//*[@id='tocsearch']"));
+		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']");
 		sendKey(placeOrderTextField,model.getScript());
-		Thread.sleep(3000);
-		nseLink=driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]"));
+		/*Thread.sleep(3000);*/
+		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
 		clickElement(nseLink);
 		//downErrorKeyEnter(placeOrderTextField);
-		Thread.sleep(2000);
+		/*Thread.sleep(2000);*/
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
-		buyButton=driver.findElement(By.xpath("//a[text()='Buy']"));
+		buyButton=fluentWaitCodeXpath(driver,"//a[text()='Buy']");
 		clickElement(buyButton);
 		}
-		Thread.sleep(4000);
-		noOfSharesTextField=driver.findElement(By.xpath("//input[@placeholder='No. of Shares']"));
+		/*Thread.sleep(4000);*/
+		noOfSharesTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
 		sendKey(noOfSharesTextField,model.getQty());
-		Thread.sleep(2000);
-		enterPriceTextField=driver.findElement(By.xpath("//input[@placeholder='Enter Price']"));
+		/*Thread.sleep(2000);*/
+		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
 		sendKey(enterPriceTextField, model.getOrderPrice());
-		Thread.sleep(1000);
+		/*Thread.sleep(1000);*/
 		if(model.getProductType().equalsIgnoreCase("CNC")) {
-		cnsRadioButton=driver.findElement(By.xpath("//label[text()='Delivery CNC']"));
+		cnsRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
 		clickElement(cnsRadioButton);
 		}
-		OptionalFieldsLabel=driver.findElement(By.xpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]"));
+		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
 		clickElement(OptionalFieldsLabel);
-		Thread.sleep(1000);
+		/*Thread.sleep(1000);*/
 		
 		orderDetail.amoCheckbox(amoFlag, driver);
-		placeOrderButton=driver.findElement(By.xpath("//input[@value ='Place Order']"));
+		placeOrderButton=fluentWaitCodeXpath(driver,"//input[@value ='Place Order']");
 		clickElement(placeOrderButton);
-		Thread.sleep(3000);
-		confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
+		/*Thread.sleep(3000);*/
+		confirmButton=fluentWaitCodeXpath(driver,"//input[@value='Confirm']");
 		//confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		
-		Thread.sleep(3000);
-		/*String [] orderDetailArray=detail.orderDetailProvider(driver,"New");
-		orderDetailArray[0]=String.valueOf(orderNo);
-		orderDetailArray[1]="New";
-		report.reportGenerator(orderDetailArray);
-		report.addScreenshotMethod(driver);
-		csvReader.WriteFile(orderDetailArray,writer);*/
+		/*Thread.sleep(3000);*/
+		
 		
 		String status=helperObject.outputProcessor(driver, "New", orderNo,"No status",model);
 		mapObject.put(driver, status);

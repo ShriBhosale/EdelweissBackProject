@@ -30,13 +30,13 @@ public class CxlOrderPage extends SeleniumCoder{
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
 		
 		detail=new OrderDetail();
-		Thread.sleep(7000);
-		cxlLink=driver.findElement(By.xpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a"));
+		/*Thread.sleep(7000);*/
+		cxlLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a");
 		clickElement(cxlLink);
-		Thread.sleep(4000);
-		confirmButton=driver.findElement(By.xpath("//button[text()='Confirm']"));
+		/*Thread.sleep(4000);*/
+		confirmButton=fluentWaitCodeXpath(driver,"//button[text()='Confirm']");
 		clickElement(confirmButton);
-		Thread.sleep(5000);
+		/*Thread.sleep(5000);*/
 		
 		}
 		String status=helperObject.outputProcessor(driver, "CXL", orderNo,newOrderStatus,model);

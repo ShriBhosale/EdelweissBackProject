@@ -3,6 +3,8 @@ package com.shreeya.util;
 import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -151,7 +153,7 @@ public class SeleniumCoder {
 		WebElement element = null;
 		try {
 			if(attributeForXpath.equalsIgnoreCase("xpath"))
-				element=driver.findElement(By.xpath(xpathString));
+				element=fluentWaitCodeXpath(driver,xpathString);
 		if(element.isDisplayed())
 			displayFlag=true;
 		}catch(NoSuchElementException e) {
@@ -161,4 +163,59 @@ public class SeleniumCoder {
 			
 			
 	}
+	public  WebElement fluentWaitCodeId(WebDriver driver,final String idString) {
+		// Waiting 30 seconds for an element to be present on the page, checking
+		   // for its presence once every 5 seconds.
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+			       .withTimeout(30, TimeUnit.SECONDS)
+			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .ignoring(NoSuchElementException.class);
+
+			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+			     public WebElement apply(WebDriver driver) {
+			       //WebElement searchTextField =driver.findElement(By.name("q"));
+			    	 WebElement element =driver.findElement(By.id(idString));
+			       if(element.isEnabled()) {
+			    	   System.out.println("Element Found");
+			    	   
+			       }
+			       return element;
+			     }
+			     
+			   });
+			   
+			   return element;
+		   
+	}
+	
+	public  WebElement fluentWaitCodeXpath(WebDriver driver,final String xpathString) {
+		// Waiting 30 seconds for an element to be present on the page, checking
+		   // for its presence once every 5 seconds.
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+			       .withTimeout(30, TimeUnit.SECONDS)
+			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .ignoring(NoSuchElementException.class);
+
+			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+			     public WebElement apply(WebDriver driver) {
+			       //WebElement searchTextField =driver.findElement(By.name("q"));
+			    	 WebElement element =driver.findElement(By.xpath(xpathString));
+			       if(element.isEnabled()) {
+			    	   System.out.println("Element Found");
+			    	   
+			       }
+			       return element;
+			     }
+			     
+			   });
+			   
+			   return element;
+		   
+	}
+	
+	
+			   
+			   
+			  
+	
 }

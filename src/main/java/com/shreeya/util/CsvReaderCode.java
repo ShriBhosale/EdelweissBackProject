@@ -44,10 +44,11 @@ public class CsvReaderCode {
 	}
 
 	public Iterator<TestDataModel> responseGenerator() {
-
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("TestData");
 		CSVReader reader = null;
 		try {
-			reader = new CSVReader(new FileReader("E:\\EdelweissProject\\TestData\\ScenarioData.txt"), '\t');
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
