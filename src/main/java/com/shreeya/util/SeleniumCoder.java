@@ -26,17 +26,22 @@ public class SeleniumCoder {
 
 	static Logger log = Logger.getLogger(SeleniumCoder.class.getName());
 	WebDriver driver=null;
+	
 	public SeleniumCoder() {
 		
 	}
 	
-	public WebDriver browserLaunch() {
+	public WebDriver browserLaunch(String scenario) {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--incognito");
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
-		WebDriver driver=new ChromeDriver(capabilities);
+		if(!scenario.equalsIgnoreCase("Partial Order")) {
+		 driver=new ChromeDriver(capabilities);
+		}else {
+			driver=new ChromeDriver();
+		}
 		driver.manage().window().maximize();
 		driver.get("https://ewuat.edelbusiness.in");
 		

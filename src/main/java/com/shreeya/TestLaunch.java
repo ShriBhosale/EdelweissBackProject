@@ -53,7 +53,9 @@ public class TestLaunch {
 		//ApacheCode excelWriter=new ApacheCode();
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		HashMap<WebDriver,String> newMapObject=new HashMap<WebDriver,String>();
-		driver = login.loginExecution(writer);
+		PartialOrderPage PartialOrderOb=new PartialOrderPage();
+		driver = login.loginExecution("no scenario");
+		login.headerInExcel(writer);
 		HelperCode helperObject=new HelperCode();
 		String timeStamp=helperObject.timeStampGenerator();
 		reporter=new ExtendReporter(timeStamp,"dfsf");
@@ -61,7 +63,9 @@ public class TestLaunch {
 		while (csvTestDataModelIterator.hasNext()) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
-			
+			if(model.getScenario().equalsIgnoreCase("Partial Order")) {
+				PartialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
+			}
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
 				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);

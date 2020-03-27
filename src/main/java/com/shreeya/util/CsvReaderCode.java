@@ -35,8 +35,7 @@ public class CsvReaderCode {
 	
 	public CSVWriter writerProvider()throws IOException {
 		helperObject = new HelperCode();
-		File file = new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\ExcelReport"
-				+ helperObject.timeStampGenerator() + ".csv");
+		File file = new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\ExcelReport"+ helperObject.timeStampGenerator() + ".csv");
 
 		FileWriter outputfile = new FileWriter(file, true);
 

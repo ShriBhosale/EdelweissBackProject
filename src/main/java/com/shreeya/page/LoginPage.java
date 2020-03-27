@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.opencsv.CSVWriter;
+import com.shreeya.model.TestDataModel;
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.SeleniumCoder;
 
@@ -30,16 +32,19 @@ public class LoginPage extends SeleniumCoder{
 	private WebElement closeButton;
 	private WebElement logoutOption;
 	private WebElement logoutlink;
-	
+	String userIdStr,passwordstr,yobstr;
 	WebDriver driver1;
+	
 	static Logger log = Logger.getLogger(LoginPage.class.getName());
 	public LoginPage() {
 			
 	}
 	
-	public WebDriver loginExecution(CSVWriter writer) throws InterruptedException, IOException {
-		driver=browserLaunch();
+	
+	public WebDriver loginExecution(String scenario) throws InterruptedException, IOException {
 		
+		driver=browserLaunch(scenario);
+		userIdAndPwd(scenario);
 		//popupButton=driver.findElement(By.xpath("//button[text()='No thanks']"));
 		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
 		clickElement(popupButton);
@@ -53,21 +58,21 @@ public class LoginPage extends SeleniumCoder{
 		 /*Thread.sleep(5000); */
 		//userIdTextField=driver.findElement(By.id("userID"));
 		userIdTextField=fluentWaitCodeId(driver, "userID");
-		clearAndSendKey(userIdTextField,"60003800");
+		clearAndSendKey(userIdTextField,userIdStr);
 		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
 		// Thread.sleep(8000); 
 		//passwordTextField=driver.findElement(By.id("password"));
 		passwordTextField=fluentWaitCodeId(driver, "password");
-		sendKey(passwordTextField, "abc123");
+		sendKey(passwordTextField, passwordstr);
 		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
 		 //Thread.sleep(7000); 
 		//yobTextField=driver.findElement(By.id("ans"));
 		yobTextField=fluentWaitCodeId(driver, "ans");
-		sendKey(yobTextField, "2000");
+		sendKey(yobTextField, yobstr);
 		//continueButton=driver.findElement(By.xpath("//button[text()='Continue']"));
 		continueButton=fluentWaitCodeXpath(driver,"//button[text()='Continue']");
 		clickElement(continueButton);
@@ -81,7 +86,7 @@ public class LoginPage extends SeleniumCoder{
 		}else {
 			//closePopupButton=driver.findElement(By.xpath("//span[text()='×']"));
 		}
-		headerInExcel(writer);
+		//headerInExcel(writer);
 		return driver;
 	}
 	
@@ -106,5 +111,31 @@ public class LoginPage extends SeleniumCoder{
 		reader.WriteFile(excelArray,writer);
 	}
 	
-	
+
+	public void userIdAndPwd(String scenario) {
+		String[] userIdArray=null,passwordArray=null,yobArray=null;
+		ConfigReader configReader=new ConfigReader();
+		String userId=configReader.configReader("userId");
+		String password=configReader.configReader("password");
+		String yob=configReader.configReader("yob");
+		if(userId.contains(",")) {
+			userIdArray=userId.split(",");
+		}
+		if(password.contains(",")) {
+			passwordArray=password.split(",");
+		}
+		if(yob.contains(",")) {
+			yobArray=yob.split(",");
+		}
+		
+		if(scenario.equalsIgnoreCase("Partial Order")) {
+			userIdStr=userIdArray[1];
+			passwordstr=passwordArray[1];
+			yobstr=yobArray[1];
+		}else {
+			userIdStr=userIdArray[0];
+			passwordstr=passwordArray[0];
+			yobstr=yobArray[0];
+		}
+	}
 }

@@ -47,7 +47,7 @@ public class NewOrderPage extends SeleniumCoder {
 		OrderDetail orderDetail=new OrderDetail();
 		detail=new OrderDetail();
 		//Thread.sleep(7000);
-		System.out.println("New Order execution Started.........");
+		System.out.println("New Order execution Started..........");
 		if(orderNo!=1) {
 			placeOrderButon=fluentWaitCodeXpath(driver,"//a[text()='Place Order']");
 			clickElement(placeOrderButon);
@@ -63,10 +63,13 @@ public class NewOrderPage extends SeleniumCoder {
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
 		buyButton=fluentWaitCodeXpath(driver,"//a[text()='Buy']");
 		clickElement(buyButton);
+		}else if(model.getOrderType().equalsIgnoreCase("Sell")) {
+			buyButton=fluentWaitCodeXpath(driver, "//a[text()='Sell']");
+			clickElement(buyButton);
 		}
 		/*Thread.sleep(4000);*/
 		noOfSharesTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
-		sendKey(noOfSharesTextField,model.getQty());
+		clearAndSendKey(noOfSharesTextField,model.getQty());
 		/*Thread.sleep(2000);*/
 		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
 		sendKey(enterPriceTextField, model.getOrderPrice());
