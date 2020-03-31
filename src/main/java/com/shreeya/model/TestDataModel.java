@@ -31,8 +31,8 @@ public class TestDataModel {
 	String scenario;
 	@CsvBindByName(column = "OrderPriceMod")
 	String orderPriceMod;
-	@CsvBindByName(column = "QtyMod")
-	String qtyMod;
+	@CsvBindByName(column = "PartialQty")
+	String partialQty;
 
 	public String getOrderNo() {
 		return orderNo;
@@ -146,12 +146,12 @@ public class TestDataModel {
 		this.orderPriceMod = orderPriceMod;
 	}
 
-	public String getQtyMod() {
-		return qtyMod;
+	public String getpartialQty() {
+		return partialQty;
 	}
 
-	public void setQtyMod(String qtyMod) {
-		this.qtyMod = qtyMod;
+	public void setpartialQty(String partialQty) {
+		this.partialQty = partialQty;
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class TestDataModel {
 		return "TestDataModel [orderNo=" + orderNo + ", userId=" + userId + ", password=" + password + ", yob=" + yob
 				+ ", action=" + action + ", orderType=" + orderType + ", script=" + script + ", segment=" + segment
 				+ ", orderPrice=" + orderPrice + ", productType=" + productType + ", qty=" + qty + ", orderValidity="
-				+ orderValidity + ", scenario=" + scenario + ", orderPriceMod=" + orderPriceMod + ", qtyMod=" + qtyMod
+				+ orderValidity + ", scenario=" + scenario + ", orderPriceMod=" + orderPriceMod + ", partialQty=" + partialQty
 				+ "]";
 	}
 

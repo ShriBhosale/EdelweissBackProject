@@ -21,6 +21,8 @@ import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
+import com.shreeya.page.PartialOrderPage;
+
 
 public class TestLaunch {
 
@@ -53,7 +55,7 @@ public class TestLaunch {
 		//ApacheCode excelWriter=new ApacheCode();
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		HashMap<WebDriver,String> newMapObject=new HashMap<WebDriver,String>();
-		PartialOrderPage PartialOrderOb=new PartialOrderPage();
+		PartialOrderPage partialOrderOb=new PartialOrderPage();
 		driver = login.loginExecution("no scenario");
 		login.headerInExcel(writer);
 		HelperCode helperObject=new HelperCode();
@@ -64,7 +66,10 @@ public class TestLaunch {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
 			if(model.getScenario().equalsIgnoreCase("Partial Order")) {
-				PartialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
+				partialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
+				partialOrderOb.orderDetail(driver, model,orderNo);
+				model = csvTestDataModelIterator.next();
+				orderNo++;
 			}
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
@@ -76,6 +81,10 @@ public class TestLaunch {
 				
 				
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
+				String modOrderStatus = helperObject.statusRemoveBracket(mapObject.values());
+				if(modOrderStatus.equalsIgnoreCase("complete")) 
+					newOrderStatus=modOrderStatus;
+				else
 				newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				System.out.println("Action :: "+model.getAction());
 				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus,model);

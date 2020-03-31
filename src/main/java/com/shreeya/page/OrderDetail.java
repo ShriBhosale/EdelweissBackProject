@@ -7,6 +7,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -29,6 +30,11 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement nestIdLable;
 	String text;
 	private WebElement QtyLabel;
+	private WebElement qtyLabel;
+	private WebElement buyAndSellButton;
+	private WebElement placeOrderLink;
+	private WebElement orderStatusLink;
+	private String rowNestIdString;
 
 	public String[] orderDetailProvider(WebDriver driver, String action) throws InterruptedException {
 		boolean rejectionFlag=false;
@@ -38,6 +44,10 @@ public class OrderDetail extends SeleniumCoder {
 				"no Nest Id","no qty", "Rejection Reason",
 				"ScriptResult", "Report link", "Screenshot link1"};
 		Thread.sleep(3000);
+		if(action.equalsIgnoreCase("Partial Order")) {
+			driver.navigate().refresh();
+			afterRefreshPage(driver);
+		}
 		try {
 		detailsTab = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']");
 		clickElement(detailsTab);
@@ -45,6 +55,7 @@ public class OrderDetail extends SeleniumCoder {
 			Thread.sleep(1000);
 			detailsTab = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']");
 			clickElement(detailsTab);
+			Thread.sleep(2000);
 		}
 		ConfigReader configReader=new ConfigReader();
 		String amoFlag=configReader.configReader("amoFlag");
@@ -92,7 +103,7 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
 		}catch(IndexOutOfBoundsException e) {
 			clickElement(detailsTab);
-			//Thread.sleep(3000);
+			Thread.sleep(3000);
 			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 			orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
 		}
@@ -101,14 +112,14 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList[9] = fetchTextFromElement(orderInfoList.get(4));
 
 		orderDetailList[10] = fetchTextFromElement(orderInfoList.get(5));
-		
-		if(rejectionFlag==true) {
+		if(orderDetailList[2].equalsIgnoreCase("Rejected")) {
+		/*if(rejectionFlag==true) {*/
 			//orderDetailList[11]=fetchTextFromElement(orderInfoList.get(7));
-			orderDetailList[12]=fetchTextFromElement(orderInfoList.get(6));
+			orderDetailList[13]=fetchTextFromElement(orderInfoList.get(6));
 		}
-		if(!orderDetailList[2].equalsIgnoreCase("Complete")) {
-		QtyLabel=fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span");
-		orderDetailList[12]=fetchTextFromElement(QtyLabel);
+		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")))) {
+		 qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span");
+		orderDetailList[12]=fetchTextFromElement(qtyLabel);
 		
 		List<WebElement> listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
 		WebElement abc = listForNestId.get(0);
@@ -116,10 +127,19 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList[11] = helper.nestIdProvider(text);
 		}else {
 			WebElement nestIdLabel=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
-			orderDetailList[11]=fetchTextFromElement(nestIdLabel);
-			
+			rowNestIdString=fetchTextFromElement(nestIdLabel);
+			System.out.println("Row Nestid string ===> "+rowNestIdString);
+			orderDetailList[11] = helper.removeExtraString(rowNestIdString,"|");
+			 if(action.equalsIgnoreCase("Partial Order")) {
+				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
+			 }else {
+				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
+			 }
+			 orderDetailList[12]=fetchTextFromElement(qtyLabel);
+			if(!orderDetailList[2].equalsIgnoreCase("Rejected")) {
 			WebElement executedSharesLable=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
 			System.out.println("Executed Shares =====>  "+fetchTextFromElement(executedSharesLable));
+			}
 		}
 		
 
@@ -131,6 +151,7 @@ public class OrderDetail extends SeleniumCoder {
 		System.out.println("AMO CheckBox checking....");
 		//Thread.sleep(3000);
 		if(checked.equalsIgnoreCase("true")) {
+			try {
 		boolean flag = elementPresentOrNot(driver,"//label[@class='amo-text rect-label']","xpath");
 		System.out.println("After Checking amo checkbox present....");
 		if(flag) {
@@ -141,7 +162,21 @@ public class OrderDetail extends SeleniumCoder {
 				clickElement(amoCheckBox);
 			}
 		}
+		}catch(TimeoutException e) {
+			System.out.println("AMO CheckBox does not present");
 		}
+		}
+		
+	}
+	
+	public void afterRefreshPage(WebDriver driver) throws InterruptedException {
+		/*buyAndSellButton=fluentWaitCodeXpath(driver, "//*[@id=\"QuickSB\"]",60);
+		clickElement(buyAndSellButton);
+		placeOrderLink=fluentWaitCodeXpath(driver, "//*[@id=\"headerCntr\"]/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
+		clickElement(placeOrderLink);*/
+		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
+		orderStatusLink=fluentWaitCodeXpath(driver, "//a[text()='Order Status' and @class='toc-tab-link']");
+		clickElement(orderStatusLink);
 	}
 
 	public void printElement(WebDriver driver) throws InterruptedException {

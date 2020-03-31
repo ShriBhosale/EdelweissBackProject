@@ -77,10 +77,16 @@ public class LoginPage extends SeleniumCoder{
 		continueButton=fluentWaitCodeXpath(driver,"//button[text()='Continue']");
 		clickElement(continueButton);
 		 //Thread.sleep(15000); 
+		//selectRadioButton(continueButton, "continue popup Button");
 		if(noLoginProccess==false) {
 		notNowButton=fluentWaitCodeXpath(driver,"//a[text()='Not now']");
 		clickElement(notNowButton);
+		
 			// Thread.sleep(5000); 
+		if(scenario.equalsIgnoreCase("Partial Order")) {
+			/*WebElement popUpButton=fluentWaitCodeXpath(driver, "//button[text()='Not Now']");
+			clickElement(popUpButton);*/
+		}
 		popupOkButton=driver.findElement(By.xpath("//button[text()='Ok']"));
 		clickElement(popupOkButton);
 		}else {

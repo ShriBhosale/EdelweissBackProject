@@ -9,7 +9,7 @@ import java.util.Properties;
 public class ConfigReader {
 	
 	 private Properties properties;
-	 private final String propertyFilePath= "E:\\EdelweissProject\\DigitalWebPlatformAutomation\\src\\main\\java\\com\\shreeya\\cofing.properties";
+	 private final String propertyFilePath= System.getProperty("user.dir")+"\\src\\main\\java\\com\\shreeya\\cofing.properties";
 	
 	public  ConfigReader(){
 		 BufferedReader reader;

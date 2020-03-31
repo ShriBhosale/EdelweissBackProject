@@ -45,6 +45,10 @@ public class HelperCode {
 		}
 		return nestIdArray[0];
 	}
+	
+	public String removeExtraString(String str,String extraString) {
+		return str.replace(extraString, "");
+	}
 
 	public String timeStampGenerator() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -67,7 +71,7 @@ public class HelperCode {
 				}
 			}else if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
 				
-			if (orderDetail[2].equalsIgnoreCase("modified")&&(orderDetail[12].equalsIgnoreCase(model.getQtyMod()))) {
+			if (orderDetail[2].equalsIgnoreCase("modified")&&(orderDetail[12].equalsIgnoreCase(model.getpartialQty()))) {
 				resultString[1]= "PASS";
 			}
 			}
@@ -75,6 +79,11 @@ public class HelperCode {
 		} 
 		}else if (orderDetail[1].equalsIgnoreCase("Cxl")) {
 			if (orderDetail[2].equalsIgnoreCase("cancelled")) {
+				resultString[0] = "PASS";
+			}
+		}else if(orderDetail[1].equalsIgnoreCase("Partial Order")) {
+			if(orderDetail[2].equalsIgnoreCase("complete")||orderDetail[2].equalsIgnoreCase("open"));
+			{
 				resultString[0] = "PASS";
 			}
 		}
@@ -100,7 +109,7 @@ public class HelperCode {
 			
 				reportFlag=true;
 			
-		} else if (action.equalsIgnoreCase("New")){
+		} else if (action.equalsIgnoreCase("New")||action.equalsIgnoreCase("Partial Order")){
 			reportFlag=true;
 		}
 		if(reportFlag) {

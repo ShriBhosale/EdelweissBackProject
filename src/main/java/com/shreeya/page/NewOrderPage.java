@@ -34,6 +34,7 @@ public class NewOrderPage extends SeleniumCoder {
 	private boolean flag;
 	
 	private WebElement placeOrderButon;
+	private WebElement productTypeRadioButton;
 	
 	
 
@@ -68,16 +69,18 @@ public class NewOrderPage extends SeleniumCoder {
 			clickElement(buyButton);
 		}
 		/*Thread.sleep(4000);*/
+		
+		Thread.sleep(2000);
+		productType(driver, model.getProductType());
 		noOfSharesTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
+		if(model.getScenario().equalsIgnoreCase("Partial Order")) 
+			clearAndSendKey(noOfSharesTextField,model.getpartialQty());
+		else
 		clearAndSendKey(noOfSharesTextField,model.getQty());
 		/*Thread.sleep(2000);*/
 		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
 		sendKey(enterPriceTextField, model.getOrderPrice());
-		/*Thread.sleep(1000);*/
-		if(model.getProductType().equalsIgnoreCase("CNC")) {
-		cnsRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
-		clickElement(cnsRadioButton);
-		}
+		
 		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
 		clickElement(OptionalFieldsLabel);
 		/*Thread.sleep(1000);*/
@@ -98,5 +101,18 @@ public class NewOrderPage extends SeleniumCoder {
 		return mapObject;
 	}
 
+	public void productType(WebDriver driver,String productTypeStr) {
+		System.out.println("This is product type ====> "+productTypeStr);
+		if(productTypeStr.equalsIgnoreCase("CNC")) {
+			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
+			selectRadioButton(cnsRadioButton, "CNS Product type");
+		}else if(productTypeStr.equalsIgnoreCase("MTF")) {
+			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Margin Trading MTF']");
+			selectRadioButton(productTypeRadioButton, "MTF Product type");
+		}else if(productTypeStr.endsWith("NRML")) {
+			productTypeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Delivery Plus -  NRML']");
+			selectRadioButton(productTypeRadioButton, "NRML Product type");
+		}
+	}
 	
 }

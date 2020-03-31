@@ -52,7 +52,7 @@ public class ModOrderPage extends SeleniumCoder {
 		//Thread.sleep(5000);
 		if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
 		noOfSharesTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
-		clearAndSendKey(noOfSharesTextField, model.getQtyMod());
+		clearAndSendKey(noOfSharesTextField, model.getpartialQty());
 		}
 		//Thread.sleep(3000);
 		if(model.getScenario().equalsIgnoreCase("Modification Price")) {
@@ -63,7 +63,7 @@ public class ModOrderPage extends SeleniumCoder {
 		if (model.getProductType().equalsIgnoreCase("CNC")) {
 
 			cnsRadioButton =fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
-			if (cnsRadioButton.isDisplayed() == false)
+			if (cnsRadioButton.isSelected() == true)
 				clickElement(cnsRadioButton);
 		}
 

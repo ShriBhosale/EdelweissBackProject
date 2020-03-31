@@ -9,12 +9,16 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -32,12 +36,15 @@ public class SeleniumCoder {
 	}
 	
 	public WebDriver browserLaunch(String scenario) {
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--incognito");
-		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-		System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
+		
+		
+		
 		if(!scenario.equalsIgnoreCase("Partial Order")) {
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--incognito");
+			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+			System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
 		 driver=new ChromeDriver(capabilities);
 		}else {
 			driver=new ChromeDriver();
@@ -59,12 +66,16 @@ public class SeleniumCoder {
 	}
 	
 	public void clickElement(WebElement element) throws InterruptedException {
-		
+		try {
 		if(element.isEnabled()==true) {
 			element.click();
 			System.out.println("Click "+element);
 		}else {
 			System.out.println("no present");
+		}
+		}catch(ElementNotInteractableException e) {
+			System.out.println("Convert driver into javascript than click on element.... ");
+			convertInJavaScriptAndClick(element);
 		}
 		
 		
@@ -158,7 +169,7 @@ public class SeleniumCoder {
 		WebElement element = null;
 		try {
 			if(attributeForXpath.equalsIgnoreCase("xpath"))
-				element=fluentWaitCodeXpath(driver,xpathString);
+				element=fluentWaitCodeXpath(driver,xpathString,10);
 		if(element.isDisplayed())
 			displayFlag=true;
 		}catch(NoSuchElementException e) {
@@ -172,7 +183,7 @@ public class SeleniumCoder {
 		// Waiting 30 seconds for an element to be present on the page, checking
 		   // for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-			       .withTimeout(30, TimeUnit.SECONDS)
+			       .withTimeout(40, TimeUnit.SECONDS)
 			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 
@@ -197,8 +208,8 @@ public class SeleniumCoder {
 		// Waiting 30 seconds for an element to be present on the page, checking
 		   // for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-			       .withTimeout(30, TimeUnit.SECONDS)
-			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .withTimeout(50, TimeUnit.SECONDS)
+			       .pollingEvery(5, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 
 			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
@@ -218,9 +229,51 @@ public class SeleniumCoder {
 		   
 	}
 	
-	
+	public  WebElement fluentWaitCodeXpath(WebDriver driver,final String xpathString,int maxWaitTime) {
+		// Waiting 30 seconds for an element to be present on the page, checking
+		   // for its presence once every 5 seconds.
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+			       .withTimeout(maxWaitTime, TimeUnit.SECONDS)
+			       .pollingEvery(5, TimeUnit.SECONDS)
+			       .ignoring(NoSuchElementException.class);
+
+			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+			     public WebElement apply(WebDriver driver) {
+			       //WebElement searchTextField =driver.findElement(By.name("q"));
+			    	 WebElement element =driver.findElement(By.xpath(xpathString));
+			       if(element.isEnabled()) {
+			    	   System.out.println("Element Found");
+			    	   
+			       }
+			       return element;
+			     }
+			     
+			   });
 			   
+			   return element;
+		   
+	}
+	
+	public void selectRadioButton(WebElement element,String nameElement) {
+		if(element.isDisplayed()) {
+			element.click();
+		}else {
+			System.out.println(nameElement+" is already selected");
+		}
+	}
+	
+	
+	public void convertInJavaScriptAndClick(WebElement element) {
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", element);
+	}
 			   
 			  
-	
+	public void hoverAndClickOption(WebDriver driver,String parentElementStr,String childElementStr) {
+		WebElement parentElement=fluentWaitCodeXpath(driver,parentElementStr);
+		Actions action = new Actions(driver);
+		action.moveToElement(parentElement).click().perform();
+		WebElement childElement=fluentWaitCodeXpath(driver,childElementStr);
+		childElement.click();
+	}
 }
