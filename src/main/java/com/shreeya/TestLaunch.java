@@ -1,6 +1,7 @@
 package com.shreeya;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.openqa.selenium.WebDriver;
@@ -18,18 +19,25 @@ import com.shreeya.page.NewOrderPage;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
+import com.shreeya.page.PartialOrderPage;
+
 
 public class TestLaunch {
 
 	static WebDriver driver;
 	static Iterator<TestDataModel> csvTestDataModelIterator;
-	static TestDataModel model;
+	static TestDataModel model,testModel;
 	CsvReaderCode coder;
 	LoginPage login;
 	ExtendReporter reporter;
 	String [] orderDetailArray;
 	CSVWriter writer;
+	private String newOrderStatus;
+	NewOrderPage newOrder;
+	ModOrderPage modOrder;
+	CxlOrderPage cxlOrder;
 
 	
 	public  TestLaunch() throws IOException {
@@ -37,37 +45,57 @@ public class TestLaunch {
 		writer=coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
 		login = new LoginPage();
-		//reporter=new ExtendReporter();
+		newOrder=new NewOrderPage();
+		 modOrder = new ModOrderPage();
+		 cxlOrder = new CxlOrderPage();
 	}
 	
 	
 	public void Execution() throws InterruptedException, IOException {
-		ApacheCode excelWriter=new ApacheCode();
-		driver = login.loginExecution(writer);
-		
+		//ApacheCode excelWriter=new ApacheCode();
+		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
+		HashMap<WebDriver,String> newMapObject=new HashMap<WebDriver,String>();
+		PartialOrderPage partialOrderOb=new PartialOrderPage();
+		driver = login.loginExecution("no scenario");
+		login.headerInExcel(writer);
+		HelperCode helperObject=new HelperCode();
+		String timeStamp=helperObject.timeStampGenerator();
+		reporter=new ExtendReporter(timeStamp,"dfsf");
 		int orderNo=0;
 		while (csvTestDataModelIterator.hasNext()) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
-			//reporter.testCreation("Order Place "+orderNo);
+			if(model.getScenario().equalsIgnoreCase("Partial Order")) {
+				partialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
+				partialOrderOb.orderDetail(driver, model,orderNo);
+				model = csvTestDataModelIterator.next();
+				orderNo++;
+			}
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
-				NewOrderPage newOrder = new NewOrderPage();
-				driver=newOrder.newOrderExecution(model,driver,orderNo,excelWriter);
+				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
-				System.out.println("Action :: "+model.getAction());
-				ModOrderPage modOrder = new ModOrderPage();
-				driver=modOrder.modExecution(model,driver,orderNo,excelWriter);
+				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
+				 System.out.println("Action :: "+model.getAction());
+				mapObject=modOrder.modExecution(model,driver,orderNo,newOrderStatus);
+				
+				
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
+				String modOrderStatus = helperObject.statusRemoveBracket(mapObject.values());
+				if(modOrderStatus.equalsIgnoreCase("complete")) 
+					newOrderStatus=modOrderStatus;
+				else
+				newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				System.out.println("Action :: "+model.getAction());
-				CxlOrderPage cxlOrder = new CxlOrderPage();
-				cxlOrder.cxlExecution(driver,orderNo,excelWriter);
+				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus,model);
 			}
+			
+			
 		}
 		login.logout(driver);
-		
+		driver.close();
 		coder.closeWriteFile(writer);
-		excelWriter.closeExcelWriting();
+		//excelWriter.closeExcelWriting();
 		//reporter.logFlush();
 	}
 
