@@ -1,0 +1,16 @@
+FATAL	2020-03-25 15:46:41,257	0	java.lang.Class	[main]	This statement is fatal
+ERROR	2020-03-25 15:46:41,259	2	java.lang.Class	[main]	This statement is error
+FATAL	2020-03-25 15:47:14,160	0	java.lang.Class	[main]	This statement is fatal
+ERROR	2020-03-25 15:47:14,162	2	java.lang.Class	[main]	This statement is error
+FATAL	2020-03-25 15:47:43,366	0	java.lang.Class	[main]	This statement is fatal
+ERROR	2020-03-25 15:47:43,367	1	java.lang.Class	[main]	This statement is error
+INFO	2020-03-25 15:48:18,759	0	java.lang.Class	[main]	This statement is info
+FATAL	2020-03-25 15:48:18,760	1	java.lang.Class	[main]	This statement is fatal
+WARN	2020-03-25 15:48:18,761	2	java.lang.Class	[main]	This statement is warn
+ERROR	2020-03-25 15:48:18,761	2	java.lang.Class	[main]	This statement is error
+INFO	2020-03-25 15:48:18,767	8	java.lang.Class	[main]	This statement is info 2
+This statement is info
+This statement is fatal
+This statement is warn
+This statement is error
+This statement is info 2
