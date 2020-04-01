@@ -22,7 +22,7 @@ public class HelperCode {
 	int noRowInTestData=0;
 	private String [] folderPathArray= {"ReportFolder path","htmlFolder path","screenshort path"};
 	String[] orderDetailArray= { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
-		"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Rejection Reason",
+		"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
 		"ScriptResult", "Report link", "Screenshot link" };
 	private boolean reportFlag=false;
 	static private int noRowInTestData1;
@@ -59,14 +59,16 @@ public class HelperCode {
 	public String[] passFailResult(String[] orderDetail,TestDataModel model) {
 		
 		if (orderDetail[1].equalsIgnoreCase("New")) {
-			if (orderDetail[2].equalsIgnoreCase("Open")) {
+			if (orderDetail[2].equalsIgnoreCase("Open")||orderDetail[2].equalsIgnoreCase("Complete")) {
 				resultString[0] = "PASS";
 			}
 		} else if (orderDetail[1].equalsIgnoreCase("Mod")) {
 			if (orderDetail[2].equalsIgnoreCase("modified")||orderDetail[2].equalsIgnoreCase("Modify After Market Order Req Received")){
 				resultString[0] = "PASS";
 			if(model.getScenario().equalsIgnoreCase("Modification Price")) {
-				if(removeDecimal(orderDetailArray[6]).equalsIgnoreCase(model.getOrderPriceMod())) {
+				if(orderDetailArray[6].equalsIgnoreCase(model.getOrderPriceMod())) {
+					resultString[1] = "PASS";
+				}else if(removeDecimal(model.getScenario()).equalsIgnoreCase(model.getOrderPriceMod())) {
 					resultString[1] = "PASS";
 				}
 			}else if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
@@ -85,6 +87,9 @@ public class HelperCode {
 			if(orderDetail[2].equalsIgnoreCase("complete")||orderDetail[2].equalsIgnoreCase("open"));
 			{
 				resultString[0] = "PASS";
+				if(orderDetail[13].equalsIgnoreCase(model.getpartialQty())&&orderDetail[12].equalsIgnoreCase(model.getQty())) {
+				resultString[1] = "PASS";
+				}
 			}
 		}
 		return resultString;
@@ -102,14 +107,16 @@ public class HelperCode {
 			throws InterruptedException, IOException {
 		FolderStructure folderStructureObject=new FolderStructure();
 		folderPathArray=folderStructureObject.reportFolderCreator(orderNo);
-		System.out.println("New order status ====> "+newOrderStatus);
+		System.out.println("New order status =====> "+newOrderStatus);
 		report = new ExtendReporter(folderPathArray[1],model.getScenario());
 		report.testCreation("Order Detail " + orderNo);
+		
 		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")))){
 			
 				reportFlag=true;
 			
 		} else if (action.equalsIgnoreCase("New")||action.equalsIgnoreCase("Partial Order")){
+			
 			reportFlag=true;
 		}
 		if(reportFlag) {
@@ -127,20 +134,25 @@ public class HelperCode {
 		
 		orderDetailArray[0] = String.valueOf(orderNo);
 		orderDetailArray[1] = action;
-		
+		if(action.equalsIgnoreCase("Partial Order")) {
+			noRowInTestData1++;
+			model.setAction(action);
+		}
 		resultString = passFailResult(orderDetailArray,model);
 		report.reportGenerator(orderDetailArray,resultString,model);
-		if(action.equalsIgnoreCase("Mod")) {
+		if(action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Partial Order")) {
 			if(resultString[0].equalsIgnoreCase("PASS")&&resultString[1].equalsIgnoreCase("PASS")){
-				orderDetailArray[14] = "PASS";
+				orderDetailArray[15] = "PASS";
+			}else {
+				orderDetailArray[15] = "FAIL";
 			}
 		}else {
-			orderDetailArray[14] = resultString[0];
+			orderDetailArray[15] = resultString[0];
 		}
 		
 		pathArray = screenShotAndReportPath(driver, report,folderPathArray[2]);
-		orderDetailArray[15] = pathArray[0];
-		orderDetailArray[16] = pathArray[1];
+		orderDetailArray[16] = pathArray[0];
+		orderDetailArray[17] = pathArray[1];
 		excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			System.out.println(orderDetail);
@@ -155,6 +167,7 @@ public class HelperCode {
 		System.out.println("<<=================================== After if else =======================================>>");
 		for(String orderDetail:orderDetailArray)
 			System.out.println(orderDetail);
+		
 		System.out.println("Order no =====>  "+orderNo+"\noRowInTestData =======> "+noRowInTestData1);
 		if(noRowInTestData1==orderNo) {
 		excelWriter.closeExcelWriting();
@@ -179,6 +192,9 @@ public class HelperCode {
 
 	public String removeDecimal(String number) {
 		String [] no=number.split("\\.");
+		if(!no[1].equalsIgnoreCase("00")) {
+			no[0]=number;
+		}
 		System.out.println(no[0]);
 		return no[0];
 	}

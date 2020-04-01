@@ -99,6 +99,16 @@ public class ExtendReporter {
 			}else {
 				test.log(Status.FAIL, "Order Qty :: "+orderDetailArray[12]);
 			}
+		}else if(model.getAction().equalsIgnoreCase("Partial Order")) {
+			test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
+			
+			if(passArray[1].equalsIgnoreCase("PASS")) {
+				test.log(Status.PASS, "Partial Qty :: "+orderDetailArray[13]);
+				test.log(Status.PASS, "Order Qty :: "+orderDetailArray[12]);
+			}else {
+				test.log(Status.FAIL, "Partial Qty :: "+orderDetailArray[13]);
+				test.log(Status.FAIL, "Order Qty :: "+orderDetailArray[12]);
+			}
 		}else {
 			test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
 			test.log(Status.INFO, "Order Qty :: "+orderDetailArray[12]);
@@ -108,7 +118,7 @@ public class ExtendReporter {
 		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);
 		test.log(Status.INFO, "Validity :: "+orderDetailArray[10]);
 		test.log(Status.INFO, "Exchange Order Numbe :: "+orderDetailArray[11]);
-		test.log(Status.INFO, "Rejection Reason : "+orderDetailArray[13]);
+		test.log(Status.INFO, "Rejection Reason : "+orderDetailArray[14]);
 		if(passArray[0].equalsIgnoreCase("PASS")) {
 			test.log(Status.PASS, "Status : "+orderDetailArray[2]);
 		}

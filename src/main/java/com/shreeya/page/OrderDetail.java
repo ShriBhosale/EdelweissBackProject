@@ -35,13 +35,16 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement placeOrderLink;
 	private WebElement orderStatusLink;
 	private String rowNestIdString;
+	private WebElement partialQtyLabel;
+	private List<WebElement> orderInfoList;
+	private List<WebElement> listForNestId;
 
 	public String[] orderDetailProvider(WebDriver driver, String action) throws InterruptedException {
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
 		String[] orderDetailList = { "no id", "no Action", "no Status", "no Order Action", "no Trading Symbol",
 				"no Product Type", "no Order Price", "no Order Type", "no User id", "no Exchange", "no Validity",
-				"no Nest Id","no qty", "Rejection Reason",
+				"no Nest Id","no qty","Partial Qty","Rejection Reason",
 				"ScriptResult", "Report link", "Screenshot link1"};
 		Thread.sleep(3000);
 		if(action.equalsIgnoreCase("Partial Order")) {
@@ -62,6 +65,7 @@ public class OrderDetail extends SeleniumCoder {
 		Thread.sleep(3000);
 		if(action.equalsIgnoreCase("Mod")) {
 			List<WebElement> statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
+			Thread.sleep(4000);
 			for(WebElement statusElement:statusList) {
 				System.out.println(fetchTextFromElement(statusElement));
 			}
@@ -70,6 +74,7 @@ public class OrderDetail extends SeleniumCoder {
 			}else {
 				orderDetailList[2]=fetchTextFromElement(statusList.get(0));
 			}
+			
 		}else {
 		try {
 			status=fluentWaitCodeXpath(driver, "//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[4]/div/span[1]");
@@ -94,9 +99,13 @@ public class OrderDetail extends SeleniumCoder {
 		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']");
 		orderDetailList[5] = fetchTextFromElement(productType);
 		orderPrice = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']");
-		//Thread.sleep(2000);
-		List<WebElement> orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
-		
+		Thread.sleep(2000);
+		try {
+		orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
+		}catch(StaleElementReferenceException e) {
+			Thread.sleep(3000);
+			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
+		}
 
 		orderDetailList[6] = fetchTextFromElement(orderPrice);
 		try {
@@ -115,13 +124,23 @@ public class OrderDetail extends SeleniumCoder {
 		if(orderDetailList[2].equalsIgnoreCase("Rejected")) {
 		/*if(rejectionFlag==true) {*/
 			//orderDetailList[11]=fetchTextFromElement(orderInfoList.get(7));
-			orderDetailList[13]=fetchTextFromElement(orderInfoList.get(6));
+			orderDetailList[14]=fetchTextFromElement(orderInfoList.get(6));
 		}
 		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")))) {
-		 qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span");
-		orderDetailList[12]=fetchTextFromElement(qtyLabel);
-		
-		List<WebElement> listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
+		try {
+			qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span");
+			orderDetailList[12]=fetchTextFromElement(qtyLabel);
+		}catch(TimeoutException e) {
+			qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
+			orderDetailList[12]=fetchTextFromElement(qtyLabel);
+		}
+		try {
+			Thread.sleep(2000);
+		listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
+		}catch(StaleElementReferenceException e) {
+			Thread.sleep(3000);
+			listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
+		}
 		WebElement abc = listForNestId.get(0);
 		text = abc.getAttribute("innerHTML");
 		orderDetailList[11] = helper.nestIdProvider(text);
@@ -131,18 +150,23 @@ public class OrderDetail extends SeleniumCoder {
 			System.out.println("Row Nestid string ===> "+rowNestIdString);
 			orderDetailList[11] = helper.removeExtraString(rowNestIdString,"|");
 			 if(action.equalsIgnoreCase("Partial Order")) {
-				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
+				 
+				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
+				 
 			 }else {
 				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
 			 }
+			
 			 orderDetailList[12]=fetchTextFromElement(qtyLabel);
+
 			if(!orderDetailList[2].equalsIgnoreCase("Rejected")) {
 			WebElement executedSharesLable=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
 			System.out.println("Executed Shares =====>  "+fetchTextFromElement(executedSharesLable));
 			}
 		}
 		
-
+		 partialQtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
+		 orderDetailList[13]=fetchTextFromElement(partialQtyLabel);
 		System.out.println("Nest id : "+orderDetailList[11]);
 		return orderDetailList;
 	}

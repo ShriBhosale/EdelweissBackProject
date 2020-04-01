@@ -38,6 +38,7 @@ public class TestLaunch {
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
+	int rejectInNew=0;
 
 	
 	public  TestLaunch() throws IOException {
@@ -70,10 +71,12 @@ public class TestLaunch {
 				partialOrderOb.orderDetail(driver, model,orderNo);
 				model = csvTestDataModelIterator.next();
 				orderNo++;
+				orderNo++;
 			}
 			if (model.getAction().equalsIgnoreCase("New")) {
 				System.out.println("Action :: "+model.getAction());
 				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
+			
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
 				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				 System.out.println("Action :: "+model.getAction());

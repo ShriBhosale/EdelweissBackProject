@@ -13,6 +13,7 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -36,18 +37,16 @@ public class SeleniumCoder {
 	}
 	
 	public WebDriver browserLaunch(String scenario) {
-		
-		
-		
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--incognito");
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+		System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
 		if(!scenario.equalsIgnoreCase("Partial Order")) {
-			ChromeOptions options = new ChromeOptions();
-			options.addArguments("--incognito");
-			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-			System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
+			
 		 driver=new ChromeDriver(capabilities);
 		}else {
-			driver=new ChromeDriver();
+			driver=new ChromeDriver(capabilities);
 		}
 		driver.manage().window().maximize();
 		driver.get("https://ewuat.edelbusiness.in");
@@ -60,6 +59,7 @@ public class SeleniumCoder {
 		/* Thread.sleep(2000); */
 		try {
 		element.sendKeys(msg);
+		System.out.println("element "+element+" msg : "+msg);
 		}catch(NullPointerException e) {
 			System.out.println(e);
 		}
@@ -91,6 +91,7 @@ public class SeleniumCoder {
 		try {
 		element.clear();
 		element.sendKeys(msg);
+		System.out.println("element "+element+" msg : "+msg);
 		}catch(NullPointerException e) {
 			System.out.println(e);
 		}
@@ -209,8 +210,8 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(50, TimeUnit.SECONDS)
-			       .pollingEvery(5, TimeUnit.SECONDS)
-			       .ignoring(NoSuchElementException.class);
+			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
 
 			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
 			     public WebElement apply(WebDriver driver) {
@@ -270,10 +271,14 @@ public class SeleniumCoder {
 			   
 			  
 	public void hoverAndClickOption(WebDriver driver,String parentElementStr,String childElementStr) {
+		WebElement childElement=null;
 		WebElement parentElement=fluentWaitCodeXpath(driver,parentElementStr);
 		Actions action = new Actions(driver);
 		action.moveToElement(parentElement).click().perform();
-		WebElement childElement=fluentWaitCodeXpath(driver,childElementStr);
+		 childElement=fluentWaitCodeXpath(driver,childElementStr);
+		
 		childElement.click();
 	}
+	
+	
 }
