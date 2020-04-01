@@ -27,6 +27,8 @@ public class HelperCode {
 	private boolean reportFlag=false;
 	static private int noRowInTestData1;
 	static boolean amoFlag=false;
+	static int countNewOrderReject=0;
+	static int rowPrint=0;
 	public HelperCode() {
 
 	}
@@ -95,9 +97,9 @@ public class HelperCode {
 		return resultString;
 	}
 
-	public String[] screenShotAndReportPath(WebDriver driver, ExtendReporter report,String folderPathStr) throws IOException {
+	public String[] screenShotAndReportPath(WebDriver driver, ExtendReporter report,String folderPathStr,String scenario,int orderNo) throws IOException {
 		// report=new ExtendReporter();
-		String[] pathArray = { report.getReportPathString(), report.captureScreen(driver,folderPathStr) };
+		String[] pathArray = { report.getReportPathString(), report.captureScreen(driver,folderPathStr,scenario,orderNo) };
 		return pathArray;
 	}
 	
@@ -108,9 +110,9 @@ public class HelperCode {
 		FolderStructure folderStructureObject=new FolderStructure();
 		folderPathArray=folderStructureObject.reportFolderCreator(orderNo);
 		System.out.println("New order status =====> "+newOrderStatus);
-		report = new ExtendReporter(folderPathArray[1],model.getScenario());
+		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
 		report.testCreation("Order Detail " + orderNo);
-		
+		rowPrint++;
 		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")))){
 			
 				reportFlag=true;
@@ -149,25 +151,30 @@ public class HelperCode {
 		}else {
 			orderDetailArray[15] = resultString[0];
 		}
-		
-		pathArray = screenShotAndReportPath(driver, report,folderPathArray[2]);
-		orderDetailArray[16] = pathArray[0];
-		orderDetailArray[17] = pathArray[1];
-		excelWriter.excelWriter(orderDetailArray, orderNo);
-		for(String orderDetail:orderDetailArray)
-			System.out.println(orderDetail);
-		
-		}else {
+		}
+		else {
 		report.errroMsg();
 		orderDetailArray[2]="New order reject1";
 		//noRowInTestData=orderNo;
 		}
+		pathArray = screenShotAndReportPath(driver, report,folderPathArray[2],model.getScenario(),orderNo);
+		orderDetailArray[16] = pathArray[0];
+		orderDetailArray[17] = pathArray[1];
+		excelWriter.excelWriter(orderDetailArray, rowPrint);
+		for(String orderDetail:orderDetailArray)
+			System.out.println(orderDetail);
+		
 		//report.tearDown(resultString);
 		report.logFlush();
 		System.out.println("<<=================================== After if else =======================================>>");
 		for(String orderDetail:orderDetailArray)
 			System.out.println(orderDetail);
-		
+		if(orderDetailArray[2].equalsIgnoreCase("rejected")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
+			countNewOrderReject++;
+		}
+		if(countNewOrderReject==4) {
+			excelWriter.closeExcelWriting();
+		}
 		System.out.println("Order no =====>  "+orderNo+"\noRowInTestData =======> "+noRowInTestData1);
 		if(noRowInTestData1==orderNo) {
 		excelWriter.closeExcelWriting();

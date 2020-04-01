@@ -23,9 +23,9 @@ public class ExtendReporter {
 	HelperCode helperObject;
 	private String reportPathString;
 	
-	public  ExtendReporter(String folderPathString,String scenario) {
+	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
 		helperObject=new HelperCode();
-		reportPathString=folderPathString+"\\HtmlReport"+helperObject.timeStampGenerator()+".html";
+		reportPathString=folderPathString+"\\"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".html";
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		
@@ -63,11 +63,11 @@ public class ExtendReporter {
 		 
 	}*/
 	
-	public String captureScreen(WebDriver driver,String folderPathString) throws IOException {
+	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {
 		
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
-		String dest =folderPathString+"\\Screenshot"+helperObject.timeStampGenerator()+".png";
+		String dest =folderPathString+"\\"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".png";
 		File target = new File(dest);
 		FileUtils.copyFile(src, target);
 		return dest;

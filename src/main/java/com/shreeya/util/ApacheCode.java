@@ -82,13 +82,7 @@ public class ApacheCode {
 		}else {
 			cell.setCellValue(orderDetails[i]);
 		}
-		
-
-		
 		}
-		
-		
-
 	}
 	
 	public String pathStrProcces(String pathStr) {

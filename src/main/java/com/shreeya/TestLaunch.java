@@ -38,7 +38,7 @@ public class TestLaunch {
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
-	int rejectInNew=0;
+	int countOfrejectNew=0;
 
 	
 	public  TestLaunch() throws IOException {
@@ -61,27 +61,33 @@ public class TestLaunch {
 		login.headerInExcel(writer);
 		HelperCode helperObject=new HelperCode();
 		String timeStamp=helperObject.timeStampGenerator();
-		reporter=new ExtendReporter(timeStamp,"dfsf");
+		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
 		int orderNo=0;
 		while (csvTestDataModelIterator.hasNext()) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
-			if(model.getScenario().equalsIgnoreCase("Partial Order")) {
+			if(model.getScenario().equalsIgnoreCase("Partial Order")&&(!newOrderStatus.equalsIgnoreCase("rejected"))) {
 				partialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
 				partialOrderOb.orderDetail(driver, model,orderNo);
 				model = csvTestDataModelIterator.next();
 				orderNo++;
 				orderNo++;
 			}
-			if (model.getAction().equalsIgnoreCase("New")) {
+			if (model.getAction().equalsIgnoreCase("New")&&(!model.getScenario().equalsIgnoreCase("Partial Order"))) {
 				System.out.println("Action :: "+model.getAction());
 				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
-			
+				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
+				 if(newOrderStatus.equalsIgnoreCase("rejected")) {
+					 countOfrejectNew++;
+				 }
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
 				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				 System.out.println("Action :: "+model.getAction());
+				 if(!newOrderStatus.equalsIgnoreCase("rejected")) {
 				mapObject=modOrder.modExecution(model,driver,orderNo,newOrderStatus);
-				
+				 }else {
+					 continue;
+				 }
 				
 			} else if (model.getAction().equalsIgnoreCase("Cxl")) {
 				String modOrderStatus = helperObject.statusRemoveBracket(mapObject.values());
@@ -90,10 +96,15 @@ public class TestLaunch {
 				else
 				newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				System.out.println("Action :: "+model.getAction());
+				 if(!newOrderStatus.equalsIgnoreCase("rejected")) {
 				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus,model);
+				 }else {
+					 continue;
+				 }
 			}
 			
-			
+			if(countOfrejectNew==4)
+				break;
 		}
 		login.logout(driver);
 		driver.close();
