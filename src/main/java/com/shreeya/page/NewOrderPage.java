@@ -102,8 +102,8 @@ public class NewOrderPage extends SeleniumCoder {
 		/*Thread.sleep(3000);*/
 		
 		
-		String status=helperObject.outputProcessor(driver, "New", orderNo,"No status",model);
-		mapObject.put(driver, status);
+		/*String status=helperObject.outputProcessor(driver, "New", orderNo,"No status",model);*/
+		mapObject.put(driver, "dfs");
 		return mapObject;
 	}
 

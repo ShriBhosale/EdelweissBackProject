@@ -39,8 +39,8 @@ public class CxlOrderPage extends SeleniumCoder{
 		/*Thread.sleep(5000);*/
 		
 		}
-		String status=helperObject.outputProcessor(driver, "CXL", orderNo,newOrderStatus,model);
-		mapObject.put(driver, status);
+		/*String status=helperObject.outputProcessor(driver, "CXL", orderNo,newOrderStatus,model);*/
+		mapObject.put(driver, "dfsf");
 		return mapObject;
 	}
 

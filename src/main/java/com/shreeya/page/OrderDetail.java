@@ -52,12 +52,14 @@ public class OrderDetail extends SeleniumCoder {
 			afterRefreshPage(driver);
 		}
 		try {
-		detailsTab = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']");
+		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
+		System.out.println("Click on details button");
 		clickElement(detailsTab);
 		}catch(StaleElementReferenceException e) {
-			Thread.sleep(1000);
-			detailsTab = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::a[text()='Details']");
+			Thread.sleep(3000);
+			detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
 			clickElement(detailsTab);
+			System.out.println("Click on 2nd time details button");
 			Thread.sleep(2000);
 		}
 		ConfigReader configReader=new ConfigReader();
@@ -109,9 +111,10 @@ public class OrderDetail extends SeleniumCoder {
 
 		orderDetailList[6] = fetchTextFromElement(orderPrice);
 		try {
+			Thread.sleep(2000);
 		orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
 		}catch(IndexOutOfBoundsException e) {
-			clickElement(detailsTab);
+			//clickElement(detailsTab);
 			Thread.sleep(3000);
 			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 			orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));

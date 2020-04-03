@@ -34,7 +34,7 @@ public class TestLaunch {
 	ExtendReporter reporter;
 	String [] orderDetailArray;
 	CSVWriter writer;
-	private String newOrderStatus;
+	private String newOrderStatus="Open";
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
@@ -74,15 +74,15 @@ public class TestLaunch {
 				orderNo++;
 			}
 			if (model.getAction().equalsIgnoreCase("New")&&(!model.getScenario().equalsIgnoreCase("Partial Order"))) {
-				System.out.println("Action :: "+model.getAction());
+				System.out.println("TestLaunch::Action :: "+model.getAction());
 				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
-				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
+				// newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				 if(newOrderStatus.equalsIgnoreCase("rejected")) {
 					 countOfrejectNew++;
 				 }
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
-				 newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
-				 System.out.println("Action :: "+model.getAction());
+				// newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
+				 System.out.println("TestLaunch::Action :: "+model.getAction());
 				 if(!newOrderStatus.equalsIgnoreCase("rejected")) {
 				mapObject=modOrder.modExecution(model,driver,orderNo,newOrderStatus);
 				 }else {
@@ -94,8 +94,8 @@ public class TestLaunch {
 				if(modOrderStatus.equalsIgnoreCase("complete")) 
 					newOrderStatus=modOrderStatus;
 				else
-				newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
-				System.out.println("Action :: "+model.getAction());
+				//newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
+				System.out.println("TestLaunch::Action :: "+model.getAction());
 				 if(!newOrderStatus.equalsIgnoreCase("rejected")) {
 				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus,model);
 				 }else {
@@ -103,8 +103,17 @@ public class TestLaunch {
 				 }
 			}
 			
-			if(countOfrejectNew==4)
+			if(countOfrejectNew==4) {
+				
 				break;
+			}
+			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus);
+			
+			String status=helperObject.outputProcessor(driver, model.getAction(), orderNo, newOrderStatus, model);
+			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
+				newOrderStatus=status;
+			}
+			
 		}
 		login.logout(driver);
 		driver.close();
