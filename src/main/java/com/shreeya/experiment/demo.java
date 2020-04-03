@@ -1,4 +1,4 @@
-package com.shreeya;
+package com.shreeya.experiment;
 
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
