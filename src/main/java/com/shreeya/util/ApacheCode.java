@@ -19,6 +19,7 @@ public class ApacheCode {
 	XSSFWorkbook workbook;
 	FileOutputStream out;
 	XSSFSheet sheet;
+
 	HelperCode helper=new HelperCode();
 	
 
@@ -29,6 +30,7 @@ public class ApacheCode {
 		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
 				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
+
 		Row row = sheet.createRow(0);
 		for (int i = 0; i < headerArray.length; i++) {
 
@@ -36,8 +38,9 @@ public class ApacheCode {
 			cell.setCellValue(headerArray[i]);
 		}
 	}
-	
+
 	public ApacheCode() {}
+
 
 	public void excelFileCreator() throws FileNotFoundException {
 		workbook = new XSSFWorkbook();
@@ -61,6 +64,7 @@ public class ApacheCode {
 	public void ExcelWriter() {
 
 	}
+
 
 	public void excelWriter(String[] orderDetails,int rowNo) {
 		String hyperLinkName="hyperLinkName not found";
@@ -89,6 +93,7 @@ public class ApacheCode {
 		String pathString=pathStr.replace("\\", "//");
 		System.out.println(pathString);
 		return pathString;
+
 	}
 
 	public static void main(String[] args) {

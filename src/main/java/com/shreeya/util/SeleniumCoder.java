@@ -3,8 +3,10 @@ package com.shreeya.util;
 import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -151,19 +153,7 @@ public class SeleniumCoder {
 		return  element.getAttribute("innerHTML");
 	}
 	
-	/*public WebElement xpathCreator(String atttributeName,String attributeValue,WebDriver driver) throws IOException {
-		WebElement element=null;
-		ExtendReporter reporter=new ExtendReporter();
-		try {
-		if(atttributeName.equalsIgnoreCase("xpath"))
-			element=driver.findElement(By.xpath(attributeValue));
-		else if(atttributeName.equalsIgnoreCase("id"))
-			element=driver.findElement(By.id(attributeValue));
-		}catch(NoSuchElementException e) {
-			reporter.captureScreen(driver);
-		}
-		return element;
-	}*/
+
 	
 	public boolean elementPresentOrNot(WebDriver driver,String xpathString,String attributeForXpath) {
 		boolean displayFlag=false;
@@ -280,5 +270,5 @@ public class SeleniumCoder {
 		childElement.click();
 	}
 	
-	
+
 }

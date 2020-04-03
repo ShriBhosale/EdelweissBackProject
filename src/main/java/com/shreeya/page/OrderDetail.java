@@ -29,6 +29,7 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement detailsTab;
 	private WebElement nestIdLable;
 	String text;
+
 	private WebElement QtyLabel;
 	private WebElement qtyLabel;
 	private WebElement buyAndSellButton;
@@ -54,6 +55,7 @@ public class OrderDetail extends SeleniumCoder {
 		try {
 		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
 		System.out.println("Click on details button");
+
 		clickElement(detailsTab);
 		}catch(StaleElementReferenceException e) {
 			Thread.sleep(3000);

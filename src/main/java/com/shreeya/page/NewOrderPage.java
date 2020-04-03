@@ -94,8 +94,8 @@ public class NewOrderPage extends SeleniumCoder {
 		orderDetail.amoCheckbox(amoFlag, driver);
 		placeOrderButton=fluentWaitCodeXpath(driver,"//input[@value ='Place Order']");
 		clickElement(placeOrderButton);
-		/*Thread.sleep(3000);*/
 		confirmButton=fluentWaitCodeXpath(driver,"//input[@value='Confirm']");
+
 		//confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton);
 		
