@@ -110,7 +110,7 @@ public class HelperCode {
 			throws InterruptedException, IOException {
 		System.out.println("******************Output Processor Started**********************************");
 		boolean reportFlag=false;
-		
+		if(!newOrderStatus.equalsIgnoreCase("Terminate")) {
 		System.out.println("Action ======>  "+action+"\nnewOrderStatus =====>  "+newOrderStatus);
 		FolderStructure folderStructureObject=new FolderStructure();
 		folderPathArray=folderStructureObject.reportFolderCreator(orderNo);
@@ -183,12 +183,18 @@ public class HelperCode {
 		if(orderDetailArray[2].equalsIgnoreCase("rejected")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 			countNewOrderReject++;
 		}
-		if(countNewOrderReject==4) {
+		if(countNewOrderReject==10) {
 			if(excelFileClose==false) {
 			excelWriter.closeExcelWriting();
 			excelFileClose=true;
 			}else {
 				System.out.println("Excel file close successfully..........................");
+			}
+		}
+		}else {
+			noRowInTestData1=0;
+			if(excelFileClose==false) {
+				excelWriter.closeExcelWriting();
 			}
 		}
 		System.out.println("Order no =====>  "+orderNo+"\nNoRowInTestData =======> "+noRowInTestData1);

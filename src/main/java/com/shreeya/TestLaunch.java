@@ -115,12 +115,13 @@ public class TestLaunch {
 			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 				newOrderStatus=status;
 			}
-			if(countOfrejectNew==4) {
+			if(countOfrejectNew==10) {
 				
 				break;
 			}
 		}
 		if(driver != null) {
+			helperObject.outputProcessor(driver, model.getAction(), orderNo, "Terminate", model);
 		login.logout(driver);
 		driver.close();
 		}else {
