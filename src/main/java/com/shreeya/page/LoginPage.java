@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -11,7 +12,11 @@ import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.FolderStructure;
 import com.shreeya.util.SeleniumCoder;
+
+import net.bytebuddy.description.modifier.SynchronizationState;
 
 public class LoginPage extends SeleniumCoder{
 	
@@ -33,7 +38,9 @@ public class LoginPage extends SeleniumCoder{
 	private WebElement logoutOption;
 	private WebElement logoutlink;
 	String userIdStr,passwordstr,yobstr;
+	private String loginErrorMsg="no error";
 	WebDriver driver1;
+	private String loginErrorStr;
 	
 	static Logger log = Logger.getLogger(LoginPage.class.getName());
 	public LoginPage() {
@@ -45,44 +52,39 @@ public class LoginPage extends SeleniumCoder{
 		
 		driver=browserLaunch(scenario);
 		userIdAndPwd(scenario);
-		//popupButton=driver.findElement(By.xpath("//button[text()='No thanks']"));
+		
 		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
 		clickElement(popupButton);
-		//loginButton=driver.findElement(By.xpath("//span[text()='Login']"));
+		
 		loginButton=fluentWaitCodeXpath(driver, "//span[text()='Login']");
 		clickElement(loginButton);
 		
-		//buyAndSellButton=driver.findElement(By.xpath("//a[text()='Buy/Sell']"));
+		
 		buyAndSellButton=fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']");
 		clickElement(buyAndSellButton);
-		 /*Thread.sleep(5000); */
-		//userIdTextField=driver.findElement(By.id("userID"));
+		
 		userIdTextField=fluentWaitCodeId(driver, "userID");
 		clearAndSendKey(userIdTextField,userIdStr);
-		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
+		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
-		// Thread.sleep(8000); 
-		//passwordTextField=driver.findElement(By.id("password"));
+		
 		passwordTextField=fluentWaitCodeId(driver, "password");
 		sendKey(passwordTextField, passwordstr);
-		//proceedButton=driver.findElement(By.xpath("//button[text()='Proceed']"));
+		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
-		 //Thread.sleep(7000); 
-		//yobTextField=driver.findElement(By.id("ans"));
+		if(logError(driver)) {
 		yobTextField=fluentWaitCodeId(driver, "ans");
 		sendKey(yobTextField, yobstr);
-		//continueButton=driver.findElement(By.xpath("//button[text()='Continue']"));
+		
 		continueButton=fluentWaitCodeXpath(driver,"//button[text()='Continue']");
 		clickElement(continueButton);
-		 //Thread.sleep(15000); 
-		//selectRadioButton(continueButton, "continue popup Button");
+		
 		if(noLoginProccess==false) {
 		notNowButton=fluentWaitCodeXpath(driver,"//a[text()='Not now']");
 		clickElement(notNowButton);
 		
-			// Thread.sleep(5000); 
 		if(scenario.equalsIgnoreCase("Partial Order")) {
 			/*WebElement popUpButton=fluentWaitCodeXpath(driver, "//button[text()='Not Now']");
 			clickElement(popUpButton);*/
@@ -92,23 +94,37 @@ public class LoginPage extends SeleniumCoder{
 		}else {
 			//closePopupButton=driver.findElement(By.xpath("//span[text()='×']"));
 		}
+		}else {
+			FolderStructure folderStructureObject=new FolderStructure();
+			String [] folderPathArray = folderStructureObject.reportFolderCreator(1);
+			ExtendReporter extend=new ExtendReporter(folderPathArray[1],"LoginError",0);
+			extend.addScreenshotMethod(driver, folderPathArray[2],"LoginError", 0);
+			extend.errroMsg("User Id : "+userIdStr);
+			extend.errroMsg("Password : "+passwordstr);
+			extend.errroMsg("Yob : "+yobstr);
+			extend.errroMsg(loginErrorStr);
+			extend.tearDown("Fail");
+			extend.logFlush();
+			driver.close();
+			System.out.println("Folder path ===> "+folderPathArray[0]);
+			driver=null;
+		}
 		//headerInExcel(writer);
 		return driver;
 	}
 	
 	public void logout(WebDriver driver) throws InterruptedException {
-		/*Thread.sleep(3000);*/
+		
 		closeButton=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[1]/a");
-		closeButton.click();
+		
+		clickElement(closeButton);
 		Thread.sleep(3000);
 		logoutOption=fluentWaitCodeXpath(driver,"//*[@id='caUser']/span[1]");
+		clickElement(logoutOption);
 		
-		logoutOption.click();
-		
-		
-		/*Thread.sleep(3000);*/
 		logoutlink=fluentWaitCodeXpath(driver,"//a[text()=' Logout']");
-		logoutlink.click();
+		clickElement(logoutlink);
+		//logoutlink.click();
 	}
 	
 	public void headerInExcel(CSVWriter writer) throws IOException {
@@ -144,4 +160,39 @@ public class LoginPage extends SeleniumCoder{
 			yobstr=yobArray[0];
 		}
 	}
+	
+	public boolean logError(WebDriver driver) {
+		boolean loginErrorFlag=false;
+		WebElement loginErrorMsg=null;
+		try {
+		 loginErrorMsg=fluentWaitCodeXpath(driver,"//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span",30);
+		 loginErrorStr=fetchTextFromElement(loginErrorMsg);
+		 if(loginErrorStr.contains(">")) {
+			 String [] logErrorArray=loginErrorStr.split("\\.");
+			 loginErrorStr=logErrorArray[0].trim();
+		 }
+		 System.out.println("Login Error ===> "+loginErrorStr);
+		 
+		}catch(TimeoutException e) {
+			loginErrorFlag=true;
+			
+		}
+		return loginErrorFlag;
+	}
+
+	
+
+	public String getLoginErrorMsg() {
+		return loginErrorMsg;
+	}
+
+
+	public void setLoginErrorMsg(String loginErrorMsg) {
+		this.loginErrorMsg = loginErrorMsg;
+	}
+
+
+	
+	
+	
 }

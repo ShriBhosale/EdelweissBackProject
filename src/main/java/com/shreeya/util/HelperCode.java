@@ -170,7 +170,7 @@ public class HelperCode {
 		report.logFlush();
 		}
 		else {
-		report.errroMsg();
+		report.errroMsg("New order reject");
 		orderDetailArray[2]="New order reject1";
 		
 		//noRowInTestData=orderNo;

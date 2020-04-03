@@ -58,10 +58,11 @@ public class ExtendReporter {
 		test = report.createTest(testName);
 	}
 	
-	/*public void addScreenshotMethod(WebDriver driver) throws IOException {
-		 test.addScreenCaptureFromPath(captureScreen(driver));
+	public void addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
+		testCreation("Login Error");
+		 test.addScreenCaptureFromPath(captureScreen(driver,folderPathString,scenario,orderNo));
 		 
-	}*/
+	}
 	
 	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {
 		
@@ -138,8 +139,9 @@ public class ExtendReporter {
 		
 	}
 
-	public void errroMsg() {
-		test.log(Status.INFO, "New order reject...");
+	
+	public void errroMsg(String msg) {
+		test.log(Status.INFO, msg);
 		
 	}
 	

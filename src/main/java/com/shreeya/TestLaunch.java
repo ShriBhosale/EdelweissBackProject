@@ -34,11 +34,12 @@ public class TestLaunch {
 	ExtendReporter reporter;
 	String [] orderDetailArray;
 	CSVWriter writer;
-	private String newOrderStatus="Open";
+	private String newOrderStatus="rejected";
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
 	int countOfrejectNew=0;
+	private boolean partialOrderReport;
 
 	
 	public  TestLaunch() throws IOException {
@@ -63,15 +64,19 @@ public class TestLaunch {
 		String timeStamp=helperObject.timeStampGenerator();
 		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
 		int orderNo=0;
-		while (csvTestDataModelIterator.hasNext()) {
+		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
-			if(model.getScenario().equalsIgnoreCase("Partial Order")&&(!newOrderStatus.equalsIgnoreCase("rejected"))) {
+			if(model.getScenario().equalsIgnoreCase("Partial Order")){
+					if(!newOrderStatus.equalsIgnoreCase("rejected")){
 				partialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
 				partialOrderOb.orderDetail(driver, model,orderNo);
 				model = csvTestDataModelIterator.next();
 				orderNo++;
 				orderNo++;
+			}else 
+				continue;
+			
 			}
 			if (model.getAction().equalsIgnoreCase("New")&&(!model.getScenario().equalsIgnoreCase("Partial Order"))) {
 				System.out.println("TestLaunch::Action :: "+model.getAction());
@@ -103,20 +108,25 @@ public class TestLaunch {
 				 }
 			}
 			
-			if(countOfrejectNew==4) {
-				
-				break;
-			}
+			
 			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus);
 			
 			String status=helperObject.outputProcessor(driver, model.getAction(), orderNo, newOrderStatus, model);
 			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 				newOrderStatus=status;
 			}
-			
+			if(countOfrejectNew==4) {
+				
+				break;
+			}
 		}
+		if(driver != null) {
 		login.logout(driver);
 		driver.close();
+		}else {
+			
+		}
+		
 		coder.closeWriteFile(writer);
 		//excelWriter.closeExcelWriting();
 		//reporter.logFlush();
