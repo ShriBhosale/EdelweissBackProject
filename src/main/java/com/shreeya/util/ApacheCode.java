@@ -20,13 +20,17 @@ public class ApacheCode {
 	FileOutputStream out;
 	XSSFSheet sheet;
 
-	public ApacheCode() throws FileNotFoundException {
+	HelperCode helper=new HelperCode();
+	
+
+	public ApacheCode(String folderPathString) throws FileNotFoundException {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
-		out = new FileOutputStream(new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\example1.xlsx"));
+		out = new FileOutputStream(new File(folderPathString+"\\ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
 		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
-				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id", "Rejection Reason",
-				"ScriptResult", "Report link", "Screenshot link" };
+				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
+				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
+
 		Row row = sheet.createRow(0);
 		for (int i = 0; i < headerArray.length; i++) {
 
@@ -34,6 +38,9 @@ public class ApacheCode {
 			cell.setCellValue(headerArray[i]);
 		}
 	}
+
+	public ApacheCode() {}
+
 
 	public void excelFileCreator() throws FileNotFoundException {
 		workbook = new XSSFWorkbook();
@@ -58,7 +65,34 @@ public class ApacheCode {
 
 	}
 
-	public void excelWriter(String[] orderDetails) {
+
+	public void excelWriter(String[] orderDetails,int rowNo) {
+		String hyperLinkName="hyperLinkName not found";
+		Row row = sheet.createRow(rowNo);
+		
+		for(int i=0;i<orderDetails.length;i++) {
+		Cell cell = row.createCell(i);
+
+		
+		if(i==16||i==17) {
+		 if(i==16)
+			 hyperLinkName="HtmlReport";
+		 else if(i==17)
+			 hyperLinkName="Screenshot";
+		 cell.setCellValue(hyperLinkName);
+		 Hyperlink href = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
+			href.setAddress("file:///"+pathStrProcces(orderDetails[i]));
+			cell.setHyperlink(href);
+		}else {
+			cell.setCellValue(orderDetails[i]);
+		}
+		}
+	}
+	
+	public String pathStrProcces(String pathStr) {
+		String pathString=pathStr.replace("\\", "//");
+		System.out.println(pathString);
+		return pathString;
 
 	}
 

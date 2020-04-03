@@ -8,6 +8,9 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.shreeya.model.TestDataModel;
 
+import freemarker.core.ReturnInstruction.Return;
+import net.bytebuddy.description.modifier.SynchronizationState;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class CsvReaderCode {
 
@@ -31,8 +35,7 @@ public class CsvReaderCode {
 	
 	public CSVWriter writerProvider()throws IOException {
 		helperObject = new HelperCode();
-		File file = new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\ExcelReport"
-				+ helperObject.timeStampGenerator() + ".csv");
+		File file = new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\ExcelReport"+ helperObject.timeStampGenerator() + ".csv");
 
 		FileWriter outputfile = new FileWriter(file, true);
 
@@ -40,10 +43,12 @@ public class CsvReaderCode {
 	}
 
 	public Iterator<TestDataModel> responseGenerator() {
-
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("TestData");
 		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
 		try {
-			reader = new CSVReader(new FileReader("E:\\EdelweissProject\\TestData\\LoginData.txt"), '\t');
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,8 +57,23 @@ public class CsvReaderCode {
 		CsvToBean<TestDataModel> csvToBean = new CsvToBeanBuilder(reader).withType(TestDataModel.class).build();
 
 		Iterator<TestDataModel> csvTestDataModelIterator = csvToBean.iterator();
-
+		
+		
 		return csvTestDataModelIterator;
+	}
+	
+	
+	public int noRowInTestData() {
+		System.out.println("****************************************Number no counting start***************************************************");
+		TestDataModel m1;
+		int i=0;
+		Iterator<TestDataModel> csvTestDataModelIterator=responseGenerator();
+		while (csvTestDataModelIterator.hasNext()) {
+			m1=csvTestDataModelIterator.next();
+			i++;
+		}
+		
+		return i;
 	}
 
 	public void WriteFile(String[] orderDetailArray,CSVWriter writer) {
@@ -69,7 +89,12 @@ public class CsvReaderCode {
 	public static void main(String[] args) throws IllegalStateException, InstantiationException, IllegalAccessException,
 			CsvRequiredFieldEmptyException, IOException {
 		CsvReaderCode coder = new CsvReaderCode();
+		System.out.println("No of rows = "+coder.noRowInTestData());
+	}
 
+	private static void While(boolean hasNext) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
