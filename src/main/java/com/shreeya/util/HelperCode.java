@@ -164,6 +164,7 @@ public class HelperCode {
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
 		excelWriter.excelWriter(orderDetailArray, rowPrint);
+		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			System.out.println(orderDetail);
 		
@@ -183,7 +184,7 @@ public class HelperCode {
 		if(orderDetailArray[2].equalsIgnoreCase("rejected")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 			countNewOrderReject++;
 		}
-		if(countNewOrderReject==10) {
+		if(countNewOrderReject==4) {
 			if(excelFileClose==false) {
 			excelWriter.closeExcelWriting();
 			excelFileClose=true;

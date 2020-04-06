@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -62,7 +63,30 @@ public class FluentWaitDemo {
 	        return (driver.findElements(elementsToWaitFor));
 	    }
 	
+	    protected List<WebElement> waitUntil1(final String xapthString,final WebDriver driver) 
+	    {
+	        
+	        FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(this.driver);
+	        fluentWait.withTimeout(50, TimeUnit.SECONDS);
+	        fluentWait.pollingEvery(1, TimeUnit.SECONDS);
+	        fluentWait.ignoring(NoSuchElementException.class);
+	        
 
+	        List<WebElement> list= fluentWait.until(new Function<WebDriver,List<WebElement>>()
+	                {
+	                    public List<WebElement> apply(WebDriver input) {
+	                        // TODO Auto-generated method stub
+	                        List<WebElement> list = driver.findElements(By.xpath(xapthString));
+
+	                        if(list.size() > 0)
+	                            throw new NoSuchElementException("List is not loaded");
+	                        else
+	                            return list;
+	                    }
+
+	                });
+	        return list;
+	    }
 	
 
 	public static void main(String[] args) throws InterruptedException {

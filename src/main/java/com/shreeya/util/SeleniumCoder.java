@@ -270,5 +270,29 @@ public class SeleniumCoder {
 		childElement.click();
 	}
 	
+	protected List<WebElement> FluentWaitForElementList(final String xapthString,final WebDriver driverI) 
+    {
+        final WebDriver driver=driverI;
+        FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver);
+        fluentWait.withTimeout(50, TimeUnit.SECONDS);
+        fluentWait.pollingEvery(1, TimeUnit.SECONDS);
+        fluentWait.ignoring(NoSuchElementException.class);
+        
+
+        List<WebElement> list= fluentWait.until(new Function<WebDriver,List<WebElement>>()
+                {
+                    public List<WebElement> apply(WebDriver input) {
+                        // TODO Auto-generated method stub
+                        List<WebElement> list = driver.findElements(By.xpath(xapthString));
+
+                        if(list.size() > 0)
+                            throw new NoSuchElementException("List is not loaded");
+                        else
+                            return list;
+                    }
+
+                });
+        return list;
+    }
 
 }

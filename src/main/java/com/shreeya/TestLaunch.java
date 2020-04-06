@@ -68,7 +68,7 @@ public class TestLaunch {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
-					if(!newOrderStatus.equalsIgnoreCase("rejected")){
+					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
 				partialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
 				partialOrderOb.orderDetail(driver, model,orderNo);
 				model = csvTestDataModelIterator.next();
@@ -115,7 +115,7 @@ public class TestLaunch {
 			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 				newOrderStatus=status;
 			}
-			if(countOfrejectNew==10) {
+			if(countOfrejectNew==4) {
 				
 				break;
 			}
@@ -132,8 +132,8 @@ public class TestLaunch {
 		//excelWriter.closeExcelWriting();
 		//reporter.logFlush();
 	}
-
-	public static void main(String[] args) throws InterruptedException, IOException {
+	@Test
+	public  void main(/*String[] args*/) throws InterruptedException, IOException {
 		TestLaunch testObject=new TestLaunch();
 		testObject.Execution();
 	}

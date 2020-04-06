@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="202424" started-at="2020-04-03T20:32:21 IST" finished-at="2020-04-03T20:35:43 IST">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="202424" started-at="2020-04-03T20:32:21 IST" finished-at="2020-04-03T20:35:43 IST">
+      <class name="com.shreeya.TestLaunch">
+        <test-method status="PASS" signature="main()[pri:0, instance:com.shreeya.TestLaunch@53aad5d5]" name="main" duration-ms="202268" started-at="2020-04-03T20:32:21 IST" finished-at="2020-04-03T20:35:43 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- main -->
+      </class> <!-- com.shreeya.TestLaunch -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

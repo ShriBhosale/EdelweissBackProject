@@ -105,6 +105,7 @@ public class OrderDetail extends SeleniumCoder {
 		orderPrice = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']");
 		Thread.sleep(2000);
 		try {
+			//orderInfoList=FluentWaitForElementList("//span[@class='value ng-binding']", driver);
 		orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 		}catch(StaleElementReferenceException e) {
 			Thread.sleep(3000);
