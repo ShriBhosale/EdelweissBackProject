@@ -15,9 +15,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ApacheCoder {
 
-	public void addHyperLink(String reportPath,String ScreenShortName,int rowNo,int colNo) throws InvalidFormatException, IOException {
+	public void addHyperLink(String reportPath,int rowNo,int colNo) throws InvalidFormatException, IOException {
 		HelperCode code=new HelperCode();
-		File file=new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\SampleFile.xlsx");
+		File file=new File("../ReportABC/ReportInExcel/SampleFile.xlsx");
 		XSSFWorkbook workBook=new XSSFWorkbook(file);
 		XSSFSheet sheet=workBook.getSheet("Sheet1");
 		Row row=sheet.getRow(rowNo);

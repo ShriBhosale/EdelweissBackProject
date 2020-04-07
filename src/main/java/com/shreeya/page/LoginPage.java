@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.opencsv.CSVWriter;
+import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
@@ -48,10 +49,10 @@ public class LoginPage extends SeleniumCoder{
 	}
 	
 	
-	public WebDriver loginExecution(String scenario) throws InterruptedException, IOException {
+	public WebDriver loginExecution(LoginModel loginModelObject) throws InterruptedException, IOException {
 		
-		driver=browserLaunch(scenario);
-		userIdAndPwd(scenario);
+		driver=browserLaunch(loginModelObject.getExecutionType());
+		//userIdAndPwd(scenario);
 		
 		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
 		clickElement(popupButton);
@@ -64,19 +65,19 @@ public class LoginPage extends SeleniumCoder{
 		clickElement(buyAndSellButton);
 		
 		userIdTextField=fluentWaitCodeId(driver, "userID");
-		clearAndSendKey(userIdTextField,userIdStr);
+		clearAndSendKey(userIdTextField,loginModelObject.getUserId());
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
 		
 		passwordTextField=fluentWaitCodeId(driver, "password");
-		sendKey(passwordTextField, passwordstr);
+		sendKey(passwordTextField, loginModelObject.getPassword());
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
 		if(logError(driver)) {
 		yobTextField=fluentWaitCodeId(driver, "ans");
-		sendKey(yobTextField, yobstr);
+		sendKey(yobTextField, loginModelObject.getYob());
 		
 		continueButton=fluentWaitCodeXpath(driver,"//button[text()='Continue']");
 		clickElement(continueButton);
@@ -85,10 +86,10 @@ public class LoginPage extends SeleniumCoder{
 		notNowButton=fluentWaitCodeXpath(driver,"//a[text()='Not now']");
 		clickElement(notNowButton);
 		
-		if(scenario.equalsIgnoreCase("Partial Order")) {
-			/*WebElement popUpButton=fluentWaitCodeXpath(driver, "//button[text()='Not Now']");
-			clickElement(popUpButton);*/
-		}
+		/*if(scenario.equalsIgnoreCase("Partial Order")) {
+			WebElement popUpButton=fluentWaitCodeXpath(driver, "//button[text()='Not Now']");
+			clickElement(popUpButton);
+		}*/
 		popupOkButton=driver.findElement(By.xpath("//button[text()='Ok']"));
 		clickElement(popupOkButton);
 		}else {

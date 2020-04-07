@@ -6,6 +6,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
 
 import freemarker.core.ReturnInstruction.Return;
@@ -95,6 +96,26 @@ public class CsvReaderCode {
 	private static void While(boolean hasNext) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public Iterator<LoginModel> LoginFileReader() {
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("LoginData");
+		CSVReader reader = null;
+		System.out.println("Login Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<LoginModel> csvToBean = new CsvToBeanBuilder(reader).withType(LoginModel.class).build();
+
+		Iterator<LoginModel> csvTestDataModelIterator = csvToBean.iterator();
+		
+		
+		return csvTestDataModelIterator;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.page.CxlOrderPage;
 import com.shreeya.page.LoginPage;
@@ -28,6 +29,7 @@ public class TestLaunch {
 
 	static WebDriver driver;
 	static Iterator<TestDataModel> csvTestDataModelIterator;
+	static Iterator<LoginModel>loginIterator;
 	static TestDataModel model,testModel;
 	CsvReaderCode coder;
 	LoginPage login;
@@ -46,6 +48,7 @@ public class TestLaunch {
 		coder = new CsvReaderCode();
 		writer=coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
+		loginIterator=coder.LoginFileReader();
 		login = new LoginPage();
 		newOrder=new NewOrderPage();
 		 modOrder = new ModOrderPage();
@@ -58,18 +61,25 @@ public class TestLaunch {
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		HashMap<WebDriver,String> newMapObject=new HashMap<WebDriver,String>();
 		PartialOrderPage partialOrderOb=new PartialOrderPage();
-		driver = login.loginExecution("no scenario");
-		login.headerInExcel(writer);
 		HelperCode helperObject=new HelperCode();
+		LoginModel loginModel=new LoginModel();
+		int orderNo=0;
+		while(loginIterator.hasNext()) {
+			loginModel=loginIterator.next();
+		driver = login.loginExecution(loginModel);
+		login.headerInExcel(writer);
+		
 		String timeStamp=helperObject.timeStampGenerator();
 		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
-		int orderNo=0;
+		
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
+			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
+			if(orderNo==startExecution) {
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
 					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
-				partialOrderOb.partialOrderExecution(model.getScenario(), model, orderNo);
+				partialOrderOb.partialOrderExecution(model, orderNo,loginModel);
 				partialOrderOb.orderDetail(driver, model,orderNo);
 				model = csvTestDataModelIterator.next();
 				orderNo++;
@@ -119,6 +129,11 @@ public class TestLaunch {
 				
 				break;
 			}
+			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
+			if(orderNo==endExecution)
+				break;
+		}
+		}
 		}
 		if(driver != null) {
 			helperObject.outputProcessor(driver, model.getAction(), orderNo, "Terminate", model);
@@ -132,9 +147,18 @@ public class TestLaunch {
 		//excelWriter.closeExcelWriting();
 		//reporter.logFlush();
 	}
-	@Test
-	public  void main(/*String[] args*/) throws InterruptedException, IOException {
+	
+	
+	public void loginData() throws IOException {
+		CsvReaderCode reader=new CsvReaderCode();
+		loginIterator=reader.LoginFileReader();
+		LoginModel model=loginIterator.next();
+	}
+	
+	public static  void main(String[] args) throws InterruptedException, IOException {
 		TestLaunch testObject=new TestLaunch();
 		testObject.Execution();
 	}
+	
+	
 }
