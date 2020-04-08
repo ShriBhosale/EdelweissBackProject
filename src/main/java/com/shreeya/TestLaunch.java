@@ -35,7 +35,7 @@ public class TestLaunch {
 	LoginPage login;
 	ExtendReporter reporter;
 	String [] orderDetailArray;
-	CSVWriter writer;
+	//CSVWriter writer;
 	private String newOrderStatus="rejected";
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
@@ -46,7 +46,7 @@ public class TestLaunch {
 	
 	public  TestLaunch() throws IOException {
 		coder = new CsvReaderCode();
-		writer=coder.writerProvider();
+		//writer=coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
 		loginIterator=coder.LoginFileReader();
 		login = new LoginPage();
@@ -67,7 +67,7 @@ public class TestLaunch {
 		while(loginIterator.hasNext()) {
 			loginModel=loginIterator.next();
 		driver = login.loginExecution(loginModel);
-		login.headerInExcel(writer);
+		//login.headerInExcel(writer);
 		
 		String timeStamp=helperObject.timeStampGenerator();
 		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
@@ -76,7 +76,8 @@ public class TestLaunch {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
 			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
-			if(orderNo==startExecution) {
+			if(orderNo>=startExecution) {
+				System.out.println("Order No ========================@> "+orderNo+"\nStartExecutionNo =======================@> "+startExecution);
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
 					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
 				partialOrderOb.partialOrderExecution(model, orderNo,loginModel);
@@ -89,7 +90,7 @@ public class TestLaunch {
 			
 			}
 			if (model.getAction().equalsIgnoreCase("New")&&(!model.getScenario().equalsIgnoreCase("Partial Order"))) {
-				System.out.println("TestLaunch::Action :: "+model.getAction());
+				System.out.println("TestLaunch::Action :: "+model.getAction()+"\n Scenario :: "+model.getScenario());
 				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
 				// newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				 if(newOrderStatus.equalsIgnoreCase("rejected")) {
@@ -130,9 +131,9 @@ public class TestLaunch {
 				break;
 			}
 			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
+			System.out.println("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo);
 			if(orderNo==endExecution)
 				break;
-		}
 		}
 		}
 		if(driver != null) {
@@ -143,9 +144,11 @@ public class TestLaunch {
 			
 		}
 		
-		coder.closeWriteFile(writer);
+		//coder.closeWriteFile(writer);
+		
 		//excelWriter.closeExcelWriting();
 		//reporter.logFlush();
+		}
 	}
 	
 	

@@ -108,16 +108,17 @@ public class HelperCode {
 
 	public String outputProcessor(WebDriver driver, String action, int orderNo,String newOrderStatus,TestDataModel model)
 			throws InterruptedException, IOException {
-		System.out.println("******************Output Processor Started**********************************");
+		System.out.println("********************Output Processor Started**********************************");
 		boolean reportFlag=false;
+		rowPrint++;
 		if(!newOrderStatus.equalsIgnoreCase("Terminate")) {
-		System.out.println("Action ======>  "+action+"\nnewOrderStatus =====>  "+newOrderStatus);
+		System.out.println("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus);
 		FolderStructure folderStructureObject=new FolderStructure();
-		folderPathArray=folderStructureObject.reportFolderCreator(orderNo);
+		folderPathArray=folderStructureObject.reportFolderCreator(rowPrint);
 		System.out.println("New order status =====> "+newOrderStatus);
 		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
 		report.testCreation("Order Detail " + orderNo);
-		rowPrint++;
+		
 		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")))){
 			
 				reportFlag=true;
@@ -130,9 +131,9 @@ public class HelperCode {
 			
 		}
 		if(reportFlag) {
-		System.out.println("Order1 no===========================================================> "+orderNo);
+		System.out.println("Order1 no===========================================================> "+orderNo+"\nExecution Count==========================================>"+rowPrint);
 		//System.out.println("noRowInTestData : "+noRowInTestData+"\n folderPathArray[0] : "+folderPathArray[0]);
-		if(orderNo==1) {
+		if(rowPrint==1) {
 			CsvReaderCode reader=new CsvReaderCode();
 			noRowInTestData1=reader.noRowInTestData();
 			

@@ -13,6 +13,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.shreeya.experiment.Report;
 import com.shreeya.model.TestDataModel;
 
 public class ExtendReporter {
@@ -25,7 +26,7 @@ public class ExtendReporter {
 	
 	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
 		helperObject=new HelperCode();
-		reportPathString=folderPathString+"\\"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".html";
+		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".html";
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		
@@ -35,6 +36,10 @@ public class ExtendReporter {
 		
 	}
 	
+	public ExtendReporter() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void tearDown(String output) {
 		if(output.equalsIgnoreCase("PASS")) {
 			test.log(Status.PASS,"Test Pass....");
@@ -59,7 +64,7 @@ public class ExtendReporter {
 	}
 	
 	public void addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
-		testCreation("Login Error");
+		//testCreation("Login Error");
 		 test.addScreenCaptureFromPath(captureScreen(driver,folderPathString,scenario,orderNo));
 		 
 	}
@@ -68,7 +73,7 @@ public class ExtendReporter {
 		
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
-		String dest =folderPathString+"\\"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".png";
+		String dest =folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".png";
 		File target = new File(dest);
 		FileUtils.copyFile(src, target);
 		return dest;
@@ -143,6 +148,19 @@ public class ExtendReporter {
 	public void errroMsg(String msg) {
 		test.log(Status.INFO, msg);
 		
+	}
+	
+	public void abnormalErrorHandling(WebDriver driver) throws IOException{
+		System.out.println("Abnormal Error Handly");
+		Report report=new  Report("Abnormal Termination");
+		report.testCreation("Abnormal Termination");
+		report.errroMsg("Abnormal Termination");
+		String screenshotPath=report.addScreenshotMethod(driver);
+		report.logFlush();
+		driver.close();
+		System.out.println("Driver close");
+		System.out.println("Screenshot path =======> "+screenshotPath);
+		System.exit(0);
 	}
 	
 

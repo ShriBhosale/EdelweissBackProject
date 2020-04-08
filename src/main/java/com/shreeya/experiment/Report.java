@@ -26,7 +26,7 @@ public class Report {
 	
 	public  Report(String scenario) {
 		helperObject=new HelperCode();
-		reportPathString="../ReportABC/"+"Abc"+".html";
+		reportPathString="../ReportABC/"+"FailReport_"+helperObject.timeStampGenerator()+".html";
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		
@@ -60,9 +60,9 @@ public class Report {
 	}
 	
 	public String addScreenshotMethod(WebDriver driver) throws IOException {
-		
-		 test.addScreenCaptureFromPath(captureScreen(driver));
-		 return captureScreen(driver);
+		String screenshotPath=captureScreen(driver);
+		 test.addScreenCaptureFromPath(screenshotPath);
+		 return screenshotPath;
 	}
 	
 	public String captureScreen(WebDriver driver) throws IOException {

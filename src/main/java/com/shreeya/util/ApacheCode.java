@@ -26,7 +26,7 @@ public class ApacheCode {
 	public ApacheCode(String folderPathString) throws FileNotFoundException {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
-		out = new FileOutputStream(new File(folderPathString+"\\ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
+		out = new FileOutputStream(new File(folderPathString+"/ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
 		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
 				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
@@ -84,7 +84,7 @@ public class ApacheCode {
 			 hyperLinkName="Screenshot";
 		 cell.setCellValue(hyperLinkName);
 		 Hyperlink href = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
-			//href.setAddress("file:///"+pathStrProcces(orderDetails[i]));
+			System.out.println("HyperLink Path ======> "+pathStrProcces(orderDetails[i]));
 		 href.setAddress(pathStrProcces(orderDetails[i]));
 			cell.setHyperlink(href);
 		}else {
@@ -95,6 +95,9 @@ public class ApacheCode {
 	
 	public String pathStrProcces(String pathStr) {
 		String pathString=pathStr.replace("\\", "//");
+		if(pathString.contains("//")) {
+			pathString=pathStr.replace("//", "/");
+		}
 		System.out.println(pathString);
 		return pathString;
 

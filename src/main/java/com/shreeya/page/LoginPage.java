@@ -75,14 +75,16 @@ public class LoginPage extends SeleniumCoder{
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton);
-		if(logError(driver)) {
+		if(logError("//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span",driver)) {
 		yobTextField=fluentWaitCodeId(driver, "ans");
 		sendKey(yobTextField, loginModelObject.getYob());
 		
 		continueButton=fluentWaitCodeXpath(driver,"//button[text()='Continue']");
 		clickElement(continueButton);
 		
-		if(noLoginProccess==false) {
+		
+		noLoginProccess=logError("//h3[text()='Updates on WhatsApp coming soon']", driver);
+		if(noLoginProccess==true) {
 		notNowButton=fluentWaitCodeXpath(driver,"//a[text()='Not now']");
 		clickElement(notNowButton);
 		
@@ -93,12 +95,14 @@ public class LoginPage extends SeleniumCoder{
 		popupOkButton=driver.findElement(By.xpath("//button[text()='Ok']"));
 		clickElement(popupOkButton);
 		}else {
-			//closePopupButton=driver.findElement(By.xpath("//span[text()='×']"));
+			notNowButton=fluentWaitCodeXpath(driver, "//button[text()='Not Now']");
+			clickElement(notNowButton);
 		}
 		}else {
 			FolderStructure folderStructureObject=new FolderStructure();
 			String [] folderPathArray = folderStructureObject.reportFolderCreator(1);
 			ExtendReporter extend=new ExtendReporter(folderPathArray[1],"LoginError",0);
+			extend.testCreation("Login error");
 			extend.addScreenshotMethod(driver, folderPathArray[2],"LoginError", 0);
 			extend.errroMsg("User Id : "+userIdStr);
 			extend.errroMsg("Password : "+passwordstr);
@@ -162,11 +166,11 @@ public class LoginPage extends SeleniumCoder{
 		}
 	}
 	
-	public boolean logError(WebDriver driver) {
+	public boolean logError(String xapthString,WebDriver driver) {
 		boolean loginErrorFlag=false;
 		WebElement loginErrorMsg=null;
 		try {
-		 loginErrorMsg=fluentWaitCodeXpath(driver,"//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span",30);
+		 loginErrorMsg=fluentWaitCodeXpath(driver,xapthString,30);
 		 loginErrorStr=fetchTextFromElement(loginErrorMsg);
 		 if(loginErrorStr.contains(">")) {
 			 String [] logErrorArray=loginErrorStr.split("\\.");

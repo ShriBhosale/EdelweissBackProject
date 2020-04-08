@@ -16,6 +16,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,7 +34,7 @@ public class SeleniumCoder {
 
 	static Logger log = Logger.getLogger(SeleniumCoder.class.getName());
 	WebDriver driver=null;
-	
+	ExtendReporter report=new ExtendReporter();
 	public SeleniumCoder() {
 		
 	}
@@ -52,6 +53,7 @@ public class SeleniumCoder {
 		}
 		driver.manage().window().maximize();
 		driver.get("https://ewuat.edelbusiness.in");
+		//driver.get("https://www.google.co.in/");
 		
 		log.info("Browser launch successfully.................");
 		return driver;
@@ -173,12 +175,13 @@ public class SeleniumCoder {
 	public  WebElement fluentWaitCodeId(WebDriver driver,final String idString) {
 		// Waiting 30 seconds for an element to be present on the page, checking
 		   // for its presence once every 5 seconds.
+		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(40, TimeUnit.SECONDS)
 			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
-
-			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+		try {
+			    element = wait.until(new Function<WebDriver, WebElement>() {
 			     public WebElement apply(WebDriver driver) {
 			       //WebElement searchTextField =driver.findElement(By.name("q"));
 			    	 WebElement element =driver.findElement(By.id(idString));
@@ -190,6 +193,16 @@ public class SeleniumCoder {
 			     }
 			     
 			   });
+		}catch(TimeoutException e) {
+			System.out.println(e);
+			
+			try {
+				report.abnormalErrorHandling(driver);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 			   
 			   return element;
 		   
@@ -198,12 +211,13 @@ public class SeleniumCoder {
 	public  WebElement fluentWaitCodeXpath(WebDriver driver,final String xpathString) {
 		// Waiting 30 seconds for an element to be present on the page, checking
 		   // for its presence once every 5 seconds.
+		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(50, TimeUnit.SECONDS)
 			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
-
-			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+		try {
+			element = wait.until(new Function<WebDriver, WebElement>() {
 			     public WebElement apply(WebDriver driver) {
 			       //WebElement searchTextField =driver.findElement(By.name("q"));
 			    	 WebElement element =driver.findElement(By.xpath(xpathString));
@@ -215,6 +229,16 @@ public class SeleniumCoder {
 			     }
 			     
 			   });
+		}catch(TimeoutException e) {
+			System.out.println(e);
+			ExtendReporter report=new ExtendReporter();
+			try {
+				report.abnormalErrorHandling(driver);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 			   
 			   return element;
 		   
@@ -295,4 +319,6 @@ public class SeleniumCoder {
         return list;
     }
 
+	
+	
 }

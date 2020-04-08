@@ -9,14 +9,15 @@ public class FolderStructure {
 	static String timeStamp;
 
 	public String[] reportFolderCreator(int orderNo) {
-		System.out.println("abc");
+		System.out.println("reportFolderCreator orderNo =====> "+orderNo);
 		HelperCode helperObject = new HelperCode();
 		if(orderNo==1) {
 		timeStamp = helperObject.timeStampGenerator();
 		}
 		String reportFolderPath = "../EdelweissReports/Report" + timeStamp;
-		String[] folderArray = { reportFolderPath, reportFolderPath + "/HtmlReports",
-				reportFolderPath + "/Screenshots" };
+		String subFolderPath= "../EdelweissReports";
+		String[] folderArray = { subFolderPath, subFolderPath + "/HtmlReports",
+				subFolderPath + "/Screenshots" };
 		for (int i = 0; i < 3; i++) {
 			File reportFolder = new File(folderArray[i]);
 			reportFolder.mkdir();
