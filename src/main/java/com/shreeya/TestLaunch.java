@@ -71,12 +71,19 @@ public class TestLaunch {
 		
 		String timeStamp=helperObject.timeStampGenerator();
 		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
-		
+		int rowNo=0;
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
 			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
+			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
+			System.out.println("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo);
+			if(orderNo>=endExecution)
+				break;
 			if(orderNo>=startExecution) {
+				if(orderNo==startExecution) {
+					 rowNo=0;
+				}
 				System.out.println("Order No ========================@> "+orderNo+"\nStartExecutionNo =======================@> "+startExecution);
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
 					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
@@ -122,7 +129,7 @@ public class TestLaunch {
 			
 			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus);
 			
-			String status=helperObject.outputProcessor(driver, model.getAction(), orderNo, newOrderStatus, model);
+			String status=helperObject.outputProcessor(driver, model.getAction(), orderNo, newOrderStatus, model,rowNo);
 			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 				newOrderStatus=status;
 			}
@@ -130,14 +137,12 @@ public class TestLaunch {
 				
 				break;
 			}
-			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
-			System.out.println("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo);
-			if(orderNo==endExecution)
-				break;
+			
+			
 		}
 		}
 		if(driver != null) {
-			helperObject.outputProcessor(driver, model.getAction(), orderNo, "Terminate", model);
+			helperObject.outputProcessor(driver, model.getAction(), orderNo, "Terminate", model,rowNo);
 		login.logout(driver);
 		driver.close();
 		}else {

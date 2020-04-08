@@ -27,7 +27,7 @@ public class ApacheCode {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
 		out = new FileOutputStream(new File(folderPathString+"/ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
-		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
+		/*String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
 				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 
@@ -35,8 +35,8 @@ public class ApacheCode {
 		for (int i = 0; i < headerArray.length; i++) {
 
 			Cell cell = row.createCell(i);
-			cell.setCellValue(headerArray[i]);
-		}
+			cell.setCellValue(headerArray[i]);*/
+	/*	}*/
 	}
 
 	public ApacheCode() {

@@ -14,10 +14,10 @@ public class FolderStructure {
 		if(orderNo==1) {
 		timeStamp = helperObject.timeStampGenerator();
 		}
-		String reportFolderPath = "../EdelweissReports/Report" + timeStamp;
-		String subFolderPath= "../EdelweissReports";
-		String[] folderArray = { subFolderPath, subFolderPath + "/HtmlReports",
-				subFolderPath + "/Screenshots" };
+		String reportFolderPath = "../Reporter/Report" + timeStamp;
+		String subFolderPath= "../Report" + timeStamp;
+		String[] folderArray = { reportFolderPath, reportFolderPath + "/HtmlReports",
+				reportFolderPath + "/Screenshots" };
 		for (int i = 0; i < 3; i++) {
 			File reportFolder = new File(folderArray[i]);
 			reportFolder.mkdir();

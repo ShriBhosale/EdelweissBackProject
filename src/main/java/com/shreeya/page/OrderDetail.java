@@ -118,7 +118,7 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
 		}catch(IndexOutOfBoundsException e) {
 			//clickElement(detailsTab);
-			Thread.sleep(3000);
+			Thread.sleep(7000);
 			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 			orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2));
 		}

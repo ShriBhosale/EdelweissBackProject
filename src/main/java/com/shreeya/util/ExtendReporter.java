@@ -63,10 +63,11 @@ public class ExtendReporter {
 		test = report.createTest(testName);
 	}
 	
-	public void addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
+	public String addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
 		//testCreation("Login Error");
-		 test.addScreenCaptureFromPath(captureScreen(driver,folderPathString,scenario,orderNo));
-		 
+		String screenshotPath=captureScreen(driver,folderPathString,scenario,orderNo);
+		 test.addScreenCaptureFromPath(screenshotPath);
+		 return screenshotPath;
 	}
 	
 	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {

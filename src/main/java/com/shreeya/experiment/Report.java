@@ -26,7 +26,7 @@ public class Report {
 	
 	public  Report(String scenario) {
 		helperObject=new HelperCode();
-		reportPathString="../ReportABC/"+"FailReport_"+helperObject.timeStampGenerator()+".html";
+		reportPathString="../EdelweissReports/ErrorReport/"+"FailReport_"+helperObject.timeStampGenerator()+".html";
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		

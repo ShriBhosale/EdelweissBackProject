@@ -27,7 +27,7 @@ public class PartialOrderPage extends SeleniumCoder {
 	public void orderDetail(WebDriver driver,TestDataModel model,int orderNo) throws InterruptedException, IOException {
 		HelperCode helperCodeObj=new HelperCode();
 		orderNo++;
-		helperCodeObj.outputProcessor(driver, "Partial Order", orderNo, "Open", model);
+		helperCodeObj.outputProcessor(driver, "Partial Order", orderNo, "Open", model,0);
 	}
 
 }
