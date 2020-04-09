@@ -41,6 +41,7 @@ public class TestLaunch {
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
 	int countOfrejectNew=0;
+	static int rowNo=0;
 	private boolean partialOrderReport;
 
 	
@@ -71,19 +72,21 @@ public class TestLaunch {
 		
 		String timeStamp=helperObject.timeStampGenerator();
 		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
-		int rowNo=0;
+		
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
 			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
 			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
 			System.out.println("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo);
-			if(orderNo>=endExecution)
+			if(orderNo>=endExecution+1)
 				break;
 			if(orderNo>=startExecution) {
 				if(orderNo==startExecution) {
 					 rowNo=0;
 				}
+				
+				rowNo++;
 				System.out.println("Order No ========================@> "+orderNo+"\nStartExecutionNo =======================@> "+startExecution);
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
 					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
@@ -127,7 +130,7 @@ public class TestLaunch {
 			}
 			
 			
-			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus);
+			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus+"\nRowNo==============> "+rowNo);
 			
 			String status=helperObject.outputProcessor(driver, model.getAction(), orderNo, newOrderStatus, model,rowNo);
 			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {

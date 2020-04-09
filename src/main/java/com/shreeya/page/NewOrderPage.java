@@ -80,7 +80,7 @@ public class NewOrderPage extends SeleniumCoder {
 		productType(driver, model.getProductType());
 		noOfSharesTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
 		if(model.getScenario().equalsIgnoreCase("Partial Order")) 
-			clearAndSendKey(noOfSharesTextField,model.getpartialQty());
+			clearAndSendKey(noOfSharesTextField,model.getQtyMod());
 		else
 		clearAndSendKey(noOfSharesTextField,model.getQty());
 		/*Thread.sleep(2000);*/
@@ -111,7 +111,7 @@ public class NewOrderPage extends SeleniumCoder {
 		System.out.println("This is product type ====> "+productTypeStr);
 		if(productTypeStr.equalsIgnoreCase("CNC")) {
 			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
-			selectRadioButton(cnsRadioButton, "CNS Product type");
+			selectRadioButton(productTypeRadioButton, "CNS Product type");
 		}else if(productTypeStr.equalsIgnoreCase("MTF")) {
 			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Margin Trading MTF']");
 			selectRadioButton(productTypeRadioButton, "MTF Product type");

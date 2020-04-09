@@ -153,10 +153,12 @@ public class ExtendReporter {
 	
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
 		System.out.println("Abnormal Error Handly");
-		Report report=new  Report("Abnormal Termination");
+		FolderStructure folderObject=new FolderStructure();
+		String [] folderArray=folderObject.reportFolderCreator(1);
+		ExtendReporter report=new  ExtendReporter(folderArray[1],"Abnormal Termination",1); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
-		String screenshotPath=report.addScreenshotMethod(driver);
+		String screenshotPath=report.addScreenshotMethod(driver,folderArray[1],"Abnormal Termination",1);
 		report.logFlush();
 		driver.close();
 		System.out.println("Driver close");

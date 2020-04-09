@@ -44,7 +44,7 @@ public class ModOrderPage extends SeleniumCoder {
 		try {
 		reinvestLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a");
 		}catch(NoSuchElementException e) {
-		
+
 		}
 		
 		modifyLink =fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a");
@@ -52,12 +52,12 @@ public class ModOrderPage extends SeleniumCoder {
 		//Thread.sleep(5000);
 		if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
 		noOfSharesTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
-		clearAndSendKey(noOfSharesTextField, model.getpartialQty());
+		clearAndSendKey(noOfSharesTextField, model.getQtyMod());
 		}
 		//Thread.sleep(3000);
 		if(model.getScenario().equalsIgnoreCase("Modification Price")) {
 		enterPriceTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
-		clearAndSendKey(enterPriceTextField, model.getOrderPriceMod());
+		clearAndSendKey(enterPriceTextField, model.getPartialPrice());
 		}
 		//Thread.sleep(3000);
 		if (model.getProductType().equalsIgnoreCase("CNC")) {

@@ -170,7 +170,7 @@ public class LoginPage extends SeleniumCoder{
 		boolean loginErrorFlag=false;
 		WebElement loginErrorMsg=null;
 		try {
-		 loginErrorMsg=fluentWaitCodeXpath(driver,xapthString,30);
+		 loginErrorMsg=fluentWaitCodeXpath(driver,xapthString,10);
 		 loginErrorStr=fetchTextFromElement(loginErrorMsg);
 		 if(loginErrorStr.contains(">")) {
 			 String [] logErrorArray=loginErrorStr.split("\\.");

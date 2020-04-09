@@ -69,14 +69,14 @@ public class HelperCode {
 			if (orderDetail[2].equalsIgnoreCase("modified")||orderDetail[2].equalsIgnoreCase("Modify After Market Order Req Received")){
 				resultString[0] = "PASS";
 			if(model.getScenario().equalsIgnoreCase("Modification Price")) {
-				if(orderDetailArray[6].equalsIgnoreCase(model.getOrderPriceMod())) {
+				if(orderDetailArray[6].equalsIgnoreCase(model.getPartialPrice())) {
 					resultString[1] = "PASS";
-				}else if(removeDecimal(model.getScenario()).equalsIgnoreCase(model.getOrderPriceMod())) {
+				}else if(removeDecimal(orderDetailArray[6]).equalsIgnoreCase(model.getPartialPrice())) {
 					resultString[1] = "PASS";
 				}
 			}else if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
 				
-			if (orderDetail[2].equalsIgnoreCase("modified")&&(orderDetail[12].equalsIgnoreCase(model.getpartialQty()))) {
+			if (orderDetail[2].equalsIgnoreCase("modified")&&(orderDetail[12].equalsIgnoreCase(model.getQtyMod()))) {
 				resultString[1]= "PASS";
 			}
 			}
@@ -90,7 +90,7 @@ public class HelperCode {
 			if(orderDetail[2].equalsIgnoreCase("complete")||orderDetail[2].equalsIgnoreCase("open"));
 			{
 				resultString[0] = "PASS";
-				if(orderDetail[13].equalsIgnoreCase(model.getpartialQty())&&orderDetail[12].equalsIgnoreCase(model.getQty())) {
+				if(orderDetail[13].equalsIgnoreCase(model.getQtyMod())&&orderDetail[12].equalsIgnoreCase(model.getQty())) {
 				resultString[1] = "PASS";
 				}
 			}
@@ -110,7 +110,7 @@ public class HelperCode {
 			throws InterruptedException, IOException {
 		System.out.println("********************Output Processor Started**********************************");
 		boolean reportFlag=false;
-		rowPrint++;
+		//rowPrint++;
 		if(!newOrderStatus.equalsIgnoreCase("Terminate")) {
 		System.out.println("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus);
 		FolderStructure folderStructureObject=new FolderStructure();
@@ -131,7 +131,7 @@ public class HelperCode {
 			
 		}
 		if(reportFlag) {
-		System.out.println("Order1 no===========================================================> "+orderNo+"\nExecution Count==========================================>"+rowPrint);
+		System.out.println("Order no===========================================================> "+orderNo+"\nExecution Count==========================================>"+rowPrint);
 		//System.out.println("noRowInTestData : "+noRowInTestData+"\n folderPathArray[0] : "+folderPathArray[0]);
 		if(rowPrint==1) {
 			CsvReaderCode reader=new CsvReaderCode();

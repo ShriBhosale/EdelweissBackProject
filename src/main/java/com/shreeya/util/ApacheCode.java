@@ -27,7 +27,7 @@ public class ApacheCode {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
 		out = new FileOutputStream(new File(folderPathString+"/ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
-		/*String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
+		String[] headerArray = { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 				"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
 				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 
@@ -35,8 +35,8 @@ public class ApacheCode {
 		for (int i = 0; i < headerArray.length; i++) {
 
 			Cell cell = row.createCell(i);
-			cell.setCellValue(headerArray[i]);*/
-	/*	}*/
+			cell.setCellValue(headerArray[i]);
+		}
 	}
 
 	public ApacheCode() {
@@ -94,12 +94,16 @@ public class ApacheCode {
 	}
 	
 	public String pathStrProcces(String pathStr) {
-		String pathString=pathStr.replace("\\", "//");
-		if(pathString.contains("//")) {
-			pathString=pathStr.replace("//", "/");
-		}
-		System.out.println(pathString);
-		return pathString;
+		String str=null;
+		char [] c=pathStr.toCharArray();
+		/*for(int i=0;i<pathStr.length();i++) {
+			System.out.println(c[i]+" count "+i);
+		}*/
+		String abc=pathStr.substring(11);
+		
+		abc=".."+abc;
+		System.out.println(abc);
+		return abc;
 
 	}
 
@@ -174,7 +178,7 @@ public class ApacheCode {
 		 Hyperlink href = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
 		 /*if(i==10) {*/
 		
-			href.setAddress(pathStrProcces(orderDetails[i]));
+			href.setAddress(removeReportStr(orderDetails[i]));
 		/*	
 		 }else {
 			 href.setAddress("file:///"+pathStrProcces(orderDetails[i]));
@@ -185,6 +189,19 @@ public class ApacheCode {
 		}
 		}
 	
+	}
+	
+	public String removeReportStr(String reportPath) {
+		String output=null;
+		String [] reportArray=reportPath.split("/");
+		for(String str:reportArray) {
+			if(!str.contains("Report")) {
+				output=str+"/";
+			}
+			
+			
+		}
+		return output;
 	}
 	
 	public void excelFile() throws FileNotFoundException {

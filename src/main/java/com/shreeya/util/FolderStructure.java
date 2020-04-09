@@ -14,7 +14,7 @@ public class FolderStructure {
 		if(orderNo==1) {
 		timeStamp = helperObject.timeStampGenerator();
 		}
-		String reportFolderPath = "../Reporter/Report" + timeStamp;
+		String reportFolderPath = "../WorkingE/Report" + timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
 		String[] folderArray = { reportFolderPath, reportFolderPath + "/HtmlReports",
 				reportFolderPath + "/Screenshots" };

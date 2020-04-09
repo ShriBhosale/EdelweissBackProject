@@ -249,7 +249,7 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(maxWaitTime, TimeUnit.SECONDS)
-			       .pollingEvery(5, TimeUnit.SECONDS)
+			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 
 			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {

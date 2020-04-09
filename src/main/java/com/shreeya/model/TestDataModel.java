@@ -29,10 +29,10 @@ public class TestDataModel {
 	String orderValidity;
 	@CsvBindByName(column = "Scenario")
 	String scenario;
-	@CsvBindByName(column = "OrderPriceMod")
-	String orderPriceMod;
-	@CsvBindByName(column = "PartialQty")
-	String partialQty;
+	@CsvBindByName(column = "QtyMod")
+	String qtyMod;
+	@CsvBindByName(column = "PartialPrice")
+	String partialPrice;
 
 	public String getOrderNo() {
 		return orderNo;
@@ -138,20 +138,20 @@ public class TestDataModel {
 		this.scenario = scenario;
 	}
 
-	public String getOrderPriceMod() {
-		return orderPriceMod;
+	public String getQtyMod() {
+		return qtyMod;
 	}
 
-	public void setOrderPriceMod(String orderPriceMod) {
-		this.orderPriceMod = orderPriceMod;
+	public void setQtyMod(String qtyMod) {
+		this.qtyMod = qtyMod;
 	}
 
-	public String getpartialQty() {
-		return partialQty;
+	public String getPartialPrice() {
+		return partialPrice;
 	}
 
-	public void setpartialQty(String partialQty) {
-		this.partialQty = partialQty;
+	public void setPartialPrice(String partialPrice) {
+		this.partialPrice = partialPrice;
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class TestDataModel {
 		return "TestDataModel [orderNo=" + orderNo + ", userId=" + userId + ", password=" + password + ", yob=" + yob
 				+ ", action=" + action + ", orderType=" + orderType + ", script=" + script + ", segment=" + segment
 				+ ", orderPrice=" + orderPrice + ", productType=" + productType + ", qty=" + qty + ", orderValidity="
-				+ orderValidity + ", scenario=" + scenario + ", orderPriceMod=" + orderPriceMod + ", partialQty=" + partialQty
+				+ orderValidity + ", scenario=" + scenario + ", qtyMod=" + qtyMod + ", partialPrice=" + partialPrice
 				+ "]";
 	}
 
