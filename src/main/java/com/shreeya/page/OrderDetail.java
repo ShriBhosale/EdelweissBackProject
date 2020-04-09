@@ -69,7 +69,7 @@ public class OrderDetail extends SeleniumCoder {
 		Thread.sleep(3000);
 		if(action.equalsIgnoreCase("Mod")) {
 			List<WebElement> statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
-			Thread.sleep(4000);
+			Thread.sleep(6000);
 			for(WebElement statusElement:statusList) {
 				System.out.println(fetchTextFromElement(statusElement));
 			}

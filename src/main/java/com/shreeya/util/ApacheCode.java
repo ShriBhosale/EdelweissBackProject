@@ -99,6 +99,7 @@ public class ApacheCode {
 		/*for(int i=0;i<pathStr.length();i++) {
 			System.out.println(c[i]+" count "+i);
 		}*/
+		
 		String abc=pathStr.substring(11);
 		
 		abc=".."+abc;
