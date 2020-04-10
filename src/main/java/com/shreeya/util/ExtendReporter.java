@@ -66,7 +66,7 @@ public class ExtendReporter {
 	public String addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
 		//testCreation("Login Error");
 		String screenshotPath=captureScreen(driver,folderPathString,scenario,orderNo);
-		 test.addScreenCaptureFromPath(screenshotPath);
+		 test.log(Status.FAIL,""+test.addScreenCaptureFromPath(screenshotPath));
 		 return screenshotPath;
 	}
 	
@@ -155,10 +155,10 @@ public class ExtendReporter {
 		System.out.println("Abnormal Error Handly");
 		FolderStructure folderObject=new FolderStructure();
 		String [] folderArray=folderObject.reportFolderCreator(1);
-		ExtendReporter report=new  ExtendReporter(folderArray[1],"Abnormal Termination",1); 
+		ExtendReporter report=new  ExtendReporter(folderArray[0],"Abnormal Termination",1); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
-		String screenshotPath=report.addScreenshotMethod(driver,folderArray[1],"Abnormal Termination",1);
+		String screenshotPath=report.addScreenshotMethod(driver,folderArray[2],"Abnormal Termination",1);
 		report.logFlush();
 		driver.close();
 		System.out.println("Driver close");

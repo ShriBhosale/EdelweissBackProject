@@ -1,15 +1,131 @@
 package com.shreeya.experiment;
 
-import org.testng.annotations.Test;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Hyperlink;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+import com.google.common.io.Files;
+import com.shreeya.util.ApacheCode;
 
 public class Tet {
 
 	 static String number="880.00";
 	 
+	 static Sheet sheet=null;
+	 String[] headerArray=null;
+	 static FileOutputStream fileOut=null;
+	 static Workbook wb ;
+	 
+	 public FileOutputStream outputFileWriterHeader() throws IOException {
+		 int counter=15;
+		 
+		 InputStream inp = new FileInputStream("E:\\EdelweissProject\\WorkingE\\Report1586493566814\\OutputFile.xlsx");
+			String[] headerArray = {"Rejection Reason",
+					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
+			wb= WorkbookFactory.create(inp);
+		
+			 sheet = wb.getSheetAt(0);
+			Row row = sheet.getRow(0);
+			for(int i=0;i<headerArray.length;i++)
+			{
+			Cell cell = row.getCell(counter);
+			
+			if (cell == null)
+			    cell = row.createCell(counter);
+			
+			cell.setCellValue(headerArray[i]);
+			 
+			counter++;
+			} 
+			return fileOut;
+	 }
+	 
+	 public FileOutputStream outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
+		 int counter=15;
+		 String hyperLinkName = null;
+			Row row = sheet.getRow(rowNo);
+			for(int i=17;i<orderDetailArray.length;i++)
+			{
+			Cell cell = row.getCell(counter);
+			
+			if (cell == null)
+			    cell = row.createCell(counter);
+			
+			
+			
+			
+			 if(i==19||i==20) {
+				 
+				if(i==19)
+					 hyperLinkName="HtmlReport";
+				 else if(i==20)
+					 hyperLinkName="Screenshot";
+				 cell.setCellValue(hyperLinkName);
+				 Hyperlink href = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
+					System.out.println("HyperLink Path ======> "+pathStrProcces(orderDetailArray[i]));
+				 href.setAddress(pathStrProcces(orderDetailArray[i]));
+					cell.setHyperlink(href);
+				}else {
+			
+					cell.setCellValue(orderDetailArray[i]);
+				}
+			 
+			// wb.write(fileOut);
+			 
+			
+			counter++;
+			}
+			return fileOut;
+	 }
+	 
+	 public String pathStrProcces(String pathStr) {
+			String str=null;
+			char [] c=pathStr.toCharArray();
+			/*for(int i=0;i<pathStr.length();i++) {
+				System.out.print(c[i]+" "+i);
+			}*/
+			
+			String abc=pathStr.substring(11);
+			
+			abc=".."+abc;
+			System.out.println(abc);
+			return abc;
+
+		}
+	public static void main(String[] args) throws IOException {
+		Tet t=new Tet();
+		String [] orderDetailArray= {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30","LIMIT","60003800","NSE","DAY","200410000000007","1","0","16387 : Security is not allowed to trade in this market","FAIL\r\n" + 
+				"","../WorkingE/Report1586493566814/HtmlReports/FreshOrderPlacement_19_1586493608362.html","../WorkingE/Report1586493566814/Screenshots/FreshOrderPlacement_19_1586493619770.png"};
+		
+		t.outputFileWriterHeader();
+		t.outputFileWriter(orderDetailArray, 1);
+		t.outputFileWriter(orderDetailArray, 2);
+		t.outputFileWriter(orderDetailArray, 3);
+		
+		t.outputExcelFileClose();
+		
+	}
 	
-	@Test
-	public void  main() {
-		System.out.println("Hello shreeya");
+	
+	
+	public void outputExcelFileClose() throws IOException {
+		fileOut = new FileOutputStream("E:\\EdelweissProject\\WorkingE\\Report1586493566814\\OutputFile.xlsx");
+		
+		wb.write(fileOut);
+		fileOut.close();
 	}
 	
 	

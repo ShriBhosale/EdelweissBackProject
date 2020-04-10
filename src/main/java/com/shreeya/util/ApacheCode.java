@@ -1,8 +1,11 @@
 package com.shreeya.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -11,14 +14,20 @@ import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ApacheCode {
 
 	XSSFWorkbook workbook;
+	Workbook wb;
 	FileOutputStream out;
 	XSSFSheet sheet;
+	Sheet outputsheet;
+	FileOutputStream fileOut=null;
 
 	HelperCode helper=new HelperCode();
 	
@@ -38,11 +47,32 @@ public class ApacheCode {
 			cell.setCellValue(headerArray[i]);
 		}
 	}
+	
+
 
 	public ApacheCode() {
 		
 	}
 
+	public void fileCopyOutputWrite(String folderPathString) throws IOException {
+		FileInputStream file = new FileInputStream(new File(folderPathString)); 
+		  
+        // Create Workbook instance holding reference to .xlsx file 
+         workbook = new XSSFWorkbook(file); 
+
+        // Get first/desired sheet from the workbook 
+        XSSFSheet sheet = workbook.getSheetAt(0);
+		String[] headerArray = {"Rejection Reason",
+				"ScriptResult Pass/fail", "Report link", "Screenshot link" };
+
+		Row row = sheet.getRow(0);
+		for (int i = 15; i < headerArray.length; i++) {
+
+			Cell cell = row.createCell(i);
+			cell.setCellValue(headerArray[i]);
+		}
+
+	}
 	
 
 	public void excelFileCreator() throws FileNotFoundException {
@@ -222,5 +252,73 @@ public class ApacheCode {
 		}*/
 	
 	}
+	
+	 public FileOutputStream outputFileWriterHeader(String folderPathString) throws IOException {
+		 int counter=15;
+		 
+		 InputStream inp = new FileInputStream(folderPathString+"/OutputFile.xlsx");
+			String[] headerArray = {"Rejection Reason",
+					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
+			wb= WorkbookFactory.create(inp);
+		
+			 outputsheet = wb.getSheetAt(0);
+			Row row = sheet.getRow(0);
+			for(int i=0;i<headerArray.length;i++)
+			{
+			Cell cell = row.getCell(counter);
+			
+			if (cell == null)
+			    cell = row.createCell(counter);
+			
+			cell.setCellValue(headerArray[i]);
+			 
+			counter++;
+			} 
+			return fileOut;
+	 }
+	 
+	 public FileOutputStream outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
+		 int counter=15;
+		 String hyperLinkName = null;
+			Row row = sheet.getRow(rowNo);
+			for(int i=17;i<orderDetailArray.length;i++)
+			{
+			Cell cell = row.getCell(counter);
+			
+			if (cell == null)
+			    cell = row.createCell(counter);
+			
+			
+			
+			
+			 if(i==19||i==20) {
+				 
+				if(i==19)
+					 hyperLinkName="HtmlReport";
+				 else if(i==20)
+					 hyperLinkName="Screenshot";
+				 cell.setCellValue(hyperLinkName);
+				 Hyperlink href = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
+					System.out.println("HyperLink Path ======> "+pathStrProcces(orderDetailArray[i]));
+				 href.setAddress(pathStrProcces(orderDetailArray[i]));
+					cell.setHyperlink(href);
+				}else {
+			
+					cell.setCellValue(orderDetailArray[i]);
+				}
+			 
+			// wb.write(fileOut);
+			 
+			
+			counter++;
+			}
+			return fileOut;
+	 }
+	 public void outputExcelFileClose(String folderPathString) throws IOException {
+			fileOut = new FileOutputStream(folderPathString+"/OutputFile.xlsx");
+			
+			wb.write(fileOut);
+			fileOut.close();
+		}
 
 }

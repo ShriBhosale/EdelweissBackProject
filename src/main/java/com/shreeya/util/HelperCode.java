@@ -30,6 +30,7 @@ public class HelperCode {
 	static int countNewOrderReject=0;
 	static int rowPrint=0;
 	static boolean excelFileClose=false;
+	static String outputFolderPath="Main output folder not generated in HelperCode";
 	public HelperCode() {
 
 	}
@@ -115,6 +116,7 @@ public class HelperCode {
 		System.out.println("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus);
 		FolderStructure folderStructureObject=new FolderStructure();
 		folderPathArray=folderStructureObject.reportFolderCreator(rowPrint);
+		outputFolderPath=folderPathArray[0];
 		System.out.println("New order status =====> "+newOrderStatus);
 		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
 		report.testCreation("Order Detail " + orderNo);
@@ -136,8 +138,9 @@ public class HelperCode {
 		if(rowPrint==1) {
 			CsvReaderCode reader=new CsvReaderCode();
 			noRowInTestData1=reader.noRowInTestData();
-			
+			folderStructureObject.copyFile(folderPathArray[0]);
 		 excelWriter=new ApacheCode(folderPathArray[0]);
+		 excelWriter.outputFileWriterHeader(folderPathArray[0]);
 		}
 		OrderDetail orderDetailObj = new OrderDetail();
 		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action);
@@ -165,6 +168,7 @@ public class HelperCode {
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
 		excelWriter.excelWriter(orderDetailArray, rowPrint);
+		excelWriter.outputFileWriter(orderDetailArray, orderNo);
 		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			System.out.println(orderDetail);
@@ -188,6 +192,7 @@ public class HelperCode {
 		if(countNewOrderReject==4) {
 			if(excelFileClose==false) {
 			excelWriter.closeExcelWriting();
+			excelWriter.outputExcelFileClose(outputFolderPath);
 			excelFileClose=true;
 			}else {
 				System.out.println("Excel file close successfully..........................");
@@ -197,12 +202,14 @@ public class HelperCode {
 			noRowInTestData1=0;
 			if(excelFileClose==false) {
 				excelWriter.closeExcelWriting();
+				excelWriter.outputExcelFileClose(outputFolderPath);
 			}
 		}
 		System.out.println("Order no =====>  "+orderNo+"\nNoRowInTestData =======> "+noRowInTestData1);
 		if(noRowInTestData1==orderNo) {
 			System.out.println("Excel file closing...........");
 		excelWriter.closeExcelWriting();
+		excelWriter.outputExcelFileClose(outputFolderPath);
 		excelFileClose=true;
 		}
 		return orderDetailArray[2];

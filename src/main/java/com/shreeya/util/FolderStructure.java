@@ -3,16 +3,22 @@ package com.shreeya.util;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
+
 import com.google.common.io.Files;
 
 public class FolderStructure {
 	static String timeStamp;
-
-	public String[] reportFolderCreator(int orderNo) {
+	ConfigReader configReader=new ConfigReader();
+	public String[] reportFolderCreator(int orderNo) throws IOException {
 		System.out.println("reportFolderCreator orderNo =====> "+orderNo);
 		HelperCode helperObject = new HelperCode();
+		
+		String outputFile="FolderStructure not able give outputFile";
 		if(orderNo==1) {
-		timeStamp = helperObject.timeStampGenerator();
+			timeStamp = helperObject.timeStampGenerator();
+			//copyFile(configReader.configReader("TestData")+".xlsx", "../WorkingE/Report" + timeStamp+"/OutputFile.xlsx");
+			//outputFile="../WorkingE/Report" + timeStamp+"/OutputFile.xlsx";
 		}
 		String reportFolderPath = "../WorkingE/Report" + timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
@@ -25,12 +31,25 @@ public class FolderStructure {
 		return folderArray;
 	}
 	
-	public void copyFile() throws IOException {
-		File file=new File("E:\\EdelweissProject\\Sources\\PQR.xlsx");
-		File targetFile=new File("E:\\EdelweissProject\\Target\\PQR.xlsx");
-		//file.renameTo(targetFile);
-		Files.copy(targetFile, file);
-		System.out.println("File copy pasting done...............");
+	public void createFolderForFailReport(String pathString) {
+		File errorReportFolder=new File(pathString);
+		errorReportFolder.mkdir();
+		File errorReportSubFolder=new File(pathString+"/Screenshot");
+		errorReportSubFolder.mkdir();
 	}
+	
+	public String copyFile(String targetName) throws IOException {
+		ConfigReader configReader=new ConfigReader();
+		File source = new File(configReader.configReader("TestData")+".xlsx");
+        File dest = new File(targetName+"/OutputFile.xlsx");
+
+        FileUtils.copyFile(source, dest);
+        System.out.println("TestData File copy into output folder");
+        System.out.println(dest.toPath());
+		return dest.toString();
+				
+	}
+	
+	
 
 }

@@ -18,7 +18,7 @@ public class AbsoluteReportPath {
 		FolderStructure folder=new FolderStructure();
 		String [] folderPathArray=folder.reportFolderCreator(1);
 		LoginPage loginPageObj=new LoginPage();
-		ExtendReporter reportObj=new ExtendReporter(folderPathArray[1],"abc",0);
+		ExtendReporter reportObj=new ExtendReporter(folderPathArray[0],"abc",0);
 
 				
 		WebDriver driver=loginPageObj.browserLaunch("Testing");

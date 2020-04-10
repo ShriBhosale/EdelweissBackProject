@@ -52,6 +52,7 @@ public class LoginPage extends SeleniumCoder{
 	public WebDriver loginExecution(LoginModel loginModelObject) throws InterruptedException, IOException {
 		
 		driver=browserLaunch(loginModelObject.getExecutionType());
+		
 		//userIdAndPwd(scenario);
 		
 		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
