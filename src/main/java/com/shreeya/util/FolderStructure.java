@@ -31,11 +31,15 @@ public class FolderStructure {
 		return folderArray;
 	}
 	
-	public void createFolderForFailReport(String pathString) {
-		File errorReportFolder=new File(pathString);
+	public  String [] createFolderForFailReport(String pathString) {
+		HelperCode helperObject=new HelperCode();
+		String [] pathArray= {pathString,pathString+"/Screenshot"};
+		System.out.println("Folder Path "+pathArray[0]+"\nScreenshot folderPath====> "+pathString+"/Screenshot");
+		File errorReportFolder=new File(pathArray[0]);
 		errorReportFolder.mkdir();
-		File errorReportSubFolder=new File(pathString+"/Screenshot");
+		File errorReportSubFolder=new File(pathArray[1]);
 		errorReportSubFolder.mkdir();
+		return pathArray;
 	}
 	
 	public String copyFile(String targetName) throws IOException {

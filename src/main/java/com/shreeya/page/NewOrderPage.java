@@ -56,7 +56,8 @@ public class NewOrderPage extends SeleniumCoder {
 		}
 	
 		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']");
-		sendKey(placeOrderTextField,model.getScript());
+		//sendKey(placeOrderTextField,model.getScript());
+		sendKeyClickOnDownArrow(placeOrderTextField,model.getScript());
 		/*Thread.sleep(3000);*/
 		if(model.getSegment().equalsIgnoreCase("NSE")) {
 		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
