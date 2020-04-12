@@ -1,6 +1,7 @@
 package com.shreeya.page;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -50,6 +51,10 @@ public class LoginPage extends SeleniumCoder{
 	
 	
 	public WebDriver loginExecution(LoginModel loginModelObject) throws InterruptedException, IOException {
+		/*
+		 * while(loginModelObjects.hasNext()) { LoginModel loginModelObject =
+		 * loginModelObjects.next();
+		 */
 		
 		driver=browserLaunch(loginModelObject.getExecutionType());
 		
@@ -115,8 +120,11 @@ public class LoginPage extends SeleniumCoder{
 			System.out.println("Folder path ===> "+folderPathArray[0]);
 			driver=null;
 		}
+		
+		
 		//headerInExcel(writer);
 		return driver;
+		
 	}
 	
 	public void logout(WebDriver driver) throws InterruptedException {

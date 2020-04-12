@@ -52,8 +52,8 @@ public class SeleniumCoder {
 			driver=new ChromeDriver(capabilities);
 		}
 		driver.manage().window().maximize();
-		driver.get("https://www.youtube.com/");
-		//driver.get("https://www.google.co.in/");
+		//driver.get("https://www.youtube.com/");
+		driver.get("https://ewuat.edelbusiness.in/");
 		
 		log.info("Browser launch successfully.................");
 		return driver;

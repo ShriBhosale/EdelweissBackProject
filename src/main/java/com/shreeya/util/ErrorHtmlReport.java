@@ -40,11 +40,14 @@ public class ErrorHtmlReport {
 		report = new ExtentReports();
 		report.attachReporter(htmlextent);
 		test=report.createTest("testcase2");
-		String screenshotPath="../ReportFailReport111/Screenshot/Screenshot.png";
+		
+		String screenshotPath="../WorkingE/ReportFailReport111/Screenshot/Screenshot.png";
 		//=pathArray[1]+"/Screenshot.png";
 		System.out.println("Screeenshot Path====> "+screenshotPath);
 		try {
-			test.log(Status.INFO, msg + test.addScreenCaptureFromPath(captureScreen(driver, screenshotPath)));
+			captureScreen(driver, screenshotPath);
+			test.log(Status.INFO,"abc",MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+			//test.log(Status.INFO, msg + test.addScreenCaptureFromPath(captureScreen(driver, screenshotPath)));
 			//test.log(Status.PASS, "Passed test 2" + log.addScreenCaptureFromPath(captureScreen()));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -98,7 +98,7 @@ public class CsvReaderCode {
 		
 	}
 	
-	public Iterator<LoginModel> LoginFileReader() {
+	public ArrayList<LoginModel> LoginFileReader() {
 		ConfigReader configReader=new ConfigReader();
 		String testDataPath=configReader.configReader("LoginData");
 		CSVReader reader = null;
@@ -111,11 +111,17 @@ public class CsvReaderCode {
 		}
 
 		CsvToBean<LoginModel> csvToBean = new CsvToBeanBuilder(reader).withType(LoginModel.class).build();
-
+		ArrayList<LoginModel> arrayListObject=new ArrayList<LoginModel>();
 		Iterator<LoginModel> csvTestDataModelIterator = csvToBean.iterator();
+		while(csvTestDataModelIterator.hasNext()) {
+			LoginModel some= csvTestDataModelIterator.next();
+			arrayListObject.add(some);
+			//System.out.println(some.toString());
+		}
 		
 		
-		return csvTestDataModelIterator;
+		
+		return arrayListObject;
 	}
 
 }
