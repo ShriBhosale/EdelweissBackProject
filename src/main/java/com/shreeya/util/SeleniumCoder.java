@@ -52,7 +52,7 @@ public class SeleniumCoder {
 			driver=new ChromeDriver(capabilities);
 		}
 		driver.manage().window().maximize();
-		//driver.get("https://www.youtube.com/");
+		//driver.get("https://www.facebook.com/");
 		driver.get("https://ewuat.edelbusiness.in/");
 		
 		log.info("Browser launch successfully.................");
@@ -74,7 +74,7 @@ public class SeleniumCoder {
 			element.sendKeys(msg);
 			element.sendKeys(Keys.ARROW_DOWN);
 			element.sendKeys(Keys.ENTER);
-			System.out.println("element "+element+" msg : "+msg);
+			System.out.println("element : "+element+" msg : "+msg);
 			}catch(NullPointerException e) {
 				System.out.println(e);
 			}

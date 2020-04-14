@@ -113,15 +113,17 @@ public class CsvReaderCode {
 		CsvToBean<LoginModel> csvToBean = new CsvToBeanBuilder(reader).withType(LoginModel.class).build();
 		ArrayList<LoginModel> arrayListObject=new ArrayList<LoginModel>();
 		Iterator<LoginModel> csvTestDataModelIterator = csvToBean.iterator();
-		while(csvTestDataModelIterator.hasNext()) {
-			LoginModel some= csvTestDataModelIterator.next();
-			arrayListObject.add(some);
-			//System.out.println(some.toString());
-		}
+		
+		  while(csvTestDataModelIterator.hasNext()) { LoginModel some=
+		  csvTestDataModelIterator.next(); arrayListObject.add(some);
+		 // System.out.println(some.toString());
+		  }
+		 
 		
 		
 		
 		return arrayListObject;
+	
 	}
 
 }

@@ -28,42 +28,51 @@ public class ParalleExecution {
 
 	}
 
-	@DataProvider(name = "getDataMethod",parallel=true)
+	@DataProvider(name = "getDataMethod")
 	public Iterator<LoginModel> getDataMethod() throws IOException {
-		CsvReaderCode csvReader = new CsvReaderCode();
-		ArrayList<LoginModel> loginData = csvReader.LoginFileReader();
-		Iterator<LoginModel> loginIteratior=loginData.iterator();
+		CsvReaderCode csvReader = new CsvReaderCode(); 
+		ArrayList<LoginModel> loginData =csvReader.LoginFileReader();
+		Iterator<LoginModel>loginIteratior = loginData.iterator();
 		return loginIteratior;
 	}
 
-	@Test(dataProvider = "getDataMethod")
-	public void firstExecution(LoginModel loginModelObj) {
+	/*
+	 * @Test(dataProvider = "getDataMethod") public void firstExecution(LoginModel
+	 * loginModelObj) { System.out.println("Execution..");
+	 * System.out.println(loginModelObj.toString());
+	 * 
+	 * 
+	 * 
+	 * try { driver=login.loginExecution(loginModelObj); } catch
+	 * (InterruptedException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
+	 * System.out.println(e); }
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
+	@Parameters({"Reference"})
+	@Test
+	public void firstExecution1(String reference) {
 		System.out.println("Execution..");
-		System.out.println(loginModelObj.toString());
-
+		Iterator<LoginModel> loginIteratior =  MyTestLauncher.loginData.iterator();
+		while(loginIteratior.hasNext()) {
+			
+			LoginModel loginModelObj= loginIteratior.next();
+			if(reference.equals(loginModelObj.getReferNo())) {
+				try {
+					driver = login.loginExecution(loginModelObj);
+					login.logout(driver);
+				} catch (InterruptedException e) { // TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) { // TODO Auto-generated catch
+					System.out.println(e);
+				}
+			}
+			
+		}
 		
-		
-		  try { driver=login.loginExecution(loginModelObj); } catch
-		  (InterruptedException e) { // TODO Auto-generated catch block
-		  e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
-		  System.out.println(e); }
-		 
-		 
-
-	}
-	@Test(dataProvider = "getDataMethod")
-	public void firstExecution1(LoginModel loginModelObj) {
-		System.out.println("Execution..");
-		System.out.println(loginModelObj.toString());
-
-		
-		
-		  try { driver=login.loginExecution(loginModelObj); } catch
-		  (InterruptedException e) { // TODO Auto-generated catch block
-		  e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
-		  System.out.println(e); }
-		 
-		 
 
 	}
 

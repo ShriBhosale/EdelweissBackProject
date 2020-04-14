@@ -262,7 +262,7 @@ public class ApacheCode {
 			wb= WorkbookFactory.create(inp);
 		
 			 outputsheet = wb.getSheetAt(0);
-			Row row = sheet.getRow(0);
+			Row row = outputsheet.getRow(0);
 			for(int i=0;i<headerArray.length;i++)
 			{
 			Cell cell = row.getCell(counter);
@@ -280,8 +280,8 @@ public class ApacheCode {
 	 public FileOutputStream outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
 		 int counter=15;
 		 String hyperLinkName = null;
-			Row row = sheet.getRow(rowNo);
-			for(int i=17;i<orderDetailArray.length;i++)
+			Row row = outputsheet.getRow(rowNo);
+			for(int i=14;i<orderDetailArray.length;i++)
 			{
 			Cell cell = row.getCell(counter);
 			
@@ -291,11 +291,11 @@ public class ApacheCode {
 			
 			
 			
-			 if(i==19||i==20) {
+			 if(i==16||i==17) {
 				 
-				if(i==19)
+				if(i==16)
 					 hyperLinkName="HtmlReport";
-				 else if(i==20)
+				 else if(i==17)
 					 hyperLinkName="Screenshot";
 				 cell.setCellValue(hyperLinkName);
 				 Hyperlink href = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
@@ -305,6 +305,7 @@ public class ApacheCode {
 				}else {
 			
 					cell.setCellValue(orderDetailArray[i]);
+					System.out.println(orderDetailArray[i]);
 				}
 			 
 			// wb.write(fileOut);

@@ -5,9 +5,9 @@
     <classes>
       <class name="com.shreeya.experiment.ParalleExecution">
         <methods>
+          <include name="firstExecution1"/>
           <include name="endExecution"/>
           <include name="executionBefore"/>
-          <include name="firstExecution"/>
         </methods>
       </class> <!-- com.shreeya.experiment.ParalleExecution -->
     </classes>

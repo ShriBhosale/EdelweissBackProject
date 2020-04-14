@@ -43,11 +43,12 @@ public class TestLaunch {
 	int countOfrejectNew=0;
 	static int rowNo=0;
 	private boolean partialOrderReport;
+	private CSVWriter writer;
 
 	
 	public  TestLaunch() throws IOException {
 		coder = new CsvReaderCode();
-		//writer=coder.writerProvider();
+		 writer = coder.writerProvider();
 		csvTestDataModelIterator = coder.responseGenerator();
 		loginIterator=coder.LoginFileReader();
 		login = new LoginPage();
@@ -162,7 +163,7 @@ public class TestLaunch {
 	
 	public void loginData() throws IOException {
 		CsvReaderCode reader=new CsvReaderCode();
-		loginIterator=reader.LoginFileReader();
+		//loginIterator=reader.LoginFileReader();
 		LoginModel model=loginIterator.next();
 	}
 	

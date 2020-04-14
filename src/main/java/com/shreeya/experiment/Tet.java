@@ -32,7 +32,7 @@ public class Tet {
 	 public FileOutputStream outputFileWriterHeader() throws IOException {
 		 int counter=15;
 		 
-		 InputStream inp = new FileInputStream("E:\\EdelweissProject\\WorkingE\\Report1586493566814\\OutputFile.xlsx");
+		 InputStream inp = new FileInputStream("E:\\EdelweissProject\\WorkingE\\Report1586750708758\\OutputFile.xlsx");
 			String[] headerArray = {"Rejection Reason",
 					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 			wb= WorkbookFactory.create(inp);
@@ -108,12 +108,12 @@ public class Tet {
 	public static void main(String[] args) throws IOException {
 		Tet t=new Tet();
 		String [] orderDetailArray= {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30","LIMIT","60003800","NSE","DAY","200410000000007","1","0","16387 : Security is not allowed to trade in this market","FAIL\r\n" + 
-				"","../WorkingE/Report1586493566814/HtmlReports/FreshOrderPlacement_19_1586493608362.html","../WorkingE/Report1586493566814/Screenshots/FreshOrderPlacement_19_1586493619770.png"};
+				"","../WorkingE/Report_FailedReport/FailReport_1586592711291.html","../WorkingE/Report_FailedReport/Screenshot/Screenshot.png"};
 		
 		t.outputFileWriterHeader();
-		t.outputFileWriter(orderDetailArray, 1);
-		t.outputFileWriter(orderDetailArray, 2);
-		t.outputFileWriter(orderDetailArray, 3);
+		t.outputFileWriter(orderDetailArray, 4);
+		t.outputFileWriter(orderDetailArray, 5);
+		t.outputFileWriter(orderDetailArray, 6);
 		
 		t.outputExcelFileClose();
 		
@@ -122,7 +122,7 @@ public class Tet {
 	
 	
 	public void outputExcelFileClose() throws IOException {
-		fileOut = new FileOutputStream("E:\\EdelweissProject\\WorkingE\\Report1586493566814\\OutputFile.xlsx");
+		fileOut = new FileOutputStream("E:\\EdelweissProject\\WorkingE\\Report1586750708758\\OutputFile.xlsx");
 		
 		wb.write(fileOut);
 		fileOut.close();
