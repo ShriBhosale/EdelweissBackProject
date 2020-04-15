@@ -35,6 +35,7 @@ public class SeleniumCoder {
 	static Logger log = Logger.getLogger(SeleniumCoder.class.getName());
 	WebDriver driver=null;
 	ExtendReporter report=new ExtendReporter();
+	int maximumDelay=300;
 	public SeleniumCoder() {
 		
 	}
@@ -53,7 +54,7 @@ public class SeleniumCoder {
 		}
 		driver.manage().window().maximize();
 		//driver.get("https://www.facebook.com/");
-		driver.get("https://ewuat.edelbusiness.in/");
+		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
 		
 		log.info("Browser launch successfully.................");
 		return driver;
@@ -117,7 +118,7 @@ public class SeleniumCoder {
 		// Waiting 30 seconds for an element to be present on the page, checking
 		   // for its presence once every 5 seconds.
 		   Wait<WebDriver> wait = new FluentWait<WebDriver>(driver) 
-		       .withTimeout(100, TimeUnit.SECONDS)
+		       .withTimeout(maximumDelay, TimeUnit.SECONDS)
 		       .pollingEvery(20, TimeUnit.SECONDS)
 		       .ignoring(NoSuchElementException.class);
 		   WebElement element=driver.findElement(By.xpath(xpathStr));
@@ -138,7 +139,7 @@ public class SeleniumCoder {
 		// Waiting 30 seconds for an element to be present on the page, checking
 		   // for its presence once every 5 seconds.
 		   Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-		       .withTimeout(200, TimeUnit.SECONDS)
+		       .withTimeout(maximumDelay, TimeUnit.SECONDS)
 		       .pollingEvery(1, TimeUnit.SECONDS)
 		       .ignoring(NoSuchElementException.class);
 		   System.out.println("fluentWaitMethodID :: ");
@@ -156,11 +157,13 @@ public class SeleniumCoder {
 
 	}
 	
-	public String fetchTextFromElement(WebElement element) {
+	public String fetchTextFromElement(WebElement element,String elementName) {
 		String elementText="no element text";
 		try {
 			elementText=element.getAttribute("innerHTML");
+			System.out.println(elementName+" found.");
 		}catch(Exception e) {
+			System.out.println(elementName+" not found.");
 			System.out.println(e);
 		}
 		return  element.getAttribute("innerHTML");
@@ -188,7 +191,7 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-			       .withTimeout(100, TimeUnit.SECONDS)
+			       .withTimeout(maximumDelay, TimeUnit.SECONDS)
 			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 		try {
@@ -224,7 +227,7 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-			       .withTimeout(100, TimeUnit.SECONDS)
+			       .withTimeout(maximumDelay, TimeUnit.SECONDS)
 			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
 		try {
@@ -243,12 +246,7 @@ public class SeleniumCoder {
 		}catch(TimeoutException e) {
 			System.out.println(e);
 			ExtendReporter report=new ExtendReporter();
-			/*try {
-				report.abnormalErrorHandling(driver);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
+			System.out.println("Timeout Exception ");
 		}
 			   
 			   return element;
@@ -309,7 +307,7 @@ public class SeleniumCoder {
     {
         final WebDriver driver=driverI;
         FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver);
-        fluentWait.withTimeout(100, TimeUnit.SECONDS);
+        fluentWait.withTimeout(maximumDelay, TimeUnit.SECONDS);
         fluentWait.pollingEvery(1, TimeUnit.SECONDS);
         fluentWait.ignoring(NoSuchElementException.class);
         

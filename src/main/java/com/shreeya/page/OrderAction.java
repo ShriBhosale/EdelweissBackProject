@@ -1,7 +1,6 @@
-package com.shreeya;
+package com.shreeya.page;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -10,24 +9,19 @@ import org.openqa.selenium.WebDriver;
 import com.opencsv.CSVWriter;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.page.CxlOrderPage;
-import com.shreeya.page.LoginPage;
-import com.shreeya.page.ModOrderPage;
-import com.shreeya.page.NewOrderPage;
-import com.shreeya.page.PartialOrderPage;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
 
+public class OrderAction {
 
-public class TestLaunch {
-
-	static WebDriver driver;
-	static Iterator<TestDataModel> csvTestDataModelIterator;
-	static Iterator<LoginModel>loginIterator;
-	static TestDataModel model,testModel;
+	 WebDriver driver;
+	 Iterator<TestDataModel> csvTestDataModelIterator;
+	 Iterator<LoginModel>loginIterator;
+	 TestDataModel model,testModel;
 	CsvReaderCode coder;
 	LoginPage login;
+	PartialOrderPage partialOrderOb;
 	ExtendReporter reporter;
 	String [] orderDetailArray;
 	//CSVWriter writer;
@@ -35,42 +29,29 @@ public class TestLaunch {
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
+	HelperCode helperObject;
 	int countOfrejectNew=0;
-	static int rowNo=0;
+	 int rowNo=0;
 	private boolean partialOrderReport;
+	int orderNo=0;
 	private CSVWriter writer;
-	ArrayList<LoginModel> loginModelList;
-
+	private HashMap<WebDriver,String> newMapObject,mapObject;
 	
-	public  TestLaunch() throws IOException {
-		coder = new CsvReaderCode();
-		 writer = coder.writerProvider();
-		csvTestDataModelIterator = coder.testDataProvider();
-		loginModelList=coder.LoginFileReader();
-		loginIterator=loginModelList.iterator();
-		login = new LoginPage();
+	public OrderAction() throws IOException {
 		newOrder=new NewOrderPage();
-		 modOrder = new ModOrderPage();
-		 cxlOrder = new CxlOrderPage();
+		modOrder=new ModOrderPage();
+		cxlOrder=new CxlOrderPage();
+		CsvReaderCode csvReaderObj=new CsvReaderCode();
+		csvTestDataModelIterator=csvReaderObj.testDataProvider();
+		partialOrderOb=new PartialOrderPage();
+		newMapObject=new HashMap<WebDriver,String>();
+		mapObject=new HashMap<WebDriver,String>();
+		helperObject=new HelperCode();
 	}
 	
+	public WebDriver orderActionStart(WebDriver driver,LoginModel loginModel) throws InterruptedException, IOException {
+		
 	
-	public void Execution() throws InterruptedException, IOException {
-		//ApacheCode excelWriter=new ApacheCode();
-		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
-		HashMap<WebDriver,String> newMapObject=new HashMap<WebDriver,String>();
-		PartialOrderPage partialOrderOb=new PartialOrderPage();
-		HelperCode helperObject=new HelperCode();
-		LoginModel loginModel=new LoginModel();
-		int orderNo=0;
-		while(loginIterator.hasNext()) {
-			loginModel=loginIterator.next();
-		driver = login.loginExecution(loginModel);
-		//login.headerInExcel(writer);
-		
-		String timeStamp=helperObject.timeStampGenerator();
-		//reporter=new ExtendReporter(timeStamp,"dfsf","jgug",1);
-		
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
@@ -80,11 +61,11 @@ public class TestLaunch {
 			if(orderNo>=endExecution+1)
 				break;
 			if(orderNo>=startExecution) {
-				if(orderNo==startExecution) {
-					 rowNo=0;
-				}
 				
-				rowNo++;
+				/* if(orderNo==startExecution) { rowNo=0; } */
+				  
+				  rowNo++;
+				 
 				System.out.println("Order No ========================@> "+orderNo+"\nStartExecutionNo =======================@> "+startExecution);
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
 					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
@@ -126,7 +107,9 @@ public class TestLaunch {
 					 continue;
 				 }
 			}
-			
+			if(model.getOrderNo().equalsIgnoreCase("16")||model.getOrderNo().equalsIgnoreCase("33")) {
+				System.out.println("bugg");
+			}
 			
 			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus+"\nRowNo==============> "+rowNo);
 			
@@ -140,34 +123,9 @@ public class TestLaunch {
 			}
 			
 			
-		}
-		}
-		if(driver != null) {
-			helperObject.outputProcessor(driver, model.getAction(), orderNo, "Terminate", model,rowNo);
-		login.logout(driver);
-		driver.close();
-		}else {
-			
+			}
 		}
 		
-		//coder.closeWriteFile(writer);
-		
-		//excelWriter.closeExcelWriting();
-		//reporter.logFlush();
-		}
+		return driver;
 	}
-	
-	
-	public void loginData() throws IOException {
-		CsvReaderCode reader=new CsvReaderCode();
-		//loginIterator=reader.LoginFileReader();
-		LoginModel model=loginIterator.next();
-	}
-	
-	public static  void main(String[] args) throws InterruptedException, IOException {
-		TestLaunch testObject=new TestLaunch();
-		testObject.Execution();
-	}
-	
-	
 }

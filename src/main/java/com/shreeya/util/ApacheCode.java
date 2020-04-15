@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Hyperlink;
@@ -27,12 +28,12 @@ public class ApacheCode {
 	FileOutputStream out;
 	XSSFSheet sheet;
 	Sheet outputsheet;
-	FileOutputStream fileOut=null;
+	public static FileOutputStream fileOut=null;
 
 	HelperCode helper=new HelperCode();
 	
 
-	public ApacheCode(String folderPathString) throws FileNotFoundException {
+	public ApacheCode(String folderPathString) throws EncryptedDocumentException, IOException {
 		workbook = new XSSFWorkbook();
 		sheet = workbook.createSheet("Orders Details");
 		out = new FileOutputStream(new File(folderPathString+"/ExcelReport"+helper.timeStampGenerator()+".xlsx"),true);
@@ -46,6 +47,9 @@ public class ApacheCode {
 			Cell cell = row.createCell(i);
 			cell.setCellValue(headerArray[i]);
 		}
+		
+
+		 
 	}
 	
 

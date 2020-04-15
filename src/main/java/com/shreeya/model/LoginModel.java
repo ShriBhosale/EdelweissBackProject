@@ -17,6 +17,21 @@ public class LoginModel {
 	private String endRowNo;
 	@CsvBindByName(column = "ExecutionType")
 	private String executionType;
+
+	public LoginModel(String referNo, String userId, String password, String yob, String startingRowNo, String endRowNo,
+			String executionType) {
+		super();
+		this.referNo = referNo;
+		this.userId = userId;
+		this.password = password;
+		this.yob = yob;
+		this.startingRowNo = startingRowNo;
+		this.endRowNo = endRowNo;
+		this.executionType = executionType;
+	}
+	
+	public LoginModel() {}
+	
 	public String getReferNo() {
 		return referNo;
 	}

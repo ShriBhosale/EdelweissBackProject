@@ -3,13 +3,15 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.shreeya.experiment.ParalleExecution">
+      <class name="com.shreeya.Execution">
         <methods>
-          <include name="firstExecution1"/>
-          <include name="endExecution"/>
+          <include name="beforeTest"/>
           <include name="executionBefore"/>
+          <include name="execution"/>
+          <include name="testAfter"/>
+          <include name="endExecution"/>
         </methods>
-      </class> <!-- com.shreeya.experiment.ParalleExecution -->
+      </class> <!-- com.shreeya.Execution -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

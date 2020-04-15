@@ -106,26 +106,41 @@ public class Tet {
 
 		}
 	public static void main(String[] args) throws IOException {
-		Tet t=new Tet();
-		String [] orderDetailArray= {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30","LIMIT","60003800","NSE","DAY","200410000000007","1","0","16387 : Security is not allowed to trade in this market","FAIL\r\n" + 
-				"","../WorkingE/Report_FailedReport/FailReport_1586592711291.html","../WorkingE/Report_FailedReport/Screenshot/Screenshot.png"};
+		/*
+		 * Tet t=new Tet(); String [] orderDetailArray=
+		 * {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30",
+		 * "LIMIT","60003800","NSE","DAY","200410000000007","1",
+		 * "0","16387 : Security is not allowed to trade in this market","FAIL\r\n" +
+		 * "","../WorkingE/Report_FailedReport/FailReport_1586592711291.html",
+		 * "../WorkingE/Report_FailedReport/Screenshot/Screenshot.png"};
+		 * 
+		 * t.outputFileWriterHeader(); t.outputFileWriter(orderDetailArray, 4);
+		 * t.outputFileWriter(orderDetailArray, 5); t.outputFileWriter(orderDetailArray,
+		 * 6);
+		 * 
+		 * t.outputExcelFileClose();
+		 */
 		
-		t.outputFileWriterHeader();
-		t.outputFileWriter(orderDetailArray, 4);
-		t.outputFileWriter(orderDetailArray, 5);
-		t.outputFileWriter(orderDetailArray, 6);
-		
-		t.outputExcelFileClose();
+		int i=10;
+		if(i>=10)
+			System.out.println("it working");
+		else
+			System.out.println("It is not working");
 		
 	}
 	
 	
 	
 	public void outputExcelFileClose() throws IOException {
-		fileOut = new FileOutputStream("E:\\EdelweissProject\\WorkingE\\Report1586750708758\\OutputFile.xlsx");
+		/*
+		 * fileOut = new FileOutputStream(
+		 * "E:\\EdelweissProject\\WorkingE\\Report1586750708758\\OutputFile.xlsx");
+		 * 
+		 * wb.write(fileOut); fileOut.close();
+		 */
 		
-		wb.write(fileOut);
-		fileOut.close();
+		
+		
 	}
 	
 	

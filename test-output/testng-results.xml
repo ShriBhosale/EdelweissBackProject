@@ -2,54 +2,130 @@
 <testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
   </reporter-output>
-  <suite name="TmpSuite" duration-ms="44367" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:30:19 IST">
+  <suite name="TmpSuite" duration-ms="135909" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:37:44 IST">
     <groups>
     </groups>
-    <test name="1" duration-ms="44312" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:30:19 IST">
-      <class name="com.shreeya.experiment.ParalleExecution">
-        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.experiment.ParalleExecution@72a7c7e0]" name="executionBefore" is-config="true" duration-ms="15" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:29:35 IST">
+    <test name="1" duration-ms="131370" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:37:39 IST">
+      <class name="com.shreeya.Execution">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="executionBefore" is-config="true" duration-ms="741" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:35:29 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- executionBefore -->
-        <test-method status="PASS" signature="firstExecution1(java.lang.String)[pri:0, instance:com.shreeya.experiment.ParalleExecution@72a7c7e0]" name="firstExecution1" duration-ms="44141" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:30:19 IST">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="beforeTest" is-config="true" duration-ms="1" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:35:29 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="execution(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.Execution@2ea227af]" name="execution" duration-ms="130200" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:37:39 IST">
           <params>
             <param index="0">
               <value>
                 <![CDATA[1]]>
               </value>
             </param>
+            <param index="1">
+              <value>
+                <![CDATA[Sanjay15]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[abc123]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[1985]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[6]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[7]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[normal]]>
+              </value>
+            </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- firstExecution1 -->
-        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.experiment.ParalleExecution@72a7c7e0]" name="endExecution" is-config="true" duration-ms="2" started-at="2020-04-14T13:30:19 IST" finished-at="2020-04-14T13:30:19 IST">
+        </test-method> <!-- execution -->
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="testAfter" is-config="true" duration-ms="2" started-at="2020-04-15T19:37:39 IST" finished-at="2020-04-15T19:37:39 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAfter -->
+        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="endExecution" is-config="true" duration-ms="1" started-at="2020-04-15T19:37:39 IST" finished-at="2020-04-15T19:37:39 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endExecution -->
-      </class> <!-- com.shreeya.experiment.ParalleExecution -->
+      </class> <!-- com.shreeya.Execution -->
     </test> <!-- 1 -->
-    <test name="2" duration-ms="44367" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:30:19 IST">
-      <class name="com.shreeya.experiment.ParalleExecution">
-        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.experiment.ParalleExecution@1ddf84b8]" name="executionBefore" is-config="true" duration-ms="15" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:29:35 IST">
+    <test name="2" duration-ms="135909" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:37:44 IST">
+      <class name="com.shreeya.Execution">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="executionBefore" is-config="true" duration-ms="741" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:35:29 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- executionBefore -->
-        <test-method status="PASS" signature="firstExecution1(java.lang.String)[pri:0, instance:com.shreeya.experiment.ParalleExecution@1ddf84b8]" name="firstExecution1" duration-ms="44327" started-at="2020-04-14T13:29:35 IST" finished-at="2020-04-14T13:30:19 IST">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="beforeTest" is-config="true" duration-ms="1" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:35:29 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="execution(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.Execution@769f71a9]" name="execution" duration-ms="134864" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:37:44 IST">
           <params>
             <param index="0">
               <value>
                 <![CDATA[2]]>
               </value>
             </param>
+            <param index="1">
+              <value>
+                <![CDATA[60003800]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[abc123]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[2000]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[12]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[13]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[normal]]>
+              </value>
+            </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- firstExecution1 -->
-        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.experiment.ParalleExecution@1ddf84b8]" name="endExecution" is-config="true" duration-ms="0" started-at="2020-04-14T13:30:19 IST" finished-at="2020-04-14T13:30:19 IST">
+        </test-method> <!-- execution -->
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="testAfter" is-config="true" duration-ms="2" started-at="2020-04-15T19:37:44 IST" finished-at="2020-04-15T19:37:44 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAfter -->
+        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="endExecution" is-config="true" duration-ms="1" started-at="2020-04-15T19:37:44 IST" finished-at="2020-04-15T19:37:44 IST">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endExecution -->
-      </class> <!-- com.shreeya.experiment.ParalleExecution -->
+      </class> <!-- com.shreeya.Execution -->
     </test> <!-- 2 -->
   </suite> <!-- TmpSuite -->
 </testng-results>

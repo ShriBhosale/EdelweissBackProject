@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.openqa.selenium.WebDriver;
 
+import com.shreeya.Execution;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.page.OrderDetail;
 
@@ -31,6 +32,7 @@ public class HelperCode {
 	static int rowPrint=0;
 	static boolean excelFileClose=false;
 	static String outputFolderPath="Main output folder not generated in HelperCode";
+	static int executionCount=0;
 	public HelperCode() {
 
 	}
@@ -110,15 +112,20 @@ public class HelperCode {
 	public String outputProcessor(WebDriver driver, String action, int orderNo,String newOrderStatus,TestDataModel model,int rowPrint)
 			throws InterruptedException, IOException {
 		System.out.println("********************Output Processor Started**********************************");
+		System.out.println("<=====================================<<<<< OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" >>>>>==================================================>");
+		executionCount++;
+		
+		System.out.println("FolderCreation array form execution class ======================> "+Execution.folderPath[0]);
+		
 		boolean reportFlag=false;
-		//rowPrint++;
+		rowPrint++;
 		if(!newOrderStatus.equalsIgnoreCase("Terminate")) {
 		System.out.println("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus);
 		FolderStructure folderStructureObject=new FolderStructure();
-		folderPathArray=folderStructureObject.reportFolderCreator(rowPrint);
-		outputFolderPath=folderPathArray[0];
+		//folderPathArray=folderStructureObject.reportFolderCreator(rowPrint);
+		//outputFolderPath=folderPathArray[0];
 		System.out.println("New order status =====> "+newOrderStatus);
-		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
+		report = new ExtendReporter(Execution.folderPath[1],model.getScenario(),orderNo);
 		report.testCreation("Order Detail " + orderNo);
 		
 		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")))){
@@ -135,17 +142,17 @@ public class HelperCode {
 		if(reportFlag) {
 		System.out.println("Order no===========================================================> "+orderNo+"\nExecution Count==========================================>"+rowPrint);
 		//System.out.println("noRowInTestData : "+noRowInTestData+"\n folderPathArray[0] : "+folderPathArray[0]);
-		if(rowPrint==1) {
+		if(executionCount==1) {
 			CsvReaderCode reader=new CsvReaderCode();
 			noRowInTestData1=reader.noRowInTestData();
-			folderStructureObject.copyFile(folderPathArray[0]);
-		 excelWriter=new ApacheCode(folderPathArray[0]);
-		 excelWriter.outputFileWriterHeader(folderPathArray[0]);
+			folderStructureObject.copyFile(Execution.folderPath[0]);
+		 //excelWriter=new ApacheCode(folderPathArray[0]);
+		 Execution.apacheCodeObj.outputFileWriterHeader(Execution.folderPath[0]);
 		}
 		OrderDetail orderDetailObj = new OrderDetail();
-		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action);
+		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo());
 		
-		
+		System.out.println("OutSide orderDetailProvider method......");
 		orderDetailArray[0] = String.valueOf(orderNo);
 		orderDetailArray[1] = action;
 		if(action.equalsIgnoreCase("Partial Order")) {
@@ -164,11 +171,11 @@ public class HelperCode {
 			orderDetailArray[15] = resultString[0];
 		}
 		
-		pathArray = screenShotAndReportPath(driver, report,folderPathArray[2],model.getScenario(),orderNo);
+		pathArray = screenShotAndReportPath(driver, report,Execution.folderPath[2],model.getScenario(),orderNo);
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
-		excelWriter.excelWriter(orderDetailArray, rowPrint);
-		excelWriter.outputFileWriter(orderDetailArray, orderNo);
+		//Execution.apacheCodeObj.excelWriter(orderDetailArray, rowPrint);
+		//Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			System.out.println(orderDetail);
@@ -184,15 +191,16 @@ public class HelperCode {
 		//report.tearDown(resultString);
 		
 		System.out.println("<<=================================== After if else =======================================>>");
-		for(String orderDetail:orderDetailArray)
-			System.out.println(orderDetail);
+		/*
+		 * for(String orderDetail:orderDetailArray) System.out.println(orderDetail);
+		 */
 		if(orderDetailArray[2].equalsIgnoreCase("rejected")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 			countNewOrderReject++;
 		}
 		if(countNewOrderReject==4) {
 			if(excelFileClose==false) {
-			excelWriter.closeExcelWriting();
-			excelWriter.outputExcelFileClose(outputFolderPath);
+			//Execution.apacheCodeObj.closeExcelWriting();
+			//Execution.apacheCodeObj.outputExcelFileClose(outputFolderPath);
 			excelFileClose=true;
 			}else {
 				System.out.println("Excel file close successfully..........................");
@@ -201,16 +209,19 @@ public class HelperCode {
 		}else {
 			noRowInTestData1=0;
 			if(excelFileClose==false) {
-				excelWriter.closeExcelWriting();
-				excelWriter.outputExcelFileClose(outputFolderPath);
+				//Execution.apacheCodeObj.closeExcelWriting();
+				//Execution.apacheCodeObj.outputExcelFileClose(outputFolderPath);
+				excelFileClose=true;
 			}
 		}
 		System.out.println("Order no =====>  "+orderNo+"\nNoRowInTestData =======> "+noRowInTestData1);
 		if(noRowInTestData1==orderNo) {
 			System.out.println("Excel file closing...........");
-		excelWriter.closeExcelWriting();
-		excelWriter.outputExcelFileClose(outputFolderPath);
+			if(excelFileClose==false) {
+				//Execution.apacheCodeObj.closeExcelWriting();
+				//Execution.apacheCodeObj.outputExcelFileClose(outputFolderPath);
 		excelFileClose=true;
+			}
 		}
 		return orderDetailArray[2];
 	}

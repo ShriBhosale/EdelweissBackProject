@@ -3,16 +3,12 @@ package com.shreeya.page;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.util.ApacheCode;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
-import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
@@ -40,7 +36,7 @@ public class NewOrderPage extends SeleniumCoder {
 	
 
 	public HashMap newOrderExecution(TestDataModel model,WebDriver driver,int orderNo) throws InterruptedException, IOException {
-	
+		System.out.println("<=====================================@@@@@@@@@@@@@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@@@@@@@@@@@==================================================>");	
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		ConfigReader configReader=new ConfigReader();
 		String amoFlag=configReader.configReader("amoFlag");
@@ -60,7 +56,7 @@ public class NewOrderPage extends SeleniumCoder {
 		//sendKeyClickOnDownArrow(placeOrderTextField,model.getScript());
 		/*Thread.sleep(3000);*/
 		if(model.getSegment().equalsIgnoreCase("NSE")) {
-		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
+		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
 		clickElement(nseLink);
 		}else if(model.getSegment().equalsIgnoreCase("BSE")) {
 		bseLink=fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
@@ -91,7 +87,7 @@ public class NewOrderPage extends SeleniumCoder {
 		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
 		sendKey(enterPriceTextField, model.getOrderPrice());
 		
-		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
+		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
 		clickElement(OptionalFieldsLabel);
 		/*Thread.sleep(1000);*/
 		

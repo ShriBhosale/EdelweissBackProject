@@ -43,7 +43,7 @@ public class CsvReaderCode {
 		return new CSVWriter(outputfile);
 	}
 
-	public Iterator<TestDataModel> responseGenerator() {
+	public Iterator<TestDataModel> testDataProvider() {
 		ConfigReader configReader=new ConfigReader();
 		String testDataPath=configReader.configReader("TestData");
 		CSVReader reader = null;
@@ -68,7 +68,7 @@ public class CsvReaderCode {
 		System.out.println("****************************************Number no counting start***************************************************");
 		TestDataModel m1;
 		int i=0;
-		Iterator<TestDataModel> csvTestDataModelIterator=responseGenerator();
+		Iterator<TestDataModel> csvTestDataModelIterator=testDataProvider();
 		while (csvTestDataModelIterator.hasNext()) {
 			m1=csvTestDataModelIterator.next();
 			i++;

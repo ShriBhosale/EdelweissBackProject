@@ -13,20 +13,23 @@ public class FolderStructure {
 	public String[] reportFolderCreator(int orderNo) throws IOException {
 		System.out.println("reportFolderCreator orderNo =====> "+orderNo);
 		HelperCode helperObject = new HelperCode();
-		
+		String[] folderArray = { "no", "no" + "/HtmlReports",
+				"no" + "/Screenshots" };
 		String outputFile="FolderStructure not able give outputFile";
 		if(orderNo==1) {
 			timeStamp = helperObject.timeStampGenerator();
 			//copyFile(configReader.configReader("TestData")+".xlsx", "../WorkingE/Report" + timeStamp+"/OutputFile.xlsx");
 			//outputFile="../WorkingE/Report" + timeStamp+"/OutputFile.xlsx";
-		}
+	
 		String reportFolderPath = "../WorkingE/Report" + timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
-		String[] folderArray = { reportFolderPath, reportFolderPath + "/HtmlReports",
-				reportFolderPath + "/Screenshots" };
+		folderArray[0]=reportFolderPath;
+		folderArray[1]=reportFolderPath + "/HtmlReports";
+		folderArray[2]=reportFolderPath + "/Screenshots" ;
 		for (int i = 0; i < 3; i++) {
 			File reportFolder = new File(folderArray[i]);
 			reportFolder.mkdir();
+		}
 		}
 		return folderArray;
 	}

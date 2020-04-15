@@ -87,7 +87,7 @@ public class ExtendReporter {
 	}
 	
 	public void reportGenerator(String [] orderDetailArray,String [] passArray,TestDataModel model) {
-		
+		System.out.println("<========***====== Report Start generate "+model.getAction()+" "+model.getOrderNo()+" ===***======================>");
 		test.log(Status.INFO, "Action : "+orderDetailArray[1]);
 		test.log(Status.INFO, "Order Action :: "+orderDetailArray[3]);
 		test.log(Status.INFO, "Trading Symbol :: "+orderDetailArray[4]);
