@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import com.opencsv.CSVWriter;
 import com.shreeya.model.TestDataModel;
@@ -24,23 +25,24 @@ public class CxlOrderPage extends SeleniumCoder{
 	
 	
 	public HashMap<WebDriver, String> cxlExecution(WebDriver driver,int orderNo,String newOrderStatus,TestDataModel model) throws InterruptedException, IOException {
-		System.out.println("<=====================================@@@@@@@@@@@@@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@@@@@@@@@@@==================================================>");
+		Reporter.log("<===@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@====>");
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
+		Reporter.log("New order status "+newOrderStatus,true);
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
-		
+			
 		detail=new OrderDetail();
 		/*Thread.sleep(7000);*/
 		cxlLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a");
-		clickElement(cxlLink);
+		clickElement(cxlLink,"CXL link");
 		/*Thread.sleep(4000);*/
 		confirmButton=fluentWaitCodeXpath(driver,"//button[text()='Confirm']");
-		clickElement(confirmButton);
+		clickElement(confirmButton,"Confirm Button");
 		/*Thread.sleep(5000);*/
 		
 		}
-		/*String status=helperObject.outputProcessor(driver, "CXL", orderNo,newOrderStatus,model);*/
+		
 		mapObject.put(driver, "dfsf");
 		return mapObject;
 	}

@@ -26,6 +26,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.testng.Reporter;
 
 import com.google.common.base.Function;
 import com.shreeya.page.LoginPage;
@@ -41,6 +42,7 @@ public class SeleniumCoder {
 	}
 	
 	public WebDriver browserLaunch(String scenario) {
+		
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--incognito");
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
@@ -56,15 +58,15 @@ public class SeleniumCoder {
 		//driver.get("https://www.facebook.com/");
 		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
 		
-		log.info("Browser launch successfully.................");
+		Reporter.log("Browser Launch", true);
 		return driver;
 	}
 	
-	public void sendKey(WebElement element,String msg) throws InterruptedException {
+	public void sendKey(WebElement element,String msg,String elementName) throws InterruptedException {
 		/* Thread.sleep(2000); */
 		try {
 		element.sendKeys(msg);
-		System.out.println("element "+element+" msg : "+msg);
+		System.out.println("elementName : "+elementName+" msg : "+msg);
 		}catch(NullPointerException e) {
 			System.out.println(e);
 		}
@@ -81,13 +83,13 @@ public class SeleniumCoder {
 			}
 	}
 	
-	public void clickElement(WebElement element) throws InterruptedException {
+	public void clickElement(WebElement element,String elementName) throws InterruptedException {
 		try {
 		if(element.isEnabled()==true) {
 			element.click();
-			System.out.println("Click "+element);
+			System.out.println(elementName+" Click ");
 		}else {
-			System.out.println("no present");
+			System.out.println(elementName+" no present");
 		}
 		}catch(ElementNotInteractableException e) {
 			System.out.println("Convert driver into javascript than click on element.... ");
@@ -98,16 +100,16 @@ public class SeleniumCoder {
 	}
 	
 	public void downErrorKeyEnter(WebElement element) {
-		
+		Reporter.log("Click Down Error Button\nClick Enter Button");
 		element.sendKeys(Keys.DOWN);
 		element.sendKeys(Keys.ENTER);
 	}
 	
-	public void clearAndSendKey(WebElement element,String msg) {
+	public void clearAndSendKey(WebElement element,String msg,String elementName) {
 		try {
 		element.clear();
 		element.sendKeys(msg);
-		System.out.println("element "+element+" msg : "+msg);
+		System.out.println("elementName : "+elementName+" msg : "+msg);
 		}catch(NullPointerException e) {
 			System.out.println(e);
 		}
@@ -161,12 +163,13 @@ public class SeleniumCoder {
 		String elementText="no element text";
 		try {
 			elementText=element.getAttribute("innerHTML");
-			System.out.println(elementName+" found.");
+			Reporter.log(elementName+" : "+elementText, true);
+			
 		}catch(Exception e) {
-			System.out.println(elementName+" not found.");
-			System.out.println(e);
+			Reporter.log(elementName+" not found", true);
+			Reporter.log(e.getMessage(), true);
 		}
-		return  element.getAttribute("innerHTML");
+		return  elementText;
 	}
 	
 
@@ -294,6 +297,7 @@ public class SeleniumCoder {
 			   
 			  
 	public void hoverAndClickOption(WebDriver driver,String parentElementStr,String childElementStr) {
+		Reporter.log("Click on Buy/Sell button and click on place order link", true);
 		WebElement childElement=null;
 		WebElement parentElement=fluentWaitCodeXpath(driver,parentElementStr);
 		Actions action = new Actions(driver);

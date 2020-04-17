@@ -40,15 +40,15 @@ public class AmazoneExecution extends SeleniumCoder {
 		WebDriver driver = login.browserLaunch("amazone");
 		
 		WebElement firstNameTextField=fluentWaitCodeId(driver, "//*[@id=\"u_0_q\"]");
-		sendKey(firstNameTextField, searchItem);
+		sendKey(firstNameTextField, searchItem,"firstNameTextField");
 		WebElement sighNow = fluentWaitCodeXpath(driver, "//*[@id=\"u_0_s\"]");
-		sendKey(firstNameTextField, buyName);
+		sendKey(firstNameTextField, buyName,"sighNow");
 		WebElement nameTextfield=fluentWaitCodeXpath(driver, "//*[@id=\"u_0_v\"]");
-		sendKey(nameTextfield,buyName);
+		sendKey(nameTextfield,buyName,"nameTextfield");
 		WebElement phoneTextfield=fluentWaitCodeXpath(driver, "//*[@id=\"u_0_10\"]");
-		sendKey(phoneTextfield,phoneNo);
+		sendKey(phoneTextfield,phoneNo,"phoneTextfield");
 		WebElement emailTextfield=fluentWaitCodeXpath(driver, "//*[@id=\"email\"]");
-		sendKey(emailTextfield,emailID);
+		sendKey(emailTextfield,emailID,"emailTextfield");
 
 	}
 

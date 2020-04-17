@@ -28,11 +28,12 @@ public class Tet {
 	 String[] headerArray=null;
 	 static FileOutputStream fileOut=null;
 	 static Workbook wb ;
+	 String inputFile="E:\\EdelweissProject\\WorkingE\\Report1587042243321\\OutputFile.xlsx";
 	 
 	 public FileOutputStream outputFileWriterHeader() throws IOException {
 		 int counter=15;
 		 
-		 InputStream inp = new FileInputStream("E:\\EdelweissProject\\WorkingE\\Report1586750708758\\OutputFile.xlsx");
+		 InputStream inp = new FileInputStream(inputFile);
 			String[] headerArray = {"Rejection Reason",
 					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 			wb= WorkbookFactory.create(inp);
@@ -83,7 +84,7 @@ public class Tet {
 					cell.setCellValue(orderDetailArray[i]);
 				}
 			 
-			// wb.write(fileOut);
+			//wb.write(fileOut);
 			 
 			
 			counter++;
@@ -106,38 +107,31 @@ public class Tet {
 
 		}
 	public static void main(String[] args) throws IOException {
-		/*
-		 * Tet t=new Tet(); String [] orderDetailArray=
-		 * {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30",
-		 * "LIMIT","60003800","NSE","DAY","200410000000007","1",
-		 * "0","16387 : Security is not allowed to trade in this market","FAIL\r\n" +
-		 * "","../WorkingE/Report_FailedReport/FailReport_1586592711291.html",
-		 * "../WorkingE/Report_FailedReport/Screenshot/Screenshot.png"};
-		 * 
-		 * t.outputFileWriterHeader(); t.outputFileWriter(orderDetailArray, 4);
-		 * t.outputFileWriter(orderDetailArray, 5); t.outputFileWriter(orderDetailArray,
-		 * 6);
-		 * 
-		 * t.outputExcelFileClose();
-		 */
 		
-		int i=10;
-		if(i>=10)
-			System.out.println("it working");
-		else
-			System.out.println("It is not working");
+		  Tet t=new Tet(); String [] orderDetailArray=
+		  {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30",
+		  "LIMIT","60003800","NSE","DAY","200410000000007","1",
+		  "0","16387 : Security is not allowed to trade in this market","FAIL\r\n" +
+		  "","../WorkingE/Report_FailedReport/FailReport_1586592711291.html",
+		  "../WorkingE/Report_FailedReport/Screenshot/Screenshot.png"};
+		  
+		  t.outputFileWriterHeader(); 
+		  t.outputFileWriter(orderDetailArray, 4);
+		  t.outputFileWriter(orderDetailArray, 5);
+		  t.outputFileWriter(orderDetailArray,6);
+		  
+		  t.outputExcelFileClose();
 		
 	}
 	
 	
 	
 	public void outputExcelFileClose() throws IOException {
-		/*
-		 * fileOut = new FileOutputStream(
-		 * "E:\\EdelweissProject\\WorkingE\\Report1586750708758\\OutputFile.xlsx");
-		 * 
-		 * wb.write(fileOut); fileOut.close();
-		 */
+		
+		  fileOut = new FileOutputStream(inputFile);
+		  
+		  wb.write(fileOut); fileOut.close();
+		 
 		
 		
 		

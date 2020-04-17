@@ -1,5 +1,6 @@
 package com.shreeya.experiment;
 
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -10,7 +11,9 @@ public class TestNgTag {
 
 	@BeforeTest
 	public void m1() {
-		System.out.println("Before Test methode");
+		Execution e=new Execution();
+		Reporter.log("<b>Abc</b>",true);
+		e.abc();
 	}
 	
 	@BeforeMethod

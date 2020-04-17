@@ -1,5 +1,7 @@
 package com.shreeya.experiment;
 
+import org.testng.Reporter;
+
 import com.shreeya.util.FolderStructure;
 
 public class Execution {
@@ -15,6 +17,10 @@ public class Execution {
 		String relativePath="../"+pathArray[pathArray.length-1]+"/Report";
 		System.out.println(relativePath);
 		return relativePath;
+	}
+	
+	public void abc() {
+		Reporter.log("Hello shreeya I am from execution ",true);
 	}
 	public static void main(String[] args) {
 		FolderStructure folder=new FolderStructure();

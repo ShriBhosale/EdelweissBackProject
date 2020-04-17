@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.testng.Reporter;
 
 import com.google.common.io.Files;
 
@@ -11,7 +12,9 @@ public class FolderStructure {
 	static String timeStamp;
 	ConfigReader configReader=new ConfigReader();
 	public String[] reportFolderCreator(int orderNo) throws IOException {
-		System.out.println("reportFolderCreator orderNo =====> "+orderNo);
+		Reporter.log("Folder Structure creation method ", true);
+		Reporter.log("orderNo ===> "+orderNo, true);
+		
 		HelperCode helperObject = new HelperCode();
 		String[] folderArray = { "no", "no" + "/HtmlReports",
 				"no" + "/Screenshots" };
@@ -26,9 +29,13 @@ public class FolderStructure {
 		folderArray[0]=reportFolderPath;
 		folderArray[1]=reportFolderPath + "/HtmlReports";
 		folderArray[2]=reportFolderPath + "/Screenshots" ;
+		
 		for (int i = 0; i < 3; i++) {
 			File reportFolder = new File(folderArray[i]);
+			if(!reportFolder.exists()) {
+			Reporter.log("FolderArray["+i+"] : "+folderArray[i], true);
 			reportFolder.mkdir();
+			}
 		}
 		}
 		return folderArray;
@@ -46,13 +53,14 @@ public class FolderStructure {
 	}
 	
 	public String copyFile(String targetName) throws IOException {
+		
 		ConfigReader configReader=new ConfigReader();
 		File source = new File(configReader.configReader("TestData")+".xlsx");
         File dest = new File(targetName+"/OutputFile.xlsx");
 
         FileUtils.copyFile(source, dest);
-        System.out.println("TestData File copy into output folder");
-        System.out.println(dest.toPath());
+        Reporter.log("TestData File copy into output folder",true);
+        Reporter.log("Output excel file : "+dest.toPath(),true);
 		return dest.toString();
 				
 	}

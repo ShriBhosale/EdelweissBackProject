@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -25,8 +26,11 @@ public class ExtendReporter {
 	private String reportPathString;
 	
 	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
+		Reporter.log("<====ExtendReporter Constructor===>",true);
+		Reporter.log("Scenario : "+scenario,true);
 		helperObject=new HelperCode();
 		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".html";
+		Reporter.log("Report Path String"+reportPathString,true);
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		
@@ -60,6 +64,7 @@ public class ExtendReporter {
 
 
 	public void testCreation(String testName) {
+		Reporter.log("Extend Report Test Name : "+testName,true);
 		test = report.createTest(testName);
 	}
 	
@@ -71,7 +76,7 @@ public class ExtendReporter {
 	}
 	
 	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {
-		
+		Reporter.log("Capture Screenshot",true);
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
 		String dest =folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".png";
@@ -81,13 +86,15 @@ public class ExtendReporter {
 	}
 
 	public void logsPrinter(ArrayList<String> msgs) {
+		
 		for(String msg:msgs) {
 			test.log(Status.INFO, msg);
+			Reporter.log(msg,true);
 		}
 	}
 	
 	public void reportGenerator(String [] orderDetailArray,String [] passArray,TestDataModel model) {
-		System.out.println("<========***====== Report Start generate "+model.getAction()+" "+model.getOrderNo()+" ===***======================>");
+		Reporter.log("<=== Report Start generate "+model.getAction()+" "+model.getOrderNo()+" ===>",true);
 		test.log(Status.INFO, "Action : "+orderDetailArray[1]);
 		test.log(Status.INFO, "Order Action :: "+orderDetailArray[3]);
 		test.log(Status.INFO, "Trading Symbol :: "+orderDetailArray[4]);
@@ -141,6 +148,8 @@ public class ExtendReporter {
 	}
 	
 	public void logFlush() {
+		Reporter.log("Extend Log Flush",true);
+		Reporter.log("Reporter path ===> "+reportPathString,true);
 		report.flush();
 		
 	}
@@ -152,7 +161,7 @@ public class ExtendReporter {
 	}
 	
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
-		System.out.println("Abnormal Error Handly");
+		Reporter.log("Abnormal Error Handly",true);
 		FolderStructure folderObject=new FolderStructure();
 		String [] folderArray=folderObject.reportFolderCreator(1);
 		ExtendReporter report=new  ExtendReporter(folderArray[0],"Abnormal Termination",1); 
@@ -161,8 +170,8 @@ public class ExtendReporter {
 		String screenshotPath=report.addScreenshotMethod(driver,folderArray[2],"Abnormal Termination",1);
 		report.logFlush();
 		driver.close();
-		System.out.println("Driver close");
-		System.out.println("Screenshot path =======> "+screenshotPath);
+		Reporter.log("Driver close",true);
+		Reporter.log("Screenshot path =======> "+screenshotPath,true);
 		System.exit(0);
 	}
 	

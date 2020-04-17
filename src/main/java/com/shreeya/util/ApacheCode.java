@@ -20,14 +20,15 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.Reporter;
 
 public class ApacheCode {
 
-	XSSFWorkbook workbook;
-	Workbook wb;
-	FileOutputStream out;
-	XSSFSheet sheet;
-	Sheet outputsheet;
+	static XSSFWorkbook workbook;
+	static Workbook wb;
+	static FileOutputStream out;
+	static XSSFSheet sheet;
+	static Sheet outputsheet;
 	public static FileOutputStream fileOut=null;
 
 	HelperCode helper=new HelperCode();
@@ -92,7 +93,7 @@ public class ApacheCode {
 
 			workbook.write(out);
 			out.close();
-			System.out.println("gfgcontribute.xlsx written successfully on disk.");
+			Reporter.log("Close excel file.",true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,7 +119,7 @@ public class ApacheCode {
 			 hyperLinkName="Screenshot";
 		 cell.setCellValue(hyperLinkName);
 		 Hyperlink href = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
-			System.out.println("HyperLink Path ======> "+pathStrProcces(orderDetails[i]));
+			Reporter.log("HyperLink Path ======> "+pathStrProcces(orderDetails[i]),true);
 		 href.setAddress(pathStrProcces(orderDetails[i]));
 			cell.setHyperlink(href);
 		}else {
@@ -131,13 +132,13 @@ public class ApacheCode {
 		String str=null;
 		char [] c=pathStr.toCharArray();
 		/*for(int i=0;i<pathStr.length();i++) {
-			System.out.println(c[i]+" count "+i);
+			Reporter.log(c[i]+" count "+i);
 		}*/
 		
 		String abc=pathStr.substring(11);
 		
 		abc=".."+abc;
-		System.out.println(abc);
+		Reporter.log(abc,true);
 		return abc;
 
 	}
@@ -190,7 +191,7 @@ public class ApacheCode {
 					new File("E:\\EdelweissProject\\Reports\\ReportInExcel\\demo1.xlsx"));
 			workbook.write(out);
 			out.close();
-			System.out.println("gfgcontribute.xlsx written successfully on disk.");
+			Reporter.log("gfgcontribute.xlsx written successfully on disk.",true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -257,9 +258,9 @@ public class ApacheCode {
 	
 	}
 	
-	 public FileOutputStream outputFileWriterHeader(String folderPathString) throws IOException {
+	 public void outputFileWriterHeader(String folderPathString) throws IOException {
 		 int counter=15;
-		 
+		 Reporter.log("Start Write in output excel file",true);
 		 InputStream inp = new FileInputStream(folderPathString+"/OutputFile.xlsx");
 			String[] headerArray = {"Rejection Reason",
 					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
@@ -278,22 +279,21 @@ public class ApacheCode {
 			 
 			counter++;
 			} 
-			return fileOut;
+			//return fileOut;
 	 }
 	 
-	 public FileOutputStream outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
+	 public void outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
+		 Reporter.log("Writer Order detail with link in outputExcel",true);
 		 int counter=15;
 		 String hyperLinkName = null;
 			Row row = outputsheet.getRow(rowNo);
+			Reporter.log("Row Object ====> "+row+"\nOutputSheet Object ====> "+outputsheet,true);
 			for(int i=14;i<orderDetailArray.length;i++)
 			{
 			Cell cell = row.getCell(counter);
 			
 			if (cell == null)
 			    cell = row.createCell(counter);
-			
-			
-			
 			
 			 if(i==16||i==17) {
 				 
@@ -303,21 +303,21 @@ public class ApacheCode {
 					 hyperLinkName="Screenshot";
 				 cell.setCellValue(hyperLinkName);
 				 Hyperlink href = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
-					System.out.println("HyperLink Path ======> "+pathStrProcces(orderDetailArray[i]));
+					Reporter.log("HyperLink Path ======> "+pathStrProcces(orderDetailArray[i]),true);
 				 href.setAddress(pathStrProcces(orderDetailArray[i]));
 					cell.setHyperlink(href);
 				}else {
-			
+					
 					cell.setCellValue(orderDetailArray[i]);
-					System.out.println(orderDetailArray[i]);
+					Reporter.log(orderDetailArray[i],true);
 				}
 			 
-			// wb.write(fileOut);
+			 //wb.write(fileOut);
 			 
 			
 			counter++;
 			}
-			return fileOut;
+			
 	 }
 	 public void outputExcelFileClose(String folderPathString) throws IOException {
 			fileOut = new FileOutputStream(folderPathString+"/OutputFile.xlsx");

@@ -10,6 +10,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.HelperCode;
@@ -41,8 +42,8 @@ public class OrderDetail extends SeleniumCoder {
 	private List<WebElement> listForNestId;
 
 	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet) throws InterruptedException {
-		System.out.println("*<============ orderDetailProvider Method Start ===================>*");
-		System.out.println("<=====================================<<<<<******** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" *************>>>>>==================================================>");
+		Reporter.log("*<==== orderDetailProvider Method Start ====>*",true);
+		Reporter.log("===<<<<<*** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" ***>>>>>===>",true);
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
 		String[] orderDetailList = { "no id", "no Action", "no Status", "no Order Action", "no Trading Symbol",
@@ -51,29 +52,31 @@ public class OrderDetail extends SeleniumCoder {
 				"ScriptResult", "Report link", "Screenshot link1"};
 		Thread.sleep(3000);
 		if(action.equalsIgnoreCase("Partial Order")) {
+			Reporter.log("Partial Order\nRefresh page",true);
 			driver.navigate().refresh();
 			afterRefreshPage(driver);
 		}
 		try {
 		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
-		System.out.println("Click on details button");
+		
 
-		clickElement(detailsTab);
+		clickElement(detailsTab,"Details tab");
 		}catch(StaleElementReferenceException e) {
 			Thread.sleep(3000);
 			detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
-			clickElement(detailsTab);
-			System.out.println("Click on 2nd time details button");
+			clickElement(detailsTab,"Details tab");
+			Reporter.log("Click on 2nd time details button",true);
 			Thread.sleep(2000);
 		}
 		ConfigReader configReader=new ConfigReader();
 		String amoFlag=configReader.configReader("amoFlag");
 		Thread.sleep(3000);
 		if(action.equalsIgnoreCase("Mod")) {
+			Reporter.log("Action : "+action,true);
 			List<WebElement> statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
 			Thread.sleep(6000);
 			for(WebElement statusElement:statusList) {
-				System.out.println(fetchTextFromElement(statusElement,"Mod Status"));
+				Reporter.log(fetchTextFromElement(statusElement,"Mod Status"),true);
 			}
 			String statusForMod=fetchTextFromElement(statusList.get(1),"Mod Status");
 			if(statusForMod.equalsIgnoreCase("modified")) {
@@ -81,7 +84,7 @@ public class OrderDetail extends SeleniumCoder {
 			}else {
 				orderDetailList[2]=fetchTextFromElement(statusList.get(0),"Status Not modified");
 			}
-			
+			Reporter.log("Status for Mod : "+orderDetailList[2],true);
 		}else {
 		try {
 			
@@ -154,13 +157,15 @@ public class OrderDetail extends SeleniumCoder {
 		WebElement abc = listForNestId.get(0);
 		text = abc.getAttribute("innerHTML");
 		orderDetailList[11] = helper.nestIdProvider(text);
+		Reporter.log("Nest id : "+orderDetailList[11], true);
 		}else {
 			WebElement nestIdLabel=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
 			rowNestIdString=fetchTextFromElement(nestIdLabel,"NestId");
-			System.out.println("Row Nestid string ===> "+rowNestIdString);
+			Reporter.log("Row Nestid string ===> "+rowNestIdString,true);
 			orderDetailList[11] = helper.removeExtraString(rowNestIdString,"|");
+			Reporter.log("Nest id : "+orderDetailList[11], true);
 			 if(action.equalsIgnoreCase("Partial Order")) {
-				 
+				
 				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
 				 
 			 }else {
@@ -171,55 +176,52 @@ public class OrderDetail extends SeleniumCoder {
 
 			if(!orderDetailList[2].equalsIgnoreCase("Rejected")) {
 			WebElement executedSharesLable=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
-			System.out.println("Executed Shares =====>  "+fetchTextFromElement(executedSharesLable,"executed Shares Lable"));
+			Reporter.log("Executed Shares =====>  "+fetchTextFromElement(executedSharesLable,"executed Shares Lable"),true);
 			}
 		}
 		Thread.sleep(4000);
 		 //uncoment in partial order scenario 2 below line
 		 //partialQtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
 		/* orderDetailList[13]=fetchTextFromElement(partialQtyLabel); */
-		System.out.println("Nest id : "+orderDetailList[11]);
-		System.out.println("Inside orderDetailProvider method......");
+		Reporter.log("Nest id : "+orderDetailList[11],true);
+		Reporter.log("Inside orderDetailProvider method......",true);
 		return orderDetailList;
 	}
 	
 	public void amoCheckbox(String checked,WebDriver driver) throws InterruptedException {
-		System.out.println("AMO CheckBox checking....");
+		Reporter.log("AMO CheckBox checking....",true);
 		//Thread.sleep(3000);
 		if(checked.equalsIgnoreCase("true")) {
 			try {
 		boolean flag = elementPresentOrNot(driver,"//label[@class='amo-text rect-label']","xpath");
-		System.out.println("After Checking amo checkbox present....");
+		Reporter.log("After Checking amo checkbox present....",true);
 		if(flag) {
 			WebElement amoCheckBox =fluentWaitCodeXpath(driver,"//label[@class='amo-text rect-label']");
 			boolean amoFlag = amoCheckBox.isEnabled();
 			if(amoFlag)
 			{
-				clickElement(amoCheckBox);
+				clickElement(amoCheckBox,"AMO check box");
 			}
 		}
 		}catch(TimeoutException e) {
-			System.out.println("AMO CheckBox does not present");
+			Reporter.log("AMO CheckBox does not present",true);
 		}
 		}
 		
 	}
 	
 	public void afterRefreshPage(WebDriver driver) throws InterruptedException {
-		/*buyAndSellButton=fluentWaitCodeXpath(driver, "//*[@id=\"QuickSB\"]",60);
-		clickElement(buyAndSellButton);
-		placeOrderLink=fluentWaitCodeXpath(driver, "//*[@id=\"headerCntr\"]/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
-		clickElement(placeOrderLink);*/
+		
 		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
 		orderStatusLink=fluentWaitCodeXpath(driver, "//a[text()='Order Status' and @class='toc-tab-link']");
-		clickElement(orderStatusLink);
+		clickElement(orderStatusLink,"Order Status Tab");
 	}
 
 	/*
 	 * public void printElement(WebDriver driver) throws InterruptedException {
 	 * String[] orderDetailArray = null; orderDetailArray =
 	 * orderDetailProvider(driver, "New"); for (String element : orderDetailArray) {
-	 * System.out.println(element); } }
+	 * Reporter.log(element); } }
 	 */
 
 }

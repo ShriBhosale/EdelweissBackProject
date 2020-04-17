@@ -7,18 +7,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Reporter;
 import org.testng.TestNG;
+import org.testng.annotations.Test;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import com.shreeya.experiment.ParalleExecution;
 import com.shreeya.model.LoginModel;
 import com.shreeya.util.CsvReaderCode;
 
 public class MyTestLauncher {
 	public static ArrayList<LoginModel> loginData;
-	public static void main(String[] args) throws IOException {
+
+
+	public static void main( String[] args ) throws IOException {
+		Reporter.log("================<< Execution Started >>================");
 		// TODO Auto-generated method stub
 		CsvReaderCode csvReader = new CsvReaderCode(); 
 		loginData =csvReader.LoginFileReader();

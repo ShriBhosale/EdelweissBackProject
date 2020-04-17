@@ -3,6 +3,7 @@ package com.shreeya.page;
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
@@ -16,6 +17,7 @@ public class PartialOrderPage extends SeleniumCoder {
 	WebDriver driver;
 	
 	public void partialOrderExecution(TestDataModel model,int orderNo,LoginModel loginModel) throws InterruptedException, IOException {
+		Reporter.log("Partial Order Execution Method",true);
 		LoginPage loginObject=new LoginPage();
 		NewOrderPage newObect=new NewOrderPage();
 		//driver=loginObject.loginExecution(loginModel);
@@ -25,6 +27,7 @@ public class PartialOrderPage extends SeleniumCoder {
 	}
 	
 	public void orderDetail(WebDriver driver,TestDataModel model,int orderNo) throws InterruptedException, IOException {
+		Reporter.log("Partial Order : Order Detail ", true);
 		HelperCode helperCodeObj=new HelperCode();
 		orderNo++;
 		helperCodeObj.outputProcessor(driver, "Partial Order", orderNo, "Open", model,0);

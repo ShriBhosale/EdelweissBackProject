@@ -1,21 +1,877 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
   <reporter-output>
+    <line>
+      <![CDATA[================<< Execution Started >>================]]>
+    </line>
+    <line>
+      <![CDATA[Execution Before ]]>
+    </line>
+    <line>
+      <![CDATA[================<< Execution Started >>================]]>
+    </line>
+    <line>
+      <![CDATA[Execution Before ]]>
+    </line>
+    <line>
+      <![CDATA[Folder Structure creation method ]]>
+    </line>
+    <line>
+      <![CDATA[orderNo ===> 1]]>
+    </line>
+    <line>
+      <![CDATA[Folder Structure creation method ]]>
+    </line>
+    <line>
+      <![CDATA[orderNo ===> 1]]>
+    </line>
+    <line>
+      <![CDATA[1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[0] : ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[0] : ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[1] : ../WorkingE/Report1587045578589/HtmlReports]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[1] : ../WorkingE/Report1587045578589/HtmlReports]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[2] : ../WorkingE/Report1587045578589/Screenshots]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[2] : ../WorkingE/Report1587045578589/Screenshots]]>
+    </line>
+    <line>
+      <![CDATA[1587045579053]]>
+    </line>
+    <line>
+      <![CDATA[1587045579053]]>
+    </line>
+    <line>
+      <![CDATA[Before Test case...]]>
+    </line>
+    <line>
+      <![CDATA[Before Test case...]]>
+    </line>
+    <line>
+      <![CDATA[BeforeMethod]]>
+    </line>
+    <line>
+      <![CDATA[BeforeMethod]]>
+    </line>
+    <line>
+      <![CDATA[*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********]]>
+    </line>
+    <line>
+      <![CDATA[*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********]]>
+    </line>
+    <line>
+      <![CDATA[Before Iterator 2]]>
+    </line>
+    <line>
+      <![CDATA[After Iterator]]>
+    </line>
+    <line>
+      <![CDATA[Before Iterator 1]]>
+    </line>
+    <line>
+      <![CDATA[After Iterator]]>
+    </line>
+    <line>
+      <![CDATA[Login Data ====> LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=12, endRowNo=12, executionType=normal]]]>
+    </line>
+    <line>
+      <![CDATA[Login Data ====> LoginModel [referNo=1, userId=Sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=6, executionType=normal]]]>
+    </line>
+    <line>
+      <![CDATA[Browser Launch]]>
+    </line>
+    <line>
+      <![CDATA[Browser Launch]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[<========OrderActionStart=======>]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=12, endRowNo=12, executionType=normal]]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 1]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 2]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 3]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 4]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 5]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 6]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 7]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 8]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 9]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 10]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 11]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 12]]>
+    </line>
+    <line>
+      <![CDATA[Order No ========================@> 12
+StartExecutionNo =======================@> 12]]>
+    </line>
+    <line>
+      <![CDATA[Scenarion : Fresh Order Placement
+Action : New
+NewOrderStatus : rejected]]>
+    </line>
+    <line>
+      <![CDATA[<====@@@@ OrderNo in Sheet 12 Action : New @@@@===>]]>
+    </line>
+    <line>
+      <![CDATA[New Order execution Started..........]]>
+    </line>
+    <line>
+      <![CDATA[<========OrderActionStart=======>]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel [referNo=1, userId=Sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=6, executionType=normal]]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 1]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 2]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 3]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 4]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 5]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 6]]>
+    </line>
+    <line>
+      <![CDATA[Order No ========================@> 6
+StartExecutionNo =======================@> 6]]>
+    </line>
+    <line>
+      <![CDATA[Scenarion : Fresh Order Placement
+Action : New
+NewOrderStatus : rejected]]>
+    </line>
+    <line>
+      <![CDATA[<====@@@@ OrderNo in Sheet 6 Action : New @@@@===>]]>
+    </line>
+    <line>
+      <![CDATA[New Order execution Started..........]]>
+    </line>
+    <line>
+      <![CDATA[This is product type ====> NRML]]>
+    </line>
+    <line>
+      <![CDATA[AMO CheckBox checking....]]>
+    </line>
+    <line>
+      <![CDATA[After Checking amo checkbox present....]]>
+    </line>
+    <line>
+      <![CDATA[This is product type ====> NRML]]>
+    </line>
+    <line>
+      <![CDATA[Action ====> New newOrderStatus =====> rejected
+RowNo==============> 1]]>
+    </line>
+    <line>
+      <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet 12 Action : New >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[Action ======>  New
+NewOrderStatus =====>  rejected]]>
+    </line>
+    <line>
+      <![CDATA[New order status =====> rejected]]>
+    </line>
+    <line>
+      <![CDATA[<====ExtendReporter Constructor===>]]>
+    </line>
+    <line>
+      <![CDATA[Scenario : Fresh Order Placement]]>
+    </line>
+    <line>
+      <![CDATA[1587045629811]]>
+    </line>
+    <line>
+      <![CDATA[Report Path String../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+    </line>
+    <line>
+      <![CDATA[AMO CheckBox checking....]]>
+    </line>
+    <line>
+      <![CDATA[After Checking amo checkbox present....]]>
+    </line>
+    <line>
+      <![CDATA[Extend Report Test Name : Order Detail 12]]>
+    </line>
+    <line>
+      <![CDATA[Execution Count : 2]]>
+    </line>
+    <line>
+      <![CDATA[Execution no ===> 1]]>
+    </line>
+    <line>
+      <![CDATA[TestData File copy into output folder]]>
+    </line>
+    <line>
+      <![CDATA[Output excel file : ..\WorkingE\Report1587045578589\OutputFile.xlsx]]>
+    </line>
+    <line>
+      <![CDATA[Start Write in output excel file]]>
+    </line>
+    <line>
+      <![CDATA[Action ====> New newOrderStatus =====> rejected
+RowNo==============> 1]]>
+    </line>
+    <line>
+      <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet 6 Action : New >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[Action ======>  New
+NewOrderStatus =====>  rejected]]>
+    </line>
+    <line>
+      <![CDATA[New order status =====> rejected]]>
+    </line>
+    <line>
+      <![CDATA[<====ExtendReporter Constructor===>]]>
+    </line>
+    <line>
+      <![CDATA[Scenario : Fresh Order Placement]]>
+    </line>
+    <line>
+      <![CDATA[1587045630919]]>
+    </line>
+    <line>
+      <![CDATA[Report Path String../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+    </line>
+    <line>
+      <![CDATA[Extend Report Test Name : Order Detail 6]]>
+    </line>
+    <line>
+      <![CDATA[Execution Count : 2]]>
+    </line>
+    <line>
+      <![CDATA[Execution no ===> 2]]>
+    </line>
+    <line>
+      <![CDATA[*<==== orderDetailProvider Method Start ====>*]]>
+    </line>
+    <line>
+      <![CDATA[===<<<<<*** OrderNo in Sheet 6 Action : New ***>>>>>===>]]>
+    </line>
+    <line>
+      <![CDATA[*<==== orderDetailProvider Method Start ====>*]]>
+    </line>
+    <line>
+      <![CDATA[===<<<<<*** OrderNo in Sheet 12 Action : New ***>>>>>===>]]>
+    </line>
+    <line>
+      <![CDATA[Status : open]]>
+    </line>
+    <line>
+      <![CDATA[Buy or Sell : BUY]]>
+    </line>
+    <line>
+      <![CDATA[Trading symbol : Accelya Soln India Ltd]]>
+    </line>
+    <line>
+      <![CDATA[Product type : NRML]]>
+    </line>
+    <line>
+      <![CDATA[Status : open]]>
+    </line>
+    <line>
+      <![CDATA[Buy or Sell : BUY]]>
+    </line>
+    <line>
+      <![CDATA[Trading symbol : Accelya Soln India Ltd]]>
+    </line>
+    <line>
+      <![CDATA[Product type : NRML]]>
+    </line>
+    <line>
+      <![CDATA[Order Price : 878.30]]>
+    </line>
+    <line>
+      <![CDATA[Order Price : 884.30]]>
+    </line>
+    <line>
+      <![CDATA[Order Type : LIMIT]]>
+    </line>
+    <line>
+      <![CDATA[User Id : SANJAY15]]>
+    </line>
+    <line>
+      <![CDATA[Exchange : NSE]]>
+    </line>
+    <line>
+      <![CDATA[Validity : DAY]]>
+    </line>
+    <line>
+      <![CDATA[Order Qty : 1]]>
+    </line>
+    <line>
+      <![CDATA[Order Type : LIMIT]]>
+    </line>
+    <line>
+      <![CDATA[User Id : 60003800]]>
+    </line>
+    <line>
+      <![CDATA[Exchange : NSE]]>
+    </line>
+    <line>
+      <![CDATA[Validity : DAY]]>
+    </line>
+    <line>
+      <![CDATA[Order Qty : 1]]>
+    </line>
+    <line>
+      <![CDATA[Nest id : 1000000001534583 ]]>
+    </line>
+    <line>
+      <![CDATA[Nest id : 1000000001534584 ]]>
+    </line>
+    <line>
+      <![CDATA[Nest id : 1000000001534583 ]]>
+    </line>
+    <line>
+      <![CDATA[Inside orderDetailProvider method......]]>
+    </line>
+    <line>
+      <![CDATA[OutSide orderDetailProvider method......]]>
+    </line>
+    <line>
+      <![CDATA[<=== passFail Result New 6 ===>]]>
+    </line>
+    <line>
+      <![CDATA[Action Result ===> PASS
+Mod Scenario wise Result ====> NOT MOD]]>
+    </line>
+    <line>
+      <![CDATA[<=== Report Start generate New 6 ===>]]>
+    </line>
+    <line>
+      <![CDATA[Capture Screenshot]]>
+    </line>
+    <line>
+      <![CDATA[Nest id : 1000000001534584 ]]>
+    </line>
+    <line>
+      <![CDATA[Inside orderDetailProvider method......]]>
+    </line>
+    <line>
+      <![CDATA[OutSide orderDetailProvider method......]]>
+    </line>
+    <line>
+      <![CDATA[<=== passFail Result New 12 ===>]]>
+    </line>
+    <line>
+      <![CDATA[Action Result ===> PASS
+Mod Scenario wise Result ====> NOT MOD]]>
+    </line>
+    <line>
+      <![CDATA[<=== Report Start generate New 12 ===>]]>
+    </line>
+    <line>
+      <![CDATA[Capture Screenshot]]>
+    </line>
+    <line>
+      <![CDATA[1587045656036]]>
+    </line>
+    <line>
+      <![CDATA[1587045656036]]>
+    </line>
+    <line>
+      <![CDATA[Writer Order detail with link in outputExcel]]>
+    </line>
+    <line>
+      <![CDATA[Writer Order detail with link in outputExcel]]>
+    </line>
+    <line>
+      <![CDATA[Row Object ====> <xml-fragment r="7" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <main:c r="A7">
+    <main:v>6</main:v>
+  </main:c>
+  <main:c r="B7">
+    <main:v>60003800</main:v>
+  </main:c>
+  <main:c r="C7" t="s">
+    <main:v>15</main:v>
+  </main:c>
+  <main:c r="D7">
+    <main:v>2000</main:v>
+  </main:c>
+  <main:c r="E7" t="s">
+    <main:v>23</main:v>
+  </main:c>
+  <main:c r="F7" t="s">
+    <main:v>24</main:v>
+  </main:c>
+  <main:c r="G7" t="s">
+    <main:v>18</main:v>
+  </main:c>
+  <main:c r="H7" t="s">
+    <main:v>19</main:v>
+  </main:c>
+  <main:c r="I7" t="s">
+    <main:v>20</main:v>
+  </main:c>
+  <main:c r="J7">
+    <main:v>879.31</main:v>
+  </main:c>
+  <main:c r="K7">
+    <main:v>890.3</main:v>
+  </main:c>
+  <main:c r="L7" t="s">
+    <main:v>21</main:v>
+  </main:c>
+  <main:c r="M7">
+    <main:v>1</main:v>
+  </main:c>
+  <main:c r="N7">
+    <main:v>2</main:v>
+  </main:c>
+  <main:c r="O7" t="s">
+    <main:v>22</main:v>
+  </main:c>
+</xml-fragment>
+OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml]]>
+    </line>
+    <line>
+      <![CDATA[Row Object ====> <xml-fragment r="13" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <main:c r="A13">
+    <main:v>12</main:v>
+  </main:c>
+  <main:c r="B13">
+    <main:v>60003800</main:v>
+  </main:c>
+  <main:c r="C13" t="s">
+    <main:v>15</main:v>
+  </main:c>
+  <main:c r="D13">
+    <main:v>2000</main:v>
+  </main:c>
+  <main:c r="E13" t="s">
+    <main:v>23</main:v>
+  </main:c>
+  <main:c r="F13" t="s">
+    <main:v>24</main:v>
+  </main:c>
+  <main:c r="G13" t="s">
+    <main:v>18</main:v>
+  </main:c>
+  <main:c r="H13" t="s">
+    <main:v>19</main:v>
+  </main:c>
+  <main:c r="I13" t="s">
+    <main:v>20</main:v>
+  </main:c>
+  <main:c r="J13">
+    <main:v>885.31</main:v>
+  </main:c>
+  <main:c r="K13">
+    <main:v>890.3</main:v>
+  </main:c>
+  <main:c r="L13" t="s">
+    <main:v>21</main:v>
+  </main:c>
+  <main:c r="M13">
+    <main:v>1</main:v>
+  </main:c>
+  <main:c r="N13">
+    <main:v>2</main:v>
+  </main:c>
+  <main:c r="O13" t="s">
+    <main:v>22</main:v>
+  </main:c>
+</xml-fragment>
+OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml]]>
+    </line>
+    <line>
+      <![CDATA[Rejection Reason]]>
+    </line>
+    <line>
+      <![CDATA[Rejection Reason]]>
+    </line>
+    <line>
+      <![CDATA[PASS]]>
+    </line>
+    <line>
+      <![CDATA[PASS]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+    </line>
+    <line>
+      <![CDATA[HyperLink Path ======> ../Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+    </line>
+    <line>
+      <![CDATA[HyperLink Path ======> ../Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[HyperLink Path ======> ../Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[HyperLink Path ======> ../Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[12]]>
+    </line>
+    <line>
+      <![CDATA[New]]>
+    </line>
+    <line>
+      <![CDATA[open]]>
+    </line>
+    <line>
+      <![CDATA[BUY]]>
+    </line>
+    <line>
+      <![CDATA[Accelya Soln India Ltd]]>
+    </line>
+    <line>
+      <![CDATA[6]]>
+    </line>
+    <line>
+      <![CDATA[NRML]]>
+    </line>
+    <line>
+      <![CDATA[884.30]]>
+    </line>
+    <line>
+      <![CDATA[LIMIT]]>
+    </line>
+    <line>
+      <![CDATA[60003800]]>
+    </line>
+    <line>
+      <![CDATA[New]]>
+    </line>
+    <line>
+      <![CDATA[open]]>
+    </line>
+    <line>
+      <![CDATA[NSE]]>
+    </line>
+    <line>
+      <![CDATA[DAY]]>
+    </line>
+    <line>
+      <![CDATA[1000000001534584 ]]>
+    </line>
+    <line>
+      <![CDATA[1]]>
+    </line>
+    <line>
+      <![CDATA[Partial Qty]]>
+    </line>
+    <line>
+      <![CDATA[Rejection Reason]]>
+    </line>
+    <line>
+      <![CDATA[PASS]]>
+    </line>
+    <line>
+      <![CDATA[../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+    </line>
+    <line>
+      <![CDATA[../WorkingE/Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[Extend Log Flush]]>
+    </line>
+    <line>
+      <![CDATA[BUY]]>
+    </line>
+    <line>
+      <![CDATA[Accelya Soln India Ltd]]>
+    </line>
+    <line>
+      <![CDATA[NRML]]>
+    </line>
+    <line>
+      <![CDATA[878.30]]>
+    </line>
+    <line>
+      <![CDATA[LIMIT]]>
+    </line>
+    <line>
+      <![CDATA[SANJAY15]]>
+    </line>
+    <line>
+      <![CDATA[NSE]]>
+    </line>
+    <line>
+      <![CDATA[DAY]]>
+    </line>
+    <line>
+      <![CDATA[1000000001534583 ]]>
+    </line>
+    <line>
+      <![CDATA[1]]>
+    </line>
+    <line>
+      <![CDATA[Partial Qty]]>
+    </line>
+    <line>
+      <![CDATA[Rejection Reason]]>
+    </line>
+    <line>
+      <![CDATA[PASS]]>
+    </line>
+    <line>
+      <![CDATA[../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+    </line>
+    <line>
+      <![CDATA[../WorkingE/Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+    </line>
+    <line>
+      <![CDATA[Extend Log Flush]]>
+    </line>
+    <line>
+      <![CDATA[Reporter path ===> ../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+    </line>
+    <line>
+      <![CDATA[Reporter path ===> ../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+    </line>
+    <line>
+      <![CDATA[<<==== After if else =========>>]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  12
+NoRowInTestData =======> 33]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 13]]>
+    </line>
+    <line>
+      <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[****Termination Conditin****]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : false]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+    </line>
+    <line>
+      <![CDATA[Excel file closing...........]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : true]]>
+    </line>
+    <line>
+      <![CDATA[<<==== After if else =========>>]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  6
+NoRowInTestData =======> 0]]>
+    </line>
+    <line>
+      <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 7]]>
+    </line>
+    <line>
+      <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[****Termination Conditin****]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+    </line>
+    <line>
+      <![CDATA[Excel file closing...........]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : true]]>
+    </line>
+    <line>
+      <![CDATA[Execution Terminate.... :)]]>
+    </line>
+    <line>
+      <![CDATA[Outside form execution............]]>
+    </line>
+    <line>
+      <![CDATA[End test case execution]]>
+    </line>
+    <line>
+      <![CDATA[Folder Path ====> ../WorkingE/Report1587045578589]]>
+    </line>
+    <line>
+      <![CDATA[Execution Terminate.... :)]]>
+    </line>
+    <line>
+      <![CDATA[Outside form execution............]]>
+    </line>
+    <line>
+      <![CDATA[End test case execution]]>
+    </line>
+    <line>
+      <![CDATA[Folder Path ====> ../WorkingE/Report1587045578589]]>
+    </line>
   </reporter-output>
-  <suite name="TmpSuite" duration-ms="135909" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:37:44 IST">
+  <suite name="TmpSuite" duration-ms="85918" started-at="2020-04-16T19:29:38 IST" finished-at="2020-04-16T19:31:04 IST">
     <groups>
     </groups>
-    <test name="1" duration-ms="131370" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:37:39 IST">
+    <test name="1" duration-ms="83519" started-at="2020-04-16T19:29:38 IST" finished-at="2020-04-16T19:31:02 IST">
       <class name="com.shreeya.Execution">
-        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="executionBefore" is-config="true" duration-ms="741" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:35:29 IST">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.Execution@363ee3a2]" name="executionBefore" is-config="true" duration-ms="570" started-at="2020-04-16T19:29:38 IST" finished-at="2020-04-16T19:29:39 IST">
           <reporter-output>
+            <line>
+              <![CDATA[Execution Before ]]>
+            </line>
+            <line>
+              <![CDATA[Folder Structure creation method ]]>
+            </line>
+            <line>
+              <![CDATA[orderNo ===> 1]]>
+            </line>
+            <line>
+              <![CDATA[1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[FolderArray[0] : ../WorkingE/Report1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[FolderArray[1] : ../WorkingE/Report1587045578589/HtmlReports]]>
+            </line>
+            <line>
+              <![CDATA[FolderArray[2] : ../WorkingE/Report1587045578589/Screenshots]]>
+            </line>
+            <line>
+              <![CDATA[1587045579053]]>
+            </line>
           </reporter-output>
         </test-method> <!-- executionBefore -->
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="beforeTest" is-config="true" duration-ms="1" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:35:29 IST">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.Execution@363ee3a2]" name="beforeTest" is-config="true" duration-ms="0" started-at="2020-04-16T19:29:39 IST" finished-at="2020-04-16T19:29:39 IST">
           <reporter-output>
+            <line>
+              <![CDATA[Before Test case...]]>
+            </line>
+            <line>
+              <![CDATA[BeforeMethod]]>
+            </line>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="PASS" signature="execution(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.Execution@2ea227af]" name="execution" duration-ms="130200" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:37:39 IST">
+        <test-method status="PASS" signature="execution(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.Execution@363ee3a2]" name="execution" duration-ms="81717" started-at="2020-04-16T19:29:39 IST" finished-at="2020-04-16T19:31:01 IST">
           <params>
             <param index="0">
               <value>
@@ -44,7 +900,7 @@
             </param>
             <param index="5">
               <value>
-                <![CDATA[7]]>
+                <![CDATA[6]]>
               </value>
             </param>
             <param index="6">
@@ -54,29 +910,421 @@
             </param>
           </params>
           <reporter-output>
+            <line>
+              <![CDATA[*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********]]>
+            </line>
+            <line>
+              <![CDATA[Before Iterator 1]]>
+            </line>
+            <line>
+              <![CDATA[After Iterator]]>
+            </line>
+            <line>
+              <![CDATA[Login Data ====> LoginModel [referNo=1, userId=Sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=6, executionType=normal]]]>
+            </line>
+            <line>
+              <![CDATA[Browser Launch]]>
+            </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[<========OrderActionStart=======>]]>
+            </line>
+            <line>
+              <![CDATA[LoginModel [referNo=1, userId=Sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=6, executionType=normal]]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 1]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 2]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 3]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 4]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 5]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 6]]>
+            </line>
+            <line>
+              <![CDATA[Order No ========================@> 6
+StartExecutionNo =======================@> 6]]>
+            </line>
+            <line>
+              <![CDATA[Scenarion : Fresh Order Placement
+Action : New
+NewOrderStatus : rejected]]>
+            </line>
+            <line>
+              <![CDATA[<====@@@@ OrderNo in Sheet 6 Action : New @@@@===>]]>
+            </line>
+            <line>
+              <![CDATA[New Order execution Started..........]]>
+            </line>
+            <line>
+              <![CDATA[This is product type ====> NRML]]>
+            </line>
+            <line>
+              <![CDATA[AMO CheckBox checking....]]>
+            </line>
+            <line>
+              <![CDATA[After Checking amo checkbox present....]]>
+            </line>
+            <line>
+              <![CDATA[Action ====> New newOrderStatus =====> rejected
+RowNo==============> 1]]>
+            </line>
+            <line>
+              <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet 6 Action : New >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[Action ======>  New
+NewOrderStatus =====>  rejected]]>
+            </line>
+            <line>
+              <![CDATA[New order status =====> rejected]]>
+            </line>
+            <line>
+              <![CDATA[<====ExtendReporter Constructor===>]]>
+            </line>
+            <line>
+              <![CDATA[Scenario : Fresh Order Placement]]>
+            </line>
+            <line>
+              <![CDATA[1587045630919]]>
+            </line>
+            <line>
+              <![CDATA[Report Path String../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+            </line>
+            <line>
+              <![CDATA[Extend Report Test Name : Order Detail 6]]>
+            </line>
+            <line>
+              <![CDATA[Execution Count : 2]]>
+            </line>
+            <line>
+              <![CDATA[Execution no ===> 2]]>
+            </line>
+            <line>
+              <![CDATA[*<==== orderDetailProvider Method Start ====>*]]>
+            </line>
+            <line>
+              <![CDATA[===<<<<<*** OrderNo in Sheet 6 Action : New ***>>>>>===>]]>
+            </line>
+            <line>
+              <![CDATA[Status : open]]>
+            </line>
+            <line>
+              <![CDATA[Buy or Sell : BUY]]>
+            </line>
+            <line>
+              <![CDATA[Trading symbol : Accelya Soln India Ltd]]>
+            </line>
+            <line>
+              <![CDATA[Product type : NRML]]>
+            </line>
+            <line>
+              <![CDATA[Order Price : 878.30]]>
+            </line>
+            <line>
+              <![CDATA[Order Type : LIMIT]]>
+            </line>
+            <line>
+              <![CDATA[User Id : SANJAY15]]>
+            </line>
+            <line>
+              <![CDATA[Exchange : NSE]]>
+            </line>
+            <line>
+              <![CDATA[Validity : DAY]]>
+            </line>
+            <line>
+              <![CDATA[Order Qty : 1]]>
+            </line>
+            <line>
+              <![CDATA[Nest id : 1000000001534583 ]]>
+            </line>
+            <line>
+              <![CDATA[Nest id : 1000000001534583 ]]>
+            </line>
+            <line>
+              <![CDATA[Inside orderDetailProvider method......]]>
+            </line>
+            <line>
+              <![CDATA[OutSide orderDetailProvider method......]]>
+            </line>
+            <line>
+              <![CDATA[<=== passFail Result New 6 ===>]]>
+            </line>
+            <line>
+              <![CDATA[Action Result ===> PASS
+Mod Scenario wise Result ====> NOT MOD]]>
+            </line>
+            <line>
+              <![CDATA[<=== Report Start generate New 6 ===>]]>
+            </line>
+            <line>
+              <![CDATA[Capture Screenshot]]>
+            </line>
+            <line>
+              <![CDATA[1587045656036]]>
+            </line>
+            <line>
+              <![CDATA[Writer Order detail with link in outputExcel]]>
+            </line>
+            <line>
+              <![CDATA[Row Object ====> <xml-fragment r="7" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <main:c r="A7">
+    <main:v>6</main:v>
+  </main:c>
+  <main:c r="B7">
+    <main:v>60003800</main:v>
+  </main:c>
+  <main:c r="C7" t="s">
+    <main:v>15</main:v>
+  </main:c>
+  <main:c r="D7">
+    <main:v>2000</main:v>
+  </main:c>
+  <main:c r="E7" t="s">
+    <main:v>23</main:v>
+  </main:c>
+  <main:c r="F7" t="s">
+    <main:v>24</main:v>
+  </main:c>
+  <main:c r="G7" t="s">
+    <main:v>18</main:v>
+  </main:c>
+  <main:c r="H7" t="s">
+    <main:v>19</main:v>
+  </main:c>
+  <main:c r="I7" t="s">
+    <main:v>20</main:v>
+  </main:c>
+  <main:c r="J7">
+    <main:v>879.31</main:v>
+  </main:c>
+  <main:c r="K7">
+    <main:v>890.3</main:v>
+  </main:c>
+  <main:c r="L7" t="s">
+    <main:v>21</main:v>
+  </main:c>
+  <main:c r="M7">
+    <main:v>1</main:v>
+  </main:c>
+  <main:c r="N7">
+    <main:v>2</main:v>
+  </main:c>
+  <main:c r="O7" t="s">
+    <main:v>22</main:v>
+  </main:c>
+</xml-fragment>
+OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml]]>
+            </line>
+            <line>
+              <![CDATA[Rejection Reason]]>
+            </line>
+            <line>
+              <![CDATA[PASS]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+            </line>
+            <line>
+              <![CDATA[HyperLink Path ======> ../Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[HyperLink Path ======> ../Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[6]]>
+            </line>
+            <line>
+              <![CDATA[New]]>
+            </line>
+            <line>
+              <![CDATA[open]]>
+            </line>
+            <line>
+              <![CDATA[BUY]]>
+            </line>
+            <line>
+              <![CDATA[Accelya Soln India Ltd]]>
+            </line>
+            <line>
+              <![CDATA[NRML]]>
+            </line>
+            <line>
+              <![CDATA[878.30]]>
+            </line>
+            <line>
+              <![CDATA[LIMIT]]>
+            </line>
+            <line>
+              <![CDATA[SANJAY15]]>
+            </line>
+            <line>
+              <![CDATA[NSE]]>
+            </line>
+            <line>
+              <![CDATA[DAY]]>
+            </line>
+            <line>
+              <![CDATA[1000000001534583 ]]>
+            </line>
+            <line>
+              <![CDATA[1]]>
+            </line>
+            <line>
+              <![CDATA[Partial Qty]]>
+            </line>
+            <line>
+              <![CDATA[Rejection Reason]]>
+            </line>
+            <line>
+              <![CDATA[PASS]]>
+            </line>
+            <line>
+              <![CDATA[../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+            </line>
+            <line>
+              <![CDATA[../WorkingE/Report1587045578589/Screenshots/FreshOrderPlacement_6_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[Extend Log Flush]]>
+            </line>
+            <line>
+              <![CDATA[Reporter path ===> ../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_6_1587045630919.html]]>
+            </line>
+            <line>
+              <![CDATA[<<==== After if else =========>>]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  6
+NoRowInTestData =======> 0]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 6
+OrderNo ==========@> 7]]>
+            </line>
+            <line>
+              <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[****Termination Conditin****]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+            </line>
+            <line>
+              <![CDATA[Excel file closing...........]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : true]]>
+            </line>
+            <line>
+              <![CDATA[Execution Terminate.... :)]]>
+            </line>
+            <line>
+              <![CDATA[Outside form execution............]]>
+            </line>
           </reporter-output>
         </test-method> <!-- execution -->
-        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="testAfter" is-config="true" duration-ms="2" started-at="2020-04-15T19:37:39 IST" finished-at="2020-04-15T19:37:39 IST">
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.Execution@363ee3a2]" name="testAfter" is-config="true" duration-ms="1" started-at="2020-04-16T19:31:01 IST" finished-at="2020-04-16T19:31:01 IST">
           <reporter-output>
+            <line>
+              <![CDATA[End test case execution]]>
+            </line>
           </reporter-output>
         </test-method> <!-- testAfter -->
-        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.Execution@2ea227af]" name="endExecution" is-config="true" duration-ms="1" started-at="2020-04-15T19:37:39 IST" finished-at="2020-04-15T19:37:39 IST">
+        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.Execution@363ee3a2]" name="endExecution" is-config="true" duration-ms="961" started-at="2020-04-16T19:31:01 IST" finished-at="2020-04-16T19:31:02 IST">
           <reporter-output>
+            <line>
+              <![CDATA[Folder Path ====> ../WorkingE/Report1587045578589]]>
+            </line>
           </reporter-output>
         </test-method> <!-- endExecution -->
       </class> <!-- com.shreeya.Execution -->
     </test> <!-- 1 -->
-    <test name="2" duration-ms="135909" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:37:44 IST">
+    <test name="2" duration-ms="85918" started-at="2020-04-16T19:29:38 IST" finished-at="2020-04-16T19:31:04 IST">
       <class name="com.shreeya.Execution">
-        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="executionBefore" is-config="true" duration-ms="741" started-at="2020-04-15T19:35:28 IST" finished-at="2020-04-15T19:35:29 IST">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.Execution@5ae50ce6]" name="executionBefore" is-config="true" duration-ms="570" started-at="2020-04-16T19:29:38 IST" finished-at="2020-04-16T19:29:39 IST">
           <reporter-output>
+            <line>
+              <![CDATA[Execution Before ]]>
+            </line>
+            <line>
+              <![CDATA[Folder Structure creation method ]]>
+            </line>
+            <line>
+              <![CDATA[orderNo ===> 1]]>
+            </line>
+            <line>
+              <![CDATA[1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[FolderArray[0] : ../WorkingE/Report1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[FolderArray[1] : ../WorkingE/Report1587045578589/HtmlReports]]>
+            </line>
+            <line>
+              <![CDATA[FolderArray[2] : ../WorkingE/Report1587045578589/Screenshots]]>
+            </line>
+            <line>
+              <![CDATA[1587045579053]]>
+            </line>
           </reporter-output>
         </test-method> <!-- executionBefore -->
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="beforeTest" is-config="true" duration-ms="1" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:35:29 IST">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.Execution@5ae50ce6]" name="beforeTest" is-config="true" duration-ms="0" started-at="2020-04-16T19:29:39 IST" finished-at="2020-04-16T19:29:39 IST">
           <reporter-output>
+            <line>
+              <![CDATA[Before Test case...]]>
+            </line>
+            <line>
+              <![CDATA[BeforeMethod]]>
+            </line>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="PASS" signature="execution(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.Execution@769f71a9]" name="execution" duration-ms="134864" started-at="2020-04-15T19:35:29 IST" finished-at="2020-04-15T19:37:44 IST">
+        <test-method status="PASS" signature="execution(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.Execution@5ae50ce6]" name="execution" duration-ms="85110" started-at="2020-04-16T19:29:39 IST" finished-at="2020-04-16T19:31:04 IST">
           <params>
             <param index="0">
               <value>
@@ -105,7 +1353,7 @@
             </param>
             <param index="5">
               <value>
-                <![CDATA[13]]>
+                <![CDATA[12]]>
               </value>
             </param>
             <param index="6">
@@ -115,14 +1363,412 @@
             </param>
           </params>
           <reporter-output>
+            <line>
+              <![CDATA[*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********]]>
+            </line>
+            <line>
+              <![CDATA[Before Iterator 2]]>
+            </line>
+            <line>
+              <![CDATA[After Iterator]]>
+            </line>
+            <line>
+              <![CDATA[Login Data ====> LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=12, endRowNo=12, executionType=normal]]]>
+            </line>
+            <line>
+              <![CDATA[Browser Launch]]>
+            </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[<========OrderActionStart=======>]]>
+            </line>
+            <line>
+              <![CDATA[LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=12, endRowNo=12, executionType=normal]]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 1]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 2]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 3]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 4]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 5]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 6]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 7]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 8]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 9]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 10]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 11]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 12]]>
+            </line>
+            <line>
+              <![CDATA[Order No ========================@> 12
+StartExecutionNo =======================@> 12]]>
+            </line>
+            <line>
+              <![CDATA[Scenarion : Fresh Order Placement
+Action : New
+NewOrderStatus : rejected]]>
+            </line>
+            <line>
+              <![CDATA[<====@@@@ OrderNo in Sheet 12 Action : New @@@@===>]]>
+            </line>
+            <line>
+              <![CDATA[New Order execution Started..........]]>
+            </line>
+            <line>
+              <![CDATA[This is product type ====> NRML]]>
+            </line>
+            <line>
+              <![CDATA[AMO CheckBox checking....]]>
+            </line>
+            <line>
+              <![CDATA[After Checking amo checkbox present....]]>
+            </line>
+            <line>
+              <![CDATA[Action ====> New newOrderStatus =====> rejected
+RowNo==============> 1]]>
+            </line>
+            <line>
+              <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet 12 Action : New >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[Action ======>  New
+NewOrderStatus =====>  rejected]]>
+            </line>
+            <line>
+              <![CDATA[New order status =====> rejected]]>
+            </line>
+            <line>
+              <![CDATA[<====ExtendReporter Constructor===>]]>
+            </line>
+            <line>
+              <![CDATA[Scenario : Fresh Order Placement]]>
+            </line>
+            <line>
+              <![CDATA[1587045629811]]>
+            </line>
+            <line>
+              <![CDATA[Report Path String../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+            </line>
+            <line>
+              <![CDATA[Extend Report Test Name : Order Detail 12]]>
+            </line>
+            <line>
+              <![CDATA[Execution Count : 2]]>
+            </line>
+            <line>
+              <![CDATA[Execution no ===> 1]]>
+            </line>
+            <line>
+              <![CDATA[TestData File copy into output folder]]>
+            </line>
+            <line>
+              <![CDATA[Output excel file : ..\WorkingE\Report1587045578589\OutputFile.xlsx]]>
+            </line>
+            <line>
+              <![CDATA[Start Write in output excel file]]>
+            </line>
+            <line>
+              <![CDATA[*<==== orderDetailProvider Method Start ====>*]]>
+            </line>
+            <line>
+              <![CDATA[===<<<<<*** OrderNo in Sheet 12 Action : New ***>>>>>===>]]>
+            </line>
+            <line>
+              <![CDATA[Status : open]]>
+            </line>
+            <line>
+              <![CDATA[Buy or Sell : BUY]]>
+            </line>
+            <line>
+              <![CDATA[Trading symbol : Accelya Soln India Ltd]]>
+            </line>
+            <line>
+              <![CDATA[Product type : NRML]]>
+            </line>
+            <line>
+              <![CDATA[Order Price : 884.30]]>
+            </line>
+            <line>
+              <![CDATA[Order Type : LIMIT]]>
+            </line>
+            <line>
+              <![CDATA[User Id : 60003800]]>
+            </line>
+            <line>
+              <![CDATA[Exchange : NSE]]>
+            </line>
+            <line>
+              <![CDATA[Validity : DAY]]>
+            </line>
+            <line>
+              <![CDATA[Order Qty : 1]]>
+            </line>
+            <line>
+              <![CDATA[Nest id : 1000000001534584 ]]>
+            </line>
+            <line>
+              <![CDATA[Nest id : 1000000001534584 ]]>
+            </line>
+            <line>
+              <![CDATA[Inside orderDetailProvider method......]]>
+            </line>
+            <line>
+              <![CDATA[OutSide orderDetailProvider method......]]>
+            </line>
+            <line>
+              <![CDATA[<=== passFail Result New 12 ===>]]>
+            </line>
+            <line>
+              <![CDATA[Action Result ===> PASS
+Mod Scenario wise Result ====> NOT MOD]]>
+            </line>
+            <line>
+              <![CDATA[<=== Report Start generate New 12 ===>]]>
+            </line>
+            <line>
+              <![CDATA[Capture Screenshot]]>
+            </line>
+            <line>
+              <![CDATA[1587045656036]]>
+            </line>
+            <line>
+              <![CDATA[Writer Order detail with link in outputExcel]]>
+            </line>
+            <line>
+              <![CDATA[Row Object ====> <xml-fragment r="13" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <main:c r="A13">
+    <main:v>12</main:v>
+  </main:c>
+  <main:c r="B13">
+    <main:v>60003800</main:v>
+  </main:c>
+  <main:c r="C13" t="s">
+    <main:v>15</main:v>
+  </main:c>
+  <main:c r="D13">
+    <main:v>2000</main:v>
+  </main:c>
+  <main:c r="E13" t="s">
+    <main:v>23</main:v>
+  </main:c>
+  <main:c r="F13" t="s">
+    <main:v>24</main:v>
+  </main:c>
+  <main:c r="G13" t="s">
+    <main:v>18</main:v>
+  </main:c>
+  <main:c r="H13" t="s">
+    <main:v>19</main:v>
+  </main:c>
+  <main:c r="I13" t="s">
+    <main:v>20</main:v>
+  </main:c>
+  <main:c r="J13">
+    <main:v>885.31</main:v>
+  </main:c>
+  <main:c r="K13">
+    <main:v>890.3</main:v>
+  </main:c>
+  <main:c r="L13" t="s">
+    <main:v>21</main:v>
+  </main:c>
+  <main:c r="M13">
+    <main:v>1</main:v>
+  </main:c>
+  <main:c r="N13">
+    <main:v>2</main:v>
+  </main:c>
+  <main:c r="O13" t="s">
+    <main:v>22</main:v>
+  </main:c>
+</xml-fragment>
+OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml]]>
+            </line>
+            <line>
+              <![CDATA[Rejection Reason]]>
+            </line>
+            <line>
+              <![CDATA[PASS]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+            </line>
+            <line>
+              <![CDATA[HyperLink Path ======> ../Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[HyperLink Path ======> ../Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[../Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[12]]>
+            </line>
+            <line>
+              <![CDATA[New]]>
+            </line>
+            <line>
+              <![CDATA[open]]>
+            </line>
+            <line>
+              <![CDATA[BUY]]>
+            </line>
+            <line>
+              <![CDATA[Accelya Soln India Ltd]]>
+            </line>
+            <line>
+              <![CDATA[NRML]]>
+            </line>
+            <line>
+              <![CDATA[884.30]]>
+            </line>
+            <line>
+              <![CDATA[LIMIT]]>
+            </line>
+            <line>
+              <![CDATA[60003800]]>
+            </line>
+            <line>
+              <![CDATA[NSE]]>
+            </line>
+            <line>
+              <![CDATA[DAY]]>
+            </line>
+            <line>
+              <![CDATA[1000000001534584 ]]>
+            </line>
+            <line>
+              <![CDATA[1]]>
+            </line>
+            <line>
+              <![CDATA[Partial Qty]]>
+            </line>
+            <line>
+              <![CDATA[Rejection Reason]]>
+            </line>
+            <line>
+              <![CDATA[PASS]]>
+            </line>
+            <line>
+              <![CDATA[../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+            </line>
+            <line>
+              <![CDATA[../WorkingE/Report1587045578589/Screenshots/FreshOrderPlacement_12_1587045656036.png]]>
+            </line>
+            <line>
+              <![CDATA[Extend Log Flush]]>
+            </line>
+            <line>
+              <![CDATA[Reporter path ===> ../WorkingE/Report1587045578589/HtmlReports/FreshOrderPlacement_12_1587045629811.html]]>
+            </line>
+            <line>
+              <![CDATA[<<==== After if else =========>>]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  12
+NoRowInTestData =======> 33]]>
+            </line>
+            <line>
+              <![CDATA[endExecution ================================@> 12
+OrderNo ==========@> 13]]>
+            </line>
+            <line>
+              <![CDATA[*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> ../WorkingE/Report1587045578589]]>
+            </line>
+            <line>
+              <![CDATA[****Termination Conditin****]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : false]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+            </line>
+            <line>
+              <![CDATA[Excel file closing...........]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : true]]>
+            </line>
+            <line>
+              <![CDATA[Execution Terminate.... :)]]>
+            </line>
+            <line>
+              <![CDATA[Outside form execution............]]>
+            </line>
           </reporter-output>
         </test-method> <!-- execution -->
-        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="testAfter" is-config="true" duration-ms="2" started-at="2020-04-15T19:37:44 IST" finished-at="2020-04-15T19:37:44 IST">
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.Execution@5ae50ce6]" name="testAfter" is-config="true" duration-ms="0" started-at="2020-04-16T19:31:04 IST" finished-at="2020-04-16T19:31:04 IST">
           <reporter-output>
+            <line>
+              <![CDATA[End test case execution]]>
+            </line>
           </reporter-output>
         </test-method> <!-- testAfter -->
-        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.Execution@769f71a9]" name="endExecution" is-config="true" duration-ms="1" started-at="2020-04-15T19:37:44 IST" finished-at="2020-04-15T19:37:44 IST">
+        <test-method status="PASS" signature="endExecution()[pri:0, instance:com.shreeya.Execution@5ae50ce6]" name="endExecution" is-config="true" duration-ms="24" started-at="2020-04-16T19:31:04 IST" finished-at="2020-04-16T19:31:04 IST">
           <reporter-output>
+            <line>
+              <![CDATA[Folder Path ====> ../WorkingE/Report1587045578589]]>
+            </line>
           </reporter-output>
         </test-method> <!-- endExecution -->
       </class> <!-- com.shreeya.Execution -->

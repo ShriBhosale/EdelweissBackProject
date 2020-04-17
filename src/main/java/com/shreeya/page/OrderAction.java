@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
 import com.opencsv.CSVWriter;
 import com.shreeya.model.LoginModel;
@@ -50,14 +51,14 @@ public class OrderAction {
 	}
 	
 	public WebDriver orderActionStart(WebDriver driver,LoginModel loginModel) throws InterruptedException, IOException {
-		
-	
+		Reporter.log("<========OrderActionStart=======>",true);
+		Reporter.log(loginModel.toString(),true);
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;
 			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
 			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
-			System.out.println("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo);
+			Reporter.log("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo,true);
 			if(orderNo>=endExecution+1)
 				break;
 			if(orderNo>=startExecution) {
@@ -66,20 +67,23 @@ public class OrderAction {
 				  
 				  rowNo++;
 				 
-				System.out.println("Order No ========================@> "+orderNo+"\nStartExecutionNo =======================@> "+startExecution);
+				  Reporter.log("Order No ========================@> "+orderNo+"\nStartExecutionNo =======================@> "+startExecution,true);
+				  Reporter.log("Scenarion : "+model.getScenario()+"\nAction : "+model.getAction()+"\nNewOrderStatus : "+newOrderStatus,true);
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
-					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
+				
+				if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
 				partialOrderOb.partialOrderExecution(model, orderNo,loginModel);
 				partialOrderOb.orderDetail(driver, model,orderNo);
 				model = csvTestDataModelIterator.next();
 				orderNo++;
 				orderNo++;
 			}else 
+				Reporter.log("Partial Order but new order status rejected",true);
 				continue;
 			
 			}
 			if (model.getAction().equalsIgnoreCase("New")&&(!model.getScenario().equalsIgnoreCase("Partial Order"))) {
-				System.out.println("TestLaunch::Action :: "+model.getAction()+"\n Scenario :: "+model.getScenario());
+				
 				newMapObject=newOrder.newOrderExecution(model,driver,orderNo);
 				// newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
 				 if(newOrderStatus.equalsIgnoreCase("rejected")) {
@@ -87,10 +91,11 @@ public class OrderAction {
 				 }
 			} else if (model.getAction().equalsIgnoreCase("Mod")) {
 				// newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
-				 System.out.println("TestLaunch::Action :: "+model.getAction());
+				 Reporter.log("TestLaunch::Action :: "+model.getAction(),true);
 				 if(!newOrderStatus.equalsIgnoreCase("rejected")) {
 				mapObject=modOrder.modExecution(model,driver,orderNo,newOrderStatus);
 				 }else {
+					 Reporter.log("Action MOD but new order status rejected",true);
 					 continue;
 				 }
 				
@@ -100,25 +105,26 @@ public class OrderAction {
 					newOrderStatus=modOrderStatus;
 				else
 				//newOrderStatus = helperObject.statusRemoveBracket(newMapObject.values());
-				System.out.println("TestLaunch::Action :: "+model.getAction());
+				
 				 if(!newOrderStatus.equalsIgnoreCase("rejected")) {
 				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus,model);
 				 }else {
+					 Reporter.log("Action CXL but new order status rejected",true);
 					 continue;
 				 }
 			}
 			if(model.getOrderNo().equalsIgnoreCase("16")||model.getOrderNo().equalsIgnoreCase("33")) {
-				System.out.println("bugg");
+				Reporter.log("bugg",true);
 			}
 			
-			System.out.println("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus+"\nRowNo==============> "+rowNo);
+			Reporter.log("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus+"\nRowNo==============> "+rowNo,true);
 			
 			String status=helperObject.outputProcessor(driver, model.getAction(), orderNo, newOrderStatus, model,rowNo);
 			if(model.getAction().equalsIgnoreCase("New")&& model.getScenario().equalsIgnoreCase("Fresh Order Placement")) {
 				newOrderStatus=status;
 			}
 			if(countOfrejectNew==4) {
-				
+				Reporter.log("New order Rejection count no : "+4,true);
 				break;
 			}
 			
