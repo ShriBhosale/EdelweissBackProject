@@ -19,9 +19,9 @@ import com.shreeya.model.TestDataModel;
 
 public class ExtendReporter {
 
-	public static ExtentHtmlReporter htmlextent = null;
-	public static ExtentReports report = null;
-	public static ExtentTest test = null;
+	public  ExtentHtmlReporter htmlextent = null;
+	public  ExtentReports report = null;
+	public  ExtentTest test = null;
 	HelperCode helperObject;
 	private String reportPathString;
 	
@@ -29,7 +29,7 @@ public class ExtendReporter {
 		Reporter.log("<====ExtendReporter Constructor===>",true);
 		Reporter.log("Scenario : "+scenario,true);
 		helperObject=new HelperCode();
-		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".html";
+		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+".html";
 		Reporter.log("Report Path String "+reportPathString,true);
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
@@ -66,6 +66,7 @@ public class ExtendReporter {
 	public void testCreation(String testName) {
 		Reporter.log("Extend Report Test Name : "+testName,true);
 		test = report.createTest(testName);
+		
 	}
 	
 	public String addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
@@ -93,8 +94,9 @@ public class ExtendReporter {
 		}
 	}
 	
-	public void reportGenerator(String [] orderDetailArray,String [] passArray,TestDataModel model) {
-		Reporter.log("<=== Report Start generate "+model.getAction()+" "+model.getOrderNo()+" ===>",true);
+	public void reportGenerator(String [] orderDetailArray,String [] passArray,TestDataModel model) throws InterruptedException {
+		Reporter.log("<=== ExtendReporter : Report Start generate "+model.getAction()+" "+model.getOrderNo()+" ===>",true);
+		
 		test.log(Status.INFO, "Action : "+orderDetailArray[1]);
 		test.log(Status.INFO, "Order Action :: "+orderDetailArray[3]);
 		test.log(Status.INFO, "Trading Symbol :: "+orderDetailArray[4]);
@@ -131,7 +133,7 @@ public class ExtendReporter {
 		test.log(Status.INFO, "User id :: "+orderDetailArray[8]);
 		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);
 		test.log(Status.INFO, "Validity :: "+orderDetailArray[10]);
-		test.log(Status.INFO, "Exchange Order Numbe :: "+orderDetailArray[11]);
+		test.log(Status.INFO, "NestId Order Numbe :: "+orderDetailArray[11]);
 		test.log(Status.INFO, "Rejection Reason : "+orderDetailArray[14]);
 		if(passArray[0].equalsIgnoreCase("PASS")) {
 			test.log(Status.PASS, "Status : "+orderDetailArray[2]);
@@ -148,10 +150,11 @@ public class ExtendReporter {
 	}
 	
 	public void logFlush() {
+		
 		Reporter.log("Extend Log Flush",true);
 		Reporter.log("Reporter path ===> "+reportPathString,true);
 		report.flush();
-		
+		Reporter.log("Report Object ==================================================================> "+report,true);
 	}
 
 	
