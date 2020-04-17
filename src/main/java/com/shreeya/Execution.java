@@ -41,7 +41,7 @@ public class Execution {
 		helperObject=new HelperCode();
 		
 		FolderStructure folderCreationObj=new FolderStructure();
-		Reporter.log("Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
+		
 		folderPath=folderCreationObj.reportFolderCreator();
 		apacheCodeObj=new ApacheCode(folderPath[0]);
 		
