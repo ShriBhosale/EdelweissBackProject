@@ -39,8 +39,10 @@ public class Execution {
 		orderActioObj=new OrderAction();
 		testDataObject=new TestDataModel();
 		helperObject=new HelperCode();
+		
 		FolderStructure folderCreationObj=new FolderStructure();
-		folderPath=folderCreationObj.reportFolderCreator(1);
+		Reporter.log("Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
+		folderPath=folderCreationObj.reportFolderCreator();
 		apacheCodeObj=new ApacheCode(folderPath[0]);
 		
 		//apacheCodeObj.outputFileWriterHeader(folderPath[0]);

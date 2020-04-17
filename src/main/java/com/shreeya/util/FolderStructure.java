@@ -10,16 +10,18 @@ import com.google.common.io.Files;
 
 public class FolderStructure {
 	static String timeStamp;
+	static int orderNo=0;
+	static String[] folderArray = { "no", "no" + "/HtmlReports",
+			"no" + "/Screenshots" };
 	ConfigReader configReader=new ConfigReader();
-	public String[] reportFolderCreator(int orderNo) throws IOException {
+	public String[] reportFolderCreator() throws IOException {
 		Reporter.log("Folder Structure creation method ", true);
 		Reporter.log("orderNo ===> "+orderNo, true);
 		
 		HelperCode helperObject = new HelperCode();
-		String[] folderArray = { "no", "no" + "/HtmlReports",
-				"no" + "/Screenshots" };
+		
 		String outputFile="FolderStructure not able give outputFile";
-		if(orderNo==1) {
+		if(orderNo==0) {
 			timeStamp = helperObject.timeStampGenerator();
 			//copyFile(configReader.configReader("TestData")+".xlsx", "../WorkingE/Report" + timeStamp+"/OutputFile.xlsx");
 			//outputFile="../WorkingE/Report" + timeStamp+"/OutputFile.xlsx";
@@ -38,6 +40,7 @@ public class FolderStructure {
 			}
 		}
 		}
+		orderNo++;
 		return folderArray;
 	}
 	

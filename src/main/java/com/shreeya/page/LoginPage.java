@@ -105,7 +105,7 @@ public class LoginPage extends SeleniumCoder{
 		}else {
 			Reporter.log("Login Error fond", true);
 			FolderStructure folderStructureObject=new FolderStructure();
-			String [] folderPathArray = folderStructureObject.reportFolderCreator(1);
+			String [] folderPathArray = folderStructureObject.reportFolderCreator();
 			ExtendReporter extend=new ExtendReporter(folderPathArray[1],"LoginError",0);
 			extend.testCreation("Login error");
 			extend.addScreenshotMethod(driver, folderPathArray[2],"LoginError", 0);

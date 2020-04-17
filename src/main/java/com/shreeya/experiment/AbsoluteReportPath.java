@@ -18,7 +18,7 @@ public class AbsoluteReportPath {
 		
 		System.out.println("Execution Started.............");
 		FolderStructure folder=new FolderStructure();
-		String [] folderPathArray=folder.reportFolderCreator(1);
+		String [] folderPathArray=folder.reportFolderCreator();
 		LoginPage loginPageObj=new LoginPage();
 		ExtendReporter reportObj=new ExtendReporter(folderPathArray[0],"abc",0);
 

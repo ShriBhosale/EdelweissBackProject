@@ -22,7 +22,7 @@ public class HelperCode {
 	String[] pathArray = { "Report path not found", "ScreenShot path not found" };
 	static ApacheCode excelWriter = null;
 	int noRowInTestData=0;
-	private String [] folderPathArray= {"ReportFolder path","htmlFolder path","screenshort path"};
+	public static String [] folderPathArray= {"ReportFolder path","htmlFolder path","screenshort path"};
 	String[] orderDetailArray= { "Id", "Action", "Status", "Order Action", "Trading Symbol", "Product Type",
 		"Order Price", "Order Type", "User id", "Exchange", "Validity", "Nest Id","Qty","Partial Qty","Rejection Reason",
 		"ScriptResult", "Report link", "Screenshot link" };
@@ -117,8 +117,8 @@ public class HelperCode {
 		Reporter.log("*************************************<<<<<<<<<<<<Output Processor Started>>>>>>>>>>>>>>>>************************************",true);
 		Reporter.log("====<<<<< OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" >>>>>====",true);
 		executionCount++;
-		
-		Reporter.log("FolderCreation array form execution class ===> "+Execution.folderPath[0],true);
+		folderPathArray=Execution.folderPath;
+		Reporter.log("FolderCreation array form execution class ===> "+folderPathArray,true);
 		
 		boolean reportFlag=false;
 		rowPrint++;
@@ -126,7 +126,7 @@ public class HelperCode {
 			Reporter.log("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus,true);
 		
 			Reporter.log("New order status =====> "+newOrderStatus,true);
-		report = new ExtendReporter(Execution.folderPath[1],model.getScenario(),orderNo);
+		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
 		report.testCreation("Order Detail " + orderNo);
 		
 		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")))){
@@ -142,7 +142,7 @@ public class HelperCode {
 		}
 		
 		if(reportFlag) {
-			Reporter.log("Execution Count : "+rowPrint,true);
+			Reporter.log("Execution Count :: "+rowPrint,true);
 			Reporter.log("Execution no ===> "+executionCount);
 		//Reporter.log("Order no===========================================================> "+orderNo+"\nExecution Count==========================================>"+rowPrint);
 		//Reporter.log("noRowInTestData : "+noRowInTestData+"\n folderPathArray[0] : "+folderPathArray[0]);
@@ -150,9 +150,9 @@ public class HelperCode {
 			CsvReaderCode reader=new CsvReaderCode();
 			noRowInTestData1=reader.noRowInTestData();
 			FolderStructure folderStructureObject=new FolderStructure();
-			folderStructureObject.copyFile(Execution.folderPath[0]);
+			folderStructureObject.copyFile(folderPathArray[0]);
 		 //excelWriter=new ApacheCode(folderPathArray[0]);
-		 Execution.apacheCodeObj.outputFileWriterHeader(Execution.folderPath[0]);
+		 Execution.apacheCodeObj.outputFileWriterHeader(folderPathArray[0]);
 		}
 		OrderDetail orderDetailObj = new OrderDetail();
 		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo());
@@ -176,16 +176,16 @@ public class HelperCode {
 			orderDetailArray[15] = resultString[0];
 		}
 		
-		pathArray = screenShotAndReportPath(driver, report,Execution.folderPath[2],model.getScenario(),orderNo);
+		pathArray = screenShotAndReportPath(driver, report,folderPathArray[2],model.getScenario(),orderNo);
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
-		//Execution.apacheCodeObj.excelWriter(orderDetailArray, rowPrint);
+		report.logFlush();
 		Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			Reporter.log(orderDetail,true);
 		
-		report.logFlush();
+		
 		}
 		else {
 		report.errroMsg("New order reject");

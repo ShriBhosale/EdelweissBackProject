@@ -30,7 +30,7 @@ public class ExtendReporter {
 		Reporter.log("Scenario : "+scenario,true);
 		helperObject=new HelperCode();
 		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".html";
-		Reporter.log("Report Path String"+reportPathString,true);
+		Reporter.log("Report Path String "+reportPathString,true);
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
 		
@@ -163,7 +163,7 @@ public class ExtendReporter {
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
 		Reporter.log("Abnormal Error Handly",true);
 		FolderStructure folderObject=new FolderStructure();
-		String [] folderArray=folderObject.reportFolderCreator(1);
+		String [] folderArray=folderObject.reportFolderCreator();
 		ExtendReporter report=new  ExtendReporter(folderArray[0],"Abnormal Termination",1); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
