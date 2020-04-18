@@ -283,6 +283,12 @@ public class ApacheCode {
 	 }
 	 
 	 public void outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
+		 try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 Reporter.log("Writer Order detail with link in outputExcel",true);
 		 int counter=15;
 		 String hyperLinkName = null;

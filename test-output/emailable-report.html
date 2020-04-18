@@ -9,11 +9,19 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="7">TmpSuite</th></tr>
-<tr><td><a href="#t0">1</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">176,986</td><td></td><td></td></tr>
+<tr><td><a href="#t0">1</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">93,161</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">TmpSuite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">1 &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">com.shreeya.Execution</td><td><a href="#m0">execution</a></td><td rowspan="1">1587145658854</td><td rowspan="1">175790</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">TmpSuite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">1 &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">com.shreeya.Execution</td><td><a href="#m0">endExecution</a></td><td rowspan="1">1587185649604</td><td rowspan="1">2</td></tr><tr><th colspan="4">1 &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">com.shreeya.Execution</td><td><a href="#m1">execution</a></td><td rowspan="1">1587185557320</td><td rowspan="1">92273</td></tr></tbody>
 </table>
-<h2>1</h2><h3 id="m0">com.shreeya.Execution#execution</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th></tr><tr class="param stripe"><td>1</td><td>OM03</td><td>qwe@321</td><td>2017</td><td>10</td><td>22</td><td>normal</td></tr><tr><th colspan="7">Messages</th></tr><tr><td colspan="7"><div class="messages">*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********<br/>Before Iterator 1<br/>After Iterator<br/>Login Data ====> LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=10, endRowNo=22, executionType=normal]<br/>Browser Launch<br/>Checking login error <br/>Checking login error <br/><========OrderActionStart=======><br/>LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=10, endRowNo=22, executionType=normal]<br/>endExecution ================================@> 22
+<h2>1</h2><h3 id="m0">com.shreeya.Execution#endExecution</h3><table class="result"><tr><th>Messages</th></tr><tr><td><div class="messages">Folder Path ====> ../WorkingE/Report1587185556539</div></td></tr><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.NullPointerException
+	at com.shreeya.util.ApacheCode.outputExcelFileClose(ApacheCode.java:331)
+	at com.shreeya.Execution.endExecution(Execution.java:106)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 15 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.shreeya.Execution#execution</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th></tr><tr class="param stripe"><td>1</td><td>OM03</td><td>qwe@321</td><td>2017</td><td>10</td><td>22</td><td>normal</td></tr><tr><th colspan="7">Messages</th></tr><tr><td colspan="7"><div class="messages">*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********<br/>Before Iterator 1<br/>After Iterator<br/>Login Data ====> LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=10, endRowNo=22, executionType=normal]<br/>Browser Launch<br/>Checking login error <br/>Checking login error <br/>Login Error : Updates on WhatsApp coming soon<br/>Login Error ===> Updates on WhatsApp coming soon<br/><========OrderActionStart=======><br/>LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=10, endRowNo=22, executionType=normal]<br/>endExecution ================================@> 22
 OrderNo ==========@> 1<br/>endExecution ================================@> 22
 OrderNo ==========@> 2<br/>endExecution ================================@> 22
 OrderNo ==========@> 3<br/>endExecution ================================@> 22
@@ -26,235 +34,19 @@ OrderNo ==========@> 9<br/>endExecution ================================@> 22
 OrderNo ==========@> 10<br/>Order No ========================@> 10
 StartExecutionNo =======================@> 10<br/>Scenarion : Fresh Order Placement
 Action : New
-NewOrderStatus : rejected<br/><====@@@@ OrderNo in Sheet 10 Action : New @@@@===><br/>New Order execution Started..........<br/>This is product type ====> NRML<br/>AMO CheckBox checking....<br/>After Checking amo checkbox present....<br/>Action ====> New newOrderStatus =====> rejected
-RowNo==============> 1<br/>*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************<br/>====<<<<< OrderNo in Sheet 10 Action : New >>>>>====<br/>FolderCreation array form execution class ===> [Ljava.lang.String;@2be14cbe<br/>Action ======>  New
-NewOrderStatus =====>  rejected<br/>New order status =====> rejected<br/><====ExtendReporter Constructor===><br/>Scenario : Fresh Order Placement<br/>Report Path String ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_10.html<br/>Extend Report Test Name : Order Detail 10<br/>Execution Count :: 2<br/>Execution no ===> 1<br/>TestData File copy into output folder<br/>Output excel file : ..\WorkingE\Report1587145657932\OutputFile.xlsx<br/>Start Write in output excel file<br/>*<==== orderDetailProvider Method Start ====>*<br/>===<<<<<*** OrderNo in Sheet 10 Action : New ***>>>>>===><br/>Status : rejected<br/>Buy or Sell : BUY<br/>Trading symbol : Accelya Soln India Ltd<br/>Product type : NRML<br/>Order Price : 882.30<br/>Order Type : LIMIT<br/>User Id : OM03<br/>Exchange : NSE<br/>Validity : DAY<br/>Rejection Reasone : RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>NestId : 200417000000210<br/>Row Nestid string ===> 200417000000210<br/>Nest id : 200417000000210<br/>Order Qty : 1<br/>Nest id : 200417000000210<br/>Inside orderDetailProvider method......<br/>OutSide orderDetailProvider method......<br/><=== passFail Result New 10 ===><br/>Action Result ===> FAIL
-Mod Scenario wise Result ====> NOT MOD<br/><=== ExtendReporter : Report Start generate New 10 ===><br/>Capture Screenshot<br/>1587145730787<br/>Extend Log Flush<br/>Reporter path ===> ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_10.html<br/>Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@72aec198<br/>Writer Order detail with link in outputExcel<br/>Row Object ====> <xml-fragment r="11" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A11">
-    <main:v>10</main:v>
-  </main:c>
-  <main:c r="B11">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C11" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D11">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E11" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F11" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G11" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H11" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I11" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J11">
-    <main:v>882.31</main:v>
-  </main:c>
-  <main:c r="K11">
-    <main:v>890.3</main:v>
-  </main:c>
-  <main:c r="L11" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M11">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N11">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O11" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment>
-OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_10.html<br/>HyperLink Path ======> ../Report1587145657932/HtmlReports/FreshOrderPlacement_10.html<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_10.html<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_10_1587145730787.png<br/>HyperLink Path ======> ../Report1587145657932/Screenshots/FreshOrderPlacement_10_1587145730787.png<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_10_1587145730787.png<br/>10<br/>New<br/>rejected<br/>BUY<br/>Accelya Soln India Ltd<br/>NRML<br/>882.30<br/>LIMIT<br/>OM03<br/>NSE<br/>DAY<br/>200417000000210<br/>1<br/>Partial Qty<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_10.html<br/>../WorkingE/Report1587145657932/Screenshots/FreshOrderPlacement_10_1587145730787.png<br/><<==== After if else =========>><br/>Order no =====>  10
-NoRowInTestData =======> 33<br/>endExecution ================================@> 22
-OrderNo ==========@> 11<br/>Order No ========================@> 11
-StartExecutionNo =======================@> 10<br/>Scenarion : Fresh Order Placement
-Action : New
-NewOrderStatus : rejected<br/><====@@@@ OrderNo in Sheet 11 Action : New @@@@===><br/>New Order execution Started..........<br/>This is product type ====> NRML<br/>AMO CheckBox checking....<br/>After Checking amo checkbox present....<br/>Action ====> New newOrderStatus =====> rejected
-RowNo==============> 2<br/>*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************<br/>====<<<<< OrderNo in Sheet 11 Action : New >>>>>====<br/>FolderCreation array form execution class ===> [Ljava.lang.String;@2be14cbe<br/>Action ======>  New
-NewOrderStatus =====>  rejected<br/>New order status =====> rejected<br/><====ExtendReporter Constructor===><br/>Scenario : Fresh Order Placement<br/>Report Path String ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_11.html<br/>Extend Report Test Name : Order Detail 11<br/>Execution Count :: 3<br/>Execution no ===> 3<br/>*<==== orderDetailProvider Method Start ====>*<br/>===<<<<<*** OrderNo in Sheet 11 Action : New ***>>>>>===><br/>Status : rejected<br/>Buy or Sell : BUY<br/>Trading symbol : Accelya Soln India Ltd<br/>Product type : NRML<br/>Order Price : 883.30<br/>Order Type : LIMIT<br/>User Id : OM03<br/>Exchange : NSE<br/>Validity : DAY<br/>Rejection Reasone : RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>NestId : 200417000000212<br/>Row Nestid string ===> 200417000000212<br/>Nest id : 200417000000212<br/>Order Qty : 1<br/>Nest id : 200417000000212<br/>Inside orderDetailProvider method......<br/>OutSide orderDetailProvider method......<br/><=== passFail Result New 11 ===><br/>Action Result ===> FAIL
-Mod Scenario wise Result ====> NOT MOD<br/><=== ExtendReporter : Report Start generate New 11 ===><br/>Capture Screenshot<br/>1587145763107<br/>Extend Log Flush<br/>Reporter path ===> ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_11.html<br/>Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@2dcb11b2<br/>Writer Order detail with link in outputExcel<br/>Row Object ====> <xml-fragment r="12" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A12">
-    <main:v>11</main:v>
-  </main:c>
-  <main:c r="B12">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C12" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D12">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E12" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F12" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G12" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H12" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I12" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J12">
-    <main:v>883.31</main:v>
-  </main:c>
-  <main:c r="K12">
-    <main:v>890.3</main:v>
-  </main:c>
-  <main:c r="L12" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M12">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N12">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O12" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment>
-OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_11.html<br/>HyperLink Path ======> ../Report1587145657932/HtmlReports/FreshOrderPlacement_11.html<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_11.html<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_11_1587145763107.png<br/>HyperLink Path ======> ../Report1587145657932/Screenshots/FreshOrderPlacement_11_1587145763107.png<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_11_1587145763107.png<br/>11<br/>New<br/>rejected<br/>BUY<br/>Accelya Soln India Ltd<br/>NRML<br/>883.30<br/>LIMIT<br/>OM03<br/>NSE<br/>DAY<br/>200417000000212<br/>1<br/>Partial Qty<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_11.html<br/>../WorkingE/Report1587145657932/Screenshots/FreshOrderPlacement_11_1587145763107.png<br/><<==== After if else =========>><br/>Order no =====>  11
-NoRowInTestData =======> 33<br/>endExecution ================================@> 22
-OrderNo ==========@> 12<br/>Order No ========================@> 12
-StartExecutionNo =======================@> 10<br/>Scenarion : Fresh Order Placement
-Action : New
-NewOrderStatus : rejected<br/><====@@@@ OrderNo in Sheet 12 Action : New @@@@===><br/>New Order execution Started..........<br/>This is product type ====> NRML<br/>AMO CheckBox checking....<br/>After Checking amo checkbox present....<br/>Action ====> New newOrderStatus =====> rejected
-RowNo==============> 3<br/>*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************<br/>====<<<<< OrderNo in Sheet 12 Action : New >>>>>====<br/>FolderCreation array form execution class ===> [Ljava.lang.String;@2be14cbe<br/>Action ======>  New
-NewOrderStatus =====>  rejected<br/>New order status =====> rejected<br/><====ExtendReporter Constructor===><br/>Scenario : Fresh Order Placement<br/>Report Path String ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_12.html<br/>Extend Report Test Name : Order Detail 12<br/>Execution Count :: 4<br/>Execution no ===> 6<br/>*<==== orderDetailProvider Method Start ====>*<br/>===<<<<<*** OrderNo in Sheet 12 Action : New ***>>>>>===><br/>Status : rejected<br/>Buy or Sell : BUY<br/>Trading symbol : Accelya Soln India Ltd<br/>Product type : NRML<br/>Order Price : 884.30<br/>Order Type : LIMIT<br/>User Id : OM03<br/>Exchange : NSE<br/>Validity : DAY<br/>Rejection Reasone : RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>NestId : 200417000000215<br/>Row Nestid string ===> 200417000000215<br/>Nest id : 200417000000215<br/>Order Qty : 1<br/>Nest id : 200417000000215<br/>Inside orderDetailProvider method......<br/>OutSide orderDetailProvider method......<br/><=== passFail Result New 12 ===><br/>Action Result ===> FAIL
-Mod Scenario wise Result ====> NOT MOD<br/><=== ExtendReporter : Report Start generate New 12 ===><br/>Capture Screenshot<br/>1587145794612<br/>Extend Log Flush<br/>Reporter path ===> ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_12.html<br/>Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@670bf8a7<br/>Writer Order detail with link in outputExcel<br/>Row Object ====> <xml-fragment r="13" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A13">
-    <main:v>12</main:v>
-  </main:c>
-  <main:c r="B13">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C13" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D13">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E13" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F13" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G13" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H13" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I13" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J13">
-    <main:v>884.31</main:v>
-  </main:c>
-  <main:c r="K13">
-    <main:v>890.3</main:v>
-  </main:c>
-  <main:c r="L13" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M13">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N13">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O13" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment>
-OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_12.html<br/>HyperLink Path ======> ../Report1587145657932/HtmlReports/FreshOrderPlacement_12.html<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_12.html<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_12_1587145794612.png<br/>HyperLink Path ======> ../Report1587145657932/Screenshots/FreshOrderPlacement_12_1587145794612.png<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_12_1587145794612.png<br/>12<br/>New<br/>rejected<br/>BUY<br/>Accelya Soln India Ltd<br/>NRML<br/>884.30<br/>LIMIT<br/>OM03<br/>NSE<br/>DAY<br/>200417000000215<br/>1<br/>Partial Qty<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_12.html<br/>../WorkingE/Report1587145657932/Screenshots/FreshOrderPlacement_12_1587145794612.png<br/><<==== After if else =========>><br/>Order no =====>  12
-NoRowInTestData =======> 33<br/>endExecution ================================@> 22
-OrderNo ==========@> 13<br/>Order No ========================@> 13
-StartExecutionNo =======================@> 10<br/>Scenarion : Modification Qty
-Action : MOD
-NewOrderStatus : rejected<br/>TestLaunch::Action :: MOD<br/>Action MOD but new order status rejected<br/>endExecution ================================@> 22
-OrderNo ==========@> 14<br/>Order No ========================@> 14
-StartExecutionNo =======================@> 10<br/>Scenarion : Modification Price
-Action : MOD
-NewOrderStatus : rejected<br/>TestLaunch::Action :: MOD<br/>Action MOD but new order status rejected<br/>endExecution ================================@> 22
-OrderNo ==========@> 15<br/>Order No ========================@> 15
-StartExecutionNo =======================@> 10<br/>Scenarion : Cancellation
-Action : CXL
-NewOrderStatus : rejected<br/>Action CXL but new order status rejected<br/>endExecution ================================@> 22
-OrderNo ==========@> 16<br/>Order No ========================@> 16
-StartExecutionNo =======================@> 10<br/>Scenarion : Fresh Order Placement
-Action : New
-NewOrderStatus : rejected<br/><====@@@@ OrderNo in Sheet 16 Action : New @@@@===><br/>New Order execution Started..........<br/>This is product type ====> NRML<br/>AMO CheckBox checking....<br/>After Checking amo checkbox present....<br/>bugg<br/>Action ====> New newOrderStatus =====> rejected
-RowNo==============> 7<br/>*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************<br/>====<<<<< OrderNo in Sheet 16 Action : New >>>>>====<br/>FolderCreation array form execution class ===> [Ljava.lang.String;@2be14cbe<br/>Action ======>  New
-NewOrderStatus =====>  rejected<br/>New order status =====> rejected<br/><====ExtendReporter Constructor===><br/>Scenario : Fresh Order Placement<br/>Report Path String ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_16.html<br/>Extend Report Test Name : Order Detail 16<br/>Execution Count :: 8<br/>Execution no ===> 8<br/>*<==== orderDetailProvider Method Start ====>*<br/>===<<<<<*** OrderNo in Sheet 16 Action : New ***>>>>>===><br/>Status : rejected<br/>Buy or Sell : BUY<br/>Trading symbol : Accelya Soln India Ltd<br/>Product type : NRML<br/>Order Price : 888.30<br/>Order Type : LIMIT<br/>User Id : OM03<br/>Exchange : NSE<br/>Validity : DAY<br/>Rejection Reasone : RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>NestId : 200417000000217<br/>Row Nestid string ===> 200417000000217<br/>Nest id : 200417000000217<br/>Order Qty : 1<br/>Nest id : 200417000000217<br/>Inside orderDetailProvider method......<br/>OutSide orderDetailProvider method......<br/><=== passFail Result New 16 ===><br/>Action Result ===> FAIL
-Mod Scenario wise Result ====> NOT MOD<br/><=== ExtendReporter : Report Start generate New 16 ===><br/>Capture Screenshot<br/>1587145826072<br/>Extend Log Flush<br/>Reporter path ===> ../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_16.html<br/>Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@4aede1a3<br/>Writer Order detail with link in outputExcel<br/>Row Object ====> <xml-fragment r="17" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A17">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="B17">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C17" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D17">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E17" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F17" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G17" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H17" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I17" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J17">
-    <main:v>888.31</main:v>
-  </main:c>
-  <main:c r="K17">
-    <main:v>890.3</main:v>
-  </main:c>
-  <main:c r="L17" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M17">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N17">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O17" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment>
-OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_16.html<br/>HyperLink Path ======> ../Report1587145657932/HtmlReports/FreshOrderPlacement_16.html<br/>../Report1587145657932/HtmlReports/FreshOrderPlacement_16.html<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_16_1587145826072.png<br/>HyperLink Path ======> ../Report1587145657932/Screenshots/FreshOrderPlacement_16_1587145826072.png<br/>../Report1587145657932/Screenshots/FreshOrderPlacement_16_1587145826072.png<br/>16<br/>New<br/>rejected<br/>BUY<br/>Accelya Soln India Ltd<br/>NRML<br/>888.30<br/>LIMIT<br/>OM03<br/>NSE<br/>DAY<br/>200417000000217<br/>1<br/>Partial Qty<br/>RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>FAIL<br/>../WorkingE/Report1587145657932/HtmlReports/FreshOrderPlacement_16.html<br/>../WorkingE/Report1587145657932/Screenshots/FreshOrderPlacement_16_1587145826072.png<br/><<==== After if else =========>><br/>Order no =====>  16
-NoRowInTestData =======> 0<br/>New order Rejection count no : 4<br/>*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************<br/>====<<<<< OrderNo in Sheet null Action : null >>>>>====<br/>FolderCreation array form execution class ===> [Ljava.lang.String;@2be14cbe<br/>****Termination Conditin****<br/>Order no =====>  0
-NoRowInTestData =======> 0<br/>Excel file closing...........<br/>ExcelFileClose flag : true<br/>Execution Terminate.... :)<br/>Outside form execution............</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+NewOrderStatus : rejected<br/><====@@@@ OrderNo in Sheet 10 Action : New @@@@===><br/>New Order execution Started..........<br/>This is product type ====> NRML<br/>AMO CheckBox checking....<br/>AMO CheckBox does not present<br/>Action ====> New newOrderStatus =====> rejected
+RowNo==============> 1<br/>*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************<br/>====<<<<< OrderNo in Sheet 10 Action : New >>>>>====<br/>FolderCreation array form execution class ===> [Ljava.lang.String;@11a5e2e0<br/>Action ======>  New
+NewOrderStatus =====>  rejected<br/>New order status =====> rejected<br/><====ExtendReporter Constructor===><br/>Scenario : Fresh Order Placement<br/>Report Path String ../WorkingE/Report1587185556539/HtmlReports/FreshOrderPlacement_10.html<br/>Extend Report Test Name : Order Detail 10<br/>Execution Count :: 2<br/>Execution no ===> 2<br/>*<==== orderDetailProvider Method Start ====>*<br/>===<<<<<*** OrderNo in Sheet 10 Action : New ***>>>>>===><br/>Status : rejected<br/>Buy or Sell : BUY<br/>Trading symbol : Accelya Soln India Ltd<br/>Product type : NRML<br/>Order Price : 882.30<br/>Order Type : LIMIT<br/>User Id : OM03<br/>Exchange : NSE<br/>Validity : DAY<br/>Rejection Reasone : RMS:No Category is assigned  for entity dealer-OM03 across exchange across segment across product <br/>NestId : 200418000000002<br/>Row Nestid string ===> 200418000000002<br/>Nest id : 200418000000002<br/>Order Qty : 1<br/>Nest id : 200418000000002<br/>Inside orderDetailProvider method......<br/>OutSide orderDetailProvider method......<br/><=== passFail Result New 10 ===><br/>Action Result ===> FAIL
+Mod Scenario wise Result ====> NOT MOD<br/><=== ExtendReporter : Report Start generate New 10 ===><br/>Capture Screenshot<br/>1587185647477<br/>Extend Log Flush<br/>Reporter path ===> ../WorkingE/Report1587185556539/HtmlReports/FreshOrderPlacement_10.html<br/>Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@40bbb66b<br/>Writer Order detail with link in outputExcel</div></td></tr><tr><th colspan="7">Exception</th></tr><tr><td colspan="7"><div class="stacktrace">java.lang.NullPointerException
+	at com.shreeya.util.ApacheCode.outputFileWriter(ApacheCode.java:295)
+	at com.shreeya.util.HelperCode.outputProcessor(HelperCode.java:183)
+	at com.shreeya.page.OrderAction.orderActionStart(OrderAction.java:125)
+	at com.shreeya.Execution.execution(Execution.java:72)
+	at java.util.ArrayList.forEach(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 18 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

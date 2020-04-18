@@ -61,9 +61,14 @@ public class FolderStructure {
 		File source = new File(configReader.configReader("TestData")+".xlsx");
         File dest = new File(targetName+"/OutputFile.xlsx");
 
+        File executeSource = new File(configReader.configReader("LoginData")+".txt");
+        File executeDest = new File(targetName+"/Executable.txt");
+        
         FileUtils.copyFile(source, dest);
+        FileUtils.copyFile(executeSource, executeDest);
         Reporter.log("TestData File copy into output folder",true);
         Reporter.log("Output excel file : "+dest.toPath(),true);
+        Reporter.log("Output excel file : "+executeDest.toPath(),true);
 		return dest.toString();
 				
 	}
