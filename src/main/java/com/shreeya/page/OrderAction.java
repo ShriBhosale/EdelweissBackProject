@@ -59,9 +59,7 @@ public class OrderAction {
 			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
 			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
 			Reporter.log("endExecution ================================@> "+endExecution+"\nOrderNo ==========@> "+orderNo,true);
-			if(model.getOrderNo().equalsIgnoreCase("32")||model.getOrderNo().equalsIgnoreCase("21")) {
-				Reporter.log("It is working "+model.getOrderNo(), true);
-			}
+			
 			if(orderNo>=endExecution+1)
 				break;
 			if(orderNo>=startExecution) {
@@ -99,6 +97,7 @@ public class OrderAction {
 				mapObject=modOrder.modExecution(model,driver,orderNo,newOrderStatus);
 				 }else {
 					 Reporter.log("Action MOD but new order status rejected",true);
+					 helperObject.reportForSkipAction(model);
 					 continue;
 				 }
 				
@@ -113,6 +112,7 @@ public class OrderAction {
 				mapObject=cxlOrder.cxlExecution(driver,orderNo,newOrderStatus,model);
 				 }else {
 					 Reporter.log("Action CXL but new order status rejected",true);
+					 helperObject.reportForSkipAction(model);
 					 continue;
 				 }
 			}
@@ -127,7 +127,7 @@ public class OrderAction {
 				newOrderStatus=status;
 			}
 			if(countOfrejectNew==4) {
-				Reporter.log("New order Rejection count no : "+4,true);
+				Reporter.log("<==================@@@@@@@ New order Rejection count no : @@@@@@====================> "+4,true);
 				break;
 			}
 			

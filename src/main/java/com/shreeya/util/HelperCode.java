@@ -190,7 +190,9 @@ public class HelperCode {
 		else {
 		report.errroMsg("New order reject");
 		orderDetailArray[2]="New order reject1";
+		report.logFlush();
 		
+		Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 		//noRowInTestData=orderNo;
 		}
 		//report.tearDown(resultString);
@@ -260,4 +262,15 @@ public class HelperCode {
 	}
 	
 
+	public void reportForSkipAction(TestDataModel model) throws IOException {
+		Reporter.log("Reporter generate for skipped mod and cxl scenario", true);
+		String folderPath=folderPathArray[0];
+		int orderNo=Integer.valueOf(model.getOrderNo());
+		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
+		report.testCreation("Order Detail " + model.getOrderNo());
+		report.errorFail(model.getAction()+" skip due to new order reject...");
+		report.logFlush();
+		orderDetailArray[16]=report.getReportPathString();
+		Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+	}
 }

@@ -163,6 +163,10 @@ public class ExtendReporter {
 		
 	}
 	
+	public void errorFail(String msg) {
+		test.log(Status.FAIL, msg);
+	}
+	
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
 		Reporter.log("Abnormal Error Handly",true);
 		FolderStructure folderObject=new FolderStructure();
