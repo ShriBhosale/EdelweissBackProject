@@ -1,12 +1,6 @@
 package com.shreeya.util;
 
-import java.awt.RenderingHints.Key;
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -21,15 +15,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import com.google.common.base.Function;
-import com.shreeya.page.LoginPage;
 
 public class SeleniumCoder {
 
@@ -37,6 +31,7 @@ public class SeleniumCoder {
 	WebDriver driver=null;
 	ExtendReporter report=new ExtendReporter();
 	int maximumDelay=300;
+	private long explicityWaitCount=20;
 	public SeleniumCoder() {
 		
 	}
@@ -94,6 +89,9 @@ public class SeleniumCoder {
 		}catch(ElementNotInteractableException e) {
 			System.out.println("Convert driver into javascript than click on element.... ");
 			convertInJavaScriptAndClick(element);
+			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+			wait.until(ExpectedConditions.visibilityOf(element)); 
+			wait.until(ExpectedConditions.elementToBeClickable(element));
 		}
 		
 		
@@ -239,8 +237,10 @@ public class SeleniumCoder {
 			       //WebElement searchTextField =driver.findElement(By.name("q"));
 			    	 WebElement element =driver.findElement(By.xpath(xpathString));
 			       if(element.isEnabled()) {
-			    	   System.out.println("Element Found");
 			    	   
+			    	   
+			       }else {
+			    	   System.out.println("Element not Found");
 			       }
 			       return element;
 			     }

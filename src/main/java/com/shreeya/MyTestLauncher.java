@@ -48,7 +48,7 @@ public class MyTestLauncher {
 		test.setName(loginModel.getReferNo());
 		test.setParameters(testScenarioParameters);
 		List<XmlClass> classes = new ArrayList<XmlClass>();
-		classes.add(new XmlClass(Execution.class.getName()));
+		classes.add(new XmlClass(FunctionKeyword.class.getName()));
 		test.setXmlClasses(classes) ;
 		 }
 		 List<XmlSuite> suites = new ArrayList<XmlSuite>();

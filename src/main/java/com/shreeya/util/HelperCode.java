@@ -11,7 +11,7 @@ import org.testng.Reporter;
 
 import com.shreeya.Execution;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.page.OrderDetail;
+import com.shreeya.orderdetailpage.OrderDetail;
 
 import net.bytebuddy.description.modifier.SynchronizationState;
 

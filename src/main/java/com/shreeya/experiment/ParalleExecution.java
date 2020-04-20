@@ -13,7 +13,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.shreeya.model.LoginModel;
-import com.shreeya.page.LoginPage;
+import com.shreeya.orderdetailpage.LoginPage;
 import com.shreeya.util.CsvReaderCode;
 
 public class ParalleExecution {

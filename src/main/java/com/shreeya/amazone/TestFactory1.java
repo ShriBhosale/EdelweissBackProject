@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
-import com.shreeya.page.LoginPage;
+import com.shreeya.orderdetailpage.LoginPage;
 
 public class TestFactory1 {
 	

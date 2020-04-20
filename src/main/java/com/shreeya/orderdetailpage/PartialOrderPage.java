@@ -1,4 +1,4 @@
-package com.shreeya.page;
+package com.shreeya.orderdetailpage;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import org.testng.Reporter;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.page.LoginPage;
-import com.shreeya.page.NewOrderPage;
+import com.shreeya.orderdetailpage.LoginPage;
+import com.shreeya.orderdetailpage.NewOrderPage;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 

@@ -17,7 +17,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.shreeya.page.LoginPage;
+import com.shreeya.orderdetailpage.LoginPage;
 
 public class Test1 {
 

@@ -14,7 +14,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.shreeya.page.LoginPage;
+import com.shreeya.orderdetailpage.LoginPage;
 
 public class ErrorHtmlReport {
 	public static ExtentHtmlReporter htmlextent = null;

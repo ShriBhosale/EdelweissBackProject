@@ -1,4 +1,4 @@
-package com.shreeya.page;
+package com.shreeya.orderdetailpage;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -32,7 +32,7 @@ public class LoginPage extends SeleniumCoder{
 	WebElement yobTextField;
 	WebElement continueButton;
 	WebElement notNowButton;
-	WebDriver driver;
+	static WebDriver driver;
 	WebElement popupOkButton;
 	
 	boolean noLoginProccess=false;
@@ -53,7 +53,9 @@ public class LoginPage extends SeleniumCoder{
 	
 	public WebDriver loginExecution(LoginModel loginModelObject) throws InterruptedException, IOException {
 		
+		Reporter.log("LoginPage : loginExecution ", true);
 		
+		Reporter.log("LoginModel data "+loginModelObject.toString(), true);
 		driver=browserLaunch(loginModelObject.getExecutionType());
 		
 		//userIdAndPwd(scenario);
@@ -139,6 +141,8 @@ public class LoginPage extends SeleniumCoder{
 		
 		logoutlink=fluentWaitCodeXpath(driver,"//a[text()=' Logout']");
 		clickElement(logoutlink,"logout link");
+		
+		setDriver(driver);
 		//logoutlink.click();
 	}
 	
@@ -205,6 +209,16 @@ public class LoginPage extends SeleniumCoder{
 
 	public void setLoginErrorMsg(String loginErrorMsg) {
 		this.loginErrorMsg = loginErrorMsg;
+	}
+
+
+	public static  WebDriver getDriver() {
+		return driver;
+	}
+
+
+	public  void setDriver(WebDriver driver) {
+		this.driver = driver;
 	}
 
 

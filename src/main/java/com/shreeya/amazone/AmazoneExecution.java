@@ -11,7 +11,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.shreeya.page.LoginPage;
+import com.shreeya.orderdetailpage.LoginPage;
 import com.shreeya.util.SeleniumCoder;
 
 public class AmazoneExecution extends SeleniumCoder {

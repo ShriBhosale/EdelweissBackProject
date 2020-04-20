@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.page.LoginPage;
-import com.shreeya.page.OrderAction;
+import com.shreeya.orderdetailpage.LoginPage;
+import com.shreeya.orderdetailpage.OrderAction;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
@@ -69,7 +69,7 @@ public class Execution {
 			if(referenceNo.equals(loginModelObj.getReferNo())) {
 				try {
 					driver = login.loginExecution(loginModelObj);
-					driver=orderActioObj.orderActionStart(driver,loginModelObj);
+					//driver=orderActioObj.orderActionStart(driver,loginModelObj);
 					terminateExecution(driver);
 				} catch (InterruptedException e) { // TODO Auto-generated catch block
 					e.printStackTrace();
