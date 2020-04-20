@@ -67,7 +67,7 @@ public class HelperCode {
 	public String[] passFailResult(String[] orderDetail,TestDataModel model) {
 		Reporter.log("<=== passFail Result "+model.getAction()+" "+model.getOrderNo()+" ===>",true);
 		if (orderDetail[1].equalsIgnoreCase("New")) {
-			if (orderDetail[2].equalsIgnoreCase("Open")||orderDetail[2].equalsIgnoreCase("Complete")) {
+			if (orderDetail[2].equalsIgnoreCase("Open")||orderDetail[2].equalsIgnoreCase("Complete")||orderDetail[2].equalsIgnoreCase("after market order req received")) {
 				resultString[0] = "PASS";
 			}
 		} else if (orderDetail[1].equalsIgnoreCase("Mod")) {
@@ -81,7 +81,7 @@ public class HelperCode {
 				}
 			}else if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
 				
-			if (orderDetail[2].equalsIgnoreCase("modified")&&(orderDetail[12].equalsIgnoreCase(model.getQtyMod()))) {
+			if (orderDetail[12].equalsIgnoreCase(model.getQtyMod())) {
 				resultString[1]= "PASS";
 			}
 			}

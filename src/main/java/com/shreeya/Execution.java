@@ -105,4 +105,8 @@ public class Execution {
 		Reporter.log("Folder Path ====> "+folderPath[0], true);
 		apacheCodeObj.outputExcelFileClose(folderPath[0]);
 	}
+	
+	public void orderDetailExecution() {
+		
+	}
 }

@@ -26,7 +26,8 @@ public class FolderStructure {
 			//copyFile(configReader.configReader("TestData")+".xlsx", "../WorkingE/Report" + timeStamp+"/OutputFile.xlsx");
 			//outputFile="../WorkingE/Report" + timeStamp+"/OutputFile.xlsx";
 	
-		String reportFolderPath = "../WorkingE/Report" + timeStamp;
+		//String reportFolderPath = "../WorkingE/Report" + timeStamp;
+			String reportFolderPath=reportPathProvider()+timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
 		folderArray[0]=reportFolderPath;
 		folderArray[1]=reportFolderPath + "/HtmlReports";
@@ -73,6 +74,16 @@ public class FolderStructure {
 				
 	}
 	
-	
+	public String reportPathProvider() {
+		ConfigReader reader=new ConfigReader();
+		String reportPath=reader.configReader("Result");
+		Reporter.log("Report Path ======> "+reportPath,true);
+		String replaceStr=reportPath.replace("\\", "-");
+		String [] reportPathArray=replaceStr.split("-");
+		String path="../"+reportPathArray[reportPathArray.length-1]+"/Report";
+		
+		Reporter.log("Path ====> "+path, true);
+		return path;
+	}
 
 }

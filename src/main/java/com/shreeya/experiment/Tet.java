@@ -1,14 +1,10 @@
 package com.shreeya.experiment;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.StandardCopyOption;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Hyperlink;
@@ -16,9 +12,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.testng.Reporter;
 
-import com.google.common.io.Files;
-import com.shreeya.util.ApacheCode;
+import com.shreeya.util.ConfigReader;
 
 public class Tet {
 
@@ -106,7 +102,7 @@ public class Tet {
 			return abc;
 
 		}
-	public static void main(String[] args) throws IOException {
+	public static void main1(String[] args) throws IOException {
 		
 		  Tet t=new Tet(); String [] orderDetailArray=
 		  {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30",
@@ -137,7 +133,9 @@ public class Tet {
 		
 	}
 	
-	
+	public static void main(String[] args) {
+		
+	}
 	
 	
 }
