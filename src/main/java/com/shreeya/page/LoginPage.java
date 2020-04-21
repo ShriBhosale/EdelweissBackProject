@@ -54,21 +54,17 @@ public class LoginPage extends SeleniumCoder{
 	public WebDriver loginExecution(LoginModel loginModelObject) throws InterruptedException, IOException {
 		
 		
-		driver=browserLaunch(loginModelObject.getExecutionType());
+		driver=browserLaunch(loginModelObject.getModule());
 		
 		//userIdAndPwd(scenario);
 		
-		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
-		clickElement(popupButton,"No thans popup button");
+		clickOnLoginButton(driver);
 		
-		loginButton=fluentWaitCodeXpath(driver, "//span[text()='Login']");
-		clickElement(loginButton,"Login button");
-		
-		
-		buyAndSellButton=fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']");
-		clickElement(buyAndSellButton,"Buy/Sell link");
-		
-		userIdTextField=fluentWaitCodeId(driver, "userID");
+		try {
+		userIdTextField=fluentWaitCodeId(driver, "userID",20);
+		}catch(Exception e) {
+			clickOnLoginButton(driver);
+		}
 		clearAndSendKey(userIdTextField,loginModelObject.getUserId(),"User Id");
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
@@ -208,7 +204,17 @@ public class LoginPage extends SeleniumCoder{
 	}
 
 
-	
+	public void clickOnLoginButton(WebDriver driver) throws InterruptedException {
+		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
+		clickElement(popupButton,"No thans popup button");
+		
+		loginButton=fluentWaitCodeXpath(driver, "//span[text()='Login']");
+		clickElement(loginButton,"Login button");
+		
+		
+		buyAndSellButton=fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']");
+		clickElement(buyAndSellButton,"Buy/Sell link");
+	}
 	
 	
 }

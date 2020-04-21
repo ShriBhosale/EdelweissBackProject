@@ -332,6 +332,31 @@ public class SeleniumCoder {
         return list;
     }
 
+	public  WebElement fluentWaitCodeId(WebDriver driver,final String idString,int maxDelay) {
+		// Waiting 30 seconds for an element to be present on the page, checking
+		   // for its presence once every 5 seconds.
+		 WebElement element=null;
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+			       .withTimeout(maxDelay, TimeUnit.SECONDS)
+			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .ignoring(NoSuchElementException.class);
 	
+			    element = wait.until(new Function<WebDriver, WebElement>() {
+			     public WebElement apply(WebDriver driver) {
+			       //WebElement searchTextField =driver.findElement(By.name("q"));
+			    	 WebElement element =driver.findElement(By.id(idString));
+			       if(element.isEnabled()) {
+			    	   System.out.println("Element Found");
+			    	   
+			       }
+			       return element;
+			     }
+			     
+			   });
+		
+			   
+			   return element;
+		   
+	}
 	
 }

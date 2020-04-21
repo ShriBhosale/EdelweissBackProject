@@ -30,6 +30,7 @@ public class ApacheCode {
 	static XSSFSheet sheet;
 	static Sheet outputsheet;
 	public static FileOutputStream fileOut=null;
+	public static boolean closeOutputExcel=false;
 
 	HelperCode helper=new HelperCode();
 	
@@ -289,10 +290,17 @@ public class ApacheCode {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 
 		 Reporter.log("Writer Order detail with link in outputExcel",true);
 		 int counter=15;
+		 Reporter.log("after count variable "+counter,true);
 		 String hyperLinkName = null;
+		 Reporter.log("hyper link Name "+hyperLinkName,true);
+		 Reporter.log("OutputSheet object ==========>>> "+outputsheet,true);
 			Row row = outputsheet.getRow(rowNo);
+			 Reporter.log("After row "+row,true);
+			if(outputsheet==null)
+				Reporter.log("Null=====================================================================$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$44>>>>>>");
 			Reporter.log("Row Object ====> "+row+"\nOutputSheet Object ====> "+outputsheet,true);
 			for(int i=14;i<orderDetailArray.length;i++)
 			{
@@ -326,10 +334,13 @@ public class ApacheCode {
 			
 	 }
 	 public void outputExcelFileClose(String folderPathString) throws IOException {
+		 if(closeOutputExcel==false) {
 			fileOut = new FileOutputStream(folderPathString+"/OutputFile.xlsx");
-			
+			Reporter.log("OutputReporter file close", true);
 			wb.write(fileOut);
 			fileOut.close();
+			closeOutputExcel=true;
+		 }
 		}
 
 }

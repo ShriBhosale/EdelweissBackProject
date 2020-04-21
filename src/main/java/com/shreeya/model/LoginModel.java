@@ -15,11 +15,11 @@ public class LoginModel {
 	private String startingRowNo;
 	@CsvBindByName(column = "EndRowNo")
 	private String endRowNo;
-	@CsvBindByName(column = "ExecutionType")
-	private String executionType;
+	@CsvBindByName(column = "Module")
+	private String module;
 
 	public LoginModel(String referNo, String userId, String password, String yob, String startingRowNo, String endRowNo,
-			String executionType) {
+			String module) {
 		super();
 		this.referNo = referNo;
 		this.userId = userId;
@@ -27,7 +27,7 @@ public class LoginModel {
 		this.yob = yob;
 		this.startingRowNo = startingRowNo;
 		this.endRowNo = endRowNo;
-		this.executionType = executionType;
+		this.module = module;
 	}
 	
 	public LoginModel() {}
@@ -68,16 +68,16 @@ public class LoginModel {
 	public void setEndRowNo(String endRowNo) {
 		this.endRowNo = endRowNo;
 	}
-	public String getExecutionType() {
-		return executionType;
+	public String getModule() {
+		return module;
 	}
-	public void setExecutionType(String executionType) {
-		this.executionType = executionType;
+	public void setModule(String module) {
+		this.module = module;
 	}
 	@Override
 	public String toString() {
 		return "LoginModel [referNo=" + referNo + ", userId=" + userId + ", password=" + password + ", yob=" + yob
-				+ ", startingRowNo=" + startingRowNo + ", endRowNo=" + endRowNo + ", executionType=" + executionType
+				+ ", startingRowNo=" + startingRowNo + ", endRowNo=" + endRowNo + ", module=" + module
 				+ "]";
 	}
 	

@@ -16,6 +16,7 @@ import com.shreeya.model.TestDataModel;
 import com.shreeya.page.LoginPage;
 import com.shreeya.page.OrderAction;
 import com.shreeya.util.ApacheCode;
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
 
@@ -29,7 +30,8 @@ public class Execution {
 	
 	public static String folderPath[]=null;
 	public static ApacheCode apacheCodeObj;
-	
+	public static int noInstance=0;
+	public static int noExecution=0;
 	
 	
 	@BeforeTest
@@ -41,10 +43,11 @@ public class Execution {
 		helperObject=new HelperCode();
 		
 		FolderStructure folderCreationObj=new FolderStructure();
-		Reporter.log("Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
+		
 		folderPath=folderCreationObj.reportFolderCreator();
 		apacheCodeObj=new ApacheCode(folderPath[0]);
-		
+		ConfigReader reader=new ConfigReader();
+		 noInstance=Integer.valueOf(reader.configReader("NumberInstance"));
 		//apacheCodeObj.outputFileWriterHeader(folderPath[0]);
 		 
 	}
@@ -55,16 +58,16 @@ public class Execution {
 		Reporter.log("BeforeMethod",true);
 	}
 
-	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","ExecutionType"})
+	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","Module"})
 	@Test
-	public void execution(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String executionType) {
+	public void execution(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String module) {
 		Reporter.log("*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********",true);
 		Reporter.log("Before Iterator "+referenceNo);
 		
 		Reporter.log("After Iterator",true);
 		
 		
-			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, executionType);
+			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, module);
 			Reporter.log("Login Data ====> "+loginModelObj.toString(),true);
 			if(referenceNo.equals(loginModelObj.getReferNo())) {
 				try {
@@ -95,14 +98,18 @@ public class Execution {
 		}
 	}
 	@AfterMethod
-	public void testAfter() {
+	public void testAfter() throws IOException {
 		Reporter.log("End test case execution",true);
+		
+		  noExecution++;
+		  
+		  if(noInstance==noExecution)
+		 		apacheCodeObj.outputExcelFileClose(folderPath[0]);
 	}
 	
 	@AfterTest
 	public void endExecution() throws IOException {
-		//apacheCodeObj.closeExcelWriting();
 		Reporter.log("Folder Path ====> "+folderPath[0], true);
-		apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		
 	}
 }
