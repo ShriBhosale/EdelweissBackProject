@@ -13,7 +13,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.shreeya.model.LoginModel;
-import com.shreeya.orderdetailpage.LoginPage;
+import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.util.CsvReaderCode;
 
 public class ParalleExecution {
@@ -62,7 +62,7 @@ public class ParalleExecution {
 			LoginModel loginModelObj= loginIteratior.next();
 			if(reference.equals(loginModelObj.getReferNo())) {
 				try {
-					driver = login.loginExecution(loginModelObj);
+					driver = login.loginExecution("normal",loginModelObj);
 					login.logout(driver);
 				} catch (InterruptedException e) { // TODO Auto-generated catch block
 					e.printStackTrace();

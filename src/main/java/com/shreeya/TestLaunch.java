@@ -10,11 +10,11 @@ import org.openqa.selenium.WebDriver;
 import com.opencsv.CSVWriter;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.orderdetailpage.CxlOrderPage;
-import com.shreeya.orderdetailpage.LoginPage;
-import com.shreeya.orderdetailpage.ModOrderPage;
-import com.shreeya.orderdetailpage.NewOrderPage;
-import com.shreeya.orderdetailpage.PartialOrderPage;
+import com.shreeya.orderdetailpages.CxlOrderPage;
+import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.orderdetailpages.ModOrderPage;
+import com.shreeya.orderdetailpages.NewOrderPage;
+import com.shreeya.orderdetailpages.PartialOrderPage;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
@@ -65,7 +65,7 @@ public class TestLaunch {
 		int orderNo=0;
 		while(loginIterator.hasNext()) {
 			loginModel=loginIterator.next();
-		driver = login.loginExecution(loginModel);
+		driver = login.loginExecution("Normal",loginModel);
 		//login.headerInExcel(writer);
 		
 		String timeStamp=helperObject.timeStampGenerator();

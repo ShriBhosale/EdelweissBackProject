@@ -32,7 +32,7 @@ public class MyTestLauncher {
 		XmlSuite suite = new XmlSuite();
 		suite.setName("TmpSuite");
 		suite.setParallel(XmlSuite.ParallelMode.TESTS);
-		suite.setThreadCount(2);
+		suite.setThreadCount(1);
 		int count=0;
 		 while(loginIteratior.hasNext()) {
 			 LoginModel loginModel = loginIteratior.next(); 
@@ -43,7 +43,7 @@ public class MyTestLauncher {
 			 testScenarioParameters.put("Yob", loginModel.getYob());
 			 testScenarioParameters.put("StartNo", loginModel.getStartingRowNo());
 			 testScenarioParameters.put("EndNo", loginModel.getEndRowNo());
-			 testScenarioParameters.put("ExecutionType", loginModel.getExecutionType());
+			 testScenarioParameters.put("Module", loginModel.getModule());
 		XmlTest test = new XmlTest(suite);
 		test.setName(loginModel.getReferNo());
 		test.setParameters(testScenarioParameters);

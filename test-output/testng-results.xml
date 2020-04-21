@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="2" ignored="0" total="2" passed="0">
+<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
   <reporter-output>
     <line>
       <![CDATA[================<< Execution Started >>================]]>
@@ -8,7 +8,146 @@
       <![CDATA[Execution Before ]]>
     </line>
     <line>
-      <![CDATA[================<< Execution Started >>================]]>
+      <![CDATA[Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>]]>
+    </line>
+    <line>
+      <![CDATA[Folder Structure creation method ]]>
+    </line>
+    <line>
+      <![CDATA[orderNo ===> 0]]>
+    </line>
+    <line>
+      <![CDATA[1587446640131]]>
+    </line>
+    <line>
+      <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE]]>
+    </line>
+    <line>
+      <![CDATA[Path ====> ../WorkingE/Report]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[0] : ../WorkingE/Report1587446640131]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[1] : ../WorkingE/Report1587446640131/HtmlReports]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[2] : ../WorkingE/Report1587446640131/Screenshots]]>
+    </line>
+    <line>
+      <![CDATA[1587446640676]]>
+    </line>
+    <line>
+      <![CDATA[Before Test case...]]>
+    </line>
+    <line>
+      <![CDATA[BeforeMethod]]>
+    </line>
+    <line>
+      <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
+    </line>
+    <line>
+      <![CDATA[Before Iterator 1]]>
+    </line>
+    <line>
+      <![CDATA[After Iterator]]>
+    </line>
+    <line>
+      <![CDATA[Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=13, module=Fund Transfer]]]>
+    </line>
+    <line>
+      <![CDATA[KeyWord before process  ====> Fund Transfer]]>
+    </line>
+    <line>
+      <![CDATA[keyword =====> fund transfer]]>
+    </line>
+    <line>
+      <![CDATA[LoginPage : loginExecution ]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=13, module=Fund Transfer]]]>
+    </line>
+    <line>
+      <![CDATA[Browser Launch]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[fun transfer executin]]>
+    </line>
+    <line>
+      <![CDATA[Fund Transfer]]>
+    </line>
+    <line>
+      <![CDATA[<====ExtendReporter Constructor===>]]>
+    </line>
+    <line>
+      <![CDATA[Scenario : Fund Transfer]]>
+    </line>
+    <line>
+      <![CDATA[Report Path String ../WorkingE/Report1587446640131/FundTransfer_1.html]]>
+    </line>
+    <line>
+      <![CDATA[Extend Report Test Name : Fund Transfer]]>
+    </line>
+    <line>
+      <![CDATA[Capture Screenshot]]>
+    </line>
+    <line>
+      <![CDATA[1587446678161]]>
+    </line>
+    <line>
+      <![CDATA[Extend Log Flush]]>
+    </line>
+    <line>
+      <![CDATA[Reporter path ===> ../WorkingE/Report1587446640131/FundTransfer_1.html]]>
+    </line>
+    <line>
+      <![CDATA[Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@4c5ca35]]>
+    </line>
+    <line>
+      <![CDATA[Driver close]]>
+    </line>
+    <line>
+      <![CDATA[Screenshot path =======> ../WorkingE/Report1587446640131/Screenshots/FundTransfer_1_1587446678161.png]]>
+    </line>
+    <line>
+      <![CDATA[*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> null]]>
+    </line>
+    <line>
+      <![CDATA[****Termination Conditin****]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : false]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+    </line>
+    <line>
+      <![CDATA[Excel file closing...........]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : true]]>
+    </line>
+    <line>
+      <![CDATA[Execution Terminate.... :)]]>
+    </line>
+    <line>
+      <![CDATA[End test case execution]]>
+    </line>
+    <line>
+      <![CDATA[Folder Path ====> ../WorkingE/Report1587446640131]]>
     </line>
     <line>
       <![CDATA[Execution Before ]]>
@@ -20,70 +159,16 @@
       <![CDATA[Folder Structure creation method ]]>
     </line>
     <line>
-      <![CDATA[orderNo ===> 0]]>
+      <![CDATA[orderNo ===> 1]]>
     </line>
     <line>
-      <![CDATA[Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>]]>
-    </line>
-    <line>
-      <![CDATA[Folder Structure creation method ]]>
-    </line>
-    <line>
-      <![CDATA[1587369963983]]>
-    </line>
-    <line>
-      <![CDATA[orderNo ===> 0]]>
-    </line>
-    <line>
-      <![CDATA[1587369963983]]>
-    </line>
-    <line>
-      <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE]]>
-    </line>
-    <line>
-      <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE]]>
-    </line>
-    <line>
-      <![CDATA[Path ====> ../WorkingE/Report]]>
-    </line>
-    <line>
-      <![CDATA[Path ====> ../WorkingE/Report]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[0] : ../WorkingE/Report1587369963983]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[0] : ../WorkingE/Report1587369963983]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[1] : ../WorkingE/Report1587369963983/HtmlReports]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[2] : ../WorkingE/Report1587369963983/Screenshots]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[2] : ../WorkingE/Report1587369963983/Screenshots]]>
-    </line>
-    <line>
-      <![CDATA[1587369964260]]>
-    </line>
-    <line>
-      <![CDATA[1587369964260]]>
-    </line>
-    <line>
-      <![CDATA[Before Test case...]]>
+      <![CDATA[1587446686221]]>
     </line>
     <line>
       <![CDATA[Before Test case...]]>
     </line>
     <line>
       <![CDATA[BeforeMethod]]>
-    </line>
-    <line>
-      <![CDATA[BeforeMethod]]>
-    </line>
-    <line>
-      <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
     </line>
     <line>
       <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
@@ -95,52 +180,143 @@
       <![CDATA[After Iterator]]>
     </line>
     <line>
-      <![CDATA[Login Data ====> LoginModel [referNo=2, userId=OM01, password=qwe@321, yob=2017, startingRowNo=12, endRowNo=16, executionType=normal]]]>
+      <![CDATA[Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=27, module=My Positions]]]>
     </line>
     <line>
-      <![CDATA[Before Iterator 1]]>
+      <![CDATA[KeyWord before process  ====> My Positions]]>
+    </line>
+    <line>
+      <![CDATA[keyword =====> my positions]]>
+    </line>
+    <line>
+      <![CDATA[LoginPage : loginExecution ]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=27, module=My Positions]]]>
+    </line>
+    <line>
+      <![CDATA[Browser Launch]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[My Position Module]]>
+    </line>
+    <line>
+      <![CDATA[My Positions]]>
+    </line>
+    <line>
+      <![CDATA[<====ExtendReporter Constructor===>]]>
+    </line>
+    <line>
+      <![CDATA[Scenario : My Positions]]>
+    </line>
+    <line>
+      <![CDATA[Report Path String ../WorkingE/Report1587446640131/MyPositions_1.html]]>
+    </line>
+    <line>
+      <![CDATA[Extend Report Test Name : My Positions]]>
+    </line>
+    <line>
+      <![CDATA[Capture Screenshot]]>
+    </line>
+    <line>
+      <![CDATA[1587446725615]]>
+    </line>
+    <line>
+      <![CDATA[Extend Log Flush]]>
+    </line>
+    <line>
+      <![CDATA[Reporter path ===> ../WorkingE/Report1587446640131/MyPositions_1.html]]>
+    </line>
+    <line>
+      <![CDATA[Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@43d8f013]]>
+    </line>
+    <line>
+      <![CDATA[Driver close]]>
+    </line>
+    <line>
+      <![CDATA[Screenshot path =======> ../WorkingE/Report1587446640131/Screenshots/MyPositions_1_1587446725615.png]]>
+    </line>
+    <line>
+      <![CDATA[*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> null]]>
+    </line>
+    <line>
+      <![CDATA[****Termination Conditin****]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+    </line>
+    <line>
+      <![CDATA[Excel file closing...........]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : true]]>
+    </line>
+    <line>
+      <![CDATA[Execution Terminate.... :)]]>
+    </line>
+    <line>
+      <![CDATA[End test case execution]]>
+    </line>
+    <line>
+      <![CDATA[Folder Path ====> ../WorkingE/Report1587446640131]]>
+    </line>
+    <line>
+      <![CDATA[Execution Before ]]>
+    </line>
+    <line>
+      <![CDATA[Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>]]>
+    </line>
+    <line>
+      <![CDATA[Folder Structure creation method ]]>
+    </line>
+    <line>
+      <![CDATA[orderNo ===> 2]]>
+    </line>
+    <line>
+      <![CDATA[1587446729874]]>
+    </line>
+    <line>
+      <![CDATA[Before Test case...]]>
+    </line>
+    <line>
+      <![CDATA[BeforeMethod]]>
+    </line>
+    <line>
+      <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
+    </line>
+    <line>
+      <![CDATA[Before Iterator 3]]>
     </line>
     <line>
       <![CDATA[After Iterator]]>
     </line>
     <line>
-      <![CDATA[Login Data ====> LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=6, endRowNo=9, executionType=normal]]]>
+      <![CDATA[Login Data ====> LoginModel [referNo=3, userId=60005274, password=abc@321, yob=2000, startingRowNo=14, endRowNo=17, module=SeeHoldings]]]>
     </line>
     <line>
-      <![CDATA[KeyWord before process  ====> orderDetail]]>
+      <![CDATA[KeyWord before process  ====> SeeHoldings]]>
     </line>
     <line>
-      <![CDATA[KeyWord before process  ====> orderDetail]]>
-    </line>
-    <line>
-      <![CDATA[keyword =====> orderdetail]]>
-    </line>
-    <line>
-      <![CDATA[keyword =====> orderdetail]]>
-    </line>
-    <line>
-      <![CDATA[Order detail functionality]]>
+      <![CDATA[keyword =====> seeholdings]]>
     </line>
     <line>
       <![CDATA[LoginPage : loginExecution ]]>
     </line>
     <line>
-      <![CDATA[LoginModel data LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=6, endRowNo=9, executionType=normal]]]>
-    </line>
-    <line>
-      <![CDATA[Order detail functionality]]>
-    </line>
-    <line>
-      <![CDATA[LoginPage : loginExecution ]]>
-    </line>
-    <line>
-      <![CDATA[LoginModel data LoginModel [referNo=2, userId=OM01, password=qwe@321, yob=2017, startingRowNo=12, endRowNo=16, executionType=normal]]]>
-    </line>
-    <line>
-      <![CDATA[Browser Launch]]>
-    </line>
-    <line>
-      <![CDATA[Checking login error ]]>
+      <![CDATA[LoginModel data LoginModel [referNo=3, userId=60005274, password=abc@321, yob=2000, startingRowNo=14, endRowNo=17, module=SeeHoldings]]]>
     </line>
     <line>
       <![CDATA[Browser Launch]]>
@@ -152,75 +328,82 @@
       <![CDATA[Checking login error ]]>
     </line>
     <line>
-      <![CDATA[<========OrderActionStart=======>]]>
+      <![CDATA[See Holdings Module]]>
     </line>
     <line>
-      <![CDATA[LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=6, endRowNo=9, executionType=normal]]]>
+      <![CDATA[SeeHoldings]]>
     </line>
     <line>
-      <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 1]]>
+      <![CDATA[<====ExtendReporter Constructor===>]]>
     </line>
     <line>
-      <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 2]]>
+      <![CDATA[Scenario : SeeHoldings]]>
     </line>
     <line>
-      <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 3]]>
+      <![CDATA[Report Path String ../WorkingE/Report1587446640131/SeeHoldings_1.html]]>
     </line>
     <line>
-      <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 4]]>
+      <![CDATA[Extend Report Test Name : SeeHoldings]]>
     </line>
     <line>
-      <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 5]]>
+      <![CDATA[Capture Screenshot]]>
     </line>
     <line>
-      <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 6]]>
+      <![CDATA[1587446771244]]>
     </line>
     <line>
-      <![CDATA[Order No ========================@> 6
-StartExecutionNo =======================@> 6]]>
+      <![CDATA[Extend Log Flush]]>
     </line>
     <line>
-      <![CDATA[Scenarion : Fresh Order Placement
-Action : New
-NewOrderStatus : rejected]]>
+      <![CDATA[Reporter path ===> ../WorkingE/Report1587446640131/SeeHoldings_1.html]]>
     </line>
     <line>
-      <![CDATA[<====@@@@ OrderNo in Sheet 6 Action : New @@@@===>]]>
+      <![CDATA[Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@6d24acf3]]>
     </line>
     <line>
-      <![CDATA[New Order execution Started..........]]>
+      <![CDATA[Driver close]]>
     </line>
     <line>
-      <![CDATA[This is product type ====> NRML]]>
+      <![CDATA[Screenshot path =======> ../WorkingE/Report1587446640131/Screenshots/SeeHoldings_1_1587446771244.png]]>
     </line>
     <line>
-      <![CDATA[AMO CheckBox checking....]]>
+      <![CDATA[*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************]]>
+    </line>
+    <line>
+      <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+    </line>
+    <line>
+      <![CDATA[FolderCreation array form execution class ===> null]]>
+    </line>
+    <line>
+      <![CDATA[****Termination Conditin****]]>
+    </line>
+    <line>
+      <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+    </line>
+    <line>
+      <![CDATA[Excel file closing...........]]>
+    </line>
+    <line>
+      <![CDATA[ExcelFileClose flag : true]]>
+    </line>
+    <line>
+      <![CDATA[Execution Terminate.... :)]]>
     </line>
     <line>
       <![CDATA[End test case execution]]>
     </line>
     <line>
-      <![CDATA[Folder Path ====> ../WorkingE/Report1587369963983]]>
-    </line>
-    <line>
-      <![CDATA[End test case execution]]>
-    </line>
-    <line>
-      <![CDATA[Folder Path ====> ../WorkingE/Report1587369963983]]>
+      <![CDATA[Folder Path ====> ../WorkingE/Report1587446640131]]>
     </line>
   </reporter-output>
-  <suite name="TmpSuite" duration-ms="3666854" started-at="2020-04-20T13:36:03 IST" finished-at="2020-04-20T14:37:10 IST">
+  <suite name="TmpSuite" duration-ms="135135" started-at="2020-04-21T10:54:00 IST" finished-at="2020-04-21T10:56:15 IST">
     <groups>
     </groups>
-    <test name="1" duration-ms="50200" started-at="2020-04-20T13:36:03 IST" finished-at="2020-04-20T13:36:54 IST">
+    <test name="1" duration-ms="46085" started-at="2020-04-21T10:54:00 IST" finished-at="2020-04-21T10:54:46 IST">
       <class name="com.shreeya.FunctionKeyword">
-        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="executionBefore" is-config="true" duration-ms="351" started-at="2020-04-20T13:36:03 IST" finished-at="2020-04-20T13:36:04 IST">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="executionBefore" is-config="true" duration-ms="631" started-at="2020-04-21T10:54:00 IST" finished-at="2020-04-21T10:54:00 IST">
           <reporter-output>
             <line>
               <![CDATA[Execution Before ]]>
@@ -235,7 +418,7 @@ NewOrderStatus : rejected]]>
               <![CDATA[orderNo ===> 0]]>
             </line>
             <line>
-              <![CDATA[1587369963983]]>
+              <![CDATA[1587446640131]]>
             </line>
             <line>
               <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE]]>
@@ -244,17 +427,20 @@ NewOrderStatus : rejected]]>
               <![CDATA[Path ====> ../WorkingE/Report]]>
             </line>
             <line>
-              <![CDATA[FolderArray[0] : ../WorkingE/Report1587369963983]]>
+              <![CDATA[FolderArray[0] : ../WorkingE/Report1587446640131]]>
             </line>
             <line>
-              <![CDATA[FolderArray[2] : ../WorkingE/Report1587369963983/Screenshots]]>
+              <![CDATA[FolderArray[1] : ../WorkingE/Report1587446640131/HtmlReports]]>
             </line>
             <line>
-              <![CDATA[1587369964260]]>
+              <![CDATA[FolderArray[2] : ../WorkingE/Report1587446640131/Screenshots]]>
+            </line>
+            <line>
+              <![CDATA[1587446640676]]>
             </line>
           </reporter-output>
         </test-method> <!-- executionBefore -->
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="beforeTest" is-config="true" duration-ms="1" started-at="2020-04-20T13:36:04 IST" finished-at="2020-04-20T13:36:04 IST">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="beforeTest" is-config="true" duration-ms="0" started-at="2020-04-21T10:54:00 IST" finished-at="2020-04-21T10:54:00 IST">
           <reporter-output>
             <line>
               <![CDATA[Before Test case...]]>
@@ -264,7 +450,7 @@ NewOrderStatus : rejected]]>
             </line>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="FAIL" signature="executionWithKeyword(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="executionWithKeyword" duration-ms="49703" started-at="2020-04-20T13:36:04 IST" finished-at="2020-04-20T13:36:54 IST">
+        <test-method status="PASS" signature="executionWithKeyword(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="executionWithKeyword" duration-ms="45285" started-at="2020-04-21T10:54:00 IST" finished-at="2020-04-21T10:54:46 IST">
           <params>
             <param index="0">
               <value>
@@ -273,17 +459,17 @@ NewOrderStatus : rejected]]>
             </param>
             <param index="1">
               <value>
-                <![CDATA[OM03]]>
+                <![CDATA[60003800]]>
               </value>
             </param>
             <param index="2">
               <value>
-                <![CDATA[qwe@321]]>
+                <![CDATA[abc123]]>
               </value>
             </param>
             <param index="3">
               <value>
-                <![CDATA[2017]]>
+                <![CDATA[2000]]>
               </value>
             </param>
             <param index="4">
@@ -293,49 +479,15 @@ NewOrderStatus : rejected]]>
             </param>
             <param index="5">
               <value>
-                <![CDATA[9]]>
+                <![CDATA[13]]>
               </value>
             </param>
             <param index="6">
               <value>
-                <![CDATA[normal]]>
+                <![CDATA[Fund Transfer]]>
               </value>
             </param>
           </params>
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-at com.shreeya.util.SeleniumCoder.convertInJavaScriptAndClick(SeleniumCoder.java:295)
-at com.shreeya.util.SeleniumCoder.clickElement(SeleniumCoder.java:91)
-at com.shreeya.orderdetailpage.NewOrderPage.newOrderExecution(NewOrderPage.java:97)
-at com.shreeya.orderdetailpage.OrderAction.orderActionStart(OrderAction.java:91)
-at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:87)
-at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-at java.lang.reflect.Method.invoke(Unknown Source)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
-at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:584)
-at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:172)
-at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
-at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:804)
-at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:145)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.util.ArrayList.forEach(Unknown Source)
-at org.testng.TestRunner.privateRun(TestRunner.java:770)
-at org.testng.TestRunner.run(TestRunner.java:591)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:402)
-at org.testng.SuiteRunner.access$000(SuiteRunner.java:41)
-at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:443)
-at org.testng.internal.thread.ThreadUtil.lambda$execute$0(ThreadUtil.java:67)
-at java.util.concurrent.FutureTask.run(Unknown Source)
-at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-at java.lang.Thread.run(Unknown Source)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
             <line>
               <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
@@ -347,22 +499,19 @@ at java.lang.Thread.run(Unknown Source)
               <![CDATA[After Iterator]]>
             </line>
             <line>
-              <![CDATA[Login Data ====> LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=6, endRowNo=9, executionType=normal]]]>
+              <![CDATA[Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=13, module=Fund Transfer]]]>
             </line>
             <line>
-              <![CDATA[KeyWord before process  ====> orderDetail]]>
+              <![CDATA[KeyWord before process  ====> Fund Transfer]]>
             </line>
             <line>
-              <![CDATA[keyword =====> orderdetail]]>
-            </line>
-            <line>
-              <![CDATA[Order detail functionality]]>
+              <![CDATA[keyword =====> fund transfer]]>
             </line>
             <line>
               <![CDATA[LoginPage : loginExecution ]]>
             </line>
             <line>
-              <![CDATA[LoginModel data LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=6, endRowNo=9, executionType=normal]]]>
+              <![CDATA[LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=13, module=Fund Transfer]]]>
             </line>
             <line>
               <![CDATA[Browser Launch]]>
@@ -374,71 +523,87 @@ at java.lang.Thread.run(Unknown Source)
               <![CDATA[Checking login error ]]>
             </line>
             <line>
-              <![CDATA[<========OrderActionStart=======>]]>
+              <![CDATA[fun transfer executin]]>
             </line>
             <line>
-              <![CDATA[LoginModel [referNo=1, userId=OM03, password=qwe@321, yob=2017, startingRowNo=6, endRowNo=9, executionType=normal]]]>
+              <![CDATA[Fund Transfer]]>
             </line>
             <line>
-              <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 1]]>
+              <![CDATA[<====ExtendReporter Constructor===>]]>
             </line>
             <line>
-              <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 2]]>
+              <![CDATA[Scenario : Fund Transfer]]>
             </line>
             <line>
-              <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 3]]>
+              <![CDATA[Report Path String ../WorkingE/Report1587446640131/FundTransfer_1.html]]>
             </line>
             <line>
-              <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 4]]>
+              <![CDATA[Extend Report Test Name : Fund Transfer]]>
             </line>
             <line>
-              <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 5]]>
+              <![CDATA[Capture Screenshot]]>
             </line>
             <line>
-              <![CDATA[endExecution ================================@> 9
-OrderNo ==========@> 6]]>
+              <![CDATA[1587446678161]]>
             </line>
             <line>
-              <![CDATA[Order No ========================@> 6
-StartExecutionNo =======================@> 6]]>
+              <![CDATA[Extend Log Flush]]>
             </line>
             <line>
-              <![CDATA[Scenarion : Fresh Order Placement
-Action : New
-NewOrderStatus : rejected]]>
+              <![CDATA[Reporter path ===> ../WorkingE/Report1587446640131/FundTransfer_1.html]]>
             </line>
             <line>
-              <![CDATA[<====@@@@ OrderNo in Sheet 6 Action : New @@@@===>]]>
+              <![CDATA[Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@4c5ca35]]>
             </line>
             <line>
-              <![CDATA[New Order execution Started..........]]>
+              <![CDATA[Driver close]]>
             </line>
             <line>
-              <![CDATA[This is product type ====> NRML]]>
+              <![CDATA[Screenshot path =======> ../WorkingE/Report1587446640131/Screenshots/FundTransfer_1_1587446678161.png]]>
             </line>
             <line>
-              <![CDATA[AMO CheckBox checking....]]>
+              <![CDATA[*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> null]]>
+            </line>
+            <line>
+              <![CDATA[****Termination Conditin****]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : false]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+            </line>
+            <line>
+              <![CDATA[Excel file closing...........]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : true]]>
+            </line>
+            <line>
+              <![CDATA[Execution Terminate.... :)]]>
             </line>
           </reporter-output>
         </test-method> <!-- executionWithKeyword -->
-        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="testAfter" is-config="true" duration-ms="1" started-at="2020-04-20T13:36:54 IST" finished-at="2020-04-20T13:36:54 IST">
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="testAfter" is-config="true" duration-ms="1" started-at="2020-04-21T10:54:46 IST" finished-at="2020-04-21T10:54:46 IST">
           <reporter-output>
             <line>
               <![CDATA[End test case execution]]>
             </line>
           </reporter-output>
         </test-method> <!-- testAfter -->
-        <test-method status="FAIL" signature="endExecution()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="endExecution" is-config="true" duration-ms="2" started-at="2020-04-20T13:36:54 IST" finished-at="2020-04-20T13:36:54 IST">
+        <test-method status="FAIL" signature="endExecution()[pri:0, instance:com.shreeya.FunctionKeyword@4b14c583]" name="endExecution" is-config="true" duration-ms="1" started-at="2020-04-21T10:54:46 IST" finished-at="2020-04-21T10:54:46 IST">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
 at com.shreeya.util.ApacheCode.outputExcelFileClose(ApacheCode.java:331)
-at com.shreeya.FunctionKeyword.endExecution(FunctionKeyword.java:124)
+at com.shreeya.FunctionKeyword.endExecution(FunctionKeyword.java:150)
 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -463,15 +628,15 @@ at java.lang.Thread.run(Unknown Source)
           </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
             <line>
-              <![CDATA[Folder Path ====> ../WorkingE/Report1587369963983]]>
+              <![CDATA[Folder Path ====> ../WorkingE/Report1587446640131]]>
             </line>
           </reporter-output>
         </test-method> <!-- endExecution -->
       </class> <!-- com.shreeya.FunctionKeyword -->
     </test> <!-- 1 -->
-    <test name="2" duration-ms="3666854" started-at="2020-04-20T13:36:03 IST" finished-at="2020-04-20T14:37:10 IST">
+    <test name="2" duration-ms="43578" started-at="2020-04-21T10:54:46 IST" finished-at="2020-04-21T10:55:29 IST">
       <class name="com.shreeya.FunctionKeyword">
-        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="executionBefore" is-config="true" duration-ms="351" started-at="2020-04-20T13:36:03 IST" finished-at="2020-04-20T13:36:04 IST">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="executionBefore" is-config="true" duration-ms="15" started-at="2020-04-21T10:54:46 IST" finished-at="2020-04-21T10:54:46 IST">
           <reporter-output>
             <line>
               <![CDATA[Execution Before ]]>
@@ -483,32 +648,14 @@ at java.lang.Thread.run(Unknown Source)
               <![CDATA[Folder Structure creation method ]]>
             </line>
             <line>
-              <![CDATA[orderNo ===> 0]]>
+              <![CDATA[orderNo ===> 1]]>
             </line>
             <line>
-              <![CDATA[1587369963983]]>
-            </line>
-            <line>
-              <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE]]>
-            </line>
-            <line>
-              <![CDATA[Path ====> ../WorkingE/Report]]>
-            </line>
-            <line>
-              <![CDATA[FolderArray[0] : ../WorkingE/Report1587369963983]]>
-            </line>
-            <line>
-              <![CDATA[FolderArray[1] : ../WorkingE/Report1587369963983/HtmlReports]]>
-            </line>
-            <line>
-              <![CDATA[FolderArray[2] : ../WorkingE/Report1587369963983/Screenshots]]>
-            </line>
-            <line>
-              <![CDATA[1587369964260]]>
+              <![CDATA[1587446686221]]>
             </line>
           </reporter-output>
         </test-method> <!-- executionBefore -->
-        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="beforeTest" is-config="true" duration-ms="0" started-at="2020-04-20T13:36:04 IST" finished-at="2020-04-20T13:36:04 IST">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="beforeTest" is-config="true" duration-ms="0" started-at="2020-04-21T10:54:46 IST" finished-at="2020-04-21T10:54:46 IST">
           <reporter-output>
             <line>
               <![CDATA[Before Test case...]]>
@@ -518,7 +665,7 @@ at java.lang.Thread.run(Unknown Source)
             </line>
           </reporter-output>
         </test-method> <!-- beforeTest -->
-        <test-method status="FAIL" signature="executionWithKeyword(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="executionWithKeyword" duration-ms="3666389" started-at="2020-04-20T13:36:04 IST" finished-at="2020-04-20T14:37:10 IST">
+        <test-method status="PASS" signature="executionWithKeyword(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="executionWithKeyword" duration-ms="43483" started-at="2020-04-21T10:54:46 IST" finished-at="2020-04-21T10:55:29 IST">
           <params>
             <param index="0">
               <value>
@@ -527,102 +674,35 @@ at java.lang.Thread.run(Unknown Source)
             </param>
             <param index="1">
               <value>
-                <![CDATA[OM01]]>
+                <![CDATA[sanjay15]]>
               </value>
             </param>
             <param index="2">
               <value>
-                <![CDATA[qwe@321]]>
+                <![CDATA[abc123]]>
               </value>
             </param>
             <param index="3">
               <value>
-                <![CDATA[2017]]>
+                <![CDATA[1985]]>
               </value>
             </param>
             <param index="4">
               <value>
-                <![CDATA[12]]>
+                <![CDATA[20]]>
               </value>
             </param>
             <param index="5">
               <value>
-                <![CDATA[16]]>
+                <![CDATA[27]]>
               </value>
             </param>
             <param index="6">
               <value>
-                <![CDATA[normal]]>
+                <![CDATA[My Positions]]>
               </value>
             </param>
           </params>
-          <exception class="org.openqa.selenium.WebDriverException">
-            <message>
-              <![CDATA[chrome not reachable
-  (Session info: chrome=81.0.4044.113)
-Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'DESKTOP-0PTHPNK', ip: '192.168.0.104', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_191'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:63168}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
-Session ID: e9af87902453555c6e1fdb1b41bd6126
-*** Element info: {Using=xpath, value=//button[text()='Continue']}]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=81.0.4044.113)
-Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'DESKTOP-0PTHPNK', ip: '192.168.0.104', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_191'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:63168}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
-Session ID: e9af87902453555c6e1fdb1b41bd6126
-*** Element info: {Using=xpath, value=//button[text()='Continue']}
-at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-at java.lang.reflect.Constructor.newInstance(Unknown Source)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
-at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
-at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
-at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
-at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
-at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:238)
-at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:1)
-at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:235)
-at com.shreeya.orderdetailpage.LoginPage.loginExecution(LoginPage.java:88)
-at com.shreeya.orderdetailpage.OrderAction.orderActionStart(OrderAction.java:56)
-at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:87)
-at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-at java.lang.reflect.Method.invoke(Unknown Source)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
-at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:584)
-at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:172)
-at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
-at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:804)
-at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:145)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.util.ArrayList.forEach(Unknown Source)
-at org.testng.TestRunner.privateRun(TestRunner.java:770)
-at org.testng.TestRunner.run(TestRunner.java:591)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:402)
-at org.testng.SuiteRunner.access$000(SuiteRunner.java:41)
-at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:443)
-at org.testng.internal.thread.ThreadUtil.lambda$execute$0(ThreadUtil.java:67)
-at java.util.concurrent.FutureTask.run(Unknown Source)
-at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
-at java.lang.Thread.run(Unknown Source)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.WebDriverException -->
           <reporter-output>
             <line>
               <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
@@ -634,22 +714,19 @@ at java.lang.Thread.run(Unknown Source)
               <![CDATA[After Iterator]]>
             </line>
             <line>
-              <![CDATA[Login Data ====> LoginModel [referNo=2, userId=OM01, password=qwe@321, yob=2017, startingRowNo=12, endRowNo=16, executionType=normal]]]>
+              <![CDATA[Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=27, module=My Positions]]]>
             </line>
             <line>
-              <![CDATA[KeyWord before process  ====> orderDetail]]>
+              <![CDATA[KeyWord before process  ====> My Positions]]>
             </line>
             <line>
-              <![CDATA[keyword =====> orderdetail]]>
-            </line>
-            <line>
-              <![CDATA[Order detail functionality]]>
+              <![CDATA[keyword =====> my positions]]>
             </line>
             <line>
               <![CDATA[LoginPage : loginExecution ]]>
             </line>
             <line>
-              <![CDATA[LoginModel data LoginModel [referNo=2, userId=OM01, password=qwe@321, yob=2017, startingRowNo=12, endRowNo=16, executionType=normal]]]>
+              <![CDATA[LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=27, module=My Positions]]]>
             </line>
             <line>
               <![CDATA[Browser Launch]]>
@@ -657,21 +734,88 @@ at java.lang.Thread.run(Unknown Source)
             <line>
               <![CDATA[Checking login error ]]>
             </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[My Position Module]]>
+            </line>
+            <line>
+              <![CDATA[My Positions]]>
+            </line>
+            <line>
+              <![CDATA[<====ExtendReporter Constructor===>]]>
+            </line>
+            <line>
+              <![CDATA[Scenario : My Positions]]>
+            </line>
+            <line>
+              <![CDATA[Report Path String ../WorkingE/Report1587446640131/MyPositions_1.html]]>
+            </line>
+            <line>
+              <![CDATA[Extend Report Test Name : My Positions]]>
+            </line>
+            <line>
+              <![CDATA[Capture Screenshot]]>
+            </line>
+            <line>
+              <![CDATA[1587446725615]]>
+            </line>
+            <line>
+              <![CDATA[Extend Log Flush]]>
+            </line>
+            <line>
+              <![CDATA[Reporter path ===> ../WorkingE/Report1587446640131/MyPositions_1.html]]>
+            </line>
+            <line>
+              <![CDATA[Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@43d8f013]]>
+            </line>
+            <line>
+              <![CDATA[Driver close]]>
+            </line>
+            <line>
+              <![CDATA[Screenshot path =======> ../WorkingE/Report1587446640131/Screenshots/MyPositions_1_1587446725615.png]]>
+            </line>
+            <line>
+              <![CDATA[*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> null]]>
+            </line>
+            <line>
+              <![CDATA[****Termination Conditin****]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+            </line>
+            <line>
+              <![CDATA[Excel file closing...........]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : true]]>
+            </line>
+            <line>
+              <![CDATA[Execution Terminate.... :)]]>
+            </line>
           </reporter-output>
         </test-method> <!-- executionWithKeyword -->
-        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="testAfter" is-config="true" duration-ms="1" started-at="2020-04-20T14:37:10 IST" finished-at="2020-04-20T14:37:10 IST">
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="testAfter" is-config="true" duration-ms="1" started-at="2020-04-21T10:55:29 IST" finished-at="2020-04-21T10:55:29 IST">
           <reporter-output>
             <line>
               <![CDATA[End test case execution]]>
             </line>
           </reporter-output>
         </test-method> <!-- testAfter -->
-        <test-method status="FAIL" signature="endExecution()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="endExecution" is-config="true" duration-ms="0" started-at="2020-04-20T14:37:10 IST" finished-at="2020-04-20T14:37:10 IST">
+        <test-method status="FAIL" signature="endExecution()[pri:0, instance:com.shreeya.FunctionKeyword@659a969b]" name="endExecution" is-config="true" duration-ms="3" started-at="2020-04-21T10:55:29 IST" finished-at="2020-04-21T10:55:29 IST">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
 at com.shreeya.util.ApacheCode.outputExcelFileClose(ApacheCode.java:331)
-at com.shreeya.FunctionKeyword.endExecution(FunctionKeyword.java:124)
+at com.shreeya.FunctionKeyword.endExecution(FunctionKeyword.java:150)
 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -696,11 +840,223 @@ at java.lang.Thread.run(Unknown Source)
           </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
             <line>
-              <![CDATA[Folder Path ====> ../WorkingE/Report1587369963983]]>
+              <![CDATA[Folder Path ====> ../WorkingE/Report1587446640131]]>
             </line>
           </reporter-output>
         </test-method> <!-- endExecution -->
       </class> <!-- com.shreeya.FunctionKeyword -->
     </test> <!-- 2 -->
+    <test name="3" duration-ms="45408" started-at="2020-04-21T10:55:29 IST" finished-at="2020-04-21T10:56:15 IST">
+      <class name="com.shreeya.FunctionKeyword">
+        <test-method status="PASS" signature="executionBefore()[pri:0, instance:com.shreeya.FunctionKeyword@4c9f8c13]" name="executionBefore" is-config="true" duration-ms="68" started-at="2020-04-21T10:55:29 IST" finished-at="2020-04-21T10:55:29 IST">
+          <reporter-output>
+            <line>
+              <![CDATA[Execution Before ]]>
+            </line>
+            <line>
+              <![CDATA[Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>]]>
+            </line>
+            <line>
+              <![CDATA[Folder Structure creation method ]]>
+            </line>
+            <line>
+              <![CDATA[orderNo ===> 2]]>
+            </line>
+            <line>
+              <![CDATA[1587446729874]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- executionBefore -->
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.shreeya.FunctionKeyword@4c9f8c13]" name="beforeTest" is-config="true" duration-ms="0" started-at="2020-04-21T10:55:29 IST" finished-at="2020-04-21T10:55:29 IST">
+          <reporter-output>
+            <line>
+              <![CDATA[Before Test case...]]>
+            </line>
+            <line>
+              <![CDATA[BeforeMethod]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="executionWithKeyword(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.shreeya.FunctionKeyword@4c9f8c13]" name="executionWithKeyword" duration-ms="45229" started-at="2020-04-21T10:55:29 IST" finished-at="2020-04-21T10:56:15 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[60005274]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[abc@321]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[2000]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[14]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[17]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[SeeHoldings]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
+            </line>
+            <line>
+              <![CDATA[Before Iterator 3]]>
+            </line>
+            <line>
+              <![CDATA[After Iterator]]>
+            </line>
+            <line>
+              <![CDATA[Login Data ====> LoginModel [referNo=3, userId=60005274, password=abc@321, yob=2000, startingRowNo=14, endRowNo=17, module=SeeHoldings]]]>
+            </line>
+            <line>
+              <![CDATA[KeyWord before process  ====> SeeHoldings]]>
+            </line>
+            <line>
+              <![CDATA[keyword =====> seeholdings]]>
+            </line>
+            <line>
+              <![CDATA[LoginPage : loginExecution ]]>
+            </line>
+            <line>
+              <![CDATA[LoginModel data LoginModel [referNo=3, userId=60005274, password=abc@321, yob=2000, startingRowNo=14, endRowNo=17, module=SeeHoldings]]]>
+            </line>
+            <line>
+              <![CDATA[Browser Launch]]>
+            </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[Checking login error ]]>
+            </line>
+            <line>
+              <![CDATA[See Holdings Module]]>
+            </line>
+            <line>
+              <![CDATA[SeeHoldings]]>
+            </line>
+            <line>
+              <![CDATA[<====ExtendReporter Constructor===>]]>
+            </line>
+            <line>
+              <![CDATA[Scenario : SeeHoldings]]>
+            </line>
+            <line>
+              <![CDATA[Report Path String ../WorkingE/Report1587446640131/SeeHoldings_1.html]]>
+            </line>
+            <line>
+              <![CDATA[Extend Report Test Name : SeeHoldings]]>
+            </line>
+            <line>
+              <![CDATA[Capture Screenshot]]>
+            </line>
+            <line>
+              <![CDATA[1587446771244]]>
+            </line>
+            <line>
+              <![CDATA[Extend Log Flush]]>
+            </line>
+            <line>
+              <![CDATA[Reporter path ===> ../WorkingE/Report1587446640131/SeeHoldings_1.html]]>
+            </line>
+            <line>
+              <![CDATA[Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@6d24acf3]]>
+            </line>
+            <line>
+              <![CDATA[Driver close]]>
+            </line>
+            <line>
+              <![CDATA[Screenshot path =======> ../WorkingE/Report1587446640131/Screenshots/SeeHoldings_1_1587446771244.png]]>
+            </line>
+            <line>
+              <![CDATA[*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************]]>
+            </line>
+            <line>
+              <![CDATA[====<<<<< OrderNo in Sheet null Action : null >>>>>====]]>
+            </line>
+            <line>
+              <![CDATA[FolderCreation array form execution class ===> null]]>
+            </line>
+            <line>
+              <![CDATA[****Termination Conditin****]]>
+            </line>
+            <line>
+              <![CDATA[Order no =====>  0
+NoRowInTestData =======> 0]]>
+            </line>
+            <line>
+              <![CDATA[Excel file closing...........]]>
+            </line>
+            <line>
+              <![CDATA[ExcelFileClose flag : true]]>
+            </line>
+            <line>
+              <![CDATA[Execution Terminate.... :)]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- executionWithKeyword -->
+        <test-method status="PASS" signature="testAfter()[pri:0, instance:com.shreeya.FunctionKeyword@4c9f8c13]" name="testAfter" is-config="true" duration-ms="1" started-at="2020-04-21T10:56:15 IST" finished-at="2020-04-21T10:56:15 IST">
+          <reporter-output>
+            <line>
+              <![CDATA[End test case execution]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testAfter -->
+        <test-method status="FAIL" signature="endExecution()[pri:0, instance:com.shreeya.FunctionKeyword@4c9f8c13]" name="endExecution" is-config="true" duration-ms="2" started-at="2020-04-21T10:56:15 IST" finished-at="2020-04-21T10:56:15 IST">
+          <exception class="java.lang.NullPointerException">
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException
+at com.shreeya.util.ApacheCode.outputExcelFileClose(ApacheCode.java:331)
+at com.shreeya.FunctionKeyword.endExecution(FunctionKeyword.java:150)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+at java.lang.reflect.Method.invoke(Unknown Source)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:62)
+at org.testng.internal.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:340)
+at org.testng.internal.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:294)
+at org.testng.TestRunner.invokeTestConfigurations(TestRunner.java:623)
+at org.testng.TestRunner.afterRun(TestRunner.java:853)
+at org.testng.TestRunner.run(TestRunner.java:594)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:402)
+at org.testng.SuiteRunner.access$000(SuiteRunner.java:41)
+at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:443)
+at org.testng.internal.thread.ThreadUtil.lambda$execute$0(ThreadUtil.java:67)
+at java.util.concurrent.FutureTask.run(Unknown Source)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+at java.lang.Thread.run(Unknown Source)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
+          <reporter-output>
+            <line>
+              <![CDATA[Folder Path ====> ../WorkingE/Report1587446640131]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- endExecution -->
+      </class> <!-- com.shreeya.FunctionKeyword -->
+    </test> <!-- 3 -->
   </suite> <!-- TmpSuite -->
 </testng-results>

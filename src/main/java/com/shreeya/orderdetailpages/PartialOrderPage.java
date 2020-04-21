@@ -1,4 +1,4 @@
-package com.shreeya.orderdetailpage;
+package com.shreeya.orderdetailpages;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import org.testng.Reporter;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.orderdetailpage.LoginPage;
-import com.shreeya.orderdetailpage.NewOrderPage;
+import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.orderdetailpages.NewOrderPage;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
@@ -20,7 +20,7 @@ public class PartialOrderPage extends SeleniumCoder {
 		Reporter.log("Partial Order Execution Method",true);
 		LoginPage loginObject=new LoginPage();
 		NewOrderPage newObect=new NewOrderPage();
-		//driver=loginObject.loginExecution(loginModel);
+		driver=loginObject.loginExecution("Partial Order",loginModel);
 		newObect.newOrderExecution(model, driver, orderNo);
 		loginObject.logout(driver);
 		driver.close();

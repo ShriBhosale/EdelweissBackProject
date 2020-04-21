@@ -6,7 +6,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
-import com.shreeya.orderdetailpage.LoginPage;
+import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.ApacheCoder;
 import com.shreeya.util.ExtendReporter;

@@ -1,4 +1,4 @@
-package com.shreeya.orderdetailpage;
+package com.shreeya.orderdetailpages;
 
 import java.io.IOException;
 import java.util.HashMap;

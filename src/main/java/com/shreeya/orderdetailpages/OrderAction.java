@@ -1,4 +1,4 @@
-package com.shreeya.orderdetailpage;
+package com.shreeya.orderdetailpages;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class OrderAction {
 	}
 	
 	public WebDriver orderActionStart(LoginModel loginModel) throws InterruptedException, IOException {
-		WebDriver driver=loginPageObj.loginExecution(loginModel);
+		WebDriver driver=loginPageObj.loginExecution("normal",loginModel);
 		Reporter.log("<========OrderActionStart=======>",true);
 		Reporter.log(loginModel.toString(),true);
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {

@@ -1,4 +1,4 @@
-package com.shreeya.orderdetailpage;
+package com.shreeya.orderdetailpages;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -51,26 +51,19 @@ public class LoginPage extends SeleniumCoder{
 	}
 	
 	
-	public WebDriver loginExecution(LoginModel loginModelObject) throws InterruptedException, IOException {
+	public WebDriver loginExecution(String scenario,LoginModel loginModelObject) throws InterruptedException, IOException {
 		
 		Reporter.log("LoginPage : loginExecution ", true);
 		
 		Reporter.log("LoginModel data "+loginModelObject.toString(), true);
-		driver=browserLaunch(loginModelObject.getExecutionType());
+		driver=browserLaunch(scenario);
 		
-		//userIdAndPwd(scenario);
-		
-		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
-		clickElement(popupButton,"No thans popup button");
-		
-		loginButton=fluentWaitCodeXpath(driver, "//span[text()='Login']");
-		clickElement(loginButton,"Login button");
-		
-		
-		buyAndSellButton=fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']");
-		clickElement(buyAndSellButton,"Buy/Sell link");
-		
-		userIdTextField=fluentWaitCodeId(driver, "userID");
+		clickOnLoginButton(driver);
+		try {
+		userIdTextField=fluentWaitCodeId(driver, "userID",20);
+		}catch(TimeoutException e) {
+			clickOnLoginButton(driver);
+		}
 		clearAndSendKey(userIdTextField,loginModelObject.getUserId(),"User Id");
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
@@ -222,6 +215,17 @@ public class LoginPage extends SeleniumCoder{
 	}
 
 
+	public void clickOnLoginButton(WebDriver driver) throws InterruptedException {
+		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
+		clickElement(popupButton,"No thans popup button");
+		
+		loginButton=fluentWaitCodeXpath(driver, "//span[text()='Login']");
+		clickElement(loginButton,"Login button");
+		
+		
+		buyAndSellButton=fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']");
+		clickElement(buyAndSellButton,"Buy/Sell link");
+	}
 	
 	
 	

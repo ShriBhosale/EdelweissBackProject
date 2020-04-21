@@ -182,5 +182,19 @@ public class ExtendReporter {
 		System.exit(0);
 	}
 	
+	public void reporter(WebDriver driver,String moduleName,String [] folderArray) throws IOException{
+		Reporter.log(moduleName,true);
+		
+		ExtendReporter report=new  ExtendReporter(folderArray[0],moduleName,1); 
+		report.testCreation(moduleName);
+		report.errroMsg(moduleName+" this executed....");
+		String screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);
+		report.logFlush();
+		
+		Reporter.log("Driver close",true);
+		Reporter.log("Screenshot path =======> "+screenshotPath,true);
+		
+	}
+	
 
 }

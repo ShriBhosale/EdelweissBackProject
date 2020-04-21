@@ -11,12 +11,16 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.shreeya.fundtransferpages.FundTransferExecution;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.orderdetailpage.LoginPage;
-import com.shreeya.orderdetailpage.OrderAction;
+import com.shreeya.mypositionspages.MyPositionsExecution;
+import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.orderdetailpages.OrderAction;
+import com.shreeya.seeholdingspages.SeeHoldingsExecution;
+import com.shreeya.seemarginpages.SeeMarginExecution;
 import com.shreeya.util.ApacheCode;
-import com.shreeya.util.ConfigReader;
+import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
 
@@ -59,27 +63,29 @@ public class FunctionKeyword {
 		Reporter.log("BeforeMethod",true);
 	}
 
-	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","ExecutionType"})
+	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","Module"})
 	@Test
-	public void executionWithKeyword(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String executionType) throws InterruptedException, IOException {
+	public void executionWithKeyword(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String module) throws InterruptedException, IOException {
 		Reporter.log("<==================== Function KeyWord : executionWithKeyword ================>",true);
 		Reporter.log("Before Iterator "+referenceNo);
 		
 		Reporter.log("After Iterator",true);
 		
 		
-			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, executionType);
+			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, module);
 			Reporter.log("Login Data ====> "+loginModelObj.toString(),true);
 			
-		ConfigReader configReaderObj=new ConfigReader();
-		keyWord=configReaderObj.configReader("KeyWord");
-		Reporter.log("KeyWord before process  ====> "+keyWord,true);
-		switch(KeywordStringProcess(keyWord)) {
+			/*
+			 * ConfigReader configReaderObj=new ConfigReader();
+			 * keyWord=configReaderObj.configReader("KeyWord");
+			 */
+		Reporter.log("KeyWord before process  ====> "+module,true);
+		switch(KeywordStringProcess(module)) {
 		
 		case "login":
 			LoginPage loginPageObj=new LoginPage();
 			Reporter.log("Login functionality", true);
-			loginPageObj.loginExecution(loginModelObj);
+			loginPageObj.loginExecution("normal",loginModelObj);
 			break;
 		case "orderdetail":
 			OrderAction orderActionObj=new OrderAction();
@@ -88,22 +94,42 @@ public class FunctionKeyword {
 			break;
 			
 		case "fundtransfer":
+			FundTransferExecution fundTransferObj=new FundTransferExecution();
+			fundTransferObj.fundTransferExecute(loginModelObj);
 			Reporter.log("fun transfer executin", true);
 			break;
+		case "mypositions":
+			MyPositionsExecution myPositionObj=new MyPositionsExecution();
+			myPositionObj.myPositionsExecute(loginModelObj);
+			Reporter.log("My Position Module", true);
+			break;
+		case "seemargin":
+			SeeMarginExecution seeMarginObj=new SeeMarginExecution();
+			seeMarginObj.seeMarginExecute(loginModelObj);
+			Reporter.log("See Margin Module",true);
+			break;
+		case "seeholdings":
+			SeeHoldingsExecution seeHoldingsObj=new SeeHoldingsExecution();
+			seeHoldingsObj.seeHoldingsExecute(loginModelObj);
+			Reporter.log("See Holdings Module", true);
+				break;
 		}
-		terminateExecution();
+		terminateExecution(module);
 	}
 	
 	public String KeywordStringProcess(String keywordString) {
 		String keywordInLowerCase=keywordString.toLowerCase();
 		Reporter.log("keyword =====> "+keywordInLowerCase.trim(), true);
+		if(keywordInLowerCase.contains(" "))
+			keywordInLowerCase=keywordInLowerCase.replace(" ", "");
 		return keywordInLowerCase.trim();
 	}
 	
-	public void terminateExecution() throws InterruptedException, IOException {
+	public void terminateExecution(String module) throws InterruptedException, IOException {
 		WebDriver driver=LoginPage.getDriver();
 		if(driver != null) {
-		
+		ExtendReporter reporter=new ExtendReporter();
+		reporter.reporter(driver,module,folderPath);
 		helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject,0);
 		login.logout(driver);
 		driver.close();

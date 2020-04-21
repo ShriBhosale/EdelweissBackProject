@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.TestDataModel;
-import com.shreeya.orderdetailpage.LoginPage;
-import com.shreeya.orderdetailpage.OrderAction;
+import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.orderdetailpages.OrderAction;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
@@ -55,20 +55,20 @@ public class Execution {
 		Reporter.log("BeforeMethod",true);
 	}
 
-	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","ExecutionType"})
+	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","Module"})
 	@Test
-	public void execution(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String executionType) {
+	public void execution(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String module) {
 		Reporter.log("*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********",true);
 		Reporter.log("Before Iterator "+referenceNo);
 		
 		Reporter.log("After Iterator",true);
 		
 		
-			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, executionType);
+			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, module);
 			Reporter.log("Login Data ====> "+loginModelObj.toString(),true);
 			if(referenceNo.equals(loginModelObj.getReferNo())) {
 				try {
-					driver = login.loginExecution(loginModelObj);
+					driver = login.loginExecution("Normal",loginModelObj);
 					//driver=orderActioObj.orderActionStart(driver,loginModelObj);
 					terminateExecution(driver);
 				} catch (InterruptedException e) { // TODO Auto-generated catch block
