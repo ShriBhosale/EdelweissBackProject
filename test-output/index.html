@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 2 failed tests</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -38,7 +38,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-TmpSuite">
-              <span class="suite-name border-passed">TmpSuite</span>
+              <span class="suite-name border-failed">TmpSuite</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -54,7 +54,7 @@
                 </li>
                 <li>
                   <a href="#" class="navigator-link " panel-name="testlist-TmpSuite">
-                    <span class="test-stats">3 tests</span>
+                    <span class="test-stats">2 tests</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,26 +91,26 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">2 methods,   2 passed</span>
+                    <span class="method-stats">2 methods, 2 failed,   </span>
                   </li>
                   <li>
-                    <span class="method-list-title passed">Passed methods</span>
-                    <span class="show-or-hide-methods passed">
-                      <a href="#" panel-name="suite-TmpSuite" class="hide-methods passed suite-TmpSuite"> (hide)</a> <!-- hide-methods passed suite-TmpSuite -->
-                      <a href="#" panel-name="suite-TmpSuite" class="show-methods passed suite-TmpSuite"> (show)</a> <!-- show-methods passed suite-TmpSuite -->
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-TmpSuite" class="hide-methods failed suite-TmpSuite"> (hide)</a> <!-- hide-methods failed suite-TmpSuite -->
+                      <a href="#" panel-name="suite-TmpSuite" class="show-methods failed suite-TmpSuite"> (show)</a> <!-- show-methods failed suite-TmpSuite -->
                     </span>
-                    <div class="method-list-content passed suite-TmpSuite">
+                    <div class="method-list-content failed suite-TmpSuite">
                       <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.Execution" hash-for-method="execution(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)">execution(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</a> <!-- method navigator-link -->
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.Execution" hash-for-method="execution(2, sanjay15, abc123, 1985, 20, 20, fundtransfer)">execution(2, sanjay15, abc123, 1985, 20, 20, fundtransfer)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.Execution" hash-for-method="execution(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings)">execution(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings)</a> <!-- method navigator-link -->
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.Execution" hash-for-method="execution(1, 60003800, abc123, 2000, 6, 6, fundtransfer)">execution(1, 60003800, abc123, 2000, 6, 6, fundtransfer)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
-                    </div> <!-- method-list-content passed suite-TmpSuite -->
+                    </div> <!-- method-list-content failed suite-TmpSuite -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -122,30 +122,54 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-TmpSuite" class="panel TmpSuite">
-          <div class="suite-TmpSuite-class-passed">
+          <div class="suite-TmpSuite-class-failed">
             <div class="main-panel-header rounded-window-top">
-              <img src="passed.png"/>
+              <img src="failed.png"/>
               <span class="class-name">com.shreeya.Execution</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="execution(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)">
-                  </a> <!-- execution(1, 60003800, abc123, 2000, 6, 6, Fund Transfer) -->
+                  <a name="execution(2, sanjay15, abc123, 1985, 20, 20, fundtransfer)">
+                  </a> <!-- execution(2, sanjay15, abc123, 1985, 20, 20, fundtransfer) -->
                   <span class="method-name">execution</span>
-                  <span class="parameters">(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</span>
+                  <span class="parameters">(2, sanjay15, abc123, 1985, 20, 20, fundtransfer)</span>
+                  <div class="stack-trace">java.lang.NullPointerException
+	at com.shreeya.util.ApacheCode.outputFileWriter(ApacheCode.java:300)
+	at com.shreeya.util.HelperCode.outputProcessor(HelperCode.java:183)
+	at com.shreeya.page.OrderAction.orderActionStart(OrderAction.java:125)
+	at com.shreeya.Execution.execution(Execution.java:75)
+	at java.util.ArrayList.forEach(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 18 stack frames
+</div> <!-- stack-trace -->
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="execution(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings)">
-                  </a> <!-- execution(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings) -->
+                  <a name="execution(1, 60003800, abc123, 2000, 6, 6, fundtransfer)">
+                  </a> <!-- execution(1, 60003800, abc123, 2000, 6, 6, fundtransfer) -->
                   <span class="method-name">execution</span>
-                  <span class="parameters">(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings)</span>
+                  <span class="parameters">(1, 60003800, abc123, 2000, 6, 6, fundtransfer)</span>
+                  <div class="stack-trace">java.lang.NullPointerException
+	at com.shreeya.util.ApacheCode.outputFileWriter(ApacheCode.java:300)
+	at com.shreeya.util.HelperCode.outputProcessor(HelperCode.java:183)
+	at com.shreeya.page.OrderAction.orderActionStart(OrderAction.java:125)
+	at com.shreeya.Execution.execution(Execution.java:75)
+	at java.util.ArrayList.forEach(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 18 stack frames
+</div> <!-- stack-trace -->
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-TmpSuite-class-passed -->
+          </div> <!-- suite-TmpSuite-class-failed -->
         </div> <!-- panel TmpSuite -->
         <div panel-name="test-xml-TmpSuite" class="panel">
           <div class="main-panel-header rounded-window-top">
@@ -161,7 +185,7 @@
     &lt;parameter name=&quot;Reference&quot; value=&quot;1&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;Fund Transfer&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;fundtransfer&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.Execution&quot;/&gt;
@@ -173,24 +197,12 @@
     &lt;parameter name=&quot;Reference&quot; value=&quot;2&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;My Positions&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;fundtransfer&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.Execution&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- 2 --&gt;
-  &lt;test thread-count=&quot;3&quot; name=&quot;3&quot; parallel=&quot;tests&quot;&gt;
-    &lt;parameter name=&quot;StartNo&quot; value=&quot;14&quot;/&gt;
-    &lt;parameter name=&quot;EndNo&quot; value=&quot;14&quot;/&gt;
-    &lt;parameter name=&quot;Reference&quot; value=&quot;3&quot;/&gt;
-    &lt;parameter name=&quot;UserId&quot; value=&quot;60005274&quot;/&gt;
-    &lt;parameter name=&quot;Pwd&quot; value=&quot;abc@321&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;SeeHoldings&quot;/&gt;
-    &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
-    &lt;classes&gt;
-      &lt;class name=&quot;com.shreeya.Execution&quot;/&gt;
-    &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- 3 --&gt;
 &lt;/suite&gt; &lt;!-- TmpSuite --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -206,9 +218,6 @@
               </li>
               <li>
                 <span class="test-name">2 (1 class)</span>
-              </li>
-              <li>
-                <span class="test-name">3 (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -238,11 +247,11 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'execution')
 data.setCell(0, 2, 'com.shreeya.Execution')
-data.setCell(0, 3, 88901);
+data.setCell(0, 3, 70638);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'execution')
 data.setCell(1, 2, 'com.shreeya.Execution')
-data.setCell(1, 3, 85251);
+data.setCell(1, 3, 70637);
 window.suiteTableData['TmpSuite']= { tableData: data, tableDiv: 'times-div-TmpSuite'}
 return data;
 }
@@ -259,17 +268,124 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="reporter-method-div">
-              <span class="reporter-method-name">execution(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</span>
+              <span class="reporter-method-name">execution(2, sanjay15, abc123, 1985, 20, 20, fundtransfer)</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output">*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********</span>
-                <span class="reporter-method-output">Before Iterator 1</span>
+                <span class="reporter-method-output">Before Iterator 2</span>
                 <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=Fund Transfer]</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=fundtransfer]</span>
                 <span class="reporter-method-output">Browser Launch</span>
                 <span class="reporter-method-output">Checking login error </span>
                 <span class="reporter-method-output">Checking login error </span>
                 <span class="reporter-method-output"><========OrderActionStart=======></span>
-                <span class="reporter-method-output">LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=Fund Transfer]</span>
+                <span class="reporter-method-output">LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=fundtransfer]</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 1</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 2</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 3</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 4</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 5</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 6</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 7</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 8</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 9</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 10</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 11</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 12</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 13</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 14</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 15</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 16</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 17</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 18</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 19</span>
+                <span class="reporter-method-output">endExecution ================================@> 20
+OrderNo ==========@> 20</span>
+                <span class="reporter-method-output">Order No ========================@> 20
+StartExecutionNo =======================@> 20</span>
+                <span class="reporter-method-output">Scenarion : Fresh Order Placement
+Action : New
+NewOrderStatus : rejected</span>
+                <span class="reporter-method-output"><====@@@@ OrderNo in Sheet 20 Action : New @@@@===></span>
+                <span class="reporter-method-output">New Order execution Started..........</span>
+                <span class="reporter-method-output">This is product type ====> NRML</span>
+                <span class="reporter-method-output">AMO CheckBox checking....</span>
+                <span class="reporter-method-output">After Checking amo checkbox present....</span>
+                <span class="reporter-method-output">Action ====> New newOrderStatus =====> rejected
+RowNo==============> 1</span>
+                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
+                <span class="reporter-method-output">====<<<<< OrderNo in Sheet 20 Action : New >>>>>====</span>
+                <span class="reporter-method-output">FolderCreation array form execution class ===> [Ljava.lang.String;@3b92fb42</span>
+                <span class="reporter-method-output">Action ======>  New
+NewOrderStatus =====>  rejected</span>
+                <span class="reporter-method-output">New order status =====> rejected</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : Fresh Order Placement</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE/Report1587477481736/HtmlReports/FreshOrderPlacement_20.html</span>
+                <span class="reporter-method-output">Extend Report Test Name : Order Detail 20</span>
+                <span class="reporter-method-output">Execution Count :: 2</span>
+                <span class="reporter-method-output">HelperCode : outputProcessor() : Execution no ===> 0</span>
+                <span class="reporter-method-output">*<==== orderDetailProvider Method Start ====>*</span>
+                <span class="reporter-method-output">===<<<<<*** OrderNo in Sheet 20 Action : New ***>>>>>===></span>
+                <span class="reporter-method-output">Status : open</span>
+                <span class="reporter-method-output">Buy or Sell : BUY</span>
+                <span class="reporter-method-output">Trading symbol : Accelya Soln India Ltd</span>
+                <span class="reporter-method-output">Product type : NRML</span>
+                <span class="reporter-method-output">Order Price : 908.05</span>
+                <span class="reporter-method-output">Order Type : LIMIT</span>
+                <span class="reporter-method-output">User Id : SANJAY15</span>
+                <span class="reporter-method-output">Exchange : NSE</span>
+                <span class="reporter-method-output">Validity : DAY</span>
+                <span class="reporter-method-output">Order Qty : 1</span>
+                <span class="reporter-method-output">Nest id : 1000000000668717 </span>
+                <span class="reporter-method-output">Nest id : 1000000000668717 </span>
+                <span class="reporter-method-output">Inside orderDetailProvider method......</span>
+                <span class="reporter-method-output">OutSide orderDetailProvider method......</span>
+                <span class="reporter-method-output"><=== passFail Result New 20 ===></span>
+                <span class="reporter-method-output">Action Result ===> PASS
+Mod Scenario wise Result ====> NOT MOD</span>
+                <span class="reporter-method-output"><=== ExtendReporter : Report Start generate New 20 ===></span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1587477550510</span>
+                <span class="reporter-method-output">Extend Log Flush</span>
+                <span class="reporter-method-output">Reporter path ===> ../WorkingE/Report1587477481736/HtmlReports/FreshOrderPlacement_20.html</span>
+                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@4db61fe5</span>
+                <span class="reporter-method-output">Writer Order detail with link in outputExcel</span>
+                <span class="reporter-method-output">after count variable 15</span>
+                <span class="reporter-method-output">hyper link Name null</span>
+                <span class="reporter-method-output">OutputSheet object ==========>>> null</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">execution(1, 60003800, abc123, 2000, 6, 6, fundtransfer)</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********</span>
+                <span class="reporter-method-output">Before Iterator 1</span>
+                <span class="reporter-method-output">After Iterator</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=fundtransfer]</span>
+                <span class="reporter-method-output">Browser Launch</span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output"><========OrderActionStart=======></span>
+                <span class="reporter-method-output">LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=fundtransfer]</span>
                 <span class="reporter-method-output">endExecution ================================@> 6
 OrderNo ==========@> 1</span>
                 <span class="reporter-method-output">endExecution ================================@> 6
@@ -296,20 +412,16 @@ NewOrderStatus : rejected</span>
 RowNo==============> 1</span>
                 <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
                 <span class="reporter-method-output">====<<<<< OrderNo in Sheet 6 Action : New >>>>>====</span>
-                <span class="reporter-method-output">FolderCreation array form execution class ===> [Ljava.lang.String;@5665a55d</span>
+                <span class="reporter-method-output">FolderCreation array form execution class ===> [Ljava.lang.String;@3b92fb42</span>
                 <span class="reporter-method-output">Action ======>  New
 NewOrderStatus =====>  rejected</span>
                 <span class="reporter-method-output">New order status =====> rejected</span>
                 <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
                 <span class="reporter-method-output">Scenario : Fresh Order Placement</span>
-                <span class="reporter-method-output">Report Path String ../WorkingE/Report1587462433015/HtmlReports/FreshOrderPlacement_6.html</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE/Report1587477481736/HtmlReports/FreshOrderPlacement_6.html</span>
                 <span class="reporter-method-output">Extend Report Test Name : Order Detail 6</span>
                 <span class="reporter-method-output">Execution Count :: 2</span>
-                <span class="reporter-method-output">Execution no ===> 1</span>
-                <span class="reporter-method-output">TestData File copy into output folder</span>
-                <span class="reporter-method-output">Output excel file : ..\WorkingE\Report1587462433015\OutputFile.xlsx</span>
-                <span class="reporter-method-output">Output excel file : ..\WorkingE\Report1587462433015\Executable.txt</span>
-                <span class="reporter-method-output">Start Write in output excel file</span>
+                <span class="reporter-method-output">HelperCode : outputProcessor() : Execution no ===> 0</span>
                 <span class="reporter-method-output">*<==== orderDetailProvider Method Start ====>*</span>
                 <span class="reporter-method-output">===<<<<<*** OrderNo in Sheet 6 Action : New ***>>>>>===></span>
                 <span class="reporter-method-output">Status : open</span>
@@ -322,8 +434,8 @@ NewOrderStatus =====>  rejected</span>
                 <span class="reporter-method-output">Exchange : NSE</span>
                 <span class="reporter-method-output">Validity : DAY</span>
                 <span class="reporter-method-output">Order Qty : 1</span>
-                <span class="reporter-method-output">Nest id : 1000000000001542 </span>
-                <span class="reporter-method-output">Nest id : 1000000000001542 </span>
+                <span class="reporter-method-output">Nest id : 1000000000668716 </span>
+                <span class="reporter-method-output">Nest id : 1000000000668716 </span>
                 <span class="reporter-method-output">Inside orderDetailProvider method......</span>
                 <span class="reporter-method-output">OutSide orderDetailProvider method......</span>
                 <span class="reporter-method-output"><=== passFail Result New 6 ===></span>
@@ -331,381 +443,14 @@ NewOrderStatus =====>  rejected</span>
 Mod Scenario wise Result ====> NOT MOD</span>
                 <span class="reporter-method-output"><=== ExtendReporter : Report Start generate New 6 ===></span>
                 <span class="reporter-method-output">Capture Screenshot</span>
-                <span class="reporter-method-output">1587462511750</span>
+                <span class="reporter-method-output">1587477550513</span>
                 <span class="reporter-method-output">Extend Log Flush</span>
-                <span class="reporter-method-output">Reporter path ===> ../WorkingE/Report1587462433015/HtmlReports/FreshOrderPlacement_6.html</span>
-                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@4561f3d7</span>
+                <span class="reporter-method-output">Reporter path ===> ../WorkingE/Report1587477481736/HtmlReports/FreshOrderPlacement_6.html</span>
+                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@3446b3d8</span>
                 <span class="reporter-method-output">Writer Order detail with link in outputExcel</span>
                 <span class="reporter-method-output">after count variable 15</span>
                 <span class="reporter-method-output">hyper link Name null</span>
-                <span class="reporter-method-output">OutputSheet object ==========>>> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml</span>
-                <span class="reporter-method-output">After row <xml-fragment r="7" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A7">
-    <main:v>6</main:v>
-  </main:c>
-  <main:c r="B7">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C7" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D7">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E7" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F7" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G7" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H7" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I7" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J7">
-    <main:v>908</main:v>
-  </main:c>
-  <main:c r="K7">
-    <main:v>909</main:v>
-  </main:c>
-  <main:c r="L7" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M7">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N7">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O7" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment></span>
-                <span class="reporter-method-output">Row Object ====> <xml-fragment r="7" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A7">
-    <main:v>6</main:v>
-  </main:c>
-  <main:c r="B7">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C7" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D7">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E7" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F7" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G7" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H7" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I7" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J7">
-    <main:v>908</main:v>
-  </main:c>
-  <main:c r="K7">
-    <main:v>909</main:v>
-  </main:c>
-  <main:c r="L7" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M7">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N7">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O7" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment>
-OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml</span>
-                <span class="reporter-method-output">Rejection Reason</span>
-                <span class="reporter-method-output">PASS</span>
-                <span class="reporter-method-output">../Report1587462433015/HtmlReports/FreshOrderPlacement_6.html</span>
-                <span class="reporter-method-output">HyperLink Path ======> ../Report1587462433015/HtmlReports/FreshOrderPlacement_6.html</span>
-                <span class="reporter-method-output">../Report1587462433015/HtmlReports/FreshOrderPlacement_6.html</span>
-                <span class="reporter-method-output">../Report1587462433015/Screenshots/FreshOrderPlacement_6_1587462511750.png</span>
-                <span class="reporter-method-output">HyperLink Path ======> ../Report1587462433015/Screenshots/FreshOrderPlacement_6_1587462511750.png</span>
-                <span class="reporter-method-output">../Report1587462433015/Screenshots/FreshOrderPlacement_6_1587462511750.png</span>
-                <span class="reporter-method-output">6</span>
-                <span class="reporter-method-output">New</span>
-                <span class="reporter-method-output">open</span>
-                <span class="reporter-method-output">BUY</span>
-                <span class="reporter-method-output">Accelya Soln India Ltd</span>
-                <span class="reporter-method-output">NRML</span>
-                <span class="reporter-method-output">908.00</span>
-                <span class="reporter-method-output">LIMIT</span>
-                <span class="reporter-method-output">60003800</span>
-                <span class="reporter-method-output">NSE</span>
-                <span class="reporter-method-output">DAY</span>
-                <span class="reporter-method-output">1000000000001542 </span>
-                <span class="reporter-method-output">1</span>
-                <span class="reporter-method-output">Partial Qty</span>
-                <span class="reporter-method-output">Rejection Reason</span>
-                <span class="reporter-method-output">PASS</span>
-                <span class="reporter-method-output">../WorkingE/Report1587462433015/HtmlReports/FreshOrderPlacement_6.html</span>
-                <span class="reporter-method-output">../WorkingE/Report1587462433015/Screenshots/FreshOrderPlacement_6_1587462511750.png</span>
-                <span class="reporter-method-output"><<==== After if else =========>></span>
-                <span class="reporter-method-output">Order no =====>  6
-NoRowInTestData =======> 0</span>
-                <span class="reporter-method-output">endExecution ================================@> 6
-OrderNo ==========@> 7</span>
-                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
-                <span class="reporter-method-output">====<<<<< OrderNo in Sheet null Action : null >>>>>====</span>
-                <span class="reporter-method-output">FolderCreation array form execution class ===> [Ljava.lang.String;@5665a55d</span>
-                <span class="reporter-method-output">****Termination Conditin****</span>
-                <span class="reporter-method-output">Order no =====>  0
-NoRowInTestData =======> 0</span>
-                <span class="reporter-method-output">Excel file closing...........</span>
-                <span class="reporter-method-output">ExcelFileClose flag : true</span>
-                <span class="reporter-method-output">Execution Terminate.... :)</span>
-                <span class="reporter-method-output">Outside form execution............</span>
-              </div> <!-- reporter-method-output-div -->
-            </div> <!-- reporter-method-div -->
-            <div class="reporter-method-div">
-              <span class="reporter-method-name">execution(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings)</span>
-              <div class="reporter-method-output-div">
-                <span class="reporter-method-output">*******<<<<<<<<<<<<<<<Your Enter into TestCase>>>>>>>>>>>>>>>********</span>
-                <span class="reporter-method-output">Before Iterator 3</span>
-                <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=3, userId=60005274, password=abc@321, yob=2000, startingRowNo=14, endRowNo=14, module=SeeHoldings]</span>
-                <span class="reporter-method-output">Browser Launch</span>
-                <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output"><========OrderActionStart=======></span>
-                <span class="reporter-method-output">LoginModel [referNo=3, userId=60005274, password=abc@321, yob=2000, startingRowNo=14, endRowNo=14, module=SeeHoldings]</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 1</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 2</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 3</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 4</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 5</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 6</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 7</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 8</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 9</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 10</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 11</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 12</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 13</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 14</span>
-                <span class="reporter-method-output">Order No ========================@> 14
-StartExecutionNo =======================@> 14</span>
-                <span class="reporter-method-output">Scenarion : Fresh Order Placement
-Action : New
-NewOrderStatus : rejected</span>
-                <span class="reporter-method-output"><====@@@@ OrderNo in Sheet 14 Action : New @@@@===></span>
-                <span class="reporter-method-output">New Order execution Started..........</span>
-                <span class="reporter-method-output">This is product type ====> NRML</span>
-                <span class="reporter-method-output">AMO CheckBox checking....</span>
-                <span class="reporter-method-output">After Checking amo checkbox present....</span>
-                <span class="reporter-method-output">Action ====> New newOrderStatus =====> rejected
-RowNo==============> 1</span>
-                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
-                <span class="reporter-method-output">====<<<<< OrderNo in Sheet 14 Action : New >>>>>====</span>
-                <span class="reporter-method-output">FolderCreation array form execution class ===> [Ljava.lang.String;@5665a55d</span>
-                <span class="reporter-method-output">Action ======>  New
-NewOrderStatus =====>  rejected</span>
-                <span class="reporter-method-output">New order status =====> rejected</span>
-                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
-                <span class="reporter-method-output">Scenario : Fresh Order Placement</span>
-                <span class="reporter-method-output">Report Path String ../WorkingE/Report1587462433015/HtmlReports/FreshOrderPlacement_14.html</span>
-                <span class="reporter-method-output">Extend Report Test Name : Order Detail 14</span>
-                <span class="reporter-method-output">Execution Count :: 2</span>
-                <span class="reporter-method-output">Execution no ===> 2</span>
-                <span class="reporter-method-output">*<==== orderDetailProvider Method Start ====>*</span>
-                <span class="reporter-method-output">===<<<<<*** OrderNo in Sheet 14 Action : New ***>>>>>===></span>
-                <span class="reporter-method-output">Status : open</span>
-                <span class="reporter-method-output">Buy or Sell : BUY</span>
-                <span class="reporter-method-output">Trading symbol : Accelya Soln India Ltd</span>
-                <span class="reporter-method-output">Product type : NRML</span>
-                <span class="reporter-method-output">Order Price : 908.00</span>
-                <span class="reporter-method-output">Order Type : LIMIT</span>
-                <span class="reporter-method-output">User Id : 60005274</span>
-                <span class="reporter-method-output">Exchange : NSE</span>
-                <span class="reporter-method-output">Validity : DAY</span>
-                <span class="reporter-method-output">Order Qty : 1</span>
-                <span class="reporter-method-output">Nest id : 1000000000001543 </span>
-                <span class="reporter-method-output">Nest id : 1000000000001543 </span>
-                <span class="reporter-method-output">Inside orderDetailProvider method......</span>
-                <span class="reporter-method-output">OutSide orderDetailProvider method......</span>
-                <span class="reporter-method-output"><=== passFail Result New 14 ===></span>
-                <span class="reporter-method-output">Action Result ===> PASS
-Mod Scenario wise Result ====> NOT MOD</span>
-                <span class="reporter-method-output"><=== ExtendReporter : Report Start generate New 14 ===></span>
-                <span class="reporter-method-output">Capture Screenshot</span>
-                <span class="reporter-method-output">1587462511770</span>
-                <span class="reporter-method-output">Extend Log Flush</span>
-                <span class="reporter-method-output">Reporter path ===> ../WorkingE/Report1587462433015/HtmlReports/FreshOrderPlacement_14.html</span>
-                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@3ec344e0</span>
-                <span class="reporter-method-output">Writer Order detail with link in outputExcel</span>
-                <span class="reporter-method-output">after count variable 15</span>
-                <span class="reporter-method-output">hyper link Name null</span>
-                <span class="reporter-method-output">OutputSheet object ==========>>> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml</span>
-                <span class="reporter-method-output">After row <xml-fragment r="15" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A15">
-    <main:v>14</main:v>
-  </main:c>
-  <main:c r="B15">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C15" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D15">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E15" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F15" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G15" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H15" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I15" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J15">
-    <main:v>908</main:v>
-  </main:c>
-  <main:c r="K15">
-    <main:v>909</main:v>
-  </main:c>
-  <main:c r="L15" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M15">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N15">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O15" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment></span>
-                <span class="reporter-method-output">Row Object ====> <xml-fragment r="15" spans="1:15" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:main="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-  <main:c r="A15">
-    <main:v>14</main:v>
-  </main:c>
-  <main:c r="B15">
-    <main:v>60003800</main:v>
-  </main:c>
-  <main:c r="C15" t="s">
-    <main:v>15</main:v>
-  </main:c>
-  <main:c r="D15">
-    <main:v>2000</main:v>
-  </main:c>
-  <main:c r="E15" t="s">
-    <main:v>16</main:v>
-  </main:c>
-  <main:c r="F15" t="s">
-    <main:v>17</main:v>
-  </main:c>
-  <main:c r="G15" t="s">
-    <main:v>18</main:v>
-  </main:c>
-  <main:c r="H15" t="s">
-    <main:v>19</main:v>
-  </main:c>
-  <main:c r="I15" t="s">
-    <main:v>20</main:v>
-  </main:c>
-  <main:c r="J15">
-    <main:v>908</main:v>
-  </main:c>
-  <main:c r="K15">
-    <main:v>909</main:v>
-  </main:c>
-  <main:c r="L15" t="s">
-    <main:v>21</main:v>
-  </main:c>
-  <main:c r="M15">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="N15">
-    <main:v>1</main:v>
-  </main:c>
-  <main:c r="O15" t="s">
-    <main:v>22</main:v>
-  </main:c>
-</xml-fragment>
-OutputSheet Object ====> Name: /xl/worksheets/sheet1.xml - Content Type: application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml</span>
-                <span class="reporter-method-output">Rejection Reason</span>
-                <span class="reporter-method-output">PASS</span>
-                <span class="reporter-method-output">../Report1587462433015/HtmlReports/FreshOrderPlacement_14.html</span>
-                <span class="reporter-method-output">HyperLink Path ======> ../Report1587462433015/HtmlReports/FreshOrderPlacement_14.html</span>
-                <span class="reporter-method-output">../Report1587462433015/HtmlReports/FreshOrderPlacement_14.html</span>
-                <span class="reporter-method-output">../Report1587462433015/Screenshots/FreshOrderPlacement_14_1587462511770.png</span>
-                <span class="reporter-method-output">HyperLink Path ======> ../Report1587462433015/Screenshots/FreshOrderPlacement_14_1587462511770.png</span>
-                <span class="reporter-method-output">../Report1587462433015/Screenshots/FreshOrderPlacement_14_1587462511770.png</span>
-                <span class="reporter-method-output">14</span>
-                <span class="reporter-method-output">New</span>
-                <span class="reporter-method-output">open</span>
-                <span class="reporter-method-output">BUY</span>
-                <span class="reporter-method-output">Accelya Soln India Ltd</span>
-                <span class="reporter-method-output">NRML</span>
-                <span class="reporter-method-output">908.00</span>
-                <span class="reporter-method-output">LIMIT</span>
-                <span class="reporter-method-output">60005274</span>
-                <span class="reporter-method-output">NSE</span>
-                <span class="reporter-method-output">DAY</span>
-                <span class="reporter-method-output">1000000000001543 </span>
-                <span class="reporter-method-output">1</span>
-                <span class="reporter-method-output">Partial Qty</span>
-                <span class="reporter-method-output">Rejection Reason</span>
-                <span class="reporter-method-output">PASS</span>
-                <span class="reporter-method-output">../WorkingE/Report1587462433015/HtmlReports/FreshOrderPlacement_14.html</span>
-                <span class="reporter-method-output">../WorkingE/Report1587462433015/Screenshots/FreshOrderPlacement_14_1587462511770.png</span>
-                <span class="reporter-method-output"><<==== After if else =========>></span>
-                <span class="reporter-method-output">Order no =====>  14
-NoRowInTestData =======> 0</span>
-                <span class="reporter-method-output">endExecution ================================@> 14
-OrderNo ==========@> 15</span>
-                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
-                <span class="reporter-method-output">====<<<<< OrderNo in Sheet null Action : null >>>>>====</span>
-                <span class="reporter-method-output">FolderCreation array form execution class ===> [Ljava.lang.String;@5665a55d</span>
-                <span class="reporter-method-output">****Termination Conditin****</span>
-                <span class="reporter-method-output">Order no =====>  0
-NoRowInTestData =======> 0</span>
-                <span class="reporter-method-output">Excel file closing...........</span>
-                <span class="reporter-method-output">ExcelFileClose flag : true</span>
-                <span class="reporter-method-output">Execution Terminate.... :)</span>
-                <span class="reporter-method-output">Outside form execution............</span>
+                <span class="reporter-method-output">OutputSheet object ==========>>> null</span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -732,57 +477,41 @@ NoRowInTestData =======> 0</span>
                 <span class="method-name">executionBefore</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-test before -->
-              <div class="configuration-test before">
-                <span class="method-name">executionBefore</span>
-                <span class="method-start">0 ms</span>
-              </div> <!-- configuration-test before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">1040 ms</span>
+                <span class="method-start">363 ms</span>
               </div> <!-- configuration-method before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">1040 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="configuration-method before">
-                <span class="method-name">beforeTest</span>
-                <span class="method-start">1040 ms</span>
+                <span class="method-start">363 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <span class="method-name">execution(3, 60005274, abc@321, 2000, 14, 14, SeeHoldings)</span>
-                <span class="method-start">1203 ms</span>
+                <img src="failed.png">
+                </img>
+                <span class="method-name">execution(2, sanjay15, abc123, 1985, 20, 20, fundtransfer)</span>
+                <span class="method-start">440 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">execution(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</span>
-                <span class="method-start">1203 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <span class="method-name">execution(2, sanjay15, abc123, 1985, 20, 20, My Positions)</span>
-                <span class="method-start">1203 ms</span>
+                <img src="failed.png">
+                </img>
+                <span class="method-name">execution(1, 60003800, abc123, 2000, 6, 6, fundtransfer)</span>
+                <span class="method-start">440 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">86419 ms</span>
+                <span class="method-start">71102 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method after">
+                <span class="method-name">testAfter</span>
+                <span class="method-start">71102 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <span class="method-name">endExecution</span>
-                <span class="method-start">86431 ms</span>
+                <span class="method-start">71108 ms</span>
               </div> <!-- configuration-test after -->
-              <div class="configuration-method after">
-                <span class="method-name">testAfter</span>
-                <span class="method-start">86461 ms</span>
-              </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <span class="method-name">endExecution</span>
-                <span class="method-start">86540 ms</span>
-              </div> <!-- configuration-test after -->
-              <div class="configuration-method after">
-                <span class="method-name">testAfter</span>
-                <span class="method-start">90110 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-test after">
-                <span class="method-name">endExecution</span>
-                <span class="method-start">90368 ms</span>
+                <span class="method-start">71108 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
