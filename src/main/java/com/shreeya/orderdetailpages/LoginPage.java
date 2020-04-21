@@ -104,13 +104,13 @@ public class LoginPage extends SeleniumCoder{
 			ExtendReporter extend=new ExtendReporter(folderPathArray[1],"LoginError",0);
 			extend.testCreation("Login error");
 			extend.addScreenshotMethod(driver, folderPathArray[2],"LoginError", 0);
-			extend.errroMsg("User Id : "+userIdStr);
-			extend.errroMsg("Password : "+passwordstr);
-			extend.errroMsg("Yob : "+yobstr);
+			extend.errroMsg("User Id : "+loginModelObject.getUserId());
+			extend.errroMsg("Password : "+loginModelObject.getPassword());
+			extend.errroMsg("Yob : "+loginModelObject.getYob());
 			extend.errroMsg(loginErrorStr);
 			extend.tearDown("Fail");
 			extend.logFlush();
-			driver.close();
+			//driver.close();
 			Reporter.log("Driver close ", true);
 			Reporter.log("Folder path ===> "+folderPathArray[0],true);
 			

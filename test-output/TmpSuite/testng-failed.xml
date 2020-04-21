@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite thread-count="3" name="Failed suite [TmpSuite]" parallel="tests">
-  <test thread-count="3" name="3(failed)" parallel="tests">
-    <parameter name="StartNo" value="14"/>
-    <parameter name="EndNo" value="17"/>
-    <parameter name="Reference" value="3"/>
-    <parameter name="UserId" value="60005274"/>
-    <parameter name="Pwd" value="abc@321"/>
-    <parameter name="Module" value="SeeHoldings"/>
+<suite thread-count="2" name="Failed suite [TmpSuite]" parallel="tests">
+  <test thread-count="2" name="1(failed)" parallel="tests">
+    <parameter name="StartNo" value="6"/>
+    <parameter name="EndNo" value="6"/>
+    <parameter name="Reference" value="1"/>
+    <parameter name="UserId" value="60003800"/>
+    <parameter name="Pwd" value="abc123"/>
+    <parameter name="Module" value="Fund Transfer"/>
     <parameter name="Yob" value="2000"/>
     <classes>
       <class name="com.shreeya.FunctionKeyword">
@@ -20,5 +20,25 @@
         </methods>
       </class> <!-- com.shreeya.FunctionKeyword -->
     </classes>
-  </test> <!-- 3(failed) -->
+  </test> <!-- 1(failed) -->
+  <test thread-count="2" name="2(failed)" parallel="tests">
+    <parameter name="StartNo" value="20"/>
+    <parameter name="EndNo" value="20"/>
+    <parameter name="Reference" value="2"/>
+    <parameter name="UserId" value="sanjay15"/>
+    <parameter name="Pwd" value="abc123"/>
+    <parameter name="Module" value="My Positions"/>
+    <parameter name="Yob" value="1985"/>
+    <classes>
+      <class name="com.shreeya.FunctionKeyword">
+        <methods>
+          <include name="executionBefore"/>
+          <include name="beforeTest"/>
+          <include name="endExecution"/>
+          <include name="executionWithKeyword" invocation-numbers="0"/>
+          <include name="testAfter"/>
+        </methods>
+      </class> <!-- com.shreeya.FunctionKeyword -->
+    </classes>
+  </test> <!-- 2(failed) -->
 </suite> <!-- Failed suite [TmpSuite] -->

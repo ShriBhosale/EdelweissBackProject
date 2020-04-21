@@ -140,7 +140,7 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		   Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 		       .withTimeout(maximumDelay, TimeUnit.SECONDS)
-		       .pollingEvery(1, TimeUnit.SECONDS)
+		       .pollingEvery(3, TimeUnit.SECONDS)
 		       .ignoring(NoSuchElementException.class);
 		   System.out.println("fluentWaitMethodID :: ");
 		   WebElement element=driver.findElement(By.id(idString));
@@ -193,7 +193,7 @@ public class SeleniumCoder {
 		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(maximumDelay, TimeUnit.SECONDS)
-			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .pollingEvery(3, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 		try {
 			    element = wait.until(new Function<WebDriver, WebElement>() {
@@ -229,7 +229,7 @@ public class SeleniumCoder {
 		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(maximumDelay, TimeUnit.SECONDS)
-			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .pollingEvery(3, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class,StaleElementReferenceException.class);
 		try {
 			element = wait.until(new Function<WebDriver, WebElement>() {
@@ -261,7 +261,7 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(maxWaitTime, TimeUnit.SECONDS)
-			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .pollingEvery(3, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 
 			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {
@@ -312,7 +312,7 @@ public class SeleniumCoder {
         final WebDriver driver=driverI;
         FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver);
         fluentWait.withTimeout(maximumDelay, TimeUnit.SECONDS);
-        fluentWait.pollingEvery(1, TimeUnit.SECONDS);
+        fluentWait.pollingEvery(3, TimeUnit.SECONDS);
         fluentWait.ignoring(NoSuchElementException.class);
         
 
@@ -338,7 +338,7 @@ public class SeleniumCoder {
 		 WebElement element=null;
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(maxDelay, TimeUnit.SECONDS)
-			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .pollingEvery(3, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 	
 			    element = wait.until(new Function<WebDriver, WebElement>() {

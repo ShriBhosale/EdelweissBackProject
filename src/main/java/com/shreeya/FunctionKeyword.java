@@ -66,6 +66,7 @@ public class FunctionKeyword {
 	@Parameters({"Reference","UserId","Pwd","Yob","StartNo","EndNo","Module"})
 	@Test
 	public void executionWithKeyword(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String module) throws InterruptedException, IOException {
+		Thread.sleep(2000);
 		Reporter.log("<==================== Function KeyWord : executionWithKeyword ================>",true);
 		Reporter.log("Before Iterator "+referenceNo);
 		

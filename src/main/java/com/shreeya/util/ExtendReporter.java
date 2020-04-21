@@ -72,6 +72,12 @@ public class ExtendReporter {
 	public String addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ) throws IOException {
 		//testCreation("Login Error");
 		String screenshotPath=captureScreen(driver,folderPathString,scenario,orderNo);
+		ConfigReader reader=new ConfigReader();
+		String path=reader.configReader("Result");
+		
+		screenshotPath=screenshotPath.replace("../WorkingE2",path);
+		screenshotPath=screenshotPath.replace("/", "//");
+		System.out.println(screenshotPath);
 		 test.log(Status.FAIL,""+test.addScreenCaptureFromPath(screenshotPath));
 		 return screenshotPath;
 	}
@@ -185,7 +191,7 @@ public class ExtendReporter {
 	public void reporter(WebDriver driver,String moduleName,String [] folderArray) throws IOException{
 		Reporter.log(moduleName,true);
 		
-		ExtendReporter report=new  ExtendReporter(folderArray[0],moduleName,1); 
+		ExtendReporter report=new  ExtendReporter(folderArray[1],moduleName,1); 
 		report.testCreation(moduleName);
 		report.errroMsg(moduleName+" this executed....");
 		String screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);

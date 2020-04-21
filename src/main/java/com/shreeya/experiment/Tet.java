@@ -104,19 +104,7 @@ public class Tet {
 		}
 	public static void main1(String[] args) throws IOException {
 		
-		  Tet t=new Tet(); String [] orderDetailArray=
-		  {"19","New","rejected","BUY","Accelya","Soln","India","Ltd","NRML","892.30",
-		  "LIMIT","60003800","NSE","DAY","200410000000007","1",
-		  "0","16387 : Security is not allowed to trade in this market","FAIL\r\n" +
-		  "","../WorkingE/Report_FailedReport/FailReport_1586592711291.html",
-		  "../WorkingE/Report_FailedReport/Screenshot/Screenshot.png"};
-		  
-		  t.outputFileWriterHeader(); 
-		  t.outputFileWriter(orderDetailArray, 4);
-		  t.outputFileWriter(orderDetailArray, 5);
-		  t.outputFileWriter(orderDetailArray,6);
-		  
-		  t.outputExcelFileClose();
+		
 		
 	}
 	
