@@ -102,12 +102,12 @@
                     <div class="method-list-content failed suite-TmpSuite">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, My Positions)">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, My Positions)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-TmpSuite -->
@@ -130,18 +130,17 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)">
-                  </a> <!-- executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, Fund Transfer) -->
+                  <a name="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)">
+                  </a> <!-- executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings) -->
                   <span class="method-name">executionWithKeyword</span>
-                  <span class="parameters">(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</span>
-                  <div class="stack-trace">org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=81.0.4044.113)
+                  <span class="parameters">(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
+                  <div class="stack-trace">org.openqa.selenium.NoSuchSessionException: invalid session id
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;DESKTOP-0PTHPNK&apos;, ip: &apos;192.168.0.104&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_191&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:61135}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
-Session ID: 365b0d1f8e4f09e210b0b66225216cec
-*** Element info: {Using=xpath, value=//button[text()=&apos;Continue&apos;]}
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:55654}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: d53171b8a826c1c46e9bfa3907439a2b
+*** Element info: {Using=xpath, value=//*[@id=&quot;rightScroll&quot;]/div[1]/ul/li[6]/a}
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
@@ -152,13 +151,12 @@ Session ID: 365b0d1f8e4f09e210b0b66225216cec
 	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
 	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:238)
+	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:240)
 	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:1)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:235)
-	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:81)
-	at com.shreeya.fundtransferpages.FundTransferExecution.fundTransferExecute(FundTransferExecution.java:19)
-	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:99)
+	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:237)
+	at com.shreeya.seeholdingspages.SeeHoldingsExecution.seeHoldingsExecute(SeeHoldingsExecution.java:22)
+	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:125)
 	at java.util.ArrayList.forEach(Unknown Source)
 	at java.util.concurrent.FutureTask.run(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
@@ -170,18 +168,17 @@ Session ID: 365b0d1f8e4f09e210b0b66225216cec
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, My Positions)">
-                  </a> <!-- executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, My Positions) -->
+                  <a name="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)">
+                  </a> <!-- executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin) -->
                   <span class="method-name">executionWithKeyword</span>
-                  <span class="parameters">(2, sanjay15, abc123, 1985, 20, 20, My Positions)</span>
-                  <div class="stack-trace">org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=81.0.4044.113)
+                  <span class="parameters">(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
+                  <div class="stack-trace">org.openqa.selenium.NoSuchSessionException: invalid session id
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;DESKTOP-0PTHPNK&apos;, ip: &apos;192.168.0.104&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_191&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:61135}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
-Session ID: 365b0d1f8e4f09e210b0b66225216cec
-*** Element info: {Using=xpath, value=//button[text()=&apos;Continue&apos;]}
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:55654}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: d53171b8a826c1c46e9bfa3907439a2b
+*** Element info: {Using=xpath, value=//a[text()=&apos;Not now&apos;]}
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
@@ -192,13 +189,12 @@ Session ID: 365b0d1f8e4f09e210b0b66225216cec
 	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
 	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:238)
+	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:240)
 	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:1)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:235)
-	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:81)
-	at com.shreeya.mypositionspages.MyPositionsExecution.myPositionsExecute(MyPositionsExecution.java:19)
-	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:104)
+	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:237)
+	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:92)
+	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:100)
 	at java.util.ArrayList.forEach(Unknown Source)
 	at java.util.concurrent.FutureTask.run(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
@@ -225,7 +221,7 @@ Session ID: 365b0d1f8e4f09e210b0b66225216cec
     &lt;parameter name=&quot;Reference&quot; value=&quot;1&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;Fund Transfer&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;seemargin&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
@@ -237,7 +233,7 @@ Session ID: 365b0d1f8e4f09e210b0b66225216cec
     &lt;parameter name=&quot;Reference&quot; value=&quot;2&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;My Positions&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;seeholdings&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
@@ -287,16 +283,16 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'executionWithKeyword')
 data.setCell(0, 2, 'com.shreeya.FunctionKeyword')
-data.setCell(0, 3, 823110);
+data.setCell(0, 3, 73916);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'executionWithKeyword')
 data.setCell(1, 2, 'com.shreeya.FunctionKeyword')
-data.setCell(1, 3, 809096);
+data.setCell(1, 3, 73916);
 window.suiteTableData['TmpSuite']= { tableData: data, tableDiv: 'times-div-TmpSuite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 13 minutes</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-TmpSuite">
               </div> <!-- times-div-TmpSuite -->
             </div> <!-- times-div -->
@@ -308,32 +304,67 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="reporter-method-div">
-              <span class="reporter-method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</span>
-              <div class="reporter-method-output-div">
-                <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
-                <span class="reporter-method-output">Before Iterator 1</span>
-                <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=Fund Transfer]</span>
-                <span class="reporter-method-output">KeyWord before process  ====> Fund Transfer</span>
-                <span class="reporter-method-output">keyword =====> fund transfer</span>
-                <span class="reporter-method-output">LoginPage : loginExecution </span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=Fund Transfer]</span>
-                <span class="reporter-method-output">Browser Launch</span>
-                <span class="reporter-method-output">Checking login error </span>
-              </div> <!-- reporter-method-output-div -->
-            </div> <!-- reporter-method-div -->
-            <div class="reporter-method-div">
-              <span class="reporter-method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, My Positions)</span>
+              <span class="reporter-method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
                 <span class="reporter-method-output">Before Iterator 2</span>
                 <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=My Positions]</span>
-                <span class="reporter-method-output">KeyWord before process  ====> My Positions</span>
-                <span class="reporter-method-output">keyword =====> my positions</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
+                <span class="reporter-method-output">KeyWord before process  ====> seeholdings</span>
+                <span class="reporter-method-output">Steps : login</span>
+                <span class="reporter-method-output">keyword =====> login</span>
+                <span class="reporter-method-output">Login functionality</span>
                 <span class="reporter-method-output">LoginPage : loginExecution </span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=My Positions]</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
                 <span class="reporter-method-output">Browser Launch</span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Driver object ====> ChromeDriver: chrome on WINDOWS (d53171b8a826c1c46e9bfa3907439a2b)</span>
+                <span class="reporter-method-output">seeholdings</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : seeholdings</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1587581872683/HtmlReports/seeholdings_1.html</span>
+                <span class="reporter-method-output">Extend Report Test Name : seeholdings</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1587581938270</span>
+                <span class="reporter-method-output">Extend Log Flush</span>
+                <span class="reporter-method-output">Reporter path ===> ../WorkingE2/Report1587581872683/HtmlReports/seeholdings_1.html</span>
+                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@2f87037a</span>
+                <span class="reporter-method-output">Driver close</span>
+                <span class="reporter-method-output">Screenshot path =======> E:\EdelweissProject\WorkingE2//Report1587581872683//Screenshots//seeholdings_1_1587581938270.png</span>
+                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
+                <span class="reporter-method-output">====<<<<< OrderNo in Sheet null Action : null >>>>>====</span>
+                <span class="reporter-method-output">FolderCreation array form execution class ===> null</span>
+                <span class="reporter-method-output">****Termination Conditin****</span>
+                <span class="reporter-method-output">ExcelFileClose flag : false</span>
+                <span class="reporter-method-output">Order no =====>  0
+NoRowInTestData =======> 0</span>
+                <span class="reporter-method-output">Excel file closing...........</span>
+                <span class="reporter-method-output">ExcelFileClose flag : true</span>
+                <span class="reporter-method-output">Execution Terminate.... :)</span>
+                <span class="reporter-method-output">Steps : seeholdings</span>
+                <span class="reporter-method-output">keyword =====> seeholdings</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
+                <span class="reporter-method-output">Before Iterator 1</span>
+                <span class="reporter-method-output">After Iterator</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=seemargin]</span>
+                <span class="reporter-method-output">KeyWord before process  ====> seemargin</span>
+                <span class="reporter-method-output">Steps : login</span>
+                <span class="reporter-method-output">keyword =====> login</span>
+                <span class="reporter-method-output">Login functionality</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=seemargin]</span>
+                <span class="reporter-method-output">Browser Launch</span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">Checking login error </span>
                 <span class="reporter-method-output">Checking login error </span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
@@ -363,43 +394,39 @@ return data;
               </div> <!-- configuration-test before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">671 ms</span>
+                <span class="method-start">586 ms</span>
               </div> <!-- configuration-method before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">671 ms</span>
+                <span class="method-start">586 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, Fund Transfer)</span>
-                <span class="method-start">774 ms</span>
+                <span class="method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
+                <span class="method-start">723 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, My Positions)</span>
-                <span class="method-start">774 ms</span>
+                <span class="method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
+                <span class="method-start">723 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">809913 ms</span>
+                <span class="method-start">74783 ms</span>
               </div> <!-- configuration-method after -->
-              <div class="configuration-test after">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">endExecution</span>
-                <span class="method-start">809923 ms</span>
-              </div> <!-- configuration-test after -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">823892 ms</span>
+                <span class="method-start">74783 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-test after">
-                <img src="failed.png">
-                </img>
                 <span class="method-name">endExecution</span>
-                <span class="method-start">823895 ms</span>
+                <span class="method-start">74794 ms</span>
+              </div> <!-- configuration-test after -->
+              <div class="configuration-test after">
+                <span class="method-name">endExecution</span>
+                <span class="method-start">74794 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

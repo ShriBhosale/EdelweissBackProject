@@ -7,6 +7,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.shreeya.model.LoginModel;
+import com.shreeya.model.MasterTestModel;
 import com.shreeya.model.TestDataModel;
 
 import freemarker.core.ReturnInstruction.Return;
@@ -26,6 +27,7 @@ public class CsvReaderCode {
 
 	String responseString;
 	static Iterator<TestDataModel> csvTestDataModelIterator;
+	static Iterator<MasterTestModel> csvMasterTestModelIterator;
 	static TestDataModel model;
 	CSVWriter writer;
 	HelperCode helperObject;
@@ -126,4 +128,23 @@ public class CsvReaderCode {
 	
 	}
 
+	public Iterator<MasterTestModel> masterTestDataProvider() {
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath="E:\\EdelweissProject\\TestData\\TestData\\MasterTest";
+		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<MasterTestModel> csvToBean = new CsvToBeanBuilder(reader).withType(MasterTestModel.class).build();
+
+		Iterator<MasterTestModel> csvMasterTestIterator = csvToBean.iterator();
+		
+		
+		return csvMasterTestIterator;
+	}
 }

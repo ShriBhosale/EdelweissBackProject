@@ -1,28 +1,29 @@
 package com.shreeya.amazone;
 
+import java.io.IOException;
+import java.util.Iterator;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
+import com.shreeya.model.MasterTestModel;
 import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.util.CsvReaderCode;
 
 public class TestFactory1 {
 	
-	String name;
-	WebDriver driver;
-
-	public TestFactory1(String name) {
-		Reporter.log("TestFactory constructor", true);
-		this.name=name;
-	}
 	
-	@Test
-	public void playerName() {
-		Reporter.log("Shreeya PlayerName", true);
-		System.out.println("Player name is "+name);
-		LoginPage login=new LoginPage();
-		//driver=login.browserLaunch(name);
-		//driver.findElement(By.xpath("//*[@id='twotabsearchtextbox']")).sendKeys(name);
+	static MasterTestModel masterTestmodel;
+	public static void main(String[] args) throws IOException {
+		CsvReaderCode code=new CsvReaderCode();
+		Iterator<MasterTestModel> csvMasterTestModelIterator=code.masterTestDataProvider();
+		while(csvMasterTestModelIterator.hasNext()) {
+			masterTestmodel=csvMasterTestModelIterator.next();
+			if(masterTestmodel.getKeyword().equalsIgnoreCase("seeholdings")) {
+				Reporter.log("Steps : "+masterTestmodel.getSteps(), true);
+			}
+		}
 	}
 }

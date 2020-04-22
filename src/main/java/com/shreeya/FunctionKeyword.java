@@ -1,6 +1,7 @@
 package com.shreeya;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
@@ -13,6 +14,7 @@ import org.testng.annotations.Test;
 
 import com.shreeya.fundtransferpages.FundTransferExecution;
 import com.shreeya.model.LoginModel;
+import com.shreeya.model.MasterTestModel;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.mypositionspages.MyPositionsExecution;
 import com.shreeya.orderdetailpages.LoginPage;
@@ -20,6 +22,7 @@ import com.shreeya.orderdetailpages.OrderAction;
 import com.shreeya.seeholdingspages.SeeHoldingsExecution;
 import com.shreeya.seemarginpages.SeeMarginExecution;
 import com.shreeya.util.ApacheCode;
+import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
@@ -34,6 +37,7 @@ public class FunctionKeyword {
 	OrderAction orderActioObj;
 	HelperCode helperObject;
 	TestDataModel testDataObject;
+	MasterTestModel masterTestmodel;
 	
 	public static String folderPath[]=null;
 	public static ApacheCode apacheCodeObj;
@@ -67,6 +71,7 @@ public class FunctionKeyword {
 	@Test
 	public void executionWithKeyword(String referenceNo,String userId,String pwd,String yob,String startNo,String endNo,String module) throws InterruptedException, IOException {
 		Thread.sleep(2000);
+		CsvReaderCode code=new CsvReaderCode();
 		Reporter.log("<==================== Function KeyWord : executionWithKeyword ================>",true);
 		Reporter.log("Before Iterator "+referenceNo);
 		
@@ -75,13 +80,19 @@ public class FunctionKeyword {
 		
 			LoginModel loginModelObj =new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, module);
 			Reporter.log("Login Data ====> "+loginModelObj.toString(),true);
-			
-			/*
-			 * ConfigReader configReaderObj=new ConfigReader();
-			 * keyWord=configReaderObj.configReader("KeyWord");
-			 */
+	
 		Reporter.log("KeyWord before process  ====> "+module,true);
-		switch(KeywordStringProcess(module)) {
+		
+		Iterator<MasterTestModel> csvMasterTestModelIterator=code.masterTestDataProvider();
+		while(csvMasterTestModelIterator.hasNext()) {
+			masterTestmodel=csvMasterTestModelIterator.next();
+			if(masterTestmodel.getKeyword().equalsIgnoreCase(loginModelObj.getModule())) {
+				Reporter.log("Steps : "+masterTestmodel.getSteps(), true);
+			
+		
+		
+		
+		switch(KeywordStringProcess(masterTestmodel.getSteps())) {
 		
 		case "login":
 			LoginPage loginPageObj=new LoginPage();
@@ -115,7 +126,10 @@ public class FunctionKeyword {
 			Reporter.log("See Holdings Module", true);
 				break;
 		}
-		terminateExecution(module);
+			
+		terminateExecution(masterTestmodel.getKeyword());
+			}
+		}
 	}
 	
 	public String KeywordStringProcess(String keywordString) {
@@ -147,8 +161,10 @@ public class FunctionKeyword {
 	@AfterTest
 	public void endExecution() throws IOException {
 		//apacheCodeObj.closeExcelWriting();
-		Reporter.log("Folder Path ====> "+folderPath[0], true);
-		apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		/*
+		 * Reporter.log("Folder Path ====> "+folderPath[0], true);
+		 * apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		 */
 	}
 
 

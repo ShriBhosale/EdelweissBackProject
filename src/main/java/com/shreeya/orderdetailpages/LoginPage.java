@@ -32,9 +32,9 @@ public class LoginPage extends SeleniumCoder{
 	WebElement yobTextField;
 	WebElement continueButton;
 	WebElement notNowButton;
-	static WebDriver driver;
+	public static WebDriver driver;
 	WebElement popupOkButton;
-	
+	public static WebDriver driver1;
 	boolean noLoginProccess=false;
 	private WebElement closePopupButton;
 	private WebElement closeButton;
@@ -42,7 +42,7 @@ public class LoginPage extends SeleniumCoder{
 	private WebElement logoutlink;
 	String userIdStr,passwordstr,yobstr;
 	private String loginErrorMsg="no error";
-	WebDriver driver1;
+	
 	private String loginErrorStr;
 	
 	static Logger log = Logger.getLogger(LoginPage.class.getName());
@@ -59,11 +59,16 @@ public class LoginPage extends SeleniumCoder{
 		driver=browserLaunch(scenario);
 		
 		clickOnLoginButton(driver);
+		do {
 		try {
-		userIdTextField=fluentWaitCodeId(driver, "userID",20);
+			Reporter.log("Before userId", true);
+		userIdTextField=fluentWaitCodeId(driver, "userID",100);
+		Reporter.log("After locate userId", true);
 		}catch(TimeoutException e) {
+			Reporter.log("User id not found now again click onLogin button");
 			clickOnLoginButton(driver);
 		}
+		}while(userIdTextField==null);
 		clearAndSendKey(userIdTextField,loginModelObject.getUserId(),"User Id");
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
@@ -117,8 +122,9 @@ public class LoginPage extends SeleniumCoder{
 			driver=null;
 		}
 		
-		
-		//headerInExcel(writer);
+		driver1=driver;
+		setDriver(driver);
+		Reporter.log("Driver object ====> "+driver1,true);
 		return driver;
 		
 	}

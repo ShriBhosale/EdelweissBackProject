@@ -85,13 +85,20 @@ public class SeleniumCoder {
 			System.out.println(elementName+" Click ");
 		}else {
 			System.out.println(elementName+" no present");
-		}
-		}catch(ElementNotInteractableException e) {
-			System.out.println("Convert driver into javascript than click on element.... ");
-			convertInJavaScriptAndClick(element);
 			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
 			wait.until(ExpectedConditions.visibilityOf(element)); 
 			wait.until(ExpectedConditions.elementToBeClickable(element));
+			Reporter.log("After explicityWait : "+elementName, true);
+			element.click();
+		}
+		}catch(ElementNotInteractableException e) {
+			System.out.println("Convert driver into javascript than click on element.... ");
+			//convertInJavaScriptAndClick(element);
+			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+			wait.until(ExpectedConditions.visibilityOf(element)); 
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+			Reporter.log("After explicityWait : "+elementName, true);
+			element.click();
 		}
 		
 		
