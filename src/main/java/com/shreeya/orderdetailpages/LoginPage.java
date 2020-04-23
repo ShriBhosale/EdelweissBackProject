@@ -55,13 +55,14 @@ public class LoginPage extends SeleniumCoder{
 		
 		Reporter.log("LoginPage : loginExecution ", true);
 		
-		Reporter.log("LoginModel data "+loginModelObject.toString(), true);
+		
 		driver=browserLaunch(scenario);
 		
 		clickOnLoginButton(driver);
 		do {
 		try {
 			Reporter.log("Before userId", true);
+			Reporter.log("LoginModel data "+loginModelObject.toString(), true);
 		userIdTextField=fluentWaitCodeId(driver, "userID",100);
 		Reporter.log("After locate userId", true);
 		}catch(TimeoutException e) {
@@ -73,12 +74,12 @@ public class LoginPage extends SeleniumCoder{
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
 		clickElement(proceedButton,"Procceed Button ");
-		
+		Reporter.log("LoginModel data "+loginModelObject.toString(), true);
 		passwordTextField=fluentWaitCodeId(driver, "password");
 		sendKey(passwordTextField, loginModelObject.getPassword(),"Password Textfield");
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
-		clickElement(proceedButton,"Proceed Button");
+		//clickElement(proceedButton,"Proceed Button");
 		if(logError("//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span",driver)) {
 		yobTextField=fluentWaitCodeId(driver, "ans");
 		sendKey(yobTextField, loginModelObject.getYob(),"Yob TextField");
@@ -222,6 +223,7 @@ public class LoginPage extends SeleniumCoder{
 
 
 	public void clickOnLoginButton(WebDriver driver) throws InterruptedException {
+		Thread.sleep(2000);
 		popupButton=fluentWaitCodeXpath(driver, "//button[text()='No thanks']");
 		clickElement(popupButton,"No thans popup button");
 		

@@ -102,12 +102,12 @@
                     <div class="method-list-content failed suite-TmpSuite">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-TmpSuite -->
@@ -130,17 +130,18 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)">
-                  </a> <!-- executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings) -->
+                  <a name="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)">
+                  </a> <!-- executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin) -->
                   <span class="method-name">executionWithKeyword</span>
-                  <span class="parameters">(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
-                  <div class="stack-trace">org.openqa.selenium.NoSuchSessionException: invalid session id
+                  <span class="parameters">(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
+                  <div class="stack-trace">org.openqa.selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=81.0.4044.113)
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;DESKTOP-0PTHPNK&apos;, ip: &apos;192.168.0.104&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_191&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:55654}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
-Session ID: d53171b8a826c1c46e9bfa3907439a2b
-*** Element info: {Using=xpath, value=//*[@id=&quot;rightScroll&quot;]/div[1]/ul/li[6]/a}
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:49643}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: 4bd7dea723a93dbd6b9e401e8798cb87
+*** Element info: {Using=id, value=password}
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
@@ -148,15 +149,15 @@ Session ID: d53171b8a826c1c46e9bfa3907439a2b
 	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:372)
+	at org.openqa.selenium.By$ById.findElement(By.java:188)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:240)
-	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:1)
+	at com.shreeya.util.SeleniumCoder$3.apply(SeleniumCoder.java:213)
+	at com.shreeya.util.SeleniumCoder$3.apply(SeleniumCoder.java:1)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:237)
-	at com.shreeya.seeholdingspages.SeeHoldingsExecution.seeHoldingsExecute(SeeHoldingsExecution.java:22)
-	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:125)
+	at com.shreeya.util.SeleniumCoder.fluentWaitCodeId(SeleniumCoder.java:210)
+	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:78)
+	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:100)
 	at java.util.ArrayList.forEach(Unknown Source)
 	at java.util.concurrent.FutureTask.run(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
@@ -168,17 +169,18 @@ Session ID: d53171b8a826c1c46e9bfa3907439a2b
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)">
-                  </a> <!-- executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin) -->
+                  <a name="executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)">
+                  </a> <!-- executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings) -->
                   <span class="method-name">executionWithKeyword</span>
-                  <span class="parameters">(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
-                  <div class="stack-trace">org.openqa.selenium.NoSuchSessionException: invalid session id
+                  <span class="parameters">(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
+                  <div class="stack-trace">org.openqa.selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=81.0.4044.113)
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;DESKTOP-0PTHPNK&apos;, ip: &apos;192.168.0.104&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_191&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:55654}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
-Session ID: d53171b8a826c1c46e9bfa3907439a2b
-*** Element info: {Using=xpath, value=//a[text()=&apos;Not now&apos;]}
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.113, chrome: {chromedriverVersion: 80.0.3987.106 (f68069574609..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:49643}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: 4bd7dea723a93dbd6b9e401e8798cb87
+*** Element info: {Using=id, value=password}
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
 	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
@@ -186,14 +188,14 @@ Session ID: d53171b8a826c1c46e9bfa3907439a2b
 	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:372)
+	at org.openqa.selenium.By$ById.findElement(By.java:188)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
-	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:240)
-	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:1)
+	at com.shreeya.util.SeleniumCoder$3.apply(SeleniumCoder.java:213)
+	at com.shreeya.util.SeleniumCoder$3.apply(SeleniumCoder.java:1)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
-	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:237)
-	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:92)
+	at com.shreeya.util.SeleniumCoder.fluentWaitCodeId(SeleniumCoder.java:210)
+	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:78)
 	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:100)
 	at java.util.ArrayList.forEach(Unknown Source)
 	at java.util.concurrent.FutureTask.run(Unknown Source)
@@ -283,16 +285,16 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'executionWithKeyword')
 data.setCell(0, 2, 'com.shreeya.FunctionKeyword')
-data.setCell(0, 3, 73916);
+data.setCell(0, 3, 249799);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'executionWithKeyword')
 data.setCell(1, 2, 'com.shreeya.FunctionKeyword')
-data.setCell(1, 3, 73916);
+data.setCell(1, 3, 235786);
 window.suiteTableData['TmpSuite']= { tableData: data, tableDiv: 'times-div-TmpSuite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 1 minutes</span>
+              <span class="suite-total-time">Total running time: 4 minutes</span>
               <div id="times-div-TmpSuite">
               </div> <!-- times-div-TmpSuite -->
             </div> <!-- times-div -->
@@ -303,51 +305,6 @@ return data;
             <span class="header-content">Reporter output for TmpSuite</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
-            <div class="reporter-method-div">
-              <span class="reporter-method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
-              <div class="reporter-method-output-div">
-                <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
-                <span class="reporter-method-output">Before Iterator 2</span>
-                <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
-                <span class="reporter-method-output">KeyWord before process  ====> seeholdings</span>
-                <span class="reporter-method-output">Steps : login</span>
-                <span class="reporter-method-output">keyword =====> login</span>
-                <span class="reporter-method-output">Login functionality</span>
-                <span class="reporter-method-output">LoginPage : loginExecution </span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
-                <span class="reporter-method-output">Browser Launch</span>
-                <span class="reporter-method-output">Before userId</span>
-                <span class="reporter-method-output">After locate userId</span>
-                <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output">Driver object ====> ChromeDriver: chrome on WINDOWS (d53171b8a826c1c46e9bfa3907439a2b)</span>
-                <span class="reporter-method-output">seeholdings</span>
-                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
-                <span class="reporter-method-output">Scenario : seeholdings</span>
-                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1587581872683/HtmlReports/seeholdings_1.html</span>
-                <span class="reporter-method-output">Extend Report Test Name : seeholdings</span>
-                <span class="reporter-method-output">Capture Screenshot</span>
-                <span class="reporter-method-output">1587581938270</span>
-                <span class="reporter-method-output">Extend Log Flush</span>
-                <span class="reporter-method-output">Reporter path ===> ../WorkingE2/Report1587581872683/HtmlReports/seeholdings_1.html</span>
-                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@2f87037a</span>
-                <span class="reporter-method-output">Driver close</span>
-                <span class="reporter-method-output">Screenshot path =======> E:\EdelweissProject\WorkingE2//Report1587581872683//Screenshots//seeholdings_1_1587581938270.png</span>
-                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
-                <span class="reporter-method-output">====<<<<< OrderNo in Sheet null Action : null >>>>>====</span>
-                <span class="reporter-method-output">FolderCreation array form execution class ===> null</span>
-                <span class="reporter-method-output">****Termination Conditin****</span>
-                <span class="reporter-method-output">ExcelFileClose flag : false</span>
-                <span class="reporter-method-output">Order no =====>  0
-NoRowInTestData =======> 0</span>
-                <span class="reporter-method-output">Excel file closing...........</span>
-                <span class="reporter-method-output">ExcelFileClose flag : true</span>
-                <span class="reporter-method-output">Execution Terminate.... :)</span>
-                <span class="reporter-method-output">Steps : seeholdings</span>
-                <span class="reporter-method-output">keyword =====> seeholdings</span>
-              </div> <!-- reporter-method-output-div -->
-            </div> <!-- reporter-method-div -->
             <div class="reporter-method-div">
               <span class="reporter-method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
               <div class="reporter-method-output-div">
@@ -360,12 +317,38 @@ NoRowInTestData =======> 0</span>
                 <span class="reporter-method-output">keyword =====> login</span>
                 <span class="reporter-method-output">Login functionality</span>
                 <span class="reporter-method-output">LoginPage : loginExecution </span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=seemargin]</span>
                 <span class="reporter-method-output">Browser Launch</span>
+                <span class="reporter-method-output">No thans popup button Click </span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
                 <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=seemargin]</span>
                 <span class="reporter-method-output">After locate userId</span>
-                <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=6, module=seemargin]</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
+                <span class="reporter-method-output">Before Iterator 2</span>
+                <span class="reporter-method-output">After Iterator</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
+                <span class="reporter-method-output">KeyWord before process  ====> seeholdings</span>
+                <span class="reporter-method-output">Steps : login</span>
+                <span class="reporter-method-output">keyword =====> login</span>
+                <span class="reporter-method-output">Login functionality</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">Browser Launch</span>
+                <span class="reporter-method-output">No thans popup button Click </span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=20, endRowNo=20, module=seeholdings]</span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -394,39 +377,39 @@ NoRowInTestData =======> 0</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">586 ms</span>
+                <span class="method-start">370 ms</span>
               </div> <!-- configuration-method before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">586 ms</span>
+                <span class="method-start">370 ms</span>
               </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
-                <span class="method-start">723 ms</span>
-              </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 6, seemargin)</span>
-                <span class="method-start">723 ms</span>
+                <span class="method-start">511 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 20, 20, seeholdings)</span>
+                <span class="method-start">511 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">74783 ms</span>
+                <span class="method-start">236395 ms</span>
               </div> <!-- configuration-method after -->
+              <div class="configuration-test after">
+                <span class="method-name">endExecution</span>
+                <span class="method-start">236398 ms</span>
+              </div> <!-- configuration-test after -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">74783 ms</span>
+                <span class="method-start">250312 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <span class="method-name">endExecution</span>
-                <span class="method-start">74794 ms</span>
-              </div> <!-- configuration-test after -->
-              <div class="configuration-test after">
-                <span class="method-name">endExecution</span>
-                <span class="method-start">74794 ms</span>
+                <span class="method-start">250313 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

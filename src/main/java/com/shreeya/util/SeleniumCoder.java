@@ -49,6 +49,7 @@ public class SeleniumCoder {
 		}else {
 			driver=new ChromeDriver(capabilities);
 		}
+		driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		//driver.get("https://www.facebook.com/");
 		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
@@ -82,11 +83,13 @@ public class SeleniumCoder {
 		try {
 		if(element.isEnabled()==true) {
 			element.click();
-			System.out.println(elementName+" Click ");
+			Reporter.log(elementName+" Click ",true);
 		}else {
-			System.out.println(elementName+" no present");
+			Reporter.log(elementName+" no present",true);
 			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+			Reporter.log("Checking element visible or not "+ elementName,true);
 			wait.until(ExpectedConditions.visibilityOf(element)); 
+			Reporter.log("Checking element clickable or not "+ elementName,true);
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 			Reporter.log("After explicityWait : "+elementName, true);
 			element.click();
@@ -112,6 +115,7 @@ public class SeleniumCoder {
 	
 	public void clearAndSendKey(WebElement element,String msg,String elementName) {
 		try {
+			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
 		element.clear();
 		element.sendKeys(msg);
 		System.out.println("elementName : "+elementName+" msg : "+msg);
