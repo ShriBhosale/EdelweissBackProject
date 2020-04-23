@@ -53,7 +53,8 @@ public class OrderAction {
 	}
 	
 	public WebDriver orderActionStart(LoginModel loginModel) throws InterruptedException, IOException {
-		WebDriver driver=loginPageObj.loginExecution("normal",loginModel);
+		//WebDriver driver=loginPageObj.loginExecution("normal",loginModel);
+		WebDriver driver=loginPageObj.driver;
 		Reporter.log("<========OrderActionStart=======>",true);
 		Reporter.log(loginModel.toString(),true);
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
@@ -119,9 +120,7 @@ public class OrderAction {
 					 continue;
 				 }
 			}
-			if(model.getOrderNo().equalsIgnoreCase("16")||model.getOrderNo().equalsIgnoreCase("33")) {
-				Reporter.log("bugg",true);
-			}
+			
 			
 			Reporter.log("Action ====> "+model.getAction()+" newOrderStatus =====> "+newOrderStatus+"\nRowNo==============> "+rowNo,true);
 			

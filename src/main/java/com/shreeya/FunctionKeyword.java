@@ -9,6 +9,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -23,10 +24,12 @@ import com.shreeya.seeholdingspages.SeeHoldingsExecution;
 import com.shreeya.seemarginpages.SeeMarginExecution;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.CustomListener;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
 
+@Listeners(CustomListener.class)
 public class FunctionKeyword {
 	
 	public static String keyWord="no Keyword in FunctionKeyWord";
@@ -125,11 +128,17 @@ public class FunctionKeyword {
 			seeHoldingsObj.seeHoldingsExecute(loginModelObj);
 			Reporter.log("See Holdings Module", true);
 				break;
+		case "logout" :
+			terminateExecution(masterTestmodel.getKeyword());
+			break;
+			default:
+				Reporter.log("Please Enter follow mentioned keyword : \nlogin\norderdetail\nfundtransfer\nmypositions\nseemargin\nseeholdings\nlogout", true);
 		}
 			
-		terminateExecution(masterTestmodel.getKeyword());
+		
 			}
 		}
+		
 	}
 	
 	public String KeywordStringProcess(String keywordString) {
@@ -143,9 +152,11 @@ public class FunctionKeyword {
 	public void terminateExecution(String module) throws InterruptedException, IOException {
 		WebDriver driver=LoginPage.getDriver();
 		if(driver != null) {
+		if(!module.equalsIgnoreCase("orderdetail")) {
 		ExtendReporter reporter=new ExtendReporter();
 		reporter.reporter(driver,module,folderPath);
 		helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject,0);
+		}
 		login.logout(driver);
 		driver.close();
 		Reporter.log("Execution Terminate.... :)",true);	
@@ -161,10 +172,10 @@ public class FunctionKeyword {
 	@AfterTest
 	public void endExecution() throws IOException {
 		//apacheCodeObj.closeExcelWriting();
-		/*
-		 * Reporter.log("Folder Path ====> "+folderPath[0], true);
-		 * apacheCodeObj.outputExcelFileClose(folderPath[0]);
-		 */
+		
+		  Reporter.log("Folder Path ====> "+folderPath[0], true);
+		  apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		 
 	}
 
 

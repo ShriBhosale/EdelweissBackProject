@@ -32,7 +32,7 @@ public class MyTestLauncher {
 		XmlSuite suite = new XmlSuite();
 		suite.setName("TmpSuite");
 		suite.setParallel(XmlSuite.ParallelMode.TESTS);
-		suite.setThreadCount(2);
+		suite.setThreadCount(1);
 		int count=0;
 		 while(loginIteratior.hasNext()) {
 			 LoginModel loginModel = loginIteratior.next(); 

@@ -28,9 +28,10 @@ import com.google.common.base.Function;
 public class SeleniumCoder {
 
 	static Logger log = Logger.getLogger(SeleniumCoder.class.getName());
-	WebDriver driver=null;
+	 WebDriver driver=null;
+	
 	ExtendReporter report=new ExtendReporter();
-	int maximumDelay=300;
+	int maximumDelay=50;
 	private long explicityWaitCount=20;
 	public SeleniumCoder() {
 		
@@ -95,8 +96,15 @@ public class SeleniumCoder {
 			element.click();
 		}
 		}catch(ElementNotInteractableException e) {
-			System.out.println("Convert driver into javascript than click on element.... ");
+			System.out.println("Convert driver into javascript than click on element  "+elementName);
 			//convertInJavaScriptAndClick(element);
+			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+			wait.until(ExpectedConditions.visibilityOf(element)); 
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+			Reporter.log("After explicityWait : "+elementName, true);
+			element.click();
+		}catch(TimeoutException e1) {
+			Reporter.log("TimeoutException for this  "+elementName,true);
 			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
 			wait.until(ExpectedConditions.visibilityOf(element)); 
 			wait.until(ExpectedConditions.elementToBeClickable(element));
@@ -115,7 +123,7 @@ public class SeleniumCoder {
 	
 	public void clearAndSendKey(WebElement element,String msg,String elementName) {
 		try {
-			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+			//new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(element));
 		element.clear();
 		element.sendKeys(msg);
 		System.out.println("elementName : "+elementName+" msg : "+msg);
@@ -272,7 +280,7 @@ public class SeleniumCoder {
 		   // for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			       .withTimeout(maxWaitTime, TimeUnit.SECONDS)
-			       .pollingEvery(3, TimeUnit.SECONDS)
+			       .pollingEvery(1, TimeUnit.SECONDS)
 			       .ignoring(NoSuchElementException.class);
 
 			   WebElement element = wait.until(new Function<WebDriver, WebElement>() {

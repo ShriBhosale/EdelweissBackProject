@@ -79,7 +79,7 @@ public class LoginPage extends SeleniumCoder{
 		sendKey(passwordTextField, loginModelObject.getPassword(),"Password Textfield");
 		
 		proceedButton=fluentWaitCodeXpath(driver, "//button[text()='Proceed']");
-		//clickElement(proceedButton,"Proceed Button");
+		clickElement(proceedButton,"Proceed Button");
 		if(logError("//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span",driver)) {
 		yobTextField=fluentWaitCodeId(driver, "ans");
 		sendKey(yobTextField, loginModelObject.getYob(),"Yob TextField");

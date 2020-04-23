@@ -9,7 +9,8 @@ import java.util.Date;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
-import com.shreeya.Execution;
+import com.shreeya.FunctionKeyword;
+import com.shreeya.FunctionKeyword;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.orderdetailpages.OrderDetail;
 
@@ -117,8 +118,8 @@ public class HelperCode {
 		Reporter.log("*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************",true);
 		Reporter.log("====<<<<< OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" >>>>>====",true);
 		executionCount++;
-		folderPathArray=Execution.folderPath;
-		Reporter.log("FolderCreation array form execution class ===> "+folderPathArray,true);
+		folderPathArray=FunctionKeyword.folderPath;
+		Reporter.log("FolderCreation array form FunctionKeyword class ===> "+folderPathArray,true);
 		
 		boolean reportFlag=false;
 		rowPrint++;
@@ -142,8 +143,8 @@ public class HelperCode {
 		}
 		
 		if(reportFlag) {
-			Reporter.log("Execution Count :: "+rowPrint,true);
-			Reporter.log("Execution no ===> "+executionCount,true);
+			Reporter.log("FunctionKeyword Count :: "+rowPrint,true);
+			Reporter.log("FunctionKeyword no ===> "+executionCount,true);
 		//Reporter.log("Order no===========================================================> "+orderNo+"\nExecution Count==========================================>"+rowPrint);
 		//Reporter.log("noRowInTestData : "+noRowInTestData+"\n folderPathArray[0] : "+folderPathArray[0]);
 		if(executionCount==1) {
@@ -152,7 +153,7 @@ public class HelperCode {
 			FolderStructure folderStructureObject=new FolderStructure();
 			folderStructureObject.copyFile(folderPathArray[0]);
 		 //excelWriter=new ApacheCode(folderPathArray[0]);
-		 Execution.apacheCodeObj.outputFileWriterHeader(folderPathArray[0]);
+		 FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0]);
 		}
 		OrderDetail orderDetailObj = new OrderDetail();
 		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo());
@@ -180,7 +181,7 @@ public class HelperCode {
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
 		report.logFlush();
-		Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			Reporter.log(orderDetail,true);
@@ -192,7 +193,7 @@ public class HelperCode {
 		orderDetailArray[2]="New order reject1";
 		report.logFlush();
 		
-		Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 		//noRowInTestData=orderNo;
 		}
 		//report.tearDown(resultString);
@@ -206,8 +207,8 @@ public class HelperCode {
 		}
 		if(countNewOrderReject==4) {
 			if(excelFileClose==false) {
-			//Execution.apacheCodeObj.closeExcelWriting();
-			//Execution.apacheCodeObj.outputExcelFileClose(outputFolderPath);
+			//FunctionKeyword.apacheCodeObj.closeExcelWriting();
+			//FunctionKeyword.apacheCodeObj.outputExcelFileClose(outputFolderPath);
 			excelFileClose=true;
 			}else {
 				Reporter.log("Excel file close successfully..........................",true);
@@ -218,8 +219,8 @@ public class HelperCode {
 			noRowInTestData1=0;
 			if(excelFileClose==false) {
 				Reporter.log("ExcelFileClose flag : "+excelFileClose,true);
-				//Execution.apacheCodeObj.closeExcelWriting();
-				//Execution.apacheCodeObj.outputExcelFileClose(outputFolderPath);
+				//FunctionKeyword.apacheCodeObj.closeExcelWriting();
+				//FunctionKeyword.apacheCodeObj.outputExcelFileClose(outputFolderPath);
 				excelFileClose=true;
 			}
 		}
@@ -229,8 +230,8 @@ public class HelperCode {
 			Reporter.log("ExcelFileClose flag : "+excelFileClose,true);
 			if(excelFileClose==false) {
 				
-				//Execution.apacheCodeObj.closeExcelWriting();
-				Execution.apacheCodeObj.outputExcelFileClose(outputFolderPath);
+				//FunctionKeyword.apacheCodeObj.closeExcelWriting();
+				FunctionKeyword.apacheCodeObj.outputExcelFileClose(outputFolderPath);
 		excelFileClose=true;
 			}
 		}
@@ -271,6 +272,6 @@ public class HelperCode {
 		report.errorFail(model.getAction()+" skip due to new order reject...");
 		report.logFlush();
 		orderDetailArray[16]=report.getReportPathString();
-		Execution.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 	}
 }

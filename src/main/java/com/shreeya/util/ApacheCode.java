@@ -135,7 +135,7 @@ public class ApacheCode {
 			Reporter.log(c[i]+" count "+i);
 		}*/
 		
-		String abc=pathStr.substring(11);
+		String abc=pathStr.substring(12);
 		
 		abc=".."+abc;
 		Reporter.log(abc,true);
