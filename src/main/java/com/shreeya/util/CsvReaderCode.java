@@ -7,6 +7,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.shreeya.model.LoginModel;
+import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.MasterTestModel;
 import com.shreeya.model.TestDataModel;
 
@@ -47,7 +48,7 @@ public class CsvReaderCode {
 
 	public Iterator<TestDataModel> testDataProvider() {
 		ConfigReader configReader=new ConfigReader();
-		String testDataPath=configReader.configReader("TestData");
+		String testDataPath=configReader.configReader("TestData")+"\\ScenarioData";
 		CSVReader reader = null;
 		System.out.println("Test Data ======> "+testDataPath);
 		try {
@@ -102,7 +103,7 @@ public class CsvReaderCode {
 	
 	public ArrayList<LoginModel> LoginFileReader() {
 		ConfigReader configReader=new ConfigReader();
-		String testDataPath=configReader.configReader("LoginData");
+		String testDataPath=configReader.configReader("TestData")+"\\Execution";
 		CSVReader reader = null;
 		System.out.println("Login Test Data ======> "+testDataPath);
 		try {
@@ -130,7 +131,7 @@ public class CsvReaderCode {
 
 	public Iterator<MasterTestModel> masterTestDataProvider() {
 		ConfigReader configReader=new ConfigReader();
-		String testDataPath="E:\\EdelweissProject\\TestData\\TestData\\MasterTest";
+		String testDataPath=configReader.configReader("TestData")+"\\MasterTest";
 		CSVReader reader = null;
 		System.out.println("Test Data ======> "+testDataPath);
 		try {
@@ -146,5 +147,25 @@ public class CsvReaderCode {
 		
 		
 		return csvMasterTestIterator;
+	}
+	
+	public Iterator<LoginTestModel> loginTestDataProvider() {
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("TestData")+"\\Login";
+		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<LoginTestModel> csvToBean = new CsvToBeanBuilder(reader).withType(LoginTestModel.class).build();
+
+		Iterator<LoginTestModel> csvLoginTestIterator = csvToBean.iterator();
+		
+		
+		return csvLoginTestIterator;
 	}
 }

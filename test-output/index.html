@@ -46,27 +46,27 @@
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
-&lt;suite thread-count=&quot;1&quot; name=&quot;TmpSuite&quot; parallel=&quot;tests&quot;&gt;
-  &lt;test thread-count=&quot;1&quot; name=&quot;1&quot; parallel=&quot;tests&quot;&gt;
+&lt;suite thread-count=&quot;2&quot; name=&quot;TmpSuite&quot; parallel=&quot;tests&quot;&gt;
+  &lt;test thread-count=&quot;2&quot; name=&quot;1&quot; parallel=&quot;tests&quot;&gt;
     &lt;parameter name=&quot;StartNo&quot; value=&quot;6&quot;/&gt;
     &lt;parameter name=&quot;EndNo&quot; value=&quot;13&quot;/&gt;
     &lt;parameter name=&quot;Reference&quot; value=&quot;1&quot;/&gt;
-    &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
+    &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;orderdetail&quot;/&gt;
-    &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;fundtransfer&quot;/&gt;
+    &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- 1 --&gt;
-  &lt;test thread-count=&quot;1&quot; name=&quot;2&quot; parallel=&quot;tests&quot;&gt;
+  &lt;test thread-count=&quot;2&quot; name=&quot;2&quot; parallel=&quot;tests&quot;&gt;
     &lt;parameter name=&quot;StartNo&quot; value=&quot;18&quot;/&gt;
     &lt;parameter name=&quot;EndNo&quot; value=&quot;27&quot;/&gt;
     &lt;parameter name=&quot;Reference&quot; value=&quot;2&quot;/&gt;
-    &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
+    &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
     &lt;parameter name=&quot;Module&quot; value=&quot;orderdetail&quot;/&gt;
-    &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
+    &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
     &lt;/classes&gt;
@@ -147,41 +147,41 @@ return data;
                 <span class="method-name">executionBefore</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-test before -->
-              <div class="configuration-method before">
-                <span class="method-name">beforeTest</span>
-                <span class="method-start">1011 ms</span>
-              </div> <!-- configuration-method before -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">executionWithKeyword(1, 60003800, abc123, 2000, 6, 13, orderdetail)</span>
-                <span class="method-start">1212 ms</span>
-              </div> <!-- test-method -->
-              <div class="configuration-test after">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">endExecution</span>
-                <span class="method-start">81238 ms</span>
-              </div> <!-- configuration-test after -->
               <div class="configuration-test before">
                 <span class="method-name">executionBefore</span>
-                <span class="method-start">81610 ms</span>
+                <span class="method-start">0 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">81685 ms</span>
+                <span class="method-start">455 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="configuration-method before">
+                <span class="method-name">beforeTest</span>
+                <span class="method-start">455 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">executionWithKeyword(2, sanjay15, abc123, 1985, 18, 27, orderdetail)</span>
-                <span class="method-start">81690 ms</span>
+                <span class="method-name">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, orderdetail)</span>
+                <span class="method-start">535 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
+                <span class="method-start">535 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-test after">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">endExecution</span>
-                <span class="method-start">149549 ms</span>
+                <span class="method-start">142178 ms</span>
+              </div> <!-- configuration-test after -->
+              <div class="configuration-test after">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">endExecution</span>
+                <span class="method-start">229022 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

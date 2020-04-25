@@ -90,7 +90,7 @@ public class FunctionKeyword {
 		while(csvMasterTestModelIterator.hasNext()) {
 			masterTestmodel=csvMasterTestModelIterator.next();
 			if(masterTestmodel.getKeyword().equalsIgnoreCase(loginModelObj.getModule())) {
-				Reporter.log("Steps : "+masterTestmodel.getSteps(), true);
+				Reporter.log("Steps =================================================================================>>> "+masterTestmodel.getSteps(), true);
 			
 		
 		
@@ -131,8 +131,11 @@ public class FunctionKeyword {
 		case "logout" :
 			terminateExecution(masterTestmodel.getKeyword());
 			break;
-			default:
-				Reporter.log("Please Enter follow mentioned keyword : \nlogin\norderdetail\nfundtransfer\nmypositions\nseemargin\nseeholdings\nlogout", true);
+		/*
+		 * default: Reporter.
+		 * log("Please Enter follow mentioned keyword : \nlogin\norderdetail\nfundtransfer\nmypositions\nseemargin\nseeholdings\nlogout"
+		 * , true);
+		 */
 		}
 			
 		

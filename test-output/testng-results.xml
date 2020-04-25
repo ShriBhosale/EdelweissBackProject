@@ -8,79 +8,7 @@
       <![CDATA[Execution Before ]]>
     </line>
     <line>
-      <![CDATA[Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>]]>
-    </line>
-    <line>
-      <![CDATA[Folder Structure creation method ]]>
-    </line>
-    <line>
-      <![CDATA[orderNo ===> 0]]>
-    </line>
-    <line>
-      <![CDATA[1587654718143]]>
-    </line>
-    <line>
-      <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE2]]>
-    </line>
-    <line>
-      <![CDATA[Path ====> ../WorkingE2/Report]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[0] : ../WorkingE2/Report1587654718143]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[1] : ../WorkingE2/Report1587654718143/HtmlReports]]>
-    </line>
-    <line>
-      <![CDATA[FolderArray[2] : ../WorkingE2/Report1587654718143/Screenshots]]>
-    </line>
-    <line>
-      <![CDATA[1587654718878]]>
-    </line>
-    <line>
-      <![CDATA[Before Test case...]]>
-    </line>
-    <line>
-      <![CDATA[BeforeMethod]]>
-    </line>
-    <line>
-      <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
-    </line>
-    <line>
-      <![CDATA[Before Iterator 1]]>
-    </line>
-    <line>
-      <![CDATA[After Iterator]]>
-    </line>
-    <line>
-      <![CDATA[Login Data ====> LoginModel [referNo=1, userId=60003800, password=abc123, yob=2000, startingRowNo=6, endRowNo=13, module=orderdetail]]]>
-    </line>
-    <line>
-      <![CDATA[KeyWord before process  ====> orderdetail]]>
-    </line>
-    <line>
-      <![CDATA[Steps : login]]>
-    </line>
-    <line>
-      <![CDATA[keyword =====> login]]>
-    </line>
-    <line>
-      <![CDATA[Login functionality]]>
-    </line>
-    <line>
-      <![CDATA[LoginPage : loginExecution ]]>
-    </line>
-    <line>
-      <![CDATA[Browser Launch]]>
-    </line>
-    <line>
-      <![CDATA[1587654799240]]>
-    </line>
-    <line>
-      <![CDATA[1587654799241]]>
-    </line>
-    <line>
-      <![CDATA[Folder Path ====> ../WorkingE2/Report1587654718143]]>
+      <![CDATA[================<< Execution Started >>================]]>
     </line>
     <line>
       <![CDATA[Execution Before ]]>
@@ -92,16 +20,73 @@
       <![CDATA[Folder Structure creation method ]]>
     </line>
     <line>
-      <![CDATA[orderNo ===> 1]]>
+      <![CDATA[Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>]]>
     </line>
     <line>
-      <![CDATA[1587654799660]]>
+      <![CDATA[Folder Structure creation method ]]>
+    </line>
+    <line>
+      <![CDATA[orderNo ===> 0]]>
+    </line>
+    <line>
+      <![CDATA[orderNo ===> 0]]>
+    </line>
+    <line>
+      <![CDATA[1587816309577]]>
+    </line>
+    <line>
+      <![CDATA[1587816309577]]>
+    </line>
+    <line>
+      <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE2]]>
+    </line>
+    <line>
+      <![CDATA[Report Path ======> E:\EdelweissProject\WorkingE2]]>
+    </line>
+    <line>
+      <![CDATA[Path ====> ../WorkingE2/Report]]>
+    </line>
+    <line>
+      <![CDATA[Path ====> ../WorkingE2/Report]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[0] : ../WorkingE2/Report1587816309577]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[0] : ../WorkingE2/Report1587816309577]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[1] : ../WorkingE2/Report1587816309577/HtmlReports]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[1] : ../WorkingE2/Report1587816309577/HtmlReports]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[2] : ../WorkingE2/Report1587816309577/Screenshots]]>
+    </line>
+    <line>
+      <![CDATA[FolderArray[2] : ../WorkingE2/Report1587816309577/Screenshots]]>
+    </line>
+    <line>
+      <![CDATA[1587816309943]]>
+    </line>
+    <line>
+      <![CDATA[1587816309943]]>
+    </line>
+    <line>
+      <![CDATA[Before Test case...]]>
     </line>
     <line>
       <![CDATA[Before Test case...]]>
     </line>
     <line>
       <![CDATA[BeforeMethod]]>
+    </line>
+    <line>
+      <![CDATA[BeforeMethod]]>
+    </line>
+    <line>
+      <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
     </line>
     <line>
       <![CDATA[<==================== Function KeyWord : executionWithKeyword ================>]]>
@@ -113,19 +98,40 @@
       <![CDATA[After Iterator]]>
     </line>
     <line>
-      <![CDATA[Login Data ====> LoginModel [referNo=2, userId=sanjay15, password=abc123, yob=1985, startingRowNo=18, endRowNo=27, module=orderdetail]]]>
+      <![CDATA[Before Iterator 1]]>
+    </line>
+    <line>
+      <![CDATA[After Iterator]]>
+    </line>
+    <line>
+      <![CDATA[Login Data ====> LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]]]>
+    </line>
+    <line>
+      <![CDATA[Login Data ====> LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=orderdetail]]]>
+    </line>
+    <line>
+      <![CDATA[KeyWord before process  ====> fundtransfer]]>
     </line>
     <line>
       <![CDATA[KeyWord before process  ====> orderdetail]]>
     </line>
     <line>
-      <![CDATA[Steps : login]]>
+      <![CDATA[Steps =================================================================================>>> orderdetail]]>
     </line>
     <line>
-      <![CDATA[keyword =====> login]]>
+      <![CDATA[keyword =====> orderdetail]]>
     </line>
     <line>
-      <![CDATA[Login functionality]]>
+      <![CDATA[Steps =================================================================================>>> fundtransfer]]>
+    </line>
+    <line>
+      <![CDATA[keyword =====> fundtransfer]]>
+    </line>
+    <line>
+      <![CDATA[LoginPage : loginExecution ]]>
+    </line>
+    <line>
+      <![CDATA[Order detail functionality]]>
     </line>
     <line>
       <![CDATA[LoginPage : loginExecution ]]>
@@ -134,16 +140,108 @@
       <![CDATA[Browser Launch]]>
     </line>
     <line>
-      <![CDATA[1587654867554]]>
+      <![CDATA[Browser Launch]]>
     </line>
     <line>
-      <![CDATA[1587654867555]]>
+      <![CDATA[No thans popup button Click ]]>
     </line>
     <line>
-      <![CDATA[Folder Path ====> ../WorkingE2/Report1587654718143]]>
+      <![CDATA[Login button Click ]]>
+    </line>
+    <line>
+      <![CDATA[Buy/Sell link Click ]]>
+    </line>
+    <line>
+      <![CDATA[Before userId]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel data LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]]]>
+    </line>
+    <line>
+      <![CDATA[No thans popup button Click ]]>
+    </line>
+    <line>
+      <![CDATA[Login button Click ]]>
+    </line>
+    <line>
+      <![CDATA[Buy/Sell link Click ]]>
+    </line>
+    <line>
+      <![CDATA[Before userId]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel data LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=orderdetail]]]>
+    </line>
+    <line>
+      <![CDATA[After locate userId]]>
+    </line>
+    <line>
+      <![CDATA[Procceed Button  Click ]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel data LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]]]>
+    </line>
+    <line>
+      <![CDATA[After locate userId]]>
+    </line>
+    <line>
+      <![CDATA[Edit button Click ]]>
+    </line>
+    <line>
+      <![CDATA[Procceed Button  Click ]]>
+    </line>
+    <line>
+      <![CDATA[LoginModel data LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=orderdetail]]]>
+    </line>
+    <line>
+      <![CDATA[Proceed Button Click ]]>
+    </line>
+    <line>
+      <![CDATA[ContinueButton Click ]]>
+    </line>
+    <line>
+      <![CDATA[Checking login error ]]>
+    </line>
+    <line>
+      <![CDATA[Timeout Exception element 
+null]]>
+    </line>
+    <line>
+      <![CDATA[Abnormal Error Handly]]>
+    </line>
+    <line>
+      <![CDATA[1587816451712]]>
+    </line>
+    <line>
+      <![CDATA[1587816451714]]>
+    </line>
+    <line>
+      <![CDATA[1587816451714]]>
+    </line>
+    <line>
+      <![CDATA[Folder Path ====> ../WorkingE2/Report1587816309577]]>
+    </line>
+    <line>
+      <![CDATA[Timeout Exception element 
+null]]>
+    </line>
+    <line>
+      <![CDATA[Abnormal Error Handly]]>
+    </line>
+    <line>
+      <![CDATA[1587816538557]]>
+    </line>
+    <line>
+      <![CDATA[1587816538557]]>
+    </line>
+    <line>
+      <![CDATA[1587816538558]]>
+    </line>
+    <line>
+      <![CDATA[Folder Path ====> ../WorkingE2/Report1587816309577]]>
     </line>
   </reporter-output>
-  <suite name="TmpSuite" duration-ms="0" started-at="2020-04-23T20:44:28 IST" finished-at="2020-04-23T20:44:28 IST">
+  <suite name="TmpSuite" duration-ms="0" started-at="2020-04-25T17:38:58 IST" finished-at="2020-04-25T17:38:58 IST">
     <groups>
     </groups>
   </suite> <!-- TmpSuite -->

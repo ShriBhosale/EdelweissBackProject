@@ -14,7 +14,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.shreeya.FunctionKeyword;
 import com.shreeya.experiment.Report;
+import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.TestDataModel;
 
 public class ExtendReporter {
@@ -29,7 +31,10 @@ public class ExtendReporter {
 		Reporter.log("<====ExtendReporter Constructor===>",true);
 		Reporter.log("Scenario : "+scenario,true);
 		helperObject=new HelperCode();
+		if(orderNo!=0)
 		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+".html";
+		else
+			reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+".html";
 		Reporter.log("Report Path String "+reportPathString,true);
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
@@ -79,6 +84,19 @@ public class ExtendReporter {
 		screenshotPath=screenshotPath.replace("/", "//");
 		System.out.println(screenshotPath);
 		 test.log(Status.FAIL,""+test.addScreenCaptureFromPath(screenshotPath));
+		 return screenshotPath;
+	}
+	
+	public String addScreenshotMethodInfo(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {
+		//testCreation("Login Error");
+		String screenshotPath=captureScreen(driver,folderPathString,scenario,orderNo);
+		ConfigReader reader=new ConfigReader();
+		String path=reader.configReader("Result");
+		
+		screenshotPath=screenshotPath.replace("../WorkingE2",path);
+		screenshotPath=screenshotPath.replace("/", "//");
+		System.out.println(screenshotPath);
+		 test.log(Status.INFO,""+test.addScreenCaptureFromPath(screenshotPath));
 		 return screenshotPath;
 	}
 	
@@ -175,12 +193,12 @@ public class ExtendReporter {
 	
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
 		Reporter.log("Abnormal Error Handly",true);
-		FolderStructure folderObject=new FolderStructure();
-		String [] folderArray=folderObject.reportFolderCreator();
-		ExtendReporter report=new  ExtendReporter(folderArray[0],"Abnormal Termination",1); 
+		HelperCode helperCode=new HelperCode();
+		int timestamp=Integer.valueOf(helperCode.timeStampGenerator());
+		ExtendReporter report=new  ExtendReporter(FunctionKeyword.folderPath[0],"Abnormal Termination",timestamp); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
-		String screenshotPath=report.addScreenshotMethod(driver,folderArray[2],"Abnormal Termination",1);
+		String screenshotPath=report.addScreenshotMethod(driver,FunctionKeyword.folderPath[2],"Abnormal Termination",1);
 		report.logFlush();
 		driver.close();
 		Reporter.log("Driver close",true);
@@ -202,5 +220,21 @@ public class ExtendReporter {
 		
 	}
 	
-
+	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr) throws IOException {
+		extend.testCreation("LoginReport_"+loginModelObject.getReference_no());
+		int orderNo=Integer.valueOf(loginModelObject.getReference_no());
+		extend.addScreenshotMethodInfo(driver, FunctionKeyword.folderPath[2],"LoginError",orderNo);
+		extend.errroMsg("User Id : "+loginModelObject.getUser_Id());
+		extend.errroMsg("Password : "+loginModelObject.getPassword());
+		extend.errroMsg("Yob : "+loginModelObject.getYob());
+		
+		
+		if(!loginErrorStr.equalsIgnoreCase("No Error")) {
+			extend.errroMsg(loginErrorStr);
+			extend.tearDown("Fail");
+		}else {
+			extend.errroMsg("Login Successfully");
+			extend.tearDown("Pass");
+		}
+	}
 }

@@ -1,11 +1,16 @@
 package com.shreeya.util;
 
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -31,7 +36,7 @@ public class SeleniumCoder {
 	 WebDriver driver=null;
 	
 	ExtendReporter report=new ExtendReporter();
-	int maximumDelay=50;
+	int maximumDelay=100;
 	private long explicityWaitCount=20;
 	public SeleniumCoder() {
 		
@@ -105,11 +110,13 @@ public class SeleniumCoder {
 			element.click();
 		}catch(TimeoutException e1) {
 			Reporter.log("TimeoutException for this  "+elementName,true);
-			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
-			wait.until(ExpectedConditions.visibilityOf(element)); 
-			wait.until(ExpectedConditions.elementToBeClickable(element));
-			Reporter.log("After explicityWait : "+elementName, true);
-			element.click();
+			ExtendReporter reporter=new ExtendReporter();
+			try {
+				reporter.abnormalErrorHandling(driver);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -124,6 +131,7 @@ public class SeleniumCoder {
 	public void clearAndSendKey(WebElement element,String msg,String elementName) {
 		try {
 			//new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(element));
+			
 		element.clear();
 		element.sendKeys(msg);
 		System.out.println("elementName : "+elementName+" msg : "+msg);
@@ -201,6 +209,10 @@ public class SeleniumCoder {
 			displayFlag=true;
 		}catch(NoSuchElementException e) {
 			System.out.println(e);
+		}catch(TimeoutException e) {
+			System.out.println(e);
+		}catch(ElementNotVisibleException e) {
+			System.out.println(e);
 		}
 		return displayFlag;
 			
@@ -268,7 +280,15 @@ public class SeleniumCoder {
 		}catch(TimeoutException e) {
 			System.out.println(e);
 			ExtendReporter report=new ExtendReporter();
-			System.out.println("Timeout Exception ");
+			Reporter.log("Timeout Exception element \n"+element, true);
+			try {
+				report.abnormalErrorHandling(driver);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}catch(NoSuchElementException e1) {
+				Reporter.log("NoSuchElementException", true);
+			}
 		}
 			   
 			   return element;

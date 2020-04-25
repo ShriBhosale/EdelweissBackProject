@@ -23,10 +23,7 @@ public class FolderStructure {
 		String outputFile="FolderStructure not able give outputFile";
 		if(orderNo==0) {
 			timeStamp = helperObject.timeStampGenerator();
-			//copyFile(configReader.configReader("TestData")+".xlsx", "../WorkingE/Report" + timeStamp+"/OutputFile.xlsx");
-			//outputFile="../WorkingE/Report" + timeStamp+"/OutputFile.xlsx";
-	
-		//String reportFolderPath = "../WorkingE/Report" + timeStamp;
+			
 			String reportFolderPath=reportPathProvider()+timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
 		folderArray[0]=reportFolderPath;
@@ -59,10 +56,10 @@ public class FolderStructure {
 	public String copyFile(String targetName) throws IOException {
 		
 		ConfigReader configReader=new ConfigReader();
-		File source = new File(configReader.configReader("TestData")+".xlsx");
+		File source = new File(configReader.configReader("TestData")+"\\ScenarioData.xlsx");
         File dest = new File(targetName+"/OutputFile.xlsx");
 
-        File executeSource = new File(configReader.configReader("LoginData")+".txt");
+        File executeSource = new File(configReader.configReader("TestData")+"\\Execution.txt");
         File executeDest = new File(targetName+"/Executable.txt");
         
         FileUtils.copyFile(source, dest);
