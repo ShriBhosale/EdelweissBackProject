@@ -15,6 +15,7 @@ import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.orderdetailpages.ModOrderPage;
 import com.shreeya.orderdetailpages.NewOrderPage;
 import com.shreeya.orderdetailpages.PartialOrderPage;
+import com.shreeya.util.BrowserLunch;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
@@ -40,6 +41,7 @@ public class TestLaunch {
 	private boolean partialOrderReport;
 	private CSVWriter writer;
 	ArrayList<LoginModel> loginModelList;
+	WebDriver driver;
 
 	
 	public  TestLaunch() throws IOException {
@@ -48,6 +50,7 @@ public class TestLaunch {
 		csvTestDataModelIterator = coder.testDataProvider();
 		loginModelList=coder.LoginFileReader();
 		loginIterator=loginModelList.iterator();
+		
 		login = new LoginPage();
 		newOrder=new NewOrderPage();
 		 modOrder = new ModOrderPage();

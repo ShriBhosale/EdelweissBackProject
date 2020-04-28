@@ -40,6 +40,11 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement partialQtyLabel;
 	private List<WebElement> orderInfoList;
 	private List<WebElement> listForNestId;
+	
+	public OrderDetail(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
 
 	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet) throws InterruptedException {
 		Reporter.log("*<==== orderDetailProvider Method Start ====>*",true);

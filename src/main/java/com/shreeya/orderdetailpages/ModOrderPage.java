@@ -31,6 +31,13 @@ public class ModOrderPage extends SeleniumCoder {
 	OrderDetail detail;
 	private WebElement reinvestLink;
 	private boolean rejectFlag=false;
+	
+	WebDriver driver;
+	
+	public ModOrderPage(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
 
 	public HashMap<WebDriver,String> modExecution(TestDataModel model, WebDriver driver,int orderNo,String newOrderStatus) throws InterruptedException, IOException {
 		Reporter.log("<===@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@===>",true);
@@ -39,7 +46,7 @@ public class ModOrderPage extends SeleniumCoder {
 		HelperCode helperObject=new HelperCode();
 		ConfigReader configReader=new ConfigReader();
 		String amoFlag=configReader.configReader("amoFlag");
-		detail=new OrderDetail();
+		detail=new OrderDetail(driver);
 		Reporter.log("New Order Status ====> "+newOrderStatus,true);
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
 		//Thread.sleep(7000);

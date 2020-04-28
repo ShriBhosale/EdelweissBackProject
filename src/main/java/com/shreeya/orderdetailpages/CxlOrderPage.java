@@ -21,8 +21,12 @@ public class CxlOrderPage extends SeleniumCoder{
 	WebElement cxlLink;
 	private WebElement confirmButton;
 	OrderDetail detail;
+	WebDriver driver;
 	 
-	
+	public CxlOrderPage(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
 	
 	public HashMap<WebDriver, String> cxlExecution(WebDriver driver,int orderNo,String newOrderStatus,TestDataModel model) throws InterruptedException, IOException {
 		Reporter.log("<===@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@====>");
@@ -32,7 +36,7 @@ public class CxlOrderPage extends SeleniumCoder{
 		Reporter.log("New order status "+newOrderStatus,true);
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
 			
-		detail=new OrderDetail();
+		detail=new OrderDetail(driver);
 		/*Thread.sleep(7000);*/
 		cxlLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a");
 		clickElement(cxlLink,"CXL link");

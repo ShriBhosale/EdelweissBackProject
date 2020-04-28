@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -34,10 +34,136 @@
           </img> <!-- collapse-all-icon -->
         </a> <!-- collapse-all-link -->
       </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" class="navigator-link" panel-name="suite-TmpSuite">
+              <span class="suite-name border-failed">TmpSuite</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="test-xml-TmpSuite">
+                    <span>[unset file name]</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="testlist-TmpSuite">
+                    <span class="test-stats">2 tests</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="group-TmpSuite">
+                    <span>0 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="times-TmpSuite">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="reporter-TmpSuite">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-TmpSuite">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="chronological-TmpSuite">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">1 method, 1 failed,   </span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-TmpSuite" class="hide-methods failed suite-TmpSuite"> (hide)</a> <!-- hide-methods failed suite-TmpSuite -->
+                      <a href="#" panel-name="suite-TmpSuite" class="show-methods failed suite-TmpSuite"> (show)</a> <!-- show-methods failed suite-TmpSuite -->
+                    </span>
+                    <div class="method-list-content failed suite-TmpSuite">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-TmpSuite -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
     </div> <!-- navigator-root -->
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-TmpSuite" class="panel TmpSuite">
+          <div class="suite-TmpSuite-class-failed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="failed.png"/>
+              <span class="class-name">com.shreeya.FunctionKeyword</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)">
+                  </a> <!-- executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login) -->
+                  <span class="method-name">executionWithKeyword</span>
+                  <span class="parameters">(1, sanjay15, abc123, 1985, 6, 13, login)</span>
+                  <div class="stack-trace">org.openqa.selenium.WebDriverException: chrome not reachable
+  (Session info: chrome=81.0.4044.122)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;DESKTOP-0PTHPNK&apos;, ip: &apos;192.168.0.104&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_191&apos;
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.122, chrome: {chromedriverVersion: 81.0.4044.69 (6813546031a4b..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:56255}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true, webdriver.remote.sessionid: affbf9e0afb75fd13656eb0c23c...}
+Session ID: affbf9e0afb75fd13656eb0c23c5a0da
+*** Element info: {Using=xpath, value=//a[text()=&apos;Not now&apos;]}
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:323)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:428)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:315)
+	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:272)
+	at com.shreeya.util.SeleniumCoder$4.apply(SeleniumCoder.java:1)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:249)
+	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:269)
+	at com.shreeya.orderdetailpages.LoginPage.loginCodeExecution(LoginPage.java:337)
+	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:69)
+	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:141)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+... Removed 22 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-TmpSuite-class-failed -->
         </div> <!-- panel TmpSuite -->
         <div panel-name="test-xml-TmpSuite" class="panel">
           <div class="main-panel-header rounded-window-top">
@@ -53,7 +179,7 @@
     &lt;parameter name=&quot;Reference&quot; value=&quot;1&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;fundtransfer&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;login&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
@@ -65,7 +191,7 @@
     &lt;parameter name=&quot;Reference&quot; value=&quot;2&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;orderdetail&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;login&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
@@ -111,12 +237,16 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(0);
+data.addRows(1);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'executionWithKeyword')
+data.setCell(0, 2, 'com.shreeya.FunctionKeyword')
+data.setCell(0, 3, 88593);
 window.suiteTableData['TmpSuite']= { tableData: data, tableDiv: 'times-div-TmpSuite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 0 ms</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-TmpSuite">
               </div> <!-- times-div-TmpSuite -->
             </div> <!-- times-div -->
@@ -127,6 +257,45 @@ return data;
             <span class="header-content">Reporter output for TmpSuite</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
+                <span class="reporter-method-output">Before Iterator 1</span>
+                <span class="reporter-method-output">After Iterator</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=login]</span>
+                <span class="reporter-method-output">KeyWord before process  ====> login</span>
+                <span class="reporter-method-output">login</span>
+                <span class="reporter-method-output">logout</span>
+                <span class="reporter-method-output">Step ===> login</span>
+                <span class="reporter-method-output">keyword =====> login</span>
+                <span class="reporter-method-output">Login functionality</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : LoginRegression</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1588010200864/LoginRegression.html</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=1, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">No thans popup button Click </span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=1, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">userId_Idvalue ===> userID</span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">EQ RadioButton Click </span>
+                <span class="reporter-method-output">Proceed Button Click </span>
+                <span class="reporter-method-output">Segement Poppup</span>
+                <span class="reporter-method-output">After Userid and than processed true</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=1, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">Proceed Button Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">ContinueButton Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Checking login error </span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="ignored-methods-TmpSuite" class="panel">
@@ -143,46 +312,62 @@ return data;
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
               <div class="chronological-class-name">com.shreeya.FunctionKeyword</div> <!-- chronological-class-name -->
+              <div class="configuration-suite before">
+                <span class="method-name">beforeSuite</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-suite before -->
               <div class="configuration-test before">
                 <span class="method-name">executionBefore</span>
-                <span class="method-start">0 ms</span>
+                <span class="method-start">15623 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-test before">
                 <span class="method-name">executionBefore</span>
-                <span class="method-start">0 ms</span>
+                <span class="method-start">15623 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">455 ms</span>
+                <span class="method-start">30429 ms</span>
               </div> <!-- configuration-method before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">455 ms</span>
+                <span class="method-start">30429 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, orderdetail)</span>
-                <span class="method-start">535 ms</span>
+                <span class="method-name">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, login)</span>
+                <span class="method-start">30724 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
-                <span class="method-start">535 ms</span>
+                <span class="method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)</span>
+                <span class="method-start">30724 ms</span>
               </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">testAfter</span>
+                <span class="method-start">110175 ms</span>
+              </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">endExecution</span>
-                <span class="method-start">142178 ms</span>
+                <span class="method-start">110185 ms</span>
               </div> <!-- configuration-test after -->
+              <div class="configuration-method after">
+                <span class="method-name">testAfter</span>
+                <span class="method-start">119324 ms</span>
+              </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">endExecution</span>
-                <span class="method-start">229022 ms</span>
+                <span class="method-start">119327 ms</span>
               </div> <!-- configuration-test after -->
+              <div class="configuration-suite after">
+                <span class="method-name">afterSuite</span>
+                <span class="method-start">119535 ms</span>
+              </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
       </div> <!-- main-panel-root -->

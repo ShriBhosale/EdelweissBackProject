@@ -5,17 +5,19 @@
     <parameter name="StartNo" value="6"/>
     <parameter name="EndNo" value="13"/>
     <parameter name="Reference" value="1"/>
-    <parameter name="UserId" value="60000019"/>
+    <parameter name="UserId" value="sanjay15"/>
     <parameter name="Pwd" value="abc123"/>
-    <parameter name="Module" value="orderdetail"/>
-    <parameter name="Yob" value="2000"/>
+    <parameter name="Module" value="login"/>
+    <parameter name="Yob" value="1985"/>
     <classes>
       <class name="com.shreeya.FunctionKeyword">
         <methods>
+          <include name="beforeSuite"/>
           <include name="executionBefore"/>
           <include name="beforeTest"/>
           <include name="endExecution"/>
-          <include name="executionWithKeyword"/>
+          <include name="afterSuite"/>
+          <include name="executionWithKeyword" invocation-numbers="0"/>
           <include name="testAfter"/>
         </methods>
       </class> <!-- com.shreeya.FunctionKeyword -->

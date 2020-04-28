@@ -2,6 +2,7 @@ package com.shreeya.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -83,10 +84,11 @@ public class ErrorHtmlReport {
 
 		}
 	 
-	 public static void main(String[] args) {
+	 public static void main(String[] args) throws MalformedURLException {
 		ErrorHtmlReport error=new ErrorHtmlReport();
-		LoginPage login=new LoginPage();
-		WebDriver driver=login.browserLaunch("Abnormal termination");
+		BrowserLunch browserLunch=new BrowserLunch();
+		//LoginPage login=new LoginPage(driver);
+		WebDriver driver=browserLunch.browserLaunch("Abnormal termination");
 		try {
 			error.createErrorReport("Abnormal termination....", driver);
 		} catch (IOException e) {

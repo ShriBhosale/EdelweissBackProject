@@ -13,8 +13,9 @@ import com.shreeya.model.TestDataModel;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.HelperCode;
+import com.shreeya.util.SeleniumCoder;
 
-public class OrderAction {
+public class OrderAction extends SeleniumCoder{
 
 	 WebDriver driver;
 	 Iterator<TestDataModel> csvTestDataModelIterator;
@@ -39,17 +40,19 @@ public class OrderAction {
 	private CSVWriter writer;
 	private HashMap<WebDriver,String> newMapObject,mapObject;
 	
-	public OrderAction() throws IOException {
-		newOrder=new NewOrderPage();
-		modOrder=new ModOrderPage();
-		cxlOrder=new CxlOrderPage();
+	public OrderAction(WebDriver driver) throws IOException {
+		super(driver);
+		this.driver=driver;
+		newOrder=new NewOrderPage(driver);
+		modOrder=new ModOrderPage(driver);
+		cxlOrder=new CxlOrderPage(driver);
 		CsvReaderCode csvReaderObj=new CsvReaderCode();
 		csvTestDataModelIterator=csvReaderObj.testDataProvider();
-		partialOrderOb=new PartialOrderPage();
+		partialOrderOb=new PartialOrderPage(driver);
 		newMapObject=new HashMap<WebDriver,String>();
 		mapObject=new HashMap<WebDriver,String>();
 		helperObject=new HelperCode();
-		loginPageObj=new LoginPage();
+		loginPageObj=new LoginPage(driver);
 	}
 	
 	public WebDriver orderActionStart(LoginModel loginModel) throws InterruptedException, IOException {

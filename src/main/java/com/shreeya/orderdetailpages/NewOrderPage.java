@@ -34,7 +34,10 @@ public class NewOrderPage extends SeleniumCoder {
 	private WebElement productTypeRadioButton;
 	private WebElement bseLink;
 	
-	
+	public NewOrderPage(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
 
 	public HashMap newOrderExecution(TestDataModel model,WebDriver driver,int orderNo) throws InterruptedException, IOException {
 		Reporter.log("<====@@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@===>",true);	
@@ -43,8 +46,8 @@ public class NewOrderPage extends SeleniumCoder {
 		String amoFlag=configReader.configReader("amoFlag");
 		HelperCode helperObject=new HelperCode();
 		CsvReaderCode csvReader=new CsvReaderCode();
-		OrderDetail orderDetail=new OrderDetail();
-		detail=new OrderDetail();
+		OrderDetail orderDetail=new OrderDetail(driver);
+		detail=new OrderDetail(driver);
 		//Thread.sleep(7000);
 		Reporter.log("New Order execution Started..........",true);
 		if(orderNo!=1) {

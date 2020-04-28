@@ -9,13 +9,14 @@ import org.testng.Reporter;
 import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.util.ApacheCode;
 import com.shreeya.util.ApacheCoder;
+import com.shreeya.util.BrowserLunch;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 
 public class AbsoluteReportPath {
 
 	public static void main(String[] args) throws IOException, InvalidFormatException {
-		
+		BrowserLunch browserLunch=new BrowserLunch();
 		System.out.println("Execution Started.............");
 		FolderStructure folder=new FolderStructure();
 		String [] folderPathArray=folder.reportFolderCreator();
@@ -23,7 +24,7 @@ public class AbsoluteReportPath {
 		ExtendReporter reportObj=new ExtendReporter(folderPathArray[0],"abc",0);
 
 				
-		WebDriver driver=loginPageObj.browserLaunch("Testing");
+		WebDriver driver=browserLunch.browserLaunch("Testing");
 		reportObj.testCreation("Screenshot");
 		reportObj.errroMsg("hello shreeya");
 		String reportPath=reportObj.addScreenshotMethod(driver,folderPathArray[2],"abc",0);

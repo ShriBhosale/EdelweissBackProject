@@ -16,10 +16,15 @@ public class PartialOrderPage extends SeleniumCoder {
 	
 	WebDriver driver;
 	
+	public PartialOrderPage(WebDriver driver){
+		super(driver);
+		this.driver=driver;
+	}
+	
 	public void partialOrderExecution(TestDataModel model,int orderNo,LoginModel loginModel) throws InterruptedException, IOException {
 		Reporter.log("Partial Order Execution Method",true);
-		LoginPage loginObject=new LoginPage();
-		NewOrderPage newObect=new NewOrderPage();
+		LoginPage loginObject=new LoginPage(driver);
+		NewOrderPage newObect=new NewOrderPage(driver);
 		driver=loginObject.loginExecution("Partial Order",loginModel);
 		newObect.newOrderExecution(model, driver, orderNo);
 		loginObject.logout(driver);

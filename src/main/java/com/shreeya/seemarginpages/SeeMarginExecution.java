@@ -14,13 +14,16 @@ public class SeeMarginExecution extends SeleniumCoder {
 	WebDriver driver;
 	private WebElement seeMarginTab;
 	
+	public SeeMarginExecution(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
+	
 	public void seeMarginExecute(LoginModel loginModel) throws InterruptedException, IOException {
-		LoginPage loginPage=new LoginPage();
 		
-		 // driver=loginPage.loginExecution("normal", loginModel);
 		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']");
 		  clickElement(seeMarginTab, "See Margin Tab");
 		 
-		Reporter.log("See Margin Execution driver =====> "+loginPage.getDriver(), true);
+		
 	}
 }

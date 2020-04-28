@@ -1,13 +1,13 @@
 package com.shreeya.util;
 
-import static org.testng.Assert.assertEquals;
-
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.openqa.grid.web.Hub;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -22,6 +22,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -29,6 +31,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import com.google.common.base.Function;
+import com.shreeya.FunctionKeyword;
 
 public class SeleniumCoder {
 
@@ -38,31 +41,12 @@ public class SeleniumCoder {
 	ExtendReporter report=new ExtendReporter();
 	int maximumDelay=100;
 	private long explicityWaitCount=20;
-	public SeleniumCoder() {
+	public SeleniumCoder(WebDriver driver) {
 		
+		this.driver=driver;
 	}
 	
-	public WebDriver browserLaunch(String scenario) {
-		
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--incognito");
-		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-		System.setProperty("webdriver.chrome.driver","E:\\EdelweissProject\\chromedriver.exe");
-		if(!scenario.equalsIgnoreCase("Partial Order")) {
-			
-		 driver=new ChromeDriver(capabilities);
-		}else {
-			driver=new ChromeDriver(capabilities);
-		}
-		driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
-		//driver.get("https://www.facebook.com/");
-		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
-		
-		Reporter.log("Browser Launch", true);
-		return driver;
-	}
+	
 	
 	public void sendKey(WebElement element,String msg,String elementName) throws InterruptedException {
 		/* Thread.sleep(2000); */
@@ -205,6 +189,25 @@ public class SeleniumCoder {
 		try {
 			if(attributeForXpath.equalsIgnoreCase("xpath"))
 				element=fluentWaitCodeXpath(driver,xpathString,10);
+		if(element.isDisplayed())
+			displayFlag=true;
+		}catch(NoSuchElementException e) {
+			System.out.println(e);
+		}catch(TimeoutException e) {
+			System.out.println(e);
+		}catch(ElementNotVisibleException e) {
+			System.out.println(e);
+		}
+		return displayFlag;
+			
+			
+	}
+	
+	public boolean elementPresentOrNot(WebDriver driver,WebElement element) {
+		boolean displayFlag=false;
+		
+		try {
+			
 		if(element.isDisplayed())
 			displayFlag=true;
 		}catch(NoSuchElementException e) {

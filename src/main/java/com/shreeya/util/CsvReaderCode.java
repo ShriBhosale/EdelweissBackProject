@@ -22,7 +22,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
+import org.testng.Reporter;
 
 public class CsvReaderCode {
 
@@ -129,8 +132,9 @@ public class CsvReaderCode {
 	
 	}
 
-	public Iterator<MasterTestModel> masterTestDataProvider() {
+	public ListIterator<String> masterTestDataProvider(String module) {
 		ConfigReader configReader=new ConfigReader();
+		
 		String testDataPath=configReader.configReader("TestData")+"\\MasterTest";
 		CSVReader reader = null;
 		System.out.println("Test Data ======> "+testDataPath);
@@ -144,9 +148,17 @@ public class CsvReaderCode {
 		CsvToBean<MasterTestModel> csvToBean = new CsvToBeanBuilder(reader).withType(MasterTestModel.class).build();
 
 		Iterator<MasterTestModel> csvMasterTestIterator = csvToBean.iterator();
-		
-		
-		return csvMasterTestIterator;
+		List<String> steplist=new ArrayList<String>();
+		while(csvMasterTestIterator.hasNext()) {
+			MasterTestModel masterTestModel=csvMasterTestIterator.next();
+			if(masterTestModel.getKeyword().equalsIgnoreCase(module)) {
+				Reporter.log(masterTestModel.getSteps(), true);	
+				steplist.add(masterTestModel.getSteps());
+			}
+			
+			
+		}
+		return steplist.listIterator();
 	}
 	
 	public Iterator<LoginTestModel> loginTestDataProvider() {
@@ -167,5 +179,31 @@ public class CsvReaderCode {
 		
 		
 		return csvLoginTestIterator;
+	}
+	
+	public LoginTestModel loginTestDataProvider(String referenceNo) {
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("TestData")+"\\Login";
+		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<LoginTestModel> csvToBean = new CsvToBeanBuilder(reader).withType(LoginTestModel.class).build();
+
+		Iterator<LoginTestModel> csvLoginTestIterator = csvToBean.iterator();
+		
+			
+		while (csvLoginTestIterator.hasNext()) {
+			LoginTestModel login = csvLoginTestIterator.next();
+			if(login.getReference_no().equalsIgnoreCase(referenceNo))return login;
+		}
+		
+		
+		return null;
 	}
 }

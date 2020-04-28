@@ -155,7 +155,7 @@ public class HelperCode {
 		 //excelWriter=new ApacheCode(folderPathArray[0]);
 		 FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0]);
 		}
-		OrderDetail orderDetailObj = new OrderDetail();
+		OrderDetail orderDetailObj = new OrderDetail(driver);
 		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo());
 		
 		Reporter.log("OutSide orderDetailProvider method......",true);

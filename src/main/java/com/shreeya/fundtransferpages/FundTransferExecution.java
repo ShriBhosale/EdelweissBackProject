@@ -14,9 +14,14 @@ public class FundTransferExecution extends SeleniumCoder{
 	WebDriver driver;
 	private WebElement fundTransferTab;
 	
+	public FundTransferExecution(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
+	
 	public void fundTransferExecute(LoginModel loginModel) throws InterruptedException, IOException {
-		LoginPage loginPage=new LoginPage();
-		driver=loginPage.loginExecution("normal", loginModel);
+		
+		
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']");
 		clickElement(fundTransferTab, "Fund Transfer Tab");
 		

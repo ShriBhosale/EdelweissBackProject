@@ -2,6 +2,7 @@ package com.shreeya.experiment;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -18,6 +19,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.util.BrowserLunch;
 
 public class Test1 {
 
@@ -25,11 +27,12 @@ public class Test1 {
 	public ExtentHtmlReporter htmlextent = null;
 	public ExtentReports report = null;
 	public ExtentTest log = null;
+	BrowserLunch browserLunch;
 
-	public void beforetest() {
+	public void beforetest() throws MalformedURLException {
 		LoginPage login = new LoginPage();
 
-		driver = login.browserLaunch("abc");
+		driver = browserLunch.browserLaunch("abc");
 		htmlextent = new ExtentHtmlReporter("E:\\EdelweissProject\\WorkingE\\Report_FailedReport\\extentdemo.html");
 		report = new ExtentReports();
 	}
@@ -66,7 +69,7 @@ public class Test1 {
 			
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MalformedURLException {
 		Test1 t1=new Test1();
 		t1.beforetest();
 		t1.beforemethod();
