@@ -39,15 +39,18 @@ public class OrderAction extends SeleniumCoder{
 	int orderNo=0;
 	private CSVWriter writer;
 	private HashMap<WebDriver,String> newMapObject,mapObject;
+	String testScenario;
+	TestDataModel testDataModel;
 	
-	public OrderAction(WebDriver driver) throws IOException {
+	public OrderAction(WebDriver driver,String loginReferNo) throws IOException {
 		super(driver);
 		this.driver=driver;
+		this.testScenario = loginReferNo;
 		newOrder=new NewOrderPage(driver);
 		modOrder=new ModOrderPage(driver);
 		cxlOrder=new CxlOrderPage(driver);
 		CsvReaderCode csvReaderObj=new CsvReaderCode();
-		csvTestDataModelIterator=csvReaderObj.testDataProvider();
+		testDataModel=csvReaderObj.testDataProvider(testScenario);
 		partialOrderOb=new PartialOrderPage(driver);
 		newMapObject=new HashMap<WebDriver,String>();
 		mapObject=new HashMap<WebDriver,String>();
@@ -55,11 +58,11 @@ public class OrderAction extends SeleniumCoder{
 		loginPageObj=new LoginPage(driver);
 	}
 	
-	public WebDriver orderActionStart(LoginModel loginModel) throws InterruptedException, IOException {
-		WebDriver driver=loginPageObj.loginExecution("normal",loginModel);
+	public WebDriver orderActionStart(String loginReferNo) throws InterruptedException, IOException {
+	
 		//WebDriver driver=loginPageObj.driver;
 		Reporter.log("<========OrderActionStart=======>",true);
-		Reporter.log(loginModel.toString(),true);
+		Reporter.log(loginReferNo,true);
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
 			orderNo++;

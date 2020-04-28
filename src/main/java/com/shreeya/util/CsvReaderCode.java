@@ -49,7 +49,7 @@ public class CsvReaderCode {
 		return new CSVWriter(outputfile);
 	}
 
-	public Iterator<TestDataModel> testDataProvider() {
+	public TestDataModel testDataProvider(String loginReferNo) {
 		ConfigReader configReader=new ConfigReader();
 		String testDataPath=configReader.configReader("TestData")+"\\ScenarioData";
 		CSVReader reader = null;
@@ -65,8 +65,11 @@ public class CsvReaderCode {
 
 		Iterator<TestDataModel> csvTestDataModelIterator = csvToBean.iterator();
 		
-		
-		return csvTestDataModelIterator;
+		while(csvTestDataModelIterator.hasNext()) {
+			TestDataModel testDataModel=csvTestDataModelIterator.next();
+			if(testDataModel.getOrderNo().equalsIgnoreCase(loginReferNo)) return testDataModel;
+		}
+		return null;
 	}
 	
 	
