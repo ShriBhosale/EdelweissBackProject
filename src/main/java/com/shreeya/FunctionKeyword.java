@@ -141,25 +141,32 @@ public class FunctionKeyword {
 				loginPageObj.loginExecution("normal", loginModelObj);
 				break;
 
-			/*
-			 * case "orderdetail": OrderAction orderActionObj = new OrderAction(driver);
-			 * Reporter.log("Order detail functionality", true);
-			 * orderActionObj.orderActionStart(loginModelObj); break;
-			 * 
-			 * case "fundtransfer": FundTransferExecution fundTransferObj = new
-			 * FundTransferExecution(driver);
-			 * fundTransferObj.fundTransferExecute(loginModelObj);
-			 * Reporter.log("fun transfer executin", true); break; case "mypositions":
-			 * MyPositionsExecution myPositionObj = new MyPositionsExecution(driver);
-			 * myPositionObj.myPositionsExecute(loginModelObj);
-			 * Reporter.log("My Position Module", true); break; case "seemargin":
-			 * SeeMarginExecution seeMarginObj = new SeeMarginExecution(driver);
-			 * seeMarginObj.seeMarginExecute(loginModelObj);
-			 * Reporter.log("See Margin Module", true); break; case "seeholdings":
-			 * SeeHoldingsExecution seeHoldingsObj = new SeeHoldingsExecution(driver);
-			 * seeHoldingsObj.seeHoldingsExecute(loginModelObj);
-			 * Reporter.log("See Holdings Module", true); break;
-			 */
+			case "orderdetail":
+				OrderAction orderActionObj = new OrderAction(driver);
+				Reporter.log("Order detail functionality", true);
+				orderActionObj.orderActionStart(loginModelObj);
+				break;
+
+			case "fundtransfer":
+				FundTransferExecution fundTransferObj = new FundTransferExecution(driver);
+				fundTransferObj.fundTransferExecute(loginModelObj);
+				Reporter.log("fun transfer executin", true);
+				break;
+			case "mypositions":
+				MyPositionsExecution myPositionObj = new MyPositionsExecution(driver);
+				myPositionObj.myPositionsExecute(loginModelObj);
+				Reporter.log("My Position Module", true);
+				break;
+			case "seemargin":
+				SeeMarginExecution seeMarginObj = new SeeMarginExecution(driver);
+				seeMarginObj.seeMarginExecute(loginModelObj);
+				Reporter.log("See Margin Module", true);
+				break;
+			case "seeholdings":
+				SeeHoldingsExecution seeHoldingsObj = new SeeHoldingsExecution(driver);
+				seeHoldingsObj.seeHoldingsExecute(loginModelObj);
+				Reporter.log("See Holdings Module", true);
+				break;
 
 			case "logout":
 				terminateExecution(masterTestmodel.getKeyword(), driver);

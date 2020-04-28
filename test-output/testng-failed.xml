@@ -7,7 +7,7 @@
     <parameter name="Reference" value="1"/>
     <parameter name="UserId" value="sanjay15"/>
     <parameter name="Pwd" value="abc123"/>
-    <parameter name="Module" value="login"/>
+    <parameter name="Module" value="fundtransfer"/>
     <parameter name="Yob" value="1985"/>
     <classes>
       <class name="com.shreeya.FunctionKeyword">
@@ -23,4 +23,26 @@
       </class> <!-- com.shreeya.FunctionKeyword -->
     </classes>
   </test> <!-- 1(failed) -->
+  <test thread-count="2" name="2(failed)" parallel="tests">
+    <parameter name="StartNo" value="18"/>
+    <parameter name="EndNo" value="27"/>
+    <parameter name="Reference" value="2"/>
+    <parameter name="UserId" value="60003800"/>
+    <parameter name="Pwd" value="abc123"/>
+    <parameter name="Module" value="seemargin"/>
+    <parameter name="Yob" value="2000"/>
+    <classes>
+      <class name="com.shreeya.FunctionKeyword">
+        <methods>
+          <include name="beforeSuite"/>
+          <include name="executionBefore"/>
+          <include name="beforeTest"/>
+          <include name="endExecution"/>
+          <include name="afterSuite"/>
+          <include name="executionWithKeyword" invocation-numbers="0"/>
+          <include name="testAfter"/>
+        </methods>
+      </class> <!-- com.shreeya.FunctionKeyword -->
+    </classes>
+  </test> <!-- 2(failed) -->
 </suite> <!-- Failed suite [TmpSuite] -->
