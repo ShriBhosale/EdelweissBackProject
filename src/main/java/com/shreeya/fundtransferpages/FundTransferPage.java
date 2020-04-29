@@ -21,6 +21,8 @@ public class FundTransferPage extends SeleniumCoder {
 	WebElement bankAccountRedionButton;
 	WebElement internetBankingRedioButton;
 	WebElement okButton;
+	WebElement yesBankAlert;
+	WebElement upiRadioButton;
 	
 	public FundTransferPage(WebDriver driver) {
 		super(driver);
@@ -33,20 +35,26 @@ public class FundTransferPage extends SeleniumCoder {
 		internetBankingRedioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']");
 		}
 		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']");
-		
+		upiRadioButton=fluentWaitCodeXpath(driver,"//label[text()='UPI via QR code']//following::label[1]");
 		
 	}
 	
-	public void paymentModeSelect(String paymentMode) throws InterruptedException {
-		if(paymentMode.equalsIgnoreCase("eCollect")) {
-			if(eCollectRadionButton==null) {
-				clickElement(internetBankingRedioButton,eCollectRadionButton.getText()+" Radio Button");
-			}else {
-				clickElementWithOutChecking(eCollectRadionButton, "eCollect Radio Button");
-			}
+	public void paymentModeSelect(String paymentMode,String bankName) throws InterruptedException {
+		if(!(bankName.equalsIgnoreCase("HDFC BANK LTD")||bankName.equalsIgnoreCase("Yes Bank"))){
+			if(paymentMode.equalsIgnoreCase("Internet Banking")) 
+			Reporter.log("Internet Banking radion button already selected ",true);
+			else if(paymentMode.equalsIgnoreCase("eCollect"))
+				Reporter.log("eCollect Payment mode is not for "+bankName+" bank");
+			else if(paymentMode.equalsIgnoreCase("UPI via QR code"))
+				clickElement(upiViaORCodeRadioButton, "UPI via Or code radio button");
+			else if(paymentMode.equalsIgnoreCase("UPI"))
+				clickElement(upiRadioButton, "UPI radio button");
 		}
-		else if(paymentMode.equalsIgnoreCase("UPI via QR code"))
-			clickElement(upiViaORCodeRadioButton, "UPI Via or code Radio Button");
+		else if(bankName.equalsIgnoreCase("Yes Bank")) {
+			yesBankAlert=fluentWaitCodeXpath(driver, "//span[text()=' Yes Bank']//following::span[6]");
+			fetchTextFromElement(yesBankAlert, "yesBankAlert");
+		}
+			
 			
 	}
 	
@@ -63,11 +71,15 @@ public class FundTransferPage extends SeleniumCoder {
 		clickElement(submitButton, "Submit button");
 	}
 	
+	
+	
 	public void fundTransferexecute(FundTransferModel model) throws InterruptedException {
 		Reporter.log(model.toString(), true);
 		bankAccountSelect(model.getBank());
-		paymentModeSelect(model.getPaymentMode());
+		paymentModeSelect(model.getPaymentMode(),model.getBank());
+		if(model.getBank().equalsIgnoreCase("HDFC BANK LTD")) {
 		clickElement(okButton, "Ok button");
+		}
 		fillAmount(model.getAmount());
 		
 	}

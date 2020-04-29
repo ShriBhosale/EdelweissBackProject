@@ -430,16 +430,17 @@ public class SeleniumCoder {
 	
 	public void clickElementWithOutChecking(WebElement element,String elementName) throws InterruptedException {
 		try {
-		
+			if(element.isSelected()) {
+				Reporter.log(elementName+" is selected already...", true);
+			}else {
 			element.click();
 			Reporter.log(elementName+" Click ",true);
+			}
 		
 		}catch(ElementNotInteractableException e) {
 			System.out.println("Convert driver into javascript than click on element  "+elementName);
 			//convertInJavaScriptAndClick(element);
-			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
-			wait.until(ExpectedConditions.visibilityOf(element)); 
-			wait.until(ExpectedConditions.elementToBeClickable(element));
+			explicityWaitMethod(element, elementName);
 			Reporter.log("After explicityWait : "+elementName, true);
 			element.click();
 		}catch(TimeoutException e1) {
@@ -451,9 +452,28 @@ public class SeleniumCoder {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}catch(StaleElementReferenceException e) {
+			Reporter.log(e.getMessage(), true);
+			explicityWaitMethod(element, elementName);
+			Reporter.log(elementName+" is selected already...", true);
+			
+			if(element.isSelected()) {
+				Reporter.log(elementName+" is selected already...", true);
+			}else {
+			element.click();
+			Reporter.log(elementName+" Click ",true);
+			}
 		}
 		
 		
+		
+	}
+	
+	public void explicityWaitMethod(WebElement element,String elementName) {
+		WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+		wait.until(ExpectedConditions.visibilityOf(element)); 
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+		Reporter.log(elementName+" is selected already...", true);
 	}
 	
 }
