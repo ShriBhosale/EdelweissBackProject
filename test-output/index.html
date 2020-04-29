@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 2 failed tests</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -54,7 +54,7 @@
                 </li>
                 <li>
                   <a href="#" class="navigator-link " panel-name="testlist-TmpSuite">
-                    <span class="test-stats">2 tests</span>
+                    <span class="test-stats">4 tests</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">2 methods, 2 failed,   </span>
+                    <span class="method-stats">3 methods, 1 failed,   2 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title failed">Failed methods</span>
@@ -102,15 +102,29 @@
                     <div class="method-list-content failed suite-TmpSuite">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seemargin)">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seemargin)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-TmpSuite -->
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-TmpSuite" class="hide-methods passed suite-TmpSuite"> (hide)</a> <!-- hide-methods passed suite-TmpSuite -->
+                      <a href="#" panel-name="suite-TmpSuite" class="show-methods passed suite-TmpSuite"> (show)</a> <!-- show-methods passed suite-TmpSuite -->
+                    </span>
+                    <div class="method-list-content passed suite-TmpSuite">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(3, sanjay15, abc123, 1985, 6, 13, fundtransfer)">executionWithKeyword(3, sanjay15, abc123, 1985, 6, 13, fundtransfer)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-TmpSuite" title="com.shreeya.FunctionKeyword" hash-for-method="executionWithKeyword(4, 60003800, abc123, 2000, 18, 27, seemargin)">executionWithKeyword(4, 60003800, abc123, 2000, 18, 27, seemargin)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-TmpSuite -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -130,54 +144,64 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)">
-                  </a> <!-- executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer) -->
+                  <a name="executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)">
+                  </a> <!-- executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login) -->
                   <span class="method-name">executionWithKeyword</span>
-                  <span class="parameters">(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
-                  <div class="stack-trace">java.lang.NumberFormatException: For input string: &quot;1588050360384&quot;
-	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
-	at java.lang.Integer.parseInt(Integer.java:583)
-	at java.lang.Integer.valueOf(Integer.java:766)
-	at com.shreeya.util.ExtendReporter.abnormalErrorHandling(ExtendReporter.java:197)
-	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:288)
-	at com.shreeya.orderdetailpages.LoginPage.loginCodeExecution(LoginPage.java:138)
-	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:66)
-	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:141)
+                  <span class="parameters">(1, sanjay15, abc123, 1985, 6, 13, login)</span>
+                  <div class="stack-trace">org.openqa.selenium.NoSuchSessionException: invalid session id
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;DESKTOP-0PTHPNK&apos;, ip: &apos;192.168.0.104&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_191&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 81.0.4044.122, chrome: {chromedriverVersion: 81.0.4044.69 (6813546031a4b..., userDataDir: C:\Users\Shreeya\AppData\Lo...}, goog:chromeOptions: {debuggerAddress: localhost:55051}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 472859bcf63153fea333fb87e88f107a
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:609)
+	at org.openqa.selenium.remote.RemoteWebDriver.getScreenshotAs(RemoteWebDriver.java:295)
+	at com.shreeya.util.ExtendReporter.captureScreen(ExtendReporter.java:109)
+	at com.shreeya.util.ExtendReporter.addScreenshotMethod(ExtendReporter.java:82)
+	at com.shreeya.util.ExtendReporter.reporter(ExtendReporter.java:218)
+	at com.shreeya.FunctionKeyword.terminateExecution(FunctionKeyword.java:193)
+	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:165)
 	at java.util.ArrayList.forEach(ArrayList.java:1257)
 	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-... Removed 18 stack frames
-</div> <!-- stack-trace -->
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seemargin)">
-                  </a> <!-- executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seemargin) -->
-                  <span class="method-name">executionWithKeyword</span>
-                  <span class="parameters">(2, 60003800, abc123, 2000, 18, 27, seemargin)</span>
-                  <div class="stack-trace">java.lang.NumberFormatException: For input string: &quot;1588050367855&quot;
-	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
-	at java.lang.Integer.parseInt(Integer.java:583)
-	at java.lang.Integer.valueOf(Integer.java:766)
-	at com.shreeya.util.ExtendReporter.abnormalErrorHandling(ExtendReporter.java:197)
-	at com.shreeya.util.SeleniumCoder.fluentWaitCodeXpath(SeleniumCoder.java:288)
-	at com.shreeya.orderdetailpages.LoginPage.loginCodeExecution(LoginPage.java:138)
-	at com.shreeya.orderdetailpages.LoginPage.loginExecution(LoginPage.java:66)
-	at com.shreeya.FunctionKeyword.executionWithKeyword(FunctionKeyword.java:141)
-	at java.util.ArrayList.forEach(ArrayList.java:1257)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-... Removed 18 stack frames
+... Removed 22 stack frames
 </div> <!-- stack-trace -->
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
           </div> <!-- suite-TmpSuite-class-failed -->
+          <div class="suite-TmpSuite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.shreeya.FunctionKeyword</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="executionWithKeyword(3, sanjay15, abc123, 1985, 6, 13, fundtransfer)">
+                  </a> <!-- executionWithKeyword(3, sanjay15, abc123, 1985, 6, 13, fundtransfer) -->
+                  <span class="method-name">executionWithKeyword</span>
+                  <span class="parameters">(3, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="executionWithKeyword(4, 60003800, abc123, 2000, 18, 27, seemargin)">
+                  </a> <!-- executionWithKeyword(4, 60003800, abc123, 2000, 18, 27, seemargin) -->
+                  <span class="method-name">executionWithKeyword</span>
+                  <span class="parameters">(4, 60003800, abc123, 2000, 18, 27, seemargin)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-TmpSuite-class-passed -->
         </div> <!-- panel TmpSuite -->
         <div panel-name="test-xml-TmpSuite" class="panel">
           <div class="main-panel-header rounded-window-top">
@@ -193,7 +217,7 @@
     &lt;parameter name=&quot;Reference&quot; value=&quot;1&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;fundtransfer&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;login&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
@@ -205,12 +229,36 @@
     &lt;parameter name=&quot;Reference&quot; value=&quot;2&quot;/&gt;
     &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
     &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
-    &lt;parameter name=&quot;Module&quot; value=&quot;seemargin&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;seeholdings&quot;/&gt;
     &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
     &lt;classes&gt;
       &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- 2 --&gt;
+  &lt;test thread-count=&quot;2&quot; name=&quot;3&quot; parallel=&quot;tests&quot;&gt;
+    &lt;parameter name=&quot;StartNo&quot; value=&quot;6&quot;/&gt;
+    &lt;parameter name=&quot;EndNo&quot; value=&quot;13&quot;/&gt;
+    &lt;parameter name=&quot;Reference&quot; value=&quot;3&quot;/&gt;
+    &lt;parameter name=&quot;UserId&quot; value=&quot;sanjay15&quot;/&gt;
+    &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;fundtransfer&quot;/&gt;
+    &lt;parameter name=&quot;Yob&quot; value=&quot;1985&quot;/&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- 3 --&gt;
+  &lt;test thread-count=&quot;2&quot; name=&quot;4&quot; parallel=&quot;tests&quot;&gt;
+    &lt;parameter name=&quot;StartNo&quot; value=&quot;18&quot;/&gt;
+    &lt;parameter name=&quot;EndNo&quot; value=&quot;27&quot;/&gt;
+    &lt;parameter name=&quot;Reference&quot; value=&quot;4&quot;/&gt;
+    &lt;parameter name=&quot;UserId&quot; value=&quot;60003800&quot;/&gt;
+    &lt;parameter name=&quot;Pwd&quot; value=&quot;abc123&quot;/&gt;
+    &lt;parameter name=&quot;Module&quot; value=&quot;seemargin&quot;/&gt;
+    &lt;parameter name=&quot;Yob&quot; value=&quot;2000&quot;/&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.shreeya.FunctionKeyword&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- 4 --&gt;
 &lt;/suite&gt; &lt;!-- TmpSuite --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -226,6 +274,12 @@
               </li>
               <li>
                 <span class="test-name">2 (1 class)</span>
+              </li>
+              <li>
+                <span class="test-name">3 (1 class)</span>
+              </li>
+              <li>
+                <span class="test-name">4 (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -251,20 +305,24 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(2);
+data.addRows(3);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'executionWithKeyword')
 data.setCell(0, 2, 'com.shreeya.FunctionKeyword')
-data.setCell(0, 3, 201493);
+data.setCell(0, 3, 133301);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'executionWithKeyword')
 data.setCell(1, 2, 'com.shreeya.FunctionKeyword')
-data.setCell(1, 3, 194022);
+data.setCell(1, 3, 26519);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'executionWithKeyword')
+data.setCell(2, 2, 'com.shreeya.FunctionKeyword')
+data.setCell(2, 3, 26317);
 window.suiteTableData['TmpSuite']= { tableData: data, tableDiv: 'times-div-TmpSuite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 3 minutes</span>
+              <span class="suite-total-time">Total running time: 2 minutes</span>
               <div id="times-div-TmpSuite">
               </div> <!-- times-div-TmpSuite -->
             </div> <!-- times-div -->
@@ -276,16 +334,17 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="reporter-method-div">
-              <span class="reporter-method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
+              <span class="reporter-method-name">executionWithKeyword(3, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
-                <span class="reporter-method-output">Before Iterator 1</span>
+                <span class="reporter-method-output">Before Iterator 3</span>
                 <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=3, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
                 <span class="reporter-method-output">KeyWord before process  ====> fundtransfer</span>
                 <span class="reporter-method-output">login</span>
                 <span class="reporter-method-output">fundtransfer</span>
                 <span class="reporter-method-output">logout</span>
+                <span class="reporter-method-output">Check Point ===================================================================================================================@@@@>>> LoginModel [referNo=3, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
                 <span class="reporter-method-output">Step ===> login</span>
                 <span class="reporter-method-output">keyword =====> login</span>
                 <span class="reporter-method-output">Login functionality</span>
@@ -294,34 +353,63 @@ return data;
                 <span class="reporter-method-output">Login button Click </span>
                 <span class="reporter-method-output">Buy/Sell link Click </span>
                 <span class="reporter-method-output">Before userId</span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=3, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
                 <span class="reporter-method-output">After locate userId</span>
                 <span class="reporter-method-output">User id : sanjay15</span>
                 <span class="reporter-method-output">NO Handly semement popup!!</span>
                 <span class="reporter-method-output">Procceed Button  Click </span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=3, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=fundtransfer]</span>
                 <span class="reporter-method-output">Password : abc123</span>
                 <span class="reporter-method-output">Proceed Button Click </span>
                 <span class="reporter-method-output">Checking login error </span>
                 <span class="reporter-method-output">ContinueButton Click </span>
-                <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output">Timeout Exception element 
-null</span>
-                <span class="reporter-method-output">Abnormal Error Handly</span>
-                <span class="reporter-method-output">1588050360384</span>
+                <span class="reporter-method-output">Not now popup button Click </span>
+                <span class="reporter-method-output">Ok popup button Click </span>
+                <span class="reporter-method-output">Step ===> fundtransfer</span>
+                <span class="reporter-method-output">keyword =====> fundtransfer</span>
+                <span class="reporter-method-output">Fund Transfer Tab Click </span>
+                <span class="reporter-method-output">fun transfer executin</span>
+                <span class="reporter-method-output">Step ===> logout</span>
+                <span class="reporter-method-output">keyword =====> logout</span>
+                <span class="reporter-method-output">fundtransfer</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : fundtransfer</span>
+                <span class="reporter-method-output">1588139860401</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1588139799977/HtmlReports/fundtransfer_1588139860401.html</span>
+                <span class="reporter-method-output">Extend Report Test Name : fundtransfer</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1588139860775</span>
+                <span class="reporter-method-output">Extend Log Flush</span>
+                <span class="reporter-method-output">Reporter path ===> ../WorkingE2/Report1588139799977/HtmlReports/fundtransfer_1588139860401.html</span>
+                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@31e1f826</span>
+                <span class="reporter-method-output">Driver close</span>
+                <span class="reporter-method-output">Screenshot path =======> E:\EdelweissProject\WorkingE2//Report1588139799977//Screenshots//fundtransfer_1_1588139860775.png</span>
+                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
+                <span class="reporter-method-output">====<<<<< OrderNo in Sheet null Action : null >>>>>====</span>
+                <span class="reporter-method-output">FolderCreation array form FunctionKeyword class ===> [Ljava.lang.String;@5ee1102e</span>
+                <span class="reporter-method-output">****Termination Conditin****</span>
+                <span class="reporter-method-output">Order no =====>  0
+NoRowInTestData =======> 0</span>
+                <span class="reporter-method-output">Excel file closing...........</span>
+                <span class="reporter-method-output">ExcelFileClose flag : true</span>
+                <span class="reporter-method-output">Close order status popup Click </span>
+                <span class="reporter-method-output">Logout option Click </span>
+                <span class="reporter-method-output">logout link Click </span>
+                <span class="reporter-method-output">Execution Terminate.... :)</span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
             <div class="reporter-method-div">
-              <span class="reporter-method-name">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seemargin)</span>
+              <span class="reporter-method-name">executionWithKeyword(4, 60003800, abc123, 2000, 18, 27, seemargin)</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
-                <span class="reporter-method-output">Before Iterator 2</span>
+                <span class="reporter-method-output">Before Iterator 4</span>
                 <span class="reporter-method-output">After Iterator</span>
-                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=4, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
                 <span class="reporter-method-output">KeyWord before process  ====> seemargin</span>
                 <span class="reporter-method-output">login</span>
                 <span class="reporter-method-output">seemargin</span>
                 <span class="reporter-method-output">logout</span>
+                <span class="reporter-method-output">Check Point ===================================================================================================================@@@@>>> LoginModel [referNo=4, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
                 <span class="reporter-method-output">Step ===> login</span>
                 <span class="reporter-method-output">keyword =====> login</span>
                 <span class="reporter-method-output">Login functionality</span>
@@ -330,21 +418,194 @@ null</span>
                 <span class="reporter-method-output">Login button Click </span>
                 <span class="reporter-method-output">Buy/Sell link Click </span>
                 <span class="reporter-method-output">Before userId</span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=4, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
                 <span class="reporter-method-output">After locate userId</span>
                 <span class="reporter-method-output">User id : 60003800</span>
                 <span class="reporter-method-output">NO Handly semement popup!!</span>
                 <span class="reporter-method-output">Procceed Button  Click </span>
-                <span class="reporter-method-output">LoginModel data LoginModel [referNo=2, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
+                <span class="reporter-method-output">LoginModel data LoginModel [referNo=4, userId=60003800, password=abc123, yob=2000, startingRowNo=18, endRowNo=27, module=seemargin]</span>
                 <span class="reporter-method-output">Password : abc123</span>
                 <span class="reporter-method-output">Proceed Button Click </span>
                 <span class="reporter-method-output">Checking login error </span>
                 <span class="reporter-method-output">ContinueButton Click </span>
+                <span class="reporter-method-output">Not now popup button Click </span>
+                <span class="reporter-method-output">Ok popup button Click </span>
+                <span class="reporter-method-output">Step ===> seemargin</span>
+                <span class="reporter-method-output">keyword =====> seemargin</span>
+                <span class="reporter-method-output">See Margin Tab Click </span>
+                <span class="reporter-method-output">See Margin Module</span>
+                <span class="reporter-method-output">Step ===> logout</span>
+                <span class="reporter-method-output">keyword =====> logout</span>
+                <span class="reporter-method-output">seemargin</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : seemargin</span>
+                <span class="reporter-method-output">1588139900413</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1588139799977/HtmlReports/seemargin_1588139900413.html</span>
+                <span class="reporter-method-output">Extend Report Test Name : seemargin</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1588139900808</span>
+                <span class="reporter-method-output">Extend Log Flush</span>
+                <span class="reporter-method-output">Reporter path ===> ../WorkingE2/Report1588139799977/HtmlReports/seemargin_1588139900413.html</span>
+                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@56367f06</span>
+                <span class="reporter-method-output">Driver close</span>
+                <span class="reporter-method-output">Screenshot path =======> E:\EdelweissProject\WorkingE2//Report1588139799977//Screenshots//seemargin_1_1588139900808.png</span>
+                <span class="reporter-method-output">*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************</span>
+                <span class="reporter-method-output">====<<<<< OrderNo in Sheet null Action : null >>>>>====</span>
+                <span class="reporter-method-output">FolderCreation array form FunctionKeyword class ===> [Ljava.lang.String;@5ee1102e</span>
+                <span class="reporter-method-output">****Termination Conditin****</span>
+                <span class="reporter-method-output">Order no =====>  0
+NoRowInTestData =======> 0</span>
+                <span class="reporter-method-output">Excel file closing...........</span>
+                <span class="reporter-method-output">ExcelFileClose flag : true</span>
+                <span class="reporter-method-output">Close order status popup Click </span>
+                <span class="reporter-method-output">Logout option Click </span>
+                <span class="reporter-method-output">logout link Click </span>
+                <span class="reporter-method-output">Execution Terminate.... :)</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output"><==================== Function KeyWord : executionWithKeyword ================></span>
+                <span class="reporter-method-output">Before Iterator 1</span>
+                <span class="reporter-method-output">After Iterator</span>
+                <span class="reporter-method-output">Login Data ====> LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=login]</span>
+                <span class="reporter-method-output">KeyWord before process  ====> login</span>
+                <span class="reporter-method-output">login</span>
+                <span class="reporter-method-output">logout</span>
+                <span class="reporter-method-output">Check Point ===================================================================================================================@@@@>>> LoginModel [referNo=1, userId=sanjay15, password=abc123, yob=1985, startingRowNo=6, endRowNo=13, module=login]</span>
+                <span class="reporter-method-output">Step ===> login</span>
+                <span class="reporter-method-output">keyword =====> login</span>
+                <span class="reporter-method-output">Login functionality</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : LoginRegression</span>
+                <span class="reporter-method-output">1588139800421</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1588139799977/HtmlReports/LoginRegression_1588139800421.html</span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=1, testScenario=Login with valid data, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=1, testScenario=Login with valid data, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">No thans popup button Click </span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=1, testScenario=Login with valid data, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">userId_Idvalue ===> userID</span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
                 <span class="reporter-method-output">Checking login error </span>
-                <span class="reporter-method-output">Timeout Exception element 
-null</span>
-                <span class="reporter-method-output">Abnormal Error Handly</span>
-                <span class="reporter-method-output">1588050367855</span>
+                <span class="reporter-method-output">After Userid and than processed true</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=1, testScenario=Login with valid data, user_Id=sanjay15, password=abc123, yob=1985, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">Proceed Button Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">ContinueButton Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Not now popup button Click </span>
+                <span class="reporter-method-output">Ok popup button Click </span>
+                <span class="reporter-method-output">Extend Report Test Name : Login with valid data_1</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1588139821278</span>
+                <span class="reporter-method-output">Close order status popup Click </span>
+                <span class="reporter-method-output">Logout option Click </span>
+                <span class="reporter-method-output">logout link Click </span>
+                <span class="reporter-method-output">Driver object ====> ChromeDriver: chrome on WINDOWS (472859bcf63153fea333fb87e88f107a)</span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=2, testScenario=Login with valid data, user_Id=60003800, password=abc123, yob=2000, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=2, testScenario=Login with valid data, user_Id=60003800, password=abc123, yob=2000, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">No thans popup button Click </span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=2, testScenario=Login with valid data, user_Id=60003800, password=abc123, yob=2000, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">userId_Idvalue ===> userID</span>
+                <span class="reporter-method-output">Edit Button  Click </span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">After Userid and than processed true</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=2, testScenario=Login with valid data, user_Id=60003800, password=abc123, yob=2000, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">Proceed Button Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">ContinueButton Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Extend Report Test Name : Login with valid data_2</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1588139873129</span>
+                <span class="reporter-method-output">No thans popup button Click </span>
+                <span class="reporter-method-output">Close order status popup Click </span>
+                <span class="reporter-method-output">Logout option Click </span>
+                <span class="reporter-method-output">logout link Click </span>
+                <span class="reporter-method-output">Driver object ====> ChromeDriver: chrome on WINDOWS (472859bcf63153fea333fb87e88f107a)</span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=3, testScenario=Login with invalid data(Userid), user_Id=60003801, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=3, testScenario=Login with invalid data(Userid), user_Id=60003801, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">No thans popup not found</span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=3, testScenario=Login with invalid data(Userid), user_Id=60003801, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">userId_Idvalue ===> userID</span>
+                <span class="reporter-method-output">Edit Button  Click </span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">After Userid and than processed true</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=3, testScenario=Login with invalid data(Userid), user_Id=60003801, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">Proceed Button Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Login Error : 
+                                    Looks like your account is blocked for incorrect attempts.<span class="callus"><a href="" ng-click="showUbUser()"> Unblock&gt;</a><span class="num"></span></span>
+                                </span>
+                <span class="reporter-method-output">Login Error ===> Looks like your account is blocked for incorrect attempts</span>
+                <span class="reporter-method-output">Login Error fond</span>
+                <span class="reporter-method-output">Extend Report Test Name : Login with invalid data(Userid)_3</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1588139902352</span>
+                <span class="reporter-method-output">Folder path ===> ../WorkingE2/Report1588139799977</span>
+                <span class="reporter-method-output">Login Detail Frame close button Click </span>
+                <span class="reporter-method-output">Driver object ====> ChromeDriver: chrome on WINDOWS (472859bcf63153fea333fb87e88f107a)</span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=3, testScenario=Login with invalid data(Yob), user_Id=60003800, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">LoginPage : loginExecution </span>
+                <span class="reporter-method-output">LoginTestModel [reference_no=3, testScenario=Login with invalid data(Yob), user_Id=60003800, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">No thans popup not found</span>
+                <span class="reporter-method-output">Login button Click </span>
+                <span class="reporter-method-output">Buy/Sell link Click </span>
+                <span class="reporter-method-output">Before userId</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=3, testScenario=Login with invalid data(Yob), user_Id=60003800, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">After locate userId</span>
+                <span class="reporter-method-output">userId_Idvalue ===> userID</span>
+                <span class="reporter-method-output">Edit Button  Click </span>
+                <span class="reporter-method-output">Procceed Button  Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">After Userid and than processed true</span>
+                <span class="reporter-method-output">LoginModel data LoginTestModel [reference_no=3, testScenario=Login with invalid data(Yob), user_Id=60003800, password=abc123, yob=1856, expected_Result=FAIL]</span>
+                <span class="reporter-method-output">Proceed Button Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">ContinueButton Click </span>
+                <span class="reporter-method-output">Checking login error </span>
+                <span class="reporter-method-output">Login Error : The year of birth you have entered is incorrect. Please review and submit again. </span>
+                <span class="reporter-method-output">Login Error ===> The year of birth you have entered is incorrect. Please review and submit again. </span>
+                <span class="reporter-method-output">Login Error fond</span>
+                <span class="reporter-method-output">Extend Report Test Name : Login with invalid data(Yob)_3</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
+                <span class="reporter-method-output">1588139929214</span>
+                <span class="reporter-method-output">Folder path ===> ../WorkingE2/Report1588139799977</span>
+                <span class="reporter-method-output">Login Detail Frame close button Click </span>
+                <span class="reporter-method-output">Driver object ====> ChromeDriver: chrome on WINDOWS (472859bcf63153fea333fb87e88f107a)</span>
+                <span class="reporter-method-output">Driver close</span>
+                <span class="reporter-method-output">Extend Log Flush</span>
+                <span class="reporter-method-output">Reporter path ===> ../WorkingE2/Report1588139799977/HtmlReports/LoginRegression_1588139800421.html</span>
+                <span class="reporter-method-output">Report Object ==================================================================> com.aventstack.extentreports.ExtentReports@61f4ade6</span>
+                <span class="reporter-method-output">Step ===> logout</span>
+                <span class="reporter-method-output">keyword =====> logout</span>
+                <span class="reporter-method-output">login</span>
+                <span class="reporter-method-output"><====ExtendReporter Constructor===></span>
+                <span class="reporter-method-output">Scenario : login</span>
+                <span class="reporter-method-output">1588139933653</span>
+                <span class="reporter-method-output">Report Path String ../WorkingE2/Report1588139799977/HtmlReports/login_1588139933653.html</span>
+                <span class="reporter-method-output">Extend Report Test Name : login</span>
+                <span class="reporter-method-output">Capture Screenshot</span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -369,55 +630,97 @@ null</span>
               </div> <!-- configuration-suite before -->
               <div class="configuration-test before">
                 <span class="method-name">executionBefore</span>
-                <span class="method-start">12877 ms</span>
+                <span class="method-start">21 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-test before">
                 <span class="method-name">executionBefore</span>
-                <span class="method-start">12877 ms</span>
+                <span class="method-start">21 ms</span>
               </div> <!-- configuration-test before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">21676 ms</span>
+                <span class="method-start">9827 ms</span>
               </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seeholdings)</span>
+                <span class="method-start">9908 ms</span>
+              </div> <!-- test-method -->
               <div class="configuration-method before">
                 <span class="method-name">beforeTest</span>
-                <span class="method-start">21731 ms</span>
+                <span class="method-start">10216 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
-                <span class="method-start">21849 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">executionWithKeyword(2, 60003800, abc123, 2000, 18, 27, seemargin)</span>
-                <span class="method-start">21849 ms</span>
+                <span class="method-name">executionWithKeyword(1, sanjay15, abc123, 1985, 6, 13, login)</span>
+                <span class="method-start">10221 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">215923 ms</span>
+                <span class="method-start">33752 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">endExecution</span>
-                <span class="method-start">215936 ms</span>
+                <span class="method-start">33758 ms</span>
+              </div> <!-- configuration-test after -->
+              <div class="configuration-test before">
+                <span class="method-name">executionBefore</span>
+                <span class="method-start">38103 ms</span>
+              </div> <!-- configuration-test before -->
+              <div class="configuration-method before">
+                <span class="method-name">beforeTest</span>
+                <span class="method-start">47406 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">executionWithKeyword(3, sanjay15, abc123, 1985, 6, 13, fundtransfer)</span>
+                <span class="method-start">47407 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">testAfter</span>
+                <span class="method-start">73931 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-test after">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">endExecution</span>
+                <span class="method-start">73933 ms</span>
+              </div> <!-- configuration-test after -->
+              <div class="configuration-test before">
+                <span class="method-name">executionBefore</span>
+                <span class="method-start">78317 ms</span>
+              </div> <!-- configuration-test before -->
+              <div class="configuration-method before">
+                <span class="method-name">beforeTest</span>
+                <span class="method-start">87673 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">executionWithKeyword(4, 60003800, abc123, 2000, 18, 27, seemargin)</span>
+                <span class="method-start">87674 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">testAfter</span>
+                <span class="method-start">113994 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-test after">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">endExecution</span>
+                <span class="method-start">113996 ms</span>
               </div> <!-- configuration-test after -->
               <div class="configuration-method after">
                 <span class="method-name">testAfter</span>
-                <span class="method-start">223711 ms</span>
+                <span class="method-start">143524 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-test after">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">endExecution</span>
-                <span class="method-start">224310 ms</span>
+                <span class="method-start">143525 ms</span>
               </div> <!-- configuration-test after -->
               <div class="configuration-suite after">
                 <span class="method-name">afterSuite</span>
-                <span class="method-start">224971 ms</span>
+                <span class="method-start">143555 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

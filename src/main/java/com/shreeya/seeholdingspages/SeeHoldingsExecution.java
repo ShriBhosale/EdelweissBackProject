@@ -10,23 +10,20 @@ import com.shreeya.model.LoginModel;
 import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.util.SeleniumCoder;
 
-public class SeeHoldingsExecution extends SeleniumCoder{
+public class SeeHoldingsExecution extends SeleniumCoder {
 
-	 WebDriver driver;
+	WebDriver driver;
 	private WebElement seeHoldingsTab;
-	
+
 	public SeeHoldingsExecution(WebDriver driver) {
 		super(driver);
-		this.driver=driver;
+		this.driver = driver;
 	}
-	
+
 	public void seeHoldingsExecute(LoginModel loginModel) throws InterruptedException, IOException {
-	
-		  seeHoldingsTab=fluentWaitCodeXpath(driver,
-		  "//*[@id=\"rightScroll\"]/div[1]/ul/li[6]/a"); clickElement(seeHoldingsTab,
-		  "See Holdings Tab");
-		 
-		
-		
+
+		seeHoldingsTab = fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']//following::a[text()='See Holdings']");
+		clickElement(seeHoldingsTab, "See Holdings Tab");
+
 	}
 }

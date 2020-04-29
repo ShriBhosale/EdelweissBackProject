@@ -1,19 +1,5 @@
 package com.shreeya.util;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import com.shreeya.model.LoginModel;
-import com.shreeya.model.LoginTestModel;
-import com.shreeya.model.MasterTestModel;
-import com.shreeya.model.TestDataModel;
-
-import freemarker.core.ReturnInstruction.Return;
-import net.bytebuddy.description.modifier.SynchronizationState;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,9 +9,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.NoSuchElementException;
 
 import org.testng.Reporter;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.shreeya.model.FundTransferModel;
+import com.shreeya.model.LoginModel;
+import com.shreeya.model.LoginTestModel;
+import com.shreeya.model.MasterTestModel;
+import com.shreeya.model.TestDataModel;
 
 public class CsvReaderCode {
 
@@ -181,7 +177,7 @@ public class CsvReaderCode {
 		return csvLoginTestIterator;
 	}
 	
-	public LoginTestModel loginTestDataProvider(String referenceNo) {
+	public LoginTestModel loginTestDataProvider( String referenceNo ) {
 		ConfigReader configReader=new ConfigReader();
 		String testDataPath=configReader.configReader("TestData")+"\\Login";
 		CSVReader reader = null;
@@ -198,12 +194,34 @@ public class CsvReaderCode {
 		Iterator<LoginTestModel> csvLoginTestIterator = csvToBean.iterator();
 		
 			
-		while (csvLoginTestIterator.hasNext()) {
-			LoginTestModel login = csvLoginTestIterator.next();
-			if(login.getReference_no().equalsIgnoreCase(referenceNo))return login;
-		}
+		
+		  while (csvLoginTestIterator.hasNext()) { LoginTestModel login =
+		  csvLoginTestIterator.next();
+		  if(login.getReference_no().equalsIgnoreCase(referenceNo))return login; }
+		 
 		
 		
 		return null;
+	}
+	
+	public Iterator<FundTransferModel> FundTransferDataProvider() {
+		ConfigReader configReader=new ConfigReader();
+		
+		String testDataPath=configReader.configReader("TestData")+"\\FundTransfer";
+		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<FundTransferModel> csvToBean = new CsvToBeanBuilder(reader).withType(FundTransferModel.class).build();
+
+		Iterator<FundTransferModel> csvFundTransferIterator  = csvToBean.iterator();
+		List<String> steplist=new ArrayList<String>();
+		
+		return csvFundTransferIterator;
 	}
 }

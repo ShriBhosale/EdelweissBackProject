@@ -26,15 +26,18 @@ public class ExtendReporter {
 	public  ExtentTest test = null;
 	HelperCode helperObject;
 	private String reportPathString;
+	static int count=0;
 	
 	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
+		
 		Reporter.log("<====ExtendReporter Constructor===>",true);
 		Reporter.log("Scenario : "+scenario,true);
 		helperObject=new HelperCode();
+		String timestamp=helperObject.timeStampGenerator();
 		if(orderNo!=0)
-		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+".html";
+		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+timestamp+".html";
 		else
-			reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+".html";
+			reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+timestamp+".html";
 		Reporter.log("Report Path String "+reportPathString,true);
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
@@ -221,7 +224,7 @@ public class ExtendReporter {
 	}
 	
 	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr) throws IOException {
-		extend.testCreation("LoginReport_"+loginModelObject.getReference_no());
+		extend.testCreation(loginModelObject.getTestScenario()+"_"+loginModelObject.getReference_no());
 		int orderNo=Integer.valueOf(loginModelObject.getReference_no());
 		extend.addScreenshotMethodInfo(driver, FunctionKeyword.folderPath[2],"LoginError",orderNo);
 		extend.errroMsg("User Id : "+loginModelObject.getUser_Id());

@@ -10,16 +10,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.shreeya.util.BrowserLunch;
+import com.shreeya.util.BrowserLaunch;
 import com.shreeya.util.SeleniumCoder;
 
 public class TestNgTag extends SeleniumCoder{
 	WebDriver driver;
 	
 	WebElement googleSerchTextfield;
-	BrowserLunch browserLunch;
-	public TestNgTag() {
-		browserLunch=new BrowserLunch();
+	BrowserLaunch browserLunch;
+	public TestNgTag(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+		browserLunch=new BrowserLaunch();
 	}
 	@BeforeMethod
 	public void beforExecution() {

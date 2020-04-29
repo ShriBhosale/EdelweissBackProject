@@ -86,7 +86,7 @@ public class ErrorHtmlReport {
 	 
 	 public static void main(String[] args) throws MalformedURLException {
 		ErrorHtmlReport error=new ErrorHtmlReport();
-		BrowserLunch browserLunch=new BrowserLunch();
+		BrowserLaunch browserLunch=new BrowserLaunch();
 		//LoginPage login=new LoginPage(driver);
 		WebDriver driver=browserLunch.browserLaunch("Abnormal termination");
 		try {

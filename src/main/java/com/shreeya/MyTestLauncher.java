@@ -36,6 +36,7 @@ public class MyTestLauncher {
 		int count=0;
 		 while(loginIteratior.hasNext()) {
 			 LoginModel loginModel = loginIteratior.next(); 
+			 Reporter.log("MyTestLauncher "+loginModel.toString(), true);
 			 Map<String,String> testScenarioParameters = new HashMap<>();
 			 testScenarioParameters.put("Reference", loginModel.getReferNo());
 			 testScenarioParameters.put("UserId", loginModel.getUserId());

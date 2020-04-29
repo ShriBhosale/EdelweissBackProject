@@ -23,7 +23,7 @@ public class SeeMarginExecution extends SeleniumCoder {
 		
 		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']");
 		  clickElement(seeMarginTab, "See Margin Tab");
-		 
+		  //Thread.sleep(50000);
 		
 	}
 }

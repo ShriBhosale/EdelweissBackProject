@@ -24,7 +24,7 @@ public class ParalleExecution {
 	@BeforeTest
 	public void executionBefore() {
 		System.out.println("Execution started....");
-		login = new LoginPage();
+		//login = new LoginPage();
 
 	}
 
@@ -61,14 +61,7 @@ public class ParalleExecution {
 			
 			LoginModel loginModelObj= loginIteratior.next();
 			if(reference.equals(loginModelObj.getReferNo())) {
-				try {
-					driver = login.loginExecution("normal",loginModelObj);
-					login.logout(driver);
-				} catch (InterruptedException e) { // TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) { // TODO Auto-generated catch
-					System.out.println(e);
-				}
+				
 			}
 			
 		}

@@ -56,7 +56,6 @@ public class OrderAction extends SeleniumCoder{
 	}
 	
 	public WebDriver orderActionStart(LoginModel loginModel) throws InterruptedException, IOException {
-		WebDriver driver=loginPageObj.loginExecution("normal",loginModel);
 		//WebDriver driver=loginPageObj.driver;
 		Reporter.log("<========OrderActionStart=======>",true);
 		Reporter.log(loginModel.toString(),true);

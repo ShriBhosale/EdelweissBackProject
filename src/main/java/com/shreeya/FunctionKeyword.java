@@ -30,7 +30,7 @@ import com.shreeya.orderdetailpages.OrderAction;
 import com.shreeya.seeholdingspages.SeeHoldingsExecution;
 import com.shreeya.seemarginpages.SeeMarginExecution;
 import com.shreeya.util.ApacheCode;
-import com.shreeya.util.BrowserLunch;
+import com.shreeya.util.BrowserLaunch;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.CustomListener;
 import com.shreeya.util.ExtendReporter;
@@ -40,8 +40,6 @@ import com.shreeya.util.HelperCode;
 public class FunctionKeyword {
 
 	public static String keyWord = "no Keyword in FunctionKeyWord";
-
-	private static Hub hub;
 	LoginPage login;
 	WebDriver driver;
 	OrderAction orderActioObj;
@@ -54,39 +52,33 @@ public class FunctionKeyword {
 	public static String folderPath[] = null;
 	public static ApacheCode apacheCodeObj;
 
-	public static Hub getHub() {
-		return hub;
-	}
 
 	@BeforeSuite
 	public void beforeSuite() throws IOException {
-		GridHubConfiguration config = new GridHubConfiguration();
-		config.host = "192.168.0.104";
-		hub = new Hub(config);
-		hub.start();
-		System.out.println("java -jar selenium-server-standalone-3.141.59.jar -role node -host "
-				+ hub.getConfiguration().host + " -port 5554 -hub http://" + hub.getConfiguration().host + ":"
-				+ hub.getConfiguration().port + "/grid/register \n pause \n");
-		Process pro = Runtime.getRuntime()
-				.exec("cmd /c java -jar selenium-server-standalone-3.141.59.jar -role node -host "
-						+ hub.getConfiguration().host + " -port 5554 -hub http://" + hub.getConfiguration().host + ":"
-						+ hub.getConfiguration().port + "/grid/register", null,
-						new File(System.getProperty("user.dir") + "\\grid"));
-		BufferedReader br = new BufferedReader(new InputStreamReader(pro.getErrorStream()));
-		String s = "";
-		System.out.println(System.getProperty("user.dir"));
-		while ((s = br.readLine()) != null) {
-			System.out.println(s);
-			if (s.contains("The node is registered to the hub and ready to use"))
-				break;
-		}
+		/*
+		 * GridHubConfiguration config = new GridHubConfiguration(); config.host =
+		 * "192.168.0.104"; hub = new Hub(config); hub.start(); System.out.
+		 * println("java -jar selenium-server-standalone-3.141.59.jar -role node -host "
+		 * + hub.getConfiguration().host + " -port 5554 -hub http://" +
+		 * hub.getConfiguration().host + ":" + hub.getConfiguration().port +
+		 * "/grid/register \n pause \n"); Process pro = Runtime.getRuntime()
+		 * .exec("cmd /c java -jar selenium-server-standalone-3.141.59.jar -role node -host "
+		 * + hub.getConfiguration().host + " -port 5554 -hub http://" +
+		 * hub.getConfiguration().host + ":" + hub.getConfiguration().port +
+		 * "/grid/register", null, new File(System.getProperty("user.dir") + "\\grid"));
+		 * BufferedReader br = new BufferedReader(new
+		 * InputStreamReader(pro.getErrorStream())); String s = "";
+		 * System.out.println(System.getProperty("user.dir")); while ((s =
+		 * br.readLine()) != null) { System.out.println(s); if
+		 * (s.contains("The node is registered to the hub and ready to use")) break; }
+		 */
 	}
 
 	@BeforeTest
 	public void executionBefore() throws IOException {
 
 		Reporter.log("Execution Before ", true);
-		BrowserLunch browserLunch = new BrowserLunch();
+		BrowserLaunch browserLunch = new BrowserLaunch();
 		driver = browserLunch.browserLaunch("Normal");
 		login = new LoginPage(driver);
 		orderActioObj = new OrderAction(driver);
@@ -97,7 +89,7 @@ public class FunctionKeyword {
 		Reporter.log(
 				"Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
 		folderPath = folderCreationObj.reportFolderCreator();
-		apacheCodeObj = new ApacheCode(folderPath[0]);
+		//apacheCodeObj = new ApacheCode(folderPath[0]);
 
 		// apacheCodeObj.outputFileWriterHeader(folderPath[0]);
 
@@ -113,7 +105,7 @@ public class FunctionKeyword {
 	@Test
 	public void executionWithKeyword(String referenceNo, String userId, String pwd, String yob, String startNo,
 			String endNo, String module) throws InterruptedException, IOException {
-		Thread.sleep(2000);
+		
 		CsvReaderCode code = new CsvReaderCode();
 		Reporter.log("<==================== Function KeyWord : executionWithKeyword ================>", true);
 		Reporter.log("Before Iterator " + referenceNo);
@@ -127,6 +119,7 @@ public class FunctionKeyword {
 
 		ListIterator<String> csvMasterTestModelIterator = code.masterTestDataProvider(module);
 		int count = 0;
+		Reporter.log("Check Point ===================================================================================================================@@@@>>> "+loginModelObj.toString(),true);
 		while (csvMasterTestModelIterator.hasNext()) {
 			step = csvMasterTestModelIterator.next();
 			System.out.println("count : " + count++);
@@ -149,7 +142,7 @@ public class FunctionKeyword {
 
 			case "fundtransfer":
 				FundTransferExecution fundTransferObj = new FundTransferExecution(driver);
-				fundTransferObj.fundTransferExecute(loginModelObj);
+				fundTransferObj.fundTransferExecute();
 				Reporter.log("fun transfer executin", true);
 				break;
 			case "mypositions":
@@ -169,7 +162,7 @@ public class FunctionKeyword {
 				break;
 
 			case "logout":
-				terminateExecution(masterTestmodel.getKeyword(), driver);
+				terminateExecution(module, driver);
 				break;
 			/*
 			 * default: Reporter.
@@ -179,6 +172,8 @@ public class FunctionKeyword {
 			}
 
 		}
+		
+		
 
 	}
 
@@ -199,7 +194,7 @@ public class FunctionKeyword {
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}
 			login.logout(driver);
-			driver.close();
+			
 			Reporter.log("Execution Terminate.... :)", true);
 		} else {
 
@@ -214,7 +209,7 @@ public class FunctionKeyword {
 	@AfterTest
 	public void endExecution() throws IOException {
 		// apacheCodeObj.closeExcelWriting();
-
+		driver.close();
 		Reporter.log("Folder Path ====> " + folderPath[0], true);
 		apacheCodeObj.outputExcelFileClose(folderPath[0]);
 
@@ -222,15 +217,17 @@ public class FunctionKeyword {
 
 	@AfterSuite
 	public void afterSuite() throws IOException {
-		hub.stop();
-		Process pro = Runtime.getRuntime().exec("cmd.exe /k netstat -ano|findstr 5554");
-		BufferedReader br = new BufferedReader(new InputStreamReader(pro.getInputStream()));
-		String s = br.readLine();
-
-		String[] output = s.split("    ");
-
-		Runtime.getRuntime().exec("cmd.exe /k taskkill /f /pid " + output[output.length - 1]);
-
+		/*
+		 * Process pro =
+		 * Runtime.getRuntime().exec("cmd.exe /k netstat -ano|findstr 5554");
+		 * BufferedReader br = new BufferedReader(new
+		 * InputStreamReader(pro.getInputStream())); String s = br.readLine();
+		 * 
+		 * String[] output = s.split("    ");
+		 * 
+		 * Runtime.getRuntime().exec("cmd.exe /k taskkill /f /pid " +
+		 * output[output.length - 1]);
+		 */
 	}
 
 }

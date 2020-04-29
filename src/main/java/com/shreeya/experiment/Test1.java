@@ -19,7 +19,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.shreeya.orderdetailpages.LoginPage;
-import com.shreeya.util.BrowserLunch;
+import com.shreeya.util.BrowserLaunch;
 
 public class Test1 {
 
@@ -27,10 +27,10 @@ public class Test1 {
 	public ExtentHtmlReporter htmlextent = null;
 	public ExtentReports report = null;
 	public ExtentTest log = null;
-	BrowserLunch browserLunch;
+	BrowserLaunch browserLunch;
 
 	public void beforetest() throws MalformedURLException {
-		LoginPage login = new LoginPage();
+		
 
 		driver = browserLunch.browserLaunch("abc");
 		htmlextent = new ExtentHtmlReporter("E:\\EdelweissProject\\WorkingE\\Report_FailedReport\\extentdemo.html");

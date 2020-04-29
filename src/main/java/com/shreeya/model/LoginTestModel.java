@@ -7,6 +7,9 @@ public class LoginTestModel {
 	@CsvBindByName(column = "Reference_no")
 	private String reference_no;
 	
+	@CsvBindByName(column = "TestScenario")
+	private String testScenario;
+	
 	@CsvBindByName(column = "User_Id")
 	private String user_Id;
 	
@@ -58,12 +61,24 @@ public class LoginTestModel {
 	public void setExpected_Result(String expected_Result) {
 		this.expected_Result = expected_Result;
 	}
+	
+	
+
+	public String getTestScenario() {
+		return testScenario;
+	}
+
+	public void setTestScenario(String testScenario) {
+		this.testScenario = testScenario;
+	}
 
 	@Override
 	public String toString() {
-		return "LoginTestModel [reference_no=" + reference_no + ", user_Id=" + user_Id + ", password=" + password
-				+ ", yob=" + yob + ", expected_Result=" + expected_Result + "]";
+		return "LoginTestModel [reference_no=" + reference_no + ", testScenario=" + testScenario + ", user_Id="
+				+ user_Id + ", password=" + password + ", yob=" + yob + ", expected_Result=" + expected_Result + "]";
 	}
+
+	
 	
 	
 }
