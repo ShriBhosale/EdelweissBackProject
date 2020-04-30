@@ -14,17 +14,20 @@ public class FolderStructure {
 	static String[] folderArray = { "no", "no" + "/HtmlReports",
 			"no" + "/Screenshots" };
 	ConfigReader configReader=new ConfigReader();
+	HelperCode helperObject;
+	
+	public FolderStructure() {
+		helperObject = new HelperCode();
+		timeStamp = helperObject.timeStampGenerator();
+	}
 	public String[] reportFolderCreator() throws IOException {
 		Reporter.log("Folder Structure creation method ", true);
 		Reporter.log("orderNo ===> "+orderNo, true);
-		
-		HelperCode helperObject = new HelperCode();
-		
 		String outputFile="FolderStructure not able give outputFile";
 		if(orderNo==0) {
-			timeStamp = helperObject.timeStampGenerator();
 			
-			String reportFolderPath=reportPathProvider()+timeStamp;
+			
+		String reportFolderPath=reportPathProvider()+timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
 		folderArray[0]=reportFolderPath;
 		folderArray[1]=reportFolderPath + "/HtmlReports";
@@ -53,11 +56,11 @@ public class FolderStructure {
 		return pathArray;
 	}
 	
-	public String copyFile(String targetName) throws IOException {
+	public String copyFile(String targetName,String testDataPath) throws IOException {
 		
 		ConfigReader configReader=new ConfigReader();
-		File source = new File(configReader.configReader("TestData")+"\\ScenarioData.xlsx");
-        File dest = new File(targetName+"/OutputFile.xlsx");
+		File source = new File(configReader.configReader("TestData")+"\\"+testDataPath+".xlsx");
+        File dest = new File(targetName+"/"+testDataPath+".xlsx");
 
         File executeSource = new File(configReader.configReader("TestData")+"\\Execution.txt");
         File executeDest = new File(targetName+"/Executable.txt");

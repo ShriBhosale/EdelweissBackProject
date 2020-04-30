@@ -20,8 +20,12 @@ public class FundTransferExecution extends SeleniumCoder{
 	private WebElement fundTransferTab;
 	Iterator<FundTransferModel> csvFundTransferIterator;
 	FundTransferModel fundTransferModel;
-	FundTransferPage fundTranferPage;
+	FundTransferPage200 fundTranferPage;
 	ExtendReporter report;
+	String [] folderPathArray;
+	String [] reportArray;
+	WebElement seeMarginTab;
+	String errorMsg;
 	
 	public FundTransferExecution(WebDriver driver) throws IOException {
 		super(driver);
@@ -29,22 +33,44 @@ public class FundTransferExecution extends SeleniumCoder{
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvFundTransferIterator=csvReader.FundTransferDataProvider();
 		report=new ExtendReporter();
+		folderPathArray=FunctionKeyword.folderPath;
+		
 	}
 	
-	public void fundTransferExecute() throws InterruptedException {
+	public void fundTransferExecute() throws InterruptedException, IOException {
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']");
-		clickElement(fundTransferTab, "Fund Transfer Tab");
-		fundTranferPage=new FundTransferPage(driver);
+		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']");
+		fundTranferPage=new FundTransferPage200(driver);
 		
-		/*
-		 * while(csvFundTransferIterator.hasNext()){
-		 * fundTransferModel=csvFundTransferIterator.next();
-		 * fundTranferPage.fundTransferexecute(fundTransferModel);
-		 * 
-		 * }
-		 */
+		
+		
+		  while(csvFundTransferIterator.hasNext()){
+			  clickElement(fundTransferTab, "Fund Transfer Tab");
+		  fundTransferModel=csvFundTransferIterator.next();
+		  errorMsg=fundTranferPage.fundTransferexecute(fundTransferModel);
+		  fundTransferReport(fundTransferModel.getReferNo(),errorMsg);
 		 
+		  clickElement(seeMarginTab, "See Margin Tab");
+		  }
+		 
+		  outputFileClose();
 		
 		Thread.sleep(3000);
+	}
+	
+	public void fundTransferReport(String referNo,String errorMsg) throws IOException {
+		int referenceNo=Integer.valueOf(referNo);
+		if(referenceNo==1) {
+			FunctionKeyword.folderCreationObj.copyFile(folderPathArray[0],"FundTransfer");
+			FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0],"FundTransfer",4);
+		}
+		String reportPath=report.reporter(driver, "FundTransfer", folderPathArray, referNo,errorMsg);
+		String screenShotStr=report.captureScreen(driver, folderPathArray[2], "FundTransfer", referenceNo);
+		String [] reportArray= {"No","PASS",reportPath,screenShotStr};
+		FunctionKeyword.apacheCodeObj.outputFileWriter(reportArray, referenceNo,4);
+	}
+	
+	public void outputFileClose() throws IOException {
+		FunctionKeyword.apacheCodeObj.outputExcelFileClose(FunctionKeyword.folderPath[0]);
 	}
 }

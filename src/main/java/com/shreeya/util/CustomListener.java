@@ -10,7 +10,7 @@ import org.testng.Reporter;
 import com.shreeya.FunctionKeyword;
 import com.shreeya.orderdetailpages.LoginPage;
 
-public class CustomListener extends SeleniumCoder implements ITestListener {
+public class CustomListener extends SeleniumCoder{
 	WebDriver driver;
 	public CustomListener(WebDriver driver) {
 		super(driver);
@@ -18,7 +18,8 @@ public class CustomListener extends SeleniumCoder implements ITestListener {
 	}
 	String screenShotPath;
 	
-	public void onTestFailure(ITestResult result) {
+	public void onTestFailure() {
+		
 		HelperCode helperObject=new HelperCode();
 		int timeStamp=Integer.valueOf(helperObject.timeStampGenerator());
 		Reporter.log("<========================@@@@@@@@@@@@@ Test Get Fail @@@@@@@@@@@=====================>", true);
@@ -35,4 +36,27 @@ public class CustomListener extends SeleniumCoder implements ITestListener {
 		reporter.logFlush();
 		driver.close();
 	}
+	
+	
+	public void testResultChecker() {
+		
+	}
+	
+	 public void getResult(ITestResult result) throws IOException
+	 {
+		 if(result.getStatus()==ITestResult.SUCCESS)
+		 {
+			 
+		 }
+		 else if( result.getStatus()==ITestResult.SKIP)
+		 {
+			
+			 
+		 }
+		 else if( result.getStatus()==ITestResult.FAILURE)
+		 {
+			 onTestFailure();
+		 }
+		
+	 }
 }

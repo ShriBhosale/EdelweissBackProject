@@ -35,6 +35,7 @@ public class HelperCode {
 	static boolean excelFileClose=false;
 	static String outputFolderPath="Main output folder not generated in HelperCode";
 	static int executionCount=0;
+	String testDataPath;
 	public HelperCode() {
 
 	}
@@ -151,9 +152,9 @@ public class HelperCode {
 			CsvReaderCode reader=new CsvReaderCode();
 			noRowInTestData1=reader.noRowInTestData();
 			FolderStructure folderStructureObject=new FolderStructure();
-			folderStructureObject.copyFile(folderPathArray[0]);
+			folderStructureObject.copyFile(folderPathArray[0],"ScenarioData");
 		 //excelWriter=new ApacheCode(folderPathArray[0]);
-		 FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0]);
+		 FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0],"ScenarioData",15);
 		}
 		OrderDetail orderDetailObj = new OrderDetail(driver);
 		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo());
@@ -181,7 +182,7 @@ public class HelperCode {
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
 		report.logFlush();
-		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo,15);
 		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
 			Reporter.log(orderDetail,true);
@@ -193,7 +194,7 @@ public class HelperCode {
 		orderDetailArray[2]="New order reject1";
 		report.logFlush();
 		
-		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo,15);
 		//noRowInTestData=orderNo;
 		}
 		//report.tearDown(resultString);
@@ -272,6 +273,6 @@ public class HelperCode {
 		report.errorFail(model.getAction()+" skip due to new order reject...");
 		report.logFlush();
 		orderDetailArray[16]=report.getReportPathString();
-		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
+		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo,15);
 	}
 }

@@ -49,7 +49,7 @@ public class ExtendReporter {
 	}
 	
 	public ExtendReporter() {
-		// TODO Auto-generated constructor stub
+		helperObject=new HelperCode();
 	}
 
 	public void tearDown(String output) {
@@ -198,7 +198,7 @@ public class ExtendReporter {
 		Reporter.log("Abnormal Error Handly",true);
 		HelperCode helperCode=new HelperCode();
 		int timestamp=Integer.valueOf(helperCode.timeStampGenerator());
-		ExtendReporter report=new  ExtendReporter(FunctionKeyword.folderPath[0],"Abnormal Termination",timestamp); 
+		ExtendReporter report=new  ExtendReporter(FunctionKeyword.folderPath[1],"Abnormal Termination",timestamp); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
 		String screenshotPath=report.addScreenshotMethod(driver,FunctionKeyword.folderPath[2],"Abnormal Termination",1);
@@ -209,18 +209,36 @@ public class ExtendReporter {
 		System.exit(0);
 	}
 	
-	public void reporter(WebDriver driver,String moduleName,String [] folderArray) throws IOException{
+	public void reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO) throws IOException{
 		Reporter.log(moduleName,true);
-		
+		String screenshotPath;
 		ExtendReporter report=new  ExtendReporter(folderArray[1],moduleName,1); 
 		report.testCreation(moduleName);
 		report.errroMsg(moduleName+" this executed....");
-		String screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);
+		report.errroMsg("ReferNo from execution file : "+referNO);
+		if(!moduleName.equalsIgnoreCase("FundTransfer"))
+		 screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);
 		report.logFlush();
 		
 		Reporter.log("Driver close",true);
-		Reporter.log("Screenshot path =======> "+screenshotPath,true);
 		
+		
+	}
+	public String reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO,String errorMsg) throws IOException{
+		Reporter.log(moduleName,true);
+		String screenshotPath;
+		ExtendReporter report=new  ExtendReporter(folderArray[1],moduleName,1); 
+		report.testCreation(moduleName);
+		report.errroMsg(moduleName+" this executed....");
+		report.errorFail(errorMsg);
+		report.errroMsg("ReferNo from execution file : "+referNO);
+		if(!moduleName.equalsIgnoreCase("FundTransfer"))
+		 screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);
+		report.logFlush();
+		
+		Reporter.log("Driver close",true);
+		
+		return report.getReportPathString();
 	}
 	
 	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr) throws IOException {

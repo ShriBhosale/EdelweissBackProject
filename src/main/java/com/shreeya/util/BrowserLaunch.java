@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
 import org.testng.annotations.Listeners;
-@Listeners(CustomListener.class)
+
 public class BrowserLaunch {
 	WebDriver driver = null;
 

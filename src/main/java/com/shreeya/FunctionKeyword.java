@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import org.openqa.grid.internal.utils.configuration.GridHubConfiguration;
 import org.openqa.grid.web.Hub;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -46,32 +47,17 @@ public class FunctionKeyword {
 	HelperCode helperObject;
 	TestDataModel testDataObject;
 	MasterTestModel masterTestmodel;
+	
 
 	private String step;
 
 	public static String folderPath[] = null;
 	public static ApacheCode apacheCodeObj;
-
+	public static FolderStructure folderCreationObj;
 
 	@BeforeSuite
 	public void beforeSuite() throws IOException {
-		/*
-		 * GridHubConfiguration config = new GridHubConfiguration(); config.host =
-		 * "192.168.0.104"; hub = new Hub(config); hub.start(); System.out.
-		 * println("java -jar selenium-server-standalone-3.141.59.jar -role node -host "
-		 * + hub.getConfiguration().host + " -port 5554 -hub http://" +
-		 * hub.getConfiguration().host + ":" + hub.getConfiguration().port +
-		 * "/grid/register \n pause \n"); Process pro = Runtime.getRuntime()
-		 * .exec("cmd /c java -jar selenium-server-standalone-3.141.59.jar -role node -host "
-		 * + hub.getConfiguration().host + " -port 5554 -hub http://" +
-		 * hub.getConfiguration().host + ":" + hub.getConfiguration().port +
-		 * "/grid/register", null, new File(System.getProperty("user.dir") + "\\grid"));
-		 * BufferedReader br = new BufferedReader(new
-		 * InputStreamReader(pro.getErrorStream())); String s = "";
-		 * System.out.println(System.getProperty("user.dir")); while ((s =
-		 * br.readLine()) != null) { System.out.println(s); if
-		 * (s.contains("The node is registered to the hub and ready to use")) break; }
-		 */
+		Reporter.log("Before suit", true);
 	}
 
 	@BeforeTest
@@ -85,11 +71,11 @@ public class FunctionKeyword {
 		testDataObject = new TestDataModel();
 		helperObject = new HelperCode();
 
-		FolderStructure folderCreationObj = new FolderStructure();
+		 folderCreationObj = new FolderStructure();
 		Reporter.log(
 				"Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
 		folderPath = folderCreationObj.reportFolderCreator();
-		//apacheCodeObj = new ApacheCode(folderPath[0]);
+		apacheCodeObj = new ApacheCode();
 
 		// apacheCodeObj.outputFileWriterHeader(folderPath[0]);
 
@@ -162,7 +148,7 @@ public class FunctionKeyword {
 				break;
 
 			case "logout":
-				terminateExecution(module, driver);
+				terminateExecution(module, driver,referenceNo);
 				break;
 			/*
 			 * default: Reporter.
@@ -185,12 +171,12 @@ public class FunctionKeyword {
 		return keywordInLowerCase.trim();
 	}
 
-	public void terminateExecution(String module, WebDriver driver) throws InterruptedException, IOException {
+	public void terminateExecution(String module, WebDriver driver,String referNo) throws InterruptedException, IOException {
 
 		if (driver != null) {
-			if (!module.equalsIgnoreCase("orderdetail")) {
+			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer"))) {
 				ExtendReporter reporter = new ExtendReporter();
-				reporter.reporter(driver, module, folderPath);
+				reporter.reporter(driver, module, folderPath,referNo);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}
 			login.logout(driver);
@@ -202,8 +188,22 @@ public class FunctionKeyword {
 	}
 
 	@AfterMethod
-	public void testAfter() {
+	public void testAfter(ITestResult result) {
 		Reporter.log("End test case execution", true);
+		CustomListener customListener=new CustomListener(driver);
+		 if(result.getStatus()==ITestResult.SUCCESS)
+		 {
+			 
+		 }
+		 else if( result.getStatus()==ITestResult.SKIP)
+		 {
+			
+			 
+		 }
+		 else if( result.getStatus()==ITestResult.FAILURE)
+		 {
+			 customListener.onTestFailure();
+		 }
 	}
 
 	@AfterTest
@@ -211,7 +211,7 @@ public class FunctionKeyword {
 		// apacheCodeObj.closeExcelWriting();
 		driver.close();
 		Reporter.log("Folder Path ====> " + folderPath[0], true);
-		apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		//apacheCodeObj.outputExcelFileClose(folderPath[0]);
 
 	}
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite thread-count="2" name="Failed suite [TmpSuite]" parallel="tests">
-  <test thread-count="2" name="1(failed)" parallel="tests">
+  <test thread-count="2" name="6(failed)" parallel="tests">
     <parameter name="StartNo" value="6"/>
     <parameter name="EndNo" value="13"/>
-    <parameter name="Reference" value="1"/>
-    <parameter name="UserId" value="sanjay15"/>
+    <parameter name="Reference" value="6"/>
+    <parameter name="UserId" value="OM03"/>
     <parameter name="Pwd" value="abc123"/>
-    <parameter name="Module" value="login"/>
-    <parameter name="Yob" value="1985"/>
+    <parameter name="Module" value="mypositions"/>
+    <parameter name="Yob" value="2017"/>
     <classes>
       <class name="com.shreeya.FunctionKeyword">
         <methods>
@@ -22,5 +22,5 @@
         </methods>
       </class> <!-- com.shreeya.FunctionKeyword -->
     </classes>
-  </test> <!-- 1(failed) -->
+  </test> <!-- 6(failed) -->
 </suite> <!-- Failed suite [TmpSuite] -->
