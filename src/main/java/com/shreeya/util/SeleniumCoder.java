@@ -39,7 +39,7 @@ public class SeleniumCoder {
 	 WebDriver driver=null;
 	
 	ExtendReporter report=new ExtendReporter();
-	int maximumDelay=100;
+	int maximumDelay=50;
 	private long explicityWaitCount=20;
 	public SeleniumCoder(WebDriver driver) {
 		
@@ -283,15 +283,8 @@ public class SeleniumCoder {
 		}catch(TimeoutException e) {
 			System.out.println(e);
 			ExtendReporter report=new ExtendReporter();
-			Reporter.log("Timeout Exception element \n"+element, true);
-			try {
-				report.abnormalErrorHandling(driver);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}catch(NoSuchElementException e1) {
-				Reporter.log("NoSuchElementException", true);
-			}
+			Reporter.log("Timeout Exception element : "+element, true);
+			
 		}
 			   
 			   return element;

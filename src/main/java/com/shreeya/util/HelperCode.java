@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
 import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
 import com.shreeya.FunctionKeyword;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.orderdetailpages.OrderDetail;
@@ -119,7 +120,7 @@ public class HelperCode {
 		Reporter.log("*************<<<<<<<<<<<<Helper class : Output Processor Started>>>>>>>>>>>>>>>>****************",true);
 		Reporter.log("====<<<<< OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" >>>>>====",true);
 		executionCount++;
-		folderPathArray=FunctionKeyword.folderPath;
+		folderPathArray=MyTestLauncher.reportFolderPath;
 		Reporter.log("FolderCreation array form FunctionKeyword class ===> "+folderPathArray,true);
 		
 		boolean reportFlag=false;
@@ -274,5 +275,11 @@ public class HelperCode {
 		report.logFlush();
 		orderDetailArray[16]=report.getReportPathString();
 		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo,15);
+	}
+	
+	public static String replaceString(String path) {
+		path=path.replace("\\", "-");
+		path=path.replace("-", "\\");
+		return path;
 	}
 }

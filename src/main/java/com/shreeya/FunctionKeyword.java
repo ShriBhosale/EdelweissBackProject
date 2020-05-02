@@ -38,26 +38,30 @@ import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
 
+@Listeners(CustomListener.class)
 public class FunctionKeyword {
 
 	public static String keyWord = "no Keyword in FunctionKeyWord";
 	LoginPage login;
-	WebDriver driver;
+	public static WebDriver driver;
 	OrderAction orderActioObj;
 	HelperCode helperObject;
 	TestDataModel testDataObject;
 	MasterTestModel masterTestmodel;
-	
+	ExtendReporter htmlReport;
 
 	private String step;
+	
+	
 
-	public static String folderPath[] = null;
+	
 	public static ApacheCode apacheCodeObj;
 	public static FolderStructure folderCreationObj;
 
 	@BeforeSuite
 	public void beforeSuite() throws IOException {
 		Reporter.log("Before suit", true);
+		htmlReport=new ExtendReporter();
 	}
 
 	@BeforeTest
@@ -71,10 +75,7 @@ public class FunctionKeyword {
 		testDataObject = new TestDataModel();
 		helperObject = new HelperCode();
 
-		 folderCreationObj = new FolderStructure();
-		Reporter.log(
-				"Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
-		folderPath = folderCreationObj.reportFolderCreator();
+		
 		apacheCodeObj = new ApacheCode();
 
 		// apacheCodeObj.outputFileWriterHeader(folderPath[0]);
@@ -93,7 +94,7 @@ public class FunctionKeyword {
 			String endNo, String module) throws InterruptedException, IOException {
 		
 		CsvReaderCode code = new CsvReaderCode();
-		Reporter.log("<==================== Function KeyWord : executionWithKeyword ================>", true);
+		Reporter.log("<b><==================== Function KeyWord : executionWithKeyword ================></b>", true);
 		Reporter.log("Before Iterator " + referenceNo);
 
 		Reporter.log("After Iterator", true);
@@ -105,7 +106,7 @@ public class FunctionKeyword {
 
 		ListIterator<String> csvMasterTestModelIterator = code.masterTestDataProvider(module);
 		int count = 0;
-		Reporter.log("Check Point ===================================================================================================================@@@@>>> "+loginModelObj.toString(),true);
+		
 		while (csvMasterTestModelIterator.hasNext()) {
 			step = csvMasterTestModelIterator.next();
 			System.out.println("count : " + count++);
@@ -172,11 +173,11 @@ public class FunctionKeyword {
 	}
 
 	public void terminateExecution(String module, WebDriver driver,String referNo) throws InterruptedException, IOException {
-
+		Reporter.log("FunctionKeyword : TerminateExecution",true);
 		if (driver != null) {
 			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer"))) {
 				ExtendReporter reporter = new ExtendReporter();
-				reporter.reporter(driver, module, folderPath,referNo);
+				reporter.reporter(driver, module, MyTestLauncher.reportFolderPath,referNo);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}
 			login.logout(driver);
@@ -188,29 +189,18 @@ public class FunctionKeyword {
 	}
 
 	@AfterMethod
-	public void testAfter(ITestResult result) {
+	public void testAfter(ITestResult result) throws IOException {
 		Reporter.log("End test case execution", true);
-		CustomListener customListener=new CustomListener(driver);
-		 if(result.getStatus()==ITestResult.SUCCESS)
-		 {
-			 
-		 }
-		 else if( result.getStatus()==ITestResult.SKIP)
-		 {
-			
-			 
-		 }
-		 else if( result.getStatus()==ITestResult.FAILURE)
-		 {
-			 customListener.onTestFailure();
-		 }
+		
+		driver.close();
 	}
 
 	@AfterTest
 	public void endExecution() throws IOException {
 		// apacheCodeObj.closeExcelWriting();
-		driver.close();
-		Reporter.log("Folder Path ====> " + folderPath[0], true);
+		
+		Reporter.log("Folder Path ====> " + MyTestLauncher.reportFolderPath[0], true);
+		
 		//apacheCodeObj.outputExcelFileClose(folderPath[0]);
 
 	}

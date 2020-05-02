@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
 import com.shreeya.model.FundTransferModel;
 import com.shreeya.model.LoginModel;
 import com.shreeya.orderdetailpages.LoginPage;
@@ -33,7 +34,7 @@ public class FundTransferExecution extends SeleniumCoder{
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvFundTransferIterator=csvReader.FundTransferDataProvider();
 		report=new ExtendReporter();
-		folderPathArray=FunctionKeyword.folderPath;
+		folderPathArray=MyTestLauncher.reportFolderPath;
 		
 	}
 	
@@ -71,6 +72,6 @@ public class FundTransferExecution extends SeleniumCoder{
 	}
 	
 	public void outputFileClose() throws IOException {
-		FunctionKeyword.apacheCodeObj.outputExcelFileClose(FunctionKeyword.folderPath[0]);
+		FunctionKeyword.apacheCodeObj.outputExcelFileClose(MyTestLauncher.reportFolderPath[0]);
 	}
 }

@@ -3,60 +3,82 @@ package com.shreeya.util;
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
 import com.shreeya.FunctionKeyword;
-import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.MyTestLauncher;
 
-public class CustomListener extends SeleniumCoder{
-	WebDriver driver;
-	public CustomListener(WebDriver driver) {
-		super(driver);
-		this.driver=driver;
-	}
-	String screenShotPath;
+public class CustomListener  implements ITestListener {
+
 	
-	public void onTestFailure() {
-		
-		HelperCode helperObject=new HelperCode();
-		int timeStamp=Integer.valueOf(helperObject.timeStampGenerator());
-		Reporter.log("<========================@@@@@@@@@@@@@ Test Get Fail @@@@@@@@@@@=====================>", true);
-		ExtendReporter reporter=new ExtendReporter(FunctionKeyword.folderPath[1],"AbnormalTermination",timeStamp);
-		reporter.testCreation("Abnormal Termination");
-		reporter.errorFail("Abnormal Termination");
-		
-		try {
-			reporter.addScreenshotMethod(driver, FunctionKeyword.folderPath[2], "AbnormalTermination", 0);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		reporter.logFlush();
-		driver.close();
-	}
+
+	int timeStamp;
 	
-	
-	public void testResultChecker() {
-		
-	}
-	
-	 public void getResult(ITestResult result) throws IOException
-	 {
-		 if(result.getStatus()==ITestResult.SUCCESS)
-		 {
-			 
-		 }
-		 else if( result.getStatus()==ITestResult.SKIP)
-		 {
-			
-			 
-		 }
-		 else if( result.getStatus()==ITestResult.FAILURE)
-		 {
-			 onTestFailure();
-		 }
-		
-	 }
+	  @Override  
+	    public void onTestStart(ITestResult result) {  
+	        // TODO Auto-generated method stub  
+	          
+	    }  
+	  
+	    @Override  
+	    public void onTestSuccess(ITestResult result) {  
+	        // TODO Auto-generated method stub  
+	        System.out.println("Success of test cases and its details are : "+result.getName());  
+	    }  
+	  
+	    @Override  
+	    public void onTestFailure(ITestResult result) {  
+	        
+	        System.out.println("shreeya Failure of test cases and its details are : "+result.getName());  
+	        HelperCode helperObject=new HelperCode();
+	        try {
+			 timeStamp=Integer.valueOf(helperObject.timeStampGenerator());
+	        }catch(NumberFormatException e) {
+	        	
+	        }
+			Reporter.log("<========================@@@@@@@@@@@@@ Test Get Fail @@@@@@@@@@@=====================>", true);
+			ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1],"AbnormalTermination",timeStamp);
+			reporter.testCreation("Abnormal Termination");
+			reporter.errorFail("Abnormal Termination");
+			String screenShotPath = null;
+			try {
+				screenShotPath=reporter.addScreenshotMethod(FunctionKeyword.driver, MyTestLauncher.reportFolderPath[2], "AbnormalTermination", 0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			reporter.logFlush();
+			Reporter.log("Customer Listernet class ......",true);
+			//Reporter.log("<b>click on following link</b><a href='html-image-hyperlink.php'><img src='"+screenShotPath+"'/></a>");
+			screenShotPath=HelperCode.replaceString(screenShotPath);
+			Reporter.log("<br><img src='"+screenShotPath+"' height='700' width='1000' /></br>");
+			FunctionKeyword.driver.close();
+	    }  
+	  
+	    @Override  
+	    public void onTestSkipped(ITestResult result) {  
+	        // TODO Auto-generated method stub  
+	        System.out.println("Skip of test cases and its details are : "+result.getName());  
+	    }  
+	  
+	    @Override  
+	    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {  
+	        // TODO Auto-generated method stub  
+	        System.out.println("Failure of test cases and its details are : "+result.getName());  
+	    }  
+	  
+	    @Override  
+	    public void onStart(ITestContext context) {  
+	        // TODO Auto-generated method stub  
+	          
+	    }  
+	  
+	    @Override  
+	    public void onFinish(ITestContext context) {  
+	        // TODO Auto-generated method stub  
+	          
+	    }  
 }

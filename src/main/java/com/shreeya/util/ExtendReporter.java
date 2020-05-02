@@ -15,6 +15,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
 import com.shreeya.experiment.Report;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.TestDataModel;
@@ -27,6 +28,7 @@ public class ExtendReporter {
 	HelperCode helperObject;
 	private String reportPathString;
 	static int count=0;
+	int timestamp;
 	
 	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
 		
@@ -197,16 +199,20 @@ public class ExtendReporter {
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
 		Reporter.log("Abnormal Error Handly",true);
 		HelperCode helperCode=new HelperCode();
-		int timestamp=Integer.valueOf(helperCode.timeStampGenerator());
-		ExtendReporter report=new  ExtendReporter(FunctionKeyword.folderPath[1],"Abnormal Termination",timestamp); 
+		try {
+		 timestamp=Integer.valueOf(helperCode.timeStampGenerator());
+		}catch(NumberFormatException e) {
+			
+		}
+		ExtendReporter report=new  ExtendReporter(MyTestLauncher.reportFolderPath[1],"Abnormal Termination",timestamp); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
-		String screenshotPath=report.addScreenshotMethod(driver,FunctionKeyword.folderPath[2],"Abnormal Termination",1);
+		String screenshotPath=report.addScreenshotMethod(driver,MyTestLauncher.reportFolderPath[2],"Abnormal Termination",1);
 		report.logFlush();
-		driver.close();
+		//driver.close();
 		Reporter.log("Driver close",true);
 		Reporter.log("Screenshot path =======> "+screenshotPath,true);
-		System.exit(0);
+		//System.exit(0);
 	}
 	
 	public void reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO) throws IOException{
@@ -244,7 +250,7 @@ public class ExtendReporter {
 	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr) throws IOException {
 		extend.testCreation(loginModelObject.getTestScenario()+"_"+loginModelObject.getReference_no());
 		int orderNo=Integer.valueOf(loginModelObject.getReference_no());
-		extend.addScreenshotMethodInfo(driver, FunctionKeyword.folderPath[2],"LoginError",orderNo);
+		extend.addScreenshotMethodInfo(driver, MyTestLauncher.reportFolderPath[2],"LoginError",orderNo);
 		extend.errroMsg("User Id : "+loginModelObject.getUser_Id());
 		extend.errroMsg("Password : "+loginModelObject.getPassword());
 		extend.errroMsg("Yob : "+loginModelObject.getYob());

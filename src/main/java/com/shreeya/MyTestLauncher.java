@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.testng.Reporter;
 import org.testng.TestNG;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
@@ -16,23 +17,31 @@ import org.testng.xml.XmlTest;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.FolderStructure;
 
 public class MyTestLauncher {
 	public static ArrayList<LoginModel> loginData;
+	FolderStructure folderCreationObj;
+	public static String [] reportFolderPath;
+	
+	public MyTestLauncher() throws IOException {
+		 folderCreationObj = new FolderStructure();
+		 reportFolderPath = folderCreationObj.reportFolderCreator();
+	}
 
 
 	public static void main( String[] args ) throws IOException {
 		Reporter.log("================<< Execution Started >>================");
 		// TODO Auto-generated method stub
+		MyTestLauncher launcher=new MyTestLauncher();
 		CsvReaderCode csvReader = new CsvReaderCode(); 
 		loginData =csvReader.LoginFileReader();
 		Iterator<LoginModel> loginIteratior = loginData.iterator();
-		
-		
 		XmlSuite suite = new XmlSuite();
-		suite.setName("TmpSuite");
+		suite.setName("TestNGReport");
 		suite.setParallel(XmlSuite.ParallelMode.TESTS);
 		suite.setThreadCount(2);
+		//suite.setListeners(listenersList);
 		int count=0;
 		 while(loginIteratior.hasNext()) {
 			 LoginModel loginModel = loginIteratior.next(); 
@@ -46,7 +55,9 @@ public class MyTestLauncher {
 			 testScenarioParameters.put("EndNo", loginModel.getEndRowNo());
 			 testScenarioParameters.put("Module", loginModel.getModule());
 		XmlTest test = new XmlTest(suite);
-		test.setName(loginModel.getReferNo());
+		Reporter.log("ReferNo=====> "+loginModel.getReferNo(),true);
+		test.setName("ServerLog_"+loginModel.getReferNo());
+		test.setVerbose(2);
 		test.setParameters(testScenarioParameters);
 		List<XmlClass> classes = new ArrayList<XmlClass>();
 		classes.add(new XmlClass(FunctionKeyword.class.getName()));
@@ -58,6 +69,8 @@ public class MyTestLauncher {
 		 TestNG tng = new TestNG();
 		 
 		 tng.setXmlSuites(suites);
+		 tng.setOutputDirectory(reportFolderPath[0]+"/SeverLog");
+		
 		 tng.run(); 
 		 
 	}
