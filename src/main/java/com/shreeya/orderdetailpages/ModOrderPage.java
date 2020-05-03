@@ -51,40 +51,40 @@ public class ModOrderPage extends SeleniumCoder {
 		if(newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")) {
 		//Thread.sleep(7000);
 		try {
-		reinvestLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a");
+		reinvestLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li/a","Reinvest Link");
 		Reporter.log("ReinvestLink is present",true);
 		}catch(NoSuchElementException e) {
 
 		}
 		
-		modifyLink =fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a");
+		modifyLink =fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[1]/a","Modify link");
 		clickElement(modifyLink,"Modify link");
 		//Thread.sleep(5000);
 		if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
-		noOfSharesTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
+		noOfSharesTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']","No of shares textfield");
 		clearAndSendKey(noOfSharesTextField, model.getQtyMod(),"No of shares textfield");
 		}
 		//Thread.sleep(3000);
 		if(model.getScenario().equalsIgnoreCase("Modification Price")) {
-		enterPriceTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
+		enterPriceTextField =fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']","enter Price TextField");
 		clearAndSendKey(enterPriceTextField, model.getPartialPrice(),"enter Price TextField");
 		}
 		//Thread.sleep(3000);
 		if (model.getProductType().equalsIgnoreCase("CNC")) {
 
-			cnsRadioButton =fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
+			cnsRadioButton =fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']","CNC Radio Button");
 			if (cnsRadioButton.isSelected() == true)
 				clickElement(cnsRadioButton,"CNC Radio Button");
 		}
 
-		OptionalFieldsLabel =fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
+		OptionalFieldsLabel =fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]","Optional Fields Label");
 		clickElement(OptionalFieldsLabel,"Optional Fields Label");
 		//Thread.sleep(2000);
 		detail.amoCheckbox(amoFlag, driver);
-		placeOrderButton =fluentWaitCodeXpath(driver,"//input[@value ='Place Order']");
+		placeOrderButton =fluentWaitCodeXpath(driver,"//input[@value ='Place Order']","Place Order Button");
 		clickElement(placeOrderButton,"Place Order Button");
 		//Thread.sleep(2000);
-		confirmButton =fluentWaitCodeXpath(driver,"//input[@value='Confirm']");
+		confirmButton =fluentWaitCodeXpath(driver,"//input[@value='Confirm']","Confirm Button");
 		clickElement(confirmButton,"Confirm Button");
 		
 		

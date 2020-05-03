@@ -247,7 +247,7 @@ public class ExtendReporter {
 		return report.getReportPathString();
 	}
 	
-	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr) throws IOException {
+	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr,String elementName) throws IOException {
 		extend.testCreation(loginModelObject.getTestScenario()+"_"+loginModelObject.getReference_no());
 		int orderNo=Integer.valueOf(loginModelObject.getReference_no());
 		extend.addScreenshotMethodInfo(driver, MyTestLauncher.reportFolderPath[2],"LoginError",orderNo);
@@ -257,11 +257,35 @@ public class ExtendReporter {
 		
 		
 		if(!loginErrorStr.equalsIgnoreCase("No Error")) {
-			extend.errroMsg(loginErrorStr);
+			extend.errorFail(elementName+" element not found.....");
+			
 			extend.tearDown("Fail");
 		}else {
 			extend.errroMsg("Login Successfully");
 			extend.tearDown("Pass");
 		}
 	}
+	
+	public void abnormalErrorHandling(WebDriver driver,String elementName) throws IOException{
+		Reporter.log("Abnormal Reporter creator",true);
+		HelperCode helperCode=new HelperCode();
+		try {
+		 timestamp=Integer.valueOf(helperCode.timeStampGenerator());
+		}catch(NumberFormatException e) {
+			
+		}
+		ExtendReporter report=new  ExtendReporter(MyTestLauncher.reportFolderPath[1],"Abnormal Termination",timestamp); 
+		report.testCreation("Abnormal Termination");
+		report.errroMsg("Abnormal Termination");
+		report.errorFail(elementName + " not found");
+		String screenshotPath=report.addScreenshotMethod(driver,MyTestLauncher.reportFolderPath[2],"Abnormal Termination",1);
+		report.logFlush();
+		//driver.close();
+		Reporter.log("Driver close",true);
+		Reporter.log("Screenshot path =======> "+screenshotPath,true);
+		//System.exit(0);
+	}
+	
+	
+	
 }

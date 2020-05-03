@@ -3,6 +3,7 @@ package com.shreeya.util;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -42,7 +43,7 @@ public class BrowserLaunch {
 			driver=new ChromeDriver(capabilities);
 		}
 		//((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-		driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 
 		// driver.get("https://www.google.com/");
 		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
@@ -50,6 +51,14 @@ public class BrowserLaunch {
 		driver.manage().deleteAllCookies();
 		Reporter.log("Browser Launch", true);
 		return driver;
+	}
+	
+	public void driverClose() {
+		try {
+			driver.close();
+		}catch(NoSuchSessionException e) {
+			Reporter.log("Driver already close", true);
+		}
 	}
 
 }

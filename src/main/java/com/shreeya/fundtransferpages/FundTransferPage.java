@@ -19,7 +19,7 @@ public class FundTransferPage extends SeleniumCoder {
 	WebElement amountToTransferTextField;
 	WebElement submitButton;
 	WebElement bankAccountRedionButton;
-	WebElement internetBankingRedioButton;
+	WebElement internetBankingRadioButton;
 	WebElement okButton;
 	WebElement yesBankAlert;
 	WebElement upiRadioButton;
@@ -28,14 +28,14 @@ public class FundTransferPage extends SeleniumCoder {
 		super(driver);
 		this.driver=driver;
 		//mtfRadioButton=fluentWaitCodeXpath(driver, "//label[text()='MTF']");
-		upiViaORCodeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']");
+		upiViaORCodeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']","UPI via OR Code radio button");
 		try {
-		eCollectRadionButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']//preceding::label[1]",15);
+		eCollectRadionButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']//preceding::label[1]",15,"eCollect Radion Button");
 		}catch(TimeoutException e) {
-		internetBankingRedioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']");
+		internetBankingRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']","internetBankingRadioButton");
 		}
-		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']");
-		upiRadioButton=fluentWaitCodeXpath(driver,"//label[text()='UPI via QR code']//following::label[1]");
+		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","ok Button");
+		upiRadioButton=fluentWaitCodeXpath(driver,"//label[text()='UPI via QR code']//following::label[1]","upi Radio Button");
 		
 	}
 	
@@ -51,7 +51,7 @@ public class FundTransferPage extends SeleniumCoder {
 				clickElement(upiRadioButton, "UPI radio button");
 		}
 		else if(bankName.equalsIgnoreCase("Yes Bank")) {
-			yesBankAlert=fluentWaitCodeXpath(driver, "//span[text()=' Yes Bank']//following::span[6]");
+			yesBankAlert=fluentWaitCodeXpath(driver, "//span[text()=' Yes Bank']//following::span[6]","yesBank Alert");
 			fetchTextFromElement(yesBankAlert, "yesBankAlert");
 		}
 			
@@ -60,14 +60,14 @@ public class FundTransferPage extends SeleniumCoder {
 	
 	public void bankAccountSelect(String bankName) throws InterruptedException {
 		
-		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']");
+		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
 		clickElement(bankAccountRedionButton, bankName+" Radio button");
 	}
 	
 	public void fillAmount(String amount) throws InterruptedException {
 		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20);
 		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
-		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']");
+		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 		clickElement(submitButton, "Submit button");
 	}
 	

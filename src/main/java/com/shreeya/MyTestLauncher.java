@@ -21,7 +21,7 @@ import com.shreeya.util.FolderStructure;
 
 public class MyTestLauncher {
 	public static ArrayList<LoginModel> loginData;
-	FolderStructure folderCreationObj;
+	public static FolderStructure folderCreationObj;
 	public static String [] reportFolderPath;
 	
 	public MyTestLauncher() throws IOException {
@@ -41,7 +41,7 @@ public class MyTestLauncher {
 		suite.setName("TestNGReport");
 		suite.setParallel(XmlSuite.ParallelMode.TESTS);
 		suite.setThreadCount(2);
-		//suite.setListeners(listenersList);
+		
 		int count=0;
 		 while(loginIteratior.hasNext()) {
 			 LoginModel loginModel = loginIteratior.next(); 

@@ -38,10 +38,10 @@ public class CxlOrderPage extends SeleniumCoder{
 			
 		detail=new OrderDetail(driver);
 		/*Thread.sleep(7000);*/
-		cxlLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a");
+		cxlLink=fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[6]/div/ul/li[2]/a","CXL Link");
 		clickElement(cxlLink,"CXL link");
 		/*Thread.sleep(4000);*/
-		confirmButton=fluentWaitCodeXpath(driver,"//button[text()='Confirm']");
+		confirmButton=fluentWaitCodeXpath(driver,"//button[text()='Confirm']","Confirm Button");
 		clickElement(confirmButton,"Confirm Button");
 		/*Thread.sleep(5000);*/
 		

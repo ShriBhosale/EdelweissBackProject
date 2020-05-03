@@ -89,12 +89,7 @@ public class SeleniumCoder1 {
 		}catch(TimeoutException e1) {
 			Reporter.log("TimeoutException for this  "+elementName,true);
 			ExtendReporter reporter=new ExtendReporter();
-			try {
-				reporter.abnormalErrorHandling(driver);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 		
 		

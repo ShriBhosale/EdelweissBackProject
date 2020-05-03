@@ -62,13 +62,13 @@ public class OrderDetail extends SeleniumCoder {
 			afterRefreshPage(driver);
 		}
 		try {
-		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
+		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a","Details tab");
 		
 
 		clickElement(detailsTab,"Details tab");
 		}catch(StaleElementReferenceException e) {
 			Thread.sleep(3000);
-			detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
+			detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a","Details tab");
 			clickElement(detailsTab,"Details tab");
 			Reporter.log("Click on 2nd time details button",true);
 			Thread.sleep(2000);
@@ -93,28 +93,28 @@ public class OrderDetail extends SeleniumCoder {
 		}else {
 		try {
 			
-			status=fluentWaitCodeXpath(driver, "//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[4]/div/span[1]");
+			status=fluentWaitCodeXpath(driver, "//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[4]/div/span[1]","Status");
 		//status = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding']");
 		
 		}catch(NoSuchElementException e) {
 			try {
-			status =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding reject']");
+			status =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding reject']","Status");
 			rejectionFlag=true;
 			}catch(NoSuchElementException e1) {
-				status =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding traded']");
+				status =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='inprogress ng-binding traded']","Status");
 				rejectionFlag=true;
 			}
 		}
 		orderDetailList[2] = fetchTextFromElement(status,"Status");
 		}
 		
-		buyAndSell = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']");
+		buyAndSell = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']","Buy or Sell");
 		orderDetailList[3] = fetchTextFromElement(buyAndSell,"Buy or Sell");
-		tradingSymbol = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']");
+		tradingSymbol = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']","Trading symbol");
 		orderDetailList[4] = fetchTextFromElement(tradingSymbol,"Trading symbol");
-		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']");
+		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']","Product type");
 		orderDetailList[5] = fetchTextFromElement(productType,"Product type");
-		orderPrice = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']");
+		orderPrice = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']","Order parice");
 		Thread.sleep(2000);
 		try {
 			//orderInfoList=FluentWaitForElementList("//span[@class='value ng-binding']", driver);
@@ -146,10 +146,10 @@ public class OrderDetail extends SeleniumCoder {
 		}
 		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")))) {
 		try {
-			qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span");
+			qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span","Order Qty");
 			orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order Qty");
 		}catch(TimeoutException e) {
-			qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
+			qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]","Order qty");
 			orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order qty");
 		}
 		try {
@@ -164,23 +164,23 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList[11] = helper.nestIdProvider(text);
 		Reporter.log("Nest id : "+orderDetailList[11], true);
 		}else {
-			WebElement nestIdLabel=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
+			WebElement nestIdLabel=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span","NestId");
 			rowNestIdString=fetchTextFromElement(nestIdLabel,"NestId");
 			Reporter.log("Row Nestid string ===> "+rowNestIdString,true);
 			orderDetailList[11] = helper.removeExtraString(rowNestIdString,"|");
 			Reporter.log("Nest id : "+orderDetailList[11], true);
 			 if(action.equalsIgnoreCase("Partial Order")) {
 				
-				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
+				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]","Order Qty");
 				 
 			 }else {
-				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
+				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]","Order Qty");
 			 }
 			
 			 orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order Qty");
 
 			if(!orderDetailList[2].equalsIgnoreCase("Rejected")) {
-			WebElement executedSharesLable=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span");
+			WebElement executedSharesLable=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span","executed Shares Lable");
 			Reporter.log("Executed Shares =====>  "+fetchTextFromElement(executedSharesLable,"executed Shares Lable"),true);
 			}
 		}
@@ -198,10 +198,10 @@ public class OrderDetail extends SeleniumCoder {
 		//Thread.sleep(3000);
 		if(checked.equalsIgnoreCase("true")) {
 			try {
-		boolean flag = elementPresentOrNot(driver,"//label[@class='amo-text rect-label']","xpath");
+		boolean flag = elementPresentOrNot(driver,"//label[@class='amo-text rect-label']","xpath","AMO check box");
 		Reporter.log("After Checking amo checkbox present....",true);
 		if(flag) {
-			WebElement amoCheckBox =fluentWaitCodeXpath(driver,"//label[@class='amo-text rect-label']");
+			WebElement amoCheckBox =fluentWaitCodeXpath(driver,"//label[@class='amo-text rect-label']","AMO check box");
 			boolean amoFlag = amoCheckBox.isEnabled();
 			if(amoFlag)
 			{
@@ -218,7 +218,7 @@ public class OrderDetail extends SeleniumCoder {
 	public void afterRefreshPage(WebDriver driver) throws InterruptedException {
 		
 		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
-		orderStatusLink=fluentWaitCodeXpath(driver, "//a[text()='Order Status' and @class='toc-tab-link']");
+		orderStatusLink=fluentWaitCodeXpath(driver, "//a[text()='Order Status' and @class='toc-tab-link']","Order Status Tab");
 		clickElement(orderStatusLink,"Order Status Tab");
 	}
 

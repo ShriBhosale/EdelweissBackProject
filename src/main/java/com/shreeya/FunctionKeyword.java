@@ -1,13 +1,8 @@
 package com.shreeya;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ListIterator;
 
-import org.openqa.grid.internal.utils.configuration.GridHubConfiguration;
-import org.openqa.grid.web.Hub;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -26,6 +21,7 @@ import com.shreeya.model.LoginModel;
 import com.shreeya.model.MasterTestModel;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.mypositionspages.MyPositionsExecution;
+import com.shreeya.orderdetailpages.LoginExecution;
 import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.orderdetailpages.OrderAction;
 import com.shreeya.seeholdingspages.SeeHoldingsExecution;
@@ -49,7 +45,7 @@ public class FunctionKeyword {
 	TestDataModel testDataObject;
 	MasterTestModel masterTestmodel;
 	ExtendReporter htmlReport;
-
+	BrowserLaunch browserLunch;
 	private String step;
 	
 	
@@ -68,7 +64,7 @@ public class FunctionKeyword {
 	public void executionBefore() throws IOException {
 
 		Reporter.log("Execution Before ", true);
-		BrowserLaunch browserLunch = new BrowserLaunch();
+		 browserLunch = new BrowserLaunch();
 		driver = browserLunch.browserLaunch("Normal");
 		login = new LoginPage(driver);
 		orderActioObj = new OrderAction(driver);
@@ -116,7 +112,7 @@ public class FunctionKeyword {
 			switch (KeywordStringProcess(step)) {
 
 			case "login":
-				LoginPage loginPageObj = new LoginPage(driver);
+				LoginExecution loginPageObj = new LoginExecution(driver);
 				Reporter.log("Login functionality", true);
 				loginPageObj.loginExecution("normal", loginModelObj);
 				break;
@@ -175,11 +171,12 @@ public class FunctionKeyword {
 	public void terminateExecution(String module, WebDriver driver,String referNo) throws InterruptedException, IOException {
 		Reporter.log("FunctionKeyword : TerminateExecution",true);
 		if (driver != null) {
-			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer"))) {
+			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer")||module.equalsIgnoreCase("login"))) {
 				ExtendReporter reporter = new ExtendReporter();
 				reporter.reporter(driver, module, MyTestLauncher.reportFolderPath,referNo);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}
+			if(!module.equalsIgnoreCase("login"))
 			login.logout(driver);
 			
 			Reporter.log("Execution Terminate.... :)", true);
@@ -191,8 +188,7 @@ public class FunctionKeyword {
 	@AfterMethod
 	public void testAfter(ITestResult result) throws IOException {
 		Reporter.log("End test case execution", true);
-		
-		driver.close();
+		browserLunch.driverClose();
 	}
 
 	@AfterTest

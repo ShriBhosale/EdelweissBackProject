@@ -33,7 +33,7 @@ public class TestNgTag extends SeleniumCoder{
 	public void shreeyaExecution(String sarchItem) throws MalformedURLException {
 		Reporter.log("Shreeya execution method execute !!!",true);
 		driver=browserLunch.browserLaunch("normal");
-		googleSerchTextfield=fluentWaitCodeXpath(driver, "//input[@name='q']");
+		googleSerchTextfield=fluentWaitCodeXpath(driver, "//input[@name='q']","Google search textfield");
 		
 			Reporter.log("shreeya search item "+sarchItem,true);
 			sendKeyClickOnDownArrow(googleSerchTextfield, sarchItem);
@@ -45,7 +45,7 @@ public class TestNgTag extends SeleniumCoder{
 	public void apurvaExecution(String sarchItem) throws MalformedURLException {
 		Reporter.log("apurva execution method execute !!!",true);
 		driver=browserLunch.browserLaunch("normal");
-		googleSerchTextfield=fluentWaitCodeXpath(driver, "//input[@name='q']");
+		googleSerchTextfield=fluentWaitCodeXpath(driver, "//input[@name='q']","Google search textfield");
 		sendKeyClickOnDownArrow(googleSerchTextfield, sarchItem);
 	}
 	
@@ -55,7 +55,7 @@ public class TestNgTag extends SeleniumCoder{
 		Reporter.log("pravina execution method execute !!!",true);
 		driver=browserLunch.browserLaunch("normal");
 		Reporter.log("pravina search item "+sarchItem,true);
-		googleSerchTextfield=fluentWaitCodeXpath(driver, "//input[@name='q']");
+		googleSerchTextfield=fluentWaitCodeXpath(driver, "//input[@name='q']","Google search textfield");
 		sendKeyClickOnDownArrow(googleSerchTextfield, sarchItem);
 	}
 	

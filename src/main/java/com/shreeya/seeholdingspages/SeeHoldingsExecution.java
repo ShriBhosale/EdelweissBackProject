@@ -22,7 +22,7 @@ public class SeeHoldingsExecution extends SeleniumCoder {
 
 	public void seeHoldingsExecute(LoginModel loginModel) throws InterruptedException, IOException {
 
-		seeHoldingsTab = fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']//following::a[text()='See Holdings']");
+		seeHoldingsTab = fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']//following::a[text()='See Holdings']", "See Holdings Tab");
 		clickElement(seeHoldingsTab, "See Holdings Tab");
 
 	}
