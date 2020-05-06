@@ -14,11 +14,11 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.shreeya.FunctionKeyword;
 import com.shreeya.MyTestLauncher;
-import com.shreeya.experiment.Report;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.TestDataModel;
+import com.shreeya.model.WatchListModel;
+import com.shreeya.watchlistPages.WatchListPage;
 
 public class ExtendReporter {
 
@@ -89,6 +89,20 @@ public class ExtendReporter {
 		screenshotPath=screenshotPath.replace("/", "//");
 		System.out.println(screenshotPath);
 		 test.log(Status.FAIL,""+test.addScreenCaptureFromPath(screenshotPath));
+		 return screenshotPath;
+	}
+	
+	public String addScreenshotMethod(String screenshotPath) throws IOException {
+		//testCreation("Login Error");
+		
+		ConfigReader reader=new ConfigReader();
+		String path=reader.configReader("Result");
+		
+		screenshotPath=screenshotPath.replace("../WorkingE2",path);
+		screenshotPath=screenshotPath.replace("//", "-");
+		//screenshotPath=screenshotPath.replace("-", "\");
+		System.out.println(screenshotPath);
+		 test.addScreenCaptureFromPath(screenshotPath);
 		 return screenshotPath;
 	}
 	
@@ -266,7 +280,7 @@ public class ExtendReporter {
 		}
 	}
 	
-	public void abnormalErrorHandling(WebDriver driver,String elementName) throws IOException{
+	public void abnormalErrorHandling(WebDriver driver,String elementName,String moduleName) throws IOException{
 		Reporter.log("Abnormal Reporter creator",true);
 		HelperCode helperCode=new HelperCode();
 		try {
@@ -278,6 +292,7 @@ public class ExtendReporter {
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
 		report.errorFail(elementName + " not found");
+		report.errroMsg("Module Name : "+moduleName);
 		String screenshotPath=report.addScreenshotMethod(driver,MyTestLauncher.reportFolderPath[2],"Abnormal Termination",1);
 		report.logFlush();
 		//driver.close();
@@ -286,6 +301,24 @@ public class ExtendReporter {
 		//System.exit(0);
 	}
 	
-	
+	public ExtendReporter watchListReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver) throws IOException, InterruptedException {
+		int orderNo=0;
+		try {
+			orderNo=Integer.valueOf(model.getReferNo());
+		}catch(NumberFormatException e) {
+			
+		}
+		htmlReport.testCreation("WatchList_"+model.getReferNo());
+		test.log(Status.INFO, "Script Name : "+model.getScriptName());
+		test.log(Status.INFO, "WatchList name : "+model.getWatchListName());
+		if(model.getDafaultWatchList().equalsIgnoreCase("Yes"))
+			test.log(Status.INFO, "With Deafault mode");
+		test.log(Status.INFO, "Exchange : "+model.getExchange());
+		Thread.sleep(3000);
+		
+		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
+		
+		return htmlReport;
+	}
 	
 }

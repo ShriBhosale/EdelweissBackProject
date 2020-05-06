@@ -3,7 +3,9 @@ package com.shreeya.orderdetailpages;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
@@ -19,24 +21,36 @@ public class LoginExecution extends SeleniumCoder{
 	LoginPage loginPage;
 	WebDriver driver;
 	LoginTestModel loginTestModel=null;
+	ExtendReporter report;
 	
 	public LoginExecution(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		loginPage=new LoginPage(driver);
+		report=new ExtendReporter();
 	}
 	
-	public void loginExecution(String scenario, LoginModel loginModelObject) throws InterruptedException, IOException {
-
+	public boolean loginExecution(String scenario, LoginModel loginModelObject) throws InterruptedException, IOException {
+		boolean skipScenario=false;
 		// driver=browserLaunch(scenario);
 		
 		if (!loginModelObject.getModule().equalsIgnoreCase("login")) {
+			try {
 			loginPage.loginCodeExecution(scenario, loginModelObject);
+			if(!loginPage.popupFlag)
+				skipScenario=true;
+			}catch(TimeoutException e) {
+				report.abnormalErrorHandling(driver, elementNameError,loginModelObject.getModule());
+				skipScenario=true;
+			}catch(ElementNotInteractableException e) {
+				report.abnormalErrorHandling(driver, elementNameError,loginModelObject.getModule());
+				skipScenario=true;
+			}
 		} else {
 			loginRegressionExecution(loginModelObject);
 		}
-		// return driver;
-	
+		
+		return skipScenario;
 	}
 	
 	public void loginRegressionExecution(LoginModel loginModelObject) throws IOException, InterruptedException {
@@ -54,6 +68,10 @@ public class LoginExecution extends SeleniumCoder{
 				loginPage.pageRefresh();
 				continue;
 			}catch(NoSuchElementException e1) {
+				extend.loginReport(driver, extend, loginTestModel, "Error",elementNameError);
+				loginPage.pageRefresh();
+				continue;
+			}catch(ElementNotInteractableException e1) {
 				extend.loginReport(driver, extend, loginTestModel, "Error",elementNameError);
 				loginPage.pageRefresh();
 				continue;

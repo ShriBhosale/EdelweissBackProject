@@ -22,6 +22,7 @@ import com.shreeya.model.LoginModel;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.MasterTestModel;
 import com.shreeya.model.TestDataModel;
+import com.shreeya.model.WatchListModel;
 
 public class CsvReaderCode {
 
@@ -223,5 +224,25 @@ public class CsvReaderCode {
 		List<String> steplist=new ArrayList<String>();
 		
 		return csvFundTransferIterator;
+	}
+	
+	public Iterator<WatchListModel> WatchListTestDataProvider() {
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("TestData")+"\\WatchList";
+		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<WatchListModel> csvToBean = new CsvToBeanBuilder(reader).withType(WatchListModel.class).build();
+
+		Iterator<WatchListModel> csvWatchListTestIterator = csvToBean.iterator();
+		
+		
+		return csvWatchListTestIterator;
 	}
 }

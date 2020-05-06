@@ -33,6 +33,7 @@ import com.shreeya.util.CustomListener;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
+import com.shreeya.watchlistPages.WatchListExecution;
 
 @Listeners(CustomListener.class)
 public class FunctionKeyword {
@@ -47,7 +48,7 @@ public class FunctionKeyword {
 	ExtendReporter htmlReport;
 	BrowserLaunch browserLunch;
 	private String step;
-	
+	boolean skipScenario=false;
 	
 
 	
@@ -114,37 +115,54 @@ public class FunctionKeyword {
 			case "login":
 				LoginExecution loginPageObj = new LoginExecution(driver);
 				Reporter.log("Login functionality", true);
-				loginPageObj.loginExecution("normal", loginModelObj);
+				skipScenario=loginPageObj.loginExecution("normal", loginModelObj);
+				if(skipScenario) {
+					Reporter.log("<b><u>Login step fail</b></u>", true);
+					continue;
+				}
 				break;
 
 			case "orderdetail":
 				OrderAction orderActionObj = new OrderAction(driver);
 				Reporter.log("Order detail functionality", true);
+				if(skipScenario==false)
 				orderActionObj.orderActionStart(loginModelObj);
 				break;
 
 			case "fundtransfer":
 				FundTransferExecution fundTransferObj = new FundTransferExecution(driver);
+				if(skipScenario==false)
 				fundTransferObj.fundTransferExecute();
 				Reporter.log("fun transfer executin", true);
 				break;
 			case "mypositions":
 				MyPositionsExecution myPositionObj = new MyPositionsExecution(driver);
+				if(skipScenario==false)
 				myPositionObj.myPositionsExecute(loginModelObj);
 				Reporter.log("My Position Module", true);
 				break;
 			case "seemargin":
 				SeeMarginExecution seeMarginObj = new SeeMarginExecution(driver);
+				if(skipScenario==false)
 				seeMarginObj.seeMarginExecute(loginModelObj);
 				Reporter.log("See Margin Module", true);
 				break;
 			case "seeholdings":
 				SeeHoldingsExecution seeHoldingsObj = new SeeHoldingsExecution(driver);
+				if(skipScenario==false)
 				seeHoldingsObj.seeHoldingsExecute(loginModelObj);
 				Reporter.log("See Holdings Module", true);
 				break;
+				
+			case "watchlist":
+				WatchListExecution watchListObj = new WatchListExecution(driver);
+				if(skipScenario==false)
+					watchListObj.watchListExecute();
+				Reporter.log("Watchlist Module", true);
+				break;
 
 			case "logout":
+				if(skipScenario==false)
 				terminateExecution(module, driver,referenceNo);
 				break;
 			/*
@@ -171,7 +189,7 @@ public class FunctionKeyword {
 	public void terminateExecution(String module, WebDriver driver,String referNo) throws InterruptedException, IOException {
 		Reporter.log("FunctionKeyword : TerminateExecution",true);
 		if (driver != null) {
-			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer")||module.equalsIgnoreCase("login"))) {
+			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer")||module.equalsIgnoreCase("login")||module.equalsIgnoreCase("watchlist"))) {
 				ExtendReporter reporter = new ExtendReporter();
 				reporter.reporter(driver, module, MyTestLauncher.reportFolderPath,referNo);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
@@ -188,6 +206,7 @@ public class FunctionKeyword {
 	@AfterMethod
 	public void testAfter(ITestResult result) throws IOException {
 		Reporter.log("End test case execution", true);
+		htmlReport.captureScreen(driver, MyTestLauncher.reportFolderPath[2], "AnyModule", 1);
 		browserLunch.driverClose();
 	}
 

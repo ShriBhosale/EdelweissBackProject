@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import org.testng.Reporter;
 
 import com.shreeya.FunctionKeyword;
 import com.shreeya.MyTestLauncher;
@@ -47,23 +47,31 @@ public class FundTransferExecution extends SeleniumCoder{
 		
 		
 		  while(csvFundTransferIterator.hasNext()){
-			  clickElement(fundTransferTab, "Fund Transfer Tab");
+			  
+			  clickElement("//a[text()='Fund Transfer']", "Fund Transfer Tab");
 		  fundTransferModel=csvFundTransferIterator.next();
+		  Reporter.log("<a><font color='Yellow'>=========@@@@ FundTransfer_\"+fundTransferModel.getReferNo()+\" @@@@========</font></a>", true);
 		  try {
 		  errorMsg=fundTranferPage.fundTransferexecute(fundTransferModel);
 		  }catch(ElementNotInteractableException e) {
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError);
-			  backFundTransferPage(fundTransferTab);
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  backFundTransferPage();
 			  continue;
 		  }catch(NullPointerException e) {
 			 
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError);
-			  backFundTransferPage(fundTransferTab);
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  backFundTransferPage();
+			  continue;
+		  }catch(TimeoutException e) {
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  backFundTransferPage();
 			  continue;
 		  }
-		  fundTransferReport(fundTransferModel.getReferNo(),errorMsg);
-		 
+		  fundTransferReport(fundTransferModel.getReferNo(),errorMsg,"PASS");
+		  backFundTransferPage();
+		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
 		  clickElement(seeMarginTab, "See Margin Tab");
+		  
 		  }
 		 
 		  outputFileClose();
@@ -71,7 +79,7 @@ public class FundTransferExecution extends SeleniumCoder{
 		Thread.sleep(3000);
 	}
 	
-	public void fundTransferReport(String referNo,String errorMsg) throws IOException {
+	public void fundTransferReport(String referNo,String errorMsg,String result) throws IOException {
 		int referenceNo=Integer.valueOf(referNo);
 		if(referenceNo==1) {
 			MyTestLauncher.folderCreationObj.copyFile(folderPathArray[0],"FundTransfer");
@@ -79,7 +87,7 @@ public class FundTransferExecution extends SeleniumCoder{
 		}
 		String reportPath=report.reporter(driver, "FundTransfer", folderPathArray, referNo,errorMsg);
 		String screenShotStr=report.captureScreen(driver, folderPathArray[2], "FundTransfer", referenceNo);
-		String [] reportArray= {"No","PASS",reportPath,screenShotStr};
+		String [] reportArray= {"No",result,reportPath,screenShotStr};
 		FunctionKeyword.apacheCodeObj.outputFileWriter(reportArray, referenceNo,6);
 	}
 	
@@ -89,11 +97,19 @@ public class FundTransferExecution extends SeleniumCoder{
 	
 	
 	
-	public void backFundTransferPage(WebElement fundTransferTab) throws InterruptedException {
+	public void backFundTransferPage() throws InterruptedException {
+		boolean flag=true;
 		String currentUrl=driver.getCurrentUrl();
+		driver.navigate().back();
+		if(flag) {
 		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
 		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
-		clickElement(fundTransferTab, "Fund transfer tab");
+		/*
+		 * fundTransferTab=fluentWaitCodeXpath(driver,
+		 * "//a[text()='Fund Transfer']","fundTransferTab");
+		 * clickElement(fundTransferTab, "Fund transfer tab");
+		 */
+		}
 		}
 	
 	

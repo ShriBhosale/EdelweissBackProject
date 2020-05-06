@@ -65,7 +65,7 @@ public class FundTransferPage extends SeleniumCoder {
 	}
 	
 	public void fillAmount(String amount) throws InterruptedException {
-		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20);
+		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
 		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
 		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 		clickElement(submitButton, "Submit button");
