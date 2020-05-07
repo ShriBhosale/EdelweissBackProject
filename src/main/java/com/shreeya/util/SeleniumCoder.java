@@ -1,14 +1,10 @@
 package com.shreeya.util;
 
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.openqa.grid.web.Hub;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -20,21 +16,14 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.LocalFileDetector;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.IntArraySerializer;
 import com.google.common.base.Function;
-import com.shreeya.FunctionKeyword;
 
 public class SeleniumCoder extends ExceptionHandler {
 
@@ -42,7 +31,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	WebDriver driver = null;
 
 	ExtendReporter report = new ExtendReporter();
-	int maximumDelay = 50;
+	int maximumDelay = 70;
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
 
@@ -228,6 +217,19 @@ public class SeleniumCoder extends ExceptionHandler {
 
 		} catch (Exception e) {
 			Reporter.log(elementName + " not found", true);
+			Reporter.log(e.getMessage(), true);
+		}
+		return elementText;
+	}
+	
+	public String fetchTextFromElement(WebElement element) {
+		String elementText = "no element text";
+		try {
+			elementText = element.getAttribute("innerHTML");
+			
+
+		} catch (Exception e) {
+			
 			Reporter.log(e.getMessage(), true);
 		}
 		return elementText;
@@ -623,8 +625,10 @@ public class SeleniumCoder extends ExceptionHandler {
 	
 	public void clickElement(String xpathString, String elementName) throws InterruptedException {
 		Thread.sleep(500);
+		
 		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
 		try {
+			Thread.sleep(500);
 			if (element.isEnabled() == true) {
 				element.click();
 				Reporter.log(elementName + " Click ", true);
@@ -842,6 +846,32 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 		}
 		return element;
+	}
+	
+	public List<WebElement> multipleElementLocator(String xpathString,String groupNameElement){
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Reporter.log("multipleElementLocator : "+groupNameElement, true);
+		List<WebElement> elements=driver.findElements(By.xpath(xpathString));
+		return elements;
+		
+	}
+	
+	public List<String> multipleElementsTextProvider(String xpathString,String groupNameElement) {
+		Reporter.log("multipleElementsTextProvider : "+groupNameElement, true);
+		List<String> elementStringList=new ArrayList<String>();
+		List<WebElement> elements=multipleElementLocator(xpathString,groupNameElement);
+		Reporter.log("multipleElementsTextProvider : elementsList length : "+elements.size(), true);
+		for(WebElement element:elements) {
+			String elementString=fetchTextFromElement(element);
+			elementStringList.add(elementString);
+		}
+		
+		return elementStringList;
 	}
 
 }

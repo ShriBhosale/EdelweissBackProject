@@ -3,6 +3,7 @@ package com.shreeya.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -88,7 +89,7 @@ public class ExtendReporter {
 		screenshotPath=screenshotPath.replace("../WorkingE2",path);
 		screenshotPath=screenshotPath.replace("/", "//");
 		System.out.println(screenshotPath);
-		 test.log(Status.FAIL,""+test.addScreenCaptureFromPath(screenshotPath));
+		 test.log(Status.INFO,""+test.addScreenCaptureFromPath(screenshotPath));
 		 return screenshotPath;
 	}
 	
@@ -302,18 +303,21 @@ public class ExtendReporter {
 	}
 	
 	public ExtendReporter watchListReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver) throws IOException, InterruptedException {
+		Reporter.log("watchListReport start", true);
 		int orderNo=0;
 		try {
 			orderNo=Integer.valueOf(model.getReferNo());
 		}catch(NumberFormatException e) {
 			
 		}
-		htmlReport.testCreation("WatchList_"+model.getReferNo());
-		test.log(Status.INFO, "Script Name : "+model.getScriptName());
+		htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
+		
 		test.log(Status.INFO, "WatchList name : "+model.getWatchListName());
 		if(model.getDafaultWatchList().equalsIgnoreCase("Yes"))
 			test.log(Status.INFO, "With Deafault mode");
 		test.log(Status.INFO, "Exchange : "+model.getExchange());
+		Reporter.log("Before compareScriptAndExchange method", true);
+		compareScriptAndExchange(model);
 		Thread.sleep(3000);
 		
 		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
@@ -321,4 +325,63 @@ public class ExtendReporter {
 		return htmlReport;
 	}
 	
+	public void compareScriptAndExchange(WatchListModel model) {
+		Reporter.log("Inside compareScriptAndExchange ", true);
+		
+		String [] scriptArray=WatchListPage.applicationScriptArray;
+		String [] exchangeArray=WatchListPage.exchangeArray;
+		String [] sheetSriptNameArray=WatchListPage.scriptArray;
+		List<String> scriptList=WatchListPage.scriptList;
+		List<String> exchangeList=WatchListPage.exchangeList;
+		String scriptZero=scriptList.get(0);
+		if(model.getKeyword().equalsIgnoreCase("CreateAddScript")||model.getKeyword().equalsIgnoreCase("CreateAddScriptDelete")) {
+			
+			for(int i=0;i<scriptList.size();i++) {
+				test.log(Status.INFO, "Script : "+sheetSriptNameArray[i]);
+				String script=scriptList.get(i).replace("\n", "");
+				Reporter.log(scriptList.get(i), true);
+				if(script.equalsIgnoreCase(scriptArray[i]) && exchangeList.get(i).equalsIgnoreCase(exchangeArray[i])) {
+					test.log(Status.PASS, "ScriptName : "+scriptList.get(i)+" Exchange : "+exchangeList.get(i));
+				}else {
+					test.log(Status.FAIL, "ScriptName : "+scriptList.get(i)+" Exchange : "+exchangeList.get(i));
+				}
+			}
+			defaultWatchList(model.getDafaultWatchList());
+		}else if(model.getKeyword().equalsIgnoreCase("CreateDuplicate")) {
+			test.log(Status.INFO, "Script : "+sheetSriptNameArray[0]);
+			if(scriptList.get(0).equalsIgnoreCase(scriptArray[0])&& exchangeList.get(0).equalsIgnoreCase(exchangeArray[0])) {
+				test.log(Status.PASS, "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]);
+			}
+			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
+			{
+				test.log(Status.PASS,WatchListPage.errorMsg);
+			}else {
+				
+				test.log(Status.FAIL, "User can create duplicate watchlist.");
+			
+			}
+		}
+		else {
+			test.log(Status.INFO, "Script : "+sheetSriptNameArray[0]);
+			if(scriptList.get(0).equalsIgnoreCase(scriptArray[0])&& exchangeList.get(0).equalsIgnoreCase(exchangeArray[0])) {
+				test.log(Status.PASS, "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]);
+			}else
+			{
+				test.log(Status.FAIL, "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]);
+			}
+			defaultWatchList(model.getDafaultWatchList());
+		}
+		
+	}
+
+	public void defaultWatchList(String defaultWList) {
+		if(defaultWList.equalsIgnoreCase("Yes")) {
+			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
+			{
+				test.log(Status.PASS,WatchListPage.errorMsg);
+			}else { 
+					test.log(Status.FAIL, "Default watchList delete.");
+			}
+			}
+	}
 }

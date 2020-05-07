@@ -22,10 +22,16 @@ public class WatchListModel {
 	@CsvBindByName(column = "Keyword")
 	private String keyword;
 	
+	@CsvBindByName(column = "VerifyScript")
+	private String verifyScript;
+
+	@CsvBindByName(column = "TestCaseName")
+	private String testCaseName;
+
 	
 
 	public WatchListModel(String referNo, String watchListName, String scriptName, String exchange,
-			String dafaultWatchList, String keyword) {
+			String dafaultWatchList, String keyword, String verifyScript, String testCaseName) {
 		super();
 		this.referNo = referNo;
 		this.watchListName = watchListName;
@@ -33,6 +39,8 @@ public class WatchListModel {
 		this.exchange = exchange;
 		this.dafaultWatchList = dafaultWatchList;
 		this.keyword = keyword;
+		this.verifyScript = verifyScript;
+		this.testCaseName = testCaseName;
 	}
 
 	public WatchListModel() {}
@@ -85,11 +93,32 @@ public class WatchListModel {
 		this.keyword = keyword;
 	}
 
+	public String getVerifyScript() {
+		return verifyScript;
+	}
+
+	public void setVerifyScript(String verifyScript) {
+		this.verifyScript = verifyScript;
+	}
+
+	public String getTestCaseName() {
+		return testCaseName;
+	}
+
+	public void setTestCaseName(String testCaseName) {
+		this.testCaseName = testCaseName;
+	}
+
 	@Override
 	public String toString() {
 		return "WatchListModel [referNo=" + referNo + ", watchListName=" + watchListName + ", scriptName=" + scriptName
-				+ ", exchange=" + exchange + ", dafaultWatchList=" + dafaultWatchList + ", keyword=" + keyword + "]";
+				+ ", exchange=" + exchange + ", dafaultWatchList=" + dafaultWatchList + ", keyword=" + keyword
+				+ ", verifyScript=" + verifyScript + ", testCaseName=" + testCaseName + "]";
 	}
+
+	
+	
+	
 
 	
 	
