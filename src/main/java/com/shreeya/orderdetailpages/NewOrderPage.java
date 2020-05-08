@@ -95,7 +95,7 @@ public class NewOrderPage extends SeleniumCoder {
 		clickElement(OptionalFieldsLabel,"OptionalFields Label");
 		/*Thread.sleep(1000);*/
 		
-		orderDetail.amoCheckbox(amoFlag, driver);
+		orderDetail.amoCheckbox(amoFlag);
 		placeOrderButton=fluentWaitCodeXpath(driver,"//input[@value ='Place Order']","Place Order Button");
 		clickElement(placeOrderButton,"Place Order Button");
 		

@@ -41,9 +41,11 @@ public class OrderDetail extends SeleniumCoder {
 	private List<WebElement> orderInfoList;
 	private List<WebElement> listForNestId;
 	
+	
 	public OrderDetail(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
+		
 	}
 
 	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet) throws InterruptedException {
@@ -193,7 +195,7 @@ public class OrderDetail extends SeleniumCoder {
 		return orderDetailList;
 	}
 	
-	public void amoCheckbox(String checked,WebDriver driver) throws InterruptedException {
+	public void amoCheckbox(String checked) throws InterruptedException {
 		Reporter.log("AMO CheckBox checking....",true);
 		//Thread.sleep(3000);
 		if(checked.equalsIgnoreCase("true")) {

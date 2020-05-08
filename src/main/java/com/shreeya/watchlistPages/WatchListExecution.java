@@ -22,12 +22,14 @@ public class WatchListExecution extends SeleniumCoder{
 	Iterator<WatchListModel> csvLoginTestIterator;
 	WatchListModel model;
 	WatchListPage watchListPage;
+	WatchListReport watchListReport;
 	public WatchListExecution(WebDriver driver) throws IOException {
 		super(driver);
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvLoginTestIterator=csvReader.WatchListTestDataProvider();
 		watchListPage=new WatchListPage(driver);
 		this.driver=driver;
+		watchListReport=new WatchListReport();
 	}
 	
 	public void watchListExecute() throws InterruptedException, IOException {
@@ -37,10 +39,14 @@ public class WatchListExecution extends SeleniumCoder{
 		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
-			watchListPage.watchListExecution(model);
+			String msg=watchListPage.watchListExecution(model,reporter);
 			//watchListPage.pageVerify(model.getWatchListName(),model.getKeyword());
-			reporter=reporter.watchListReport(model, reporter, driver);
-			
+			if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
+				
+				reporter=watchListReport.watchListReportExecution(model, reporter,driver);
+			}else {
+			reporter=reporter.watchListReport(model, reporter, driver,msg);
+			}
 		}
 		reporter.logFlush();
 	}

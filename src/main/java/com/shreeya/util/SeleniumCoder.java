@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,13 +32,17 @@ public class SeleniumCoder extends ExceptionHandler {
 	WebDriver driver = null;
 
 	ExtendReporter report = new ExtendReporter();
-	int maximumDelay = 70;
+	int maximumDelay = 150;
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
 
 	public SeleniumCoder(WebDriver driver) {
 
 		this.driver = driver;
+	}
+	
+	public SeleniumCoder() {
+		
 	}
 
 	public void sendKey(WebElement element, String msg, String elementName) throws InterruptedException {
@@ -57,8 +62,8 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	}
 
-	public void clickElement(WebElement element, String elementName) throws InterruptedException {
-		Thread.sleep(500);
+	public void clickElement(WebElement element, String elementName)  {
+		staticWait(500);
 		try {
 			if (element.isEnabled() == true) {
 				element.click();
@@ -74,6 +79,7 @@ public class SeleniumCoder extends ExceptionHandler {
 				element.click();
 			}
 		} catch (ElementNotInteractableException e) {
+			staticWait(700);
 			System.out.println("Convert driver into javascript than click on element  " + elementName);
 			elementNameError=elementName;
 			
@@ -85,7 +91,11 @@ public class SeleniumCoder extends ExceptionHandler {
 					Reporter.log("<br>"+st.toString(), true);
 				}
 			}
+			try {
 			elementNotInteractableExceptionHandling(element, elementName);
+			}catch(ElementClickInterceptedException e1) {
+				staticWait(3000);
+			}
 			element.click();
 		} catch (TimeoutException e) {
 			Reporter.log("TimeoutException for this  " + elementName, true);
@@ -157,8 +167,8 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	}
 
-	public WebElement fluentWaitMethod(WebDriver driver, final String xpathStr) throws InterruptedException {
-		Thread.sleep(3000);
+	public WebElement fluentWaitMethod(WebDriver driver, final String xpathStr)  {
+		staticWait(3000);
 		// Waiting 30 seconds for an element to be present on the page, checking
 		// for its presence once every 5 seconds.
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(maximumDelay, TimeUnit.SECONDS)
@@ -623,12 +633,12 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 	}
 	
-	public void clickElement(String xpathString, String elementName) throws InterruptedException {
-		Thread.sleep(500);
+	public void clickElement(String xpathString, String elementName) {
+		staticWait(500);
 		
 		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
 		try {
-			Thread.sleep(500);
+			staticWait(300);
 			if (element.isEnabled() == true) {
 				element.click();
 				Reporter.log(elementName + " Click ", true);
@@ -654,7 +664,9 @@ public class SeleniumCoder extends ExceptionHandler {
 					Reporter.log("<br>"+st.toString(), true);
 				}
 			}
-			elementNotInteractableExceptionHandling(element, elementName);
+			staticWait(1000);
+			element=fluentWaitCodeXpath(driver, xpathString, elementName);
+			//elementNotInteractableExceptionHandling(element, elementName);
 			element.click();
 		} catch (TimeoutException e) {
 			Reporter.log("TimeoutException for this  " + elementName, true);
@@ -788,14 +800,14 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	}
 	
-	public void hoverAndClickOption(String parentElementStr, String childElementStr) throws InterruptedException {
+	public void hoverAndClickOption(String parentElementStr, String childElementStr)  {
 		Reporter.log("click on Buy/Sell button and click on place order link", true);
 		WebElement childElement = null;
 		WebElement parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
 		Actions action = new Actions(driver);
 		action.moveToElement(parentElement).click().perform();
 		childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
-		Thread.sleep(200);
+		staticWait(200);
 		clickElement(childElement,  "Child Element");
 	}
 	
@@ -807,7 +819,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		action.moveToElement(parentElement).click().perform();
 	}
 	
-	public void downErrorKeyEnter(String xpath,String elementName) throws InterruptedException {
+	public void downErrorKeyEnter(String xpath,String elementName) {
 		//WebElement element=fluentWaitCodeXpath(xpath, elementName);
 		Reporter.log("Click Down Error Button\nClick Enter Button");
 		/*
@@ -817,7 +829,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		Actions action=new Actions(driver);
 		action.sendKeys(Keys.ARROW_DOWN).build().perform();
 		action.sendKeys(Keys.ENTER).build().perform();
-		Thread.sleep(4000);
+		staticWait(1000);
 		//element.sendKeys(Keys.ENTER);
 		
 	}
@@ -849,12 +861,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public List<WebElement> multipleElementLocator(String xpathString,String groupNameElement){
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		staticWait(2000);
 		Reporter.log("multipleElementLocator : "+groupNameElement, true);
 		List<WebElement> elements=driver.findElements(By.xpath(xpathString));
 		return elements;
@@ -872,6 +879,89 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 		
 		return elementStringList;
+	}
+
+	public WebElement fluentWaitCodeXpath(final String xpathString, int maxWaitTime,String elementName) {
+		WebElement element=null;
+		try {
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(maxWaitTime, TimeUnit.SECONDS)
+				.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+
+		 element = wait.until(new Function<WebDriver, WebElement>() {
+			public WebElement apply(WebDriver driver) {
+				// WebElement searchTextField =driver.findElement(By.name("q"));
+				WebElement element = driver.findElement(By.xpath(xpathString));
+				if (element.isEnabled()) {
+					System.out.println("Element Found");
+
+				}
+				return element;
+			}
+
+		});
+
+		
+		}catch(TimeoutException e) {
+			StackTraceElement [] locaString=e.getStackTrace();
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception location : </b>", true);
+			for(StackTraceElement st:locaString) {
+				if(st.toString().contains("com.shreeya")) {
+					Reporter.log("<br>"+st.toString(), true);
+				}
+			}
+		}
+		return element;
+	}
+	
+	public void clickElementWithoutException(String xpathString, String elementName) throws InterruptedException{
+		Thread.sleep(500);
+		
+		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
+		try {
+			Thread.sleep(500);
+			if (element.isEnabled() == true) {
+				element.click();
+				Reporter.log(elementName + " Click ", true);
+			} else {
+				Reporter.log(elementName + " no present", true);
+				WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+				Reporter.log("Checking element visible or not " + elementName, true);
+				wait.until(ExpectedConditions.visibilityOf(element));
+				Reporter.log("Checking element clickable or not " + elementName, true);
+				wait.until(ExpectedConditions.elementToBeClickable(element));
+				Reporter.log("After explicityWait : " + elementName, true);
+				element.click();
+			}
+		} /*catch (TimeoutException e) {
+			Reporter.log("TimeoutException for this  " + elementName, true);
+			ExtendReporter reporter = new ExtendReporter();
+			elementNameError=elementName;
+			
+			StackTraceElement [] locaString=e.getStackTrace();
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception location : </b>", true);
+			for(StackTraceElement st:locaString) {
+				if(st.toString().contains("com.shreeya")) {
+					Reporter.log("<br>"+st.toString(), true);
+				}
+			}*/
+		catch(StaleElementReferenceException e) {
+			Reporter.log("StateElementReferenceException", true);
+			element=fluentWaitCodeXpath(driver, xpathString, elementName);
+			element.click();
+		}
+			 
+
+	}
+	
+	public void staticWait(int timeout) {
+		try {
+			Thread.sleep(timeout);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

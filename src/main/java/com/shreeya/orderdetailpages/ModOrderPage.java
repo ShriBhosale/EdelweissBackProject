@@ -80,7 +80,7 @@ public class ModOrderPage extends SeleniumCoder {
 		OptionalFieldsLabel =fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]","Optional Fields Label");
 		clickElement(OptionalFieldsLabel,"Optional Fields Label");
 		//Thread.sleep(2000);
-		detail.amoCheckbox(amoFlag, driver);
+		detail.amoCheckbox(amoFlag);
 		placeOrderButton =fluentWaitCodeXpath(driver,"//input[@value ='Place Order']","Place Order Button");
 		clickElement(placeOrderButton,"Place Order Button");
 		//Thread.sleep(2000);

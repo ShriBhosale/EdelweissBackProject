@@ -194,13 +194,10 @@ public class LoginPage extends SeleniumCoder {
 		if (segmentRadioButton != null) {
 			elementFlag = true;
 			WebElement proceedButton = fluentWaitCodeXpath(driver, "//button[text()='Proceed']","Procced Button for segement info popup");
-			try {
+			
 				clickElement(segmentRadioButton, segement + " RadioButton");
 				clickElement(proceedButton, "Proceed Button");
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 		return elementFlag;
 
