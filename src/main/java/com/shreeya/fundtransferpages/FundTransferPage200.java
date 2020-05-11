@@ -46,7 +46,7 @@ public class FundTransferPage200 extends SeleniumCoder{
 	}
 	
 	public void amountFill(String bankName,String amount) throws InterruptedException {
-		if(!(bankName.equalsIgnoreCase("Kotak Mahindra Bank")||bankName.equalsIgnoreCase("CANARA BANK")||bankName.equalsIgnoreCase("YES Bank"))) {
+		if(!(bankName.equalsIgnoreCase("Kotak Mahindra Bank")||bankName.equalsIgnoreCase("CANARA BANK")||bankName.equalsIgnoreCase("YES Bank")||bankName.contains("ICICI BANK"))) {
 			okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","Ok button");
 			clickElement(okButton, "Ok button");
 		}

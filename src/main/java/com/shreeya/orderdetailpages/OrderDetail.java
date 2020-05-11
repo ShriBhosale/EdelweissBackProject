@@ -64,7 +64,8 @@ public class OrderDetail extends SeleniumCoder {
 			afterRefreshPage(driver);
 		}
 		try {
-		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a","Details tab");
+			staticWait(1000);
+		detailsTab = fluentWaitCodeXpath(driver,"//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[7]/div/a","Details tab");
 		
 
 		clickElement(detailsTab,"Details tab");

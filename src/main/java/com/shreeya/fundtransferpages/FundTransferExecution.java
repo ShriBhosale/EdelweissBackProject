@@ -22,7 +22,7 @@ public class FundTransferExecution extends SeleniumCoder{
 	private WebElement fundTransferTab;
 	Iterator<FundTransferModel> csvFundTransferIterator;
 	FundTransferModel fundTransferModel;
-	FundTransferPage200 fundTranferPage;
+	FundTransferPage fundTranferPage;
 	ExtendReporter report;
 	String [] folderPathArray;
 	String [] reportArray;
@@ -42,7 +42,7 @@ public class FundTransferExecution extends SeleniumCoder{
 	public void fundTransferExecute() throws InterruptedException, IOException {
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
 		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
-		fundTranferPage=new FundTransferPage200(driver);
+		fundTranferPage=new FundTransferPage(driver);
 		
 		
 		
@@ -52,7 +52,7 @@ public class FundTransferExecution extends SeleniumCoder{
 		  fundTransferModel=csvFundTransferIterator.next();
 		  Reporter.log("<a><font color='Yellow'>=========@@@@ FundTransfer_\"+fundTransferModel.getReferNo()+\" @@@@========</font></a>", true);
 		  try {
-		  errorMsg=fundTranferPage.fundTransferexecute(fundTransferModel);
+		  fundTranferPage.fundTransferexecute(fundTransferModel);
 		  }catch(ElementNotInteractableException e) {
 			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
 			  backFundTransferPage();

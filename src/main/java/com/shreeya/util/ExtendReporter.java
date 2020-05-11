@@ -366,7 +366,7 @@ public class ExtendReporter {
 			}
 			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
 			{
-				test.log(Status.WARNING,"MSg : "+WatchListPage.errorMsg);
+				test.log(Status.PASS,"MSg : "+WatchListPage.errorMsg);
 			}
 			defaultWatchList(model.getDafaultWatchList());
 		}else if(model.getKeyword().equalsIgnoreCase("CreateDuplicate")) {

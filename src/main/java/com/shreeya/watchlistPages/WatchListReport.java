@@ -68,7 +68,7 @@ public class WatchListReport extends ExtendReporter {
 			
 		}
 		test=htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
-		if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
+		if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
 			predefineWatchListReport(model);
 			htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "PredefineWatchList", orderNo);
 			
@@ -79,5 +79,17 @@ public class WatchListReport extends ExtendReporter {
 		return htmlReport;
 	}
 	
+	public ExtendReporter abnormalReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver) {
+		int orderNo=0;
+		try {
+			orderNo=Integer.valueOf(model.getReferNo());
+		}catch(NumberFormatException e) {
+			
+		}
+		test=htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
+		test.log(Status.FAIL, "Abnormal condition");
+		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], model.getTestCaseName(), orderNo);
+		return htmlReport;
+	}
 	
 }

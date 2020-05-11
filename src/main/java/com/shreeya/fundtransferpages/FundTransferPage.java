@@ -24,31 +24,38 @@ public class FundTransferPage extends SeleniumCoder {
 	WebElement yesBankAlert;
 	WebElement upiRadioButton;
 	
-	public FundTransferPage(WebDriver driver) {
-		super(driver);
-		this.driver=driver;
-		//mtfRadioButton=fluentWaitCodeXpath(driver, "//label[text()='MTF']");
-		upiViaORCodeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']","UPI via OR Code radio button");
-		try {
-		eCollectRadionButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']//preceding::label[1]",15,"eCollect Radion Button");
-		}catch(TimeoutException e) {
-		internetBankingRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']","internetBankingRadioButton");
-		}
-		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","ok Button");
-		upiRadioButton=fluentWaitCodeXpath(driver,"//label[text()='UPI via QR code']//following::label[1]","upi Radio Button");
+	Payment payment;
+	
+	public FundTransferPage() {
 		
 	}
 	
+	public FundTransferPage(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+		payment=new Payment(driver);
+	}
+	
 	public void paymentModeSelect(String paymentMode,String bankName) throws InterruptedException {
+		try {
+			eCollectRadionButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']//preceding::label[1]",15,"eCollect Radion Button");
+			}catch(TimeoutException e) {
+			internetBankingRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']","internetBankingRadioButton");
+			}
 		if(!(bankName.equalsIgnoreCase("HDFC BANK LTD")||bankName.equalsIgnoreCase("Yes Bank"))){
 			if(paymentMode.equalsIgnoreCase("Internet Banking")) 
 			Reporter.log("Internet Banking radion button already selected ",true);
-			else if(paymentMode.equalsIgnoreCase("eCollect"))
+			else if(paymentMode.equalsIgnoreCase("eCollect")) {
 				Reporter.log("eCollect Payment mode is not for "+bankName+" bank");
-			else if(paymentMode.equalsIgnoreCase("UPI via QR code"))
+			}
+			else if(paymentMode.equalsIgnoreCase("UPI via QR code")) {
+				upiViaORCodeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='UPI via QR code']","UPI via OR Code radio button");
 				clickElement(upiViaORCodeRadioButton, "UPI via Or code radio button");
-			else if(paymentMode.equalsIgnoreCase("UPI"))
+			}
+			else if(paymentMode.equalsIgnoreCase("UPI")) {
+				upiRadioButton=fluentWaitCodeXpath(driver,"//label[text()='UPI via QR code']//following::label[1]","upi Radio Button");
 				clickElement(upiRadioButton, "UPI radio button");
+			}
 		}
 		else if(bankName.equalsIgnoreCase("Yes Bank")) {
 			yesBankAlert=fluentWaitCodeXpath(driver, "//span[text()=' Yes Bank']//following::span[6]","yesBank Alert");
@@ -78,9 +85,10 @@ public class FundTransferPage extends SeleniumCoder {
 		bankAccountSelect(model.getBank());
 		paymentModeSelect(model.getPaymentMode(),model.getBank());
 		if(model.getBank().equalsIgnoreCase("HDFC BANK LTD")) {
+		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","ok Button");
 		clickElement(okButton, "Ok button");
 		}
 		fillAmount(model.getAmount());
-		
+		payment.paymentCodeExecution(model);
 	}
 }

@@ -32,7 +32,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	WebDriver driver = null;
 
 	ExtendReporter report = new ExtendReporter();
-	int maximumDelay = 150;
+	int maximumDelay = 100;
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
 
@@ -807,7 +807,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		Actions action = new Actions(driver);
 		action.moveToElement(parentElement).click().perform();
 		childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
-		staticWait(200);
+		staticWait(500);
 		clickElement(childElement,  "Child Element");
 	}
 	
@@ -976,5 +976,13 @@ public class SeleniumCoder extends ExceptionHandler {
 			 
 			driver.switchTo().window(handle);}
 		return driver;
+	}
+	
+	public void browserPopup(boolean flag) {
+		if(flag) {
+			driver.switchTo().alert().accept();
+		}else if(!flag) {
+			driver.switchTo().alert().dismiss();
+		}
 	}
 }

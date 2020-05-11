@@ -16,10 +16,23 @@ public class FundTransferModel {
 	private String userName;
 	@CsvBindByName(column="Password")
 	private String password;
+	@CsvBindByName(column="Remarks")
+	private String remarks;
+	@CsvBindByName(column="DebitCardNo")
+	private String debitCardNo;
+	@CsvBindByName(column="AccountType")
+	private String accountType;
+	
+	@CsvBindByName(column="TranscationMode")
+	private String transcationMode;
+	
+	@CsvBindByName(column="Negative")
+	private String negative;
 	
 	
 	public FundTransferModel(String referNo, String bank, String paymentMode, String amount, String userName,
-			String password) {
+			String password, String remarks, String debitCardNo, String accountType, String transcationMode,
+			String negative) {
 		super();
 		this.referNo = referNo;
 		this.bank = bank;
@@ -27,6 +40,11 @@ public class FundTransferModel {
 		this.amount = amount;
 		this.userName = userName;
 		this.password = password;
+		this.remarks = remarks;
+		this.debitCardNo = debitCardNo;
+		this.accountType = accountType;
+		this.transcationMode = transcationMode;
+		this.negative = negative;
 	}
 	public FundTransferModel() {
 		super();
@@ -70,13 +88,43 @@ public class FundTransferModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public String getDebitCardNo() {
+		return debitCardNo;
+	}
+	public void setDebitCardNo(String debitCardNo) {
+		this.debitCardNo = debitCardNo;
+	}
+	public String getAccountType() {
+		return accountType;
+	}
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+	public String getTranscationMode() {
+		return transcationMode;
+	}
+	public void setTranscationMode(String transcationMode) {
+		this.transcationMode = transcationMode;
+	}
+	public String getNegative() {
+		return negative;
+	}
+	public void setNegative(String negative) {
+		this.negative = negative;
+	}
 	@Override
 	public String toString() {
 		return "FundTransferModel [referNo=" + referNo + ", bank=" + bank + ", paymentMode=" + paymentMode + ", amount="
-				+ amount + ", userName=" + userName + ", password=" + password + "]";
+				+ amount + ", userName=" + userName + ", password=" + password + ", remarks=" + remarks
+				+ ", debitCardNo=" + debitCardNo + ", accountType=" + accountType + ", transcationMode="
+				+ transcationMode + ", negative=" + negative + "]";
 	}
-	
-	
 	
 	
 }

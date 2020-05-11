@@ -208,7 +208,7 @@ public class LoginPage extends SeleniumCoder {
 		int noTab=noTabs(driver);
 //		for(int i=0;i<noTab;i++) {
 			
-		closeButton = fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[1]/a",5,"Close Button (x)");
+		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a",5,"Close Button (x)");
 		if(closeButton!=null)
 		clickElement(closeButton, "Close order status popup");
 		Thread.sleep(3000);

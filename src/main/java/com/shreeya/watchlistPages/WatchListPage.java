@@ -324,7 +324,7 @@ public class WatchListPage extends SeleniumCoder{
 	
 	public List<String> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
 		List<String> stepsList=watchListKeyword.keywordProccess(model.getKeyword());
-		
+		errorMsg="no";
 		for(String steps:stepsList) {
 			Reporter.log("Step ===================================================>>> "+steps+"\n=======================================>>> "+model.getKeyword(), true);
 			switch(steps) {
