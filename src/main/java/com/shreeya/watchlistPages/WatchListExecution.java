@@ -1,7 +1,9 @@
 package com.shreeya.watchlistPages;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,13 +41,18 @@ public class WatchListExecution extends SeleniumCoder{
 		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
-			String msg=watchListPage.watchListExecution(model,reporter);
+			List<String> watchListDetail=new ArrayList<String>();
+			try {
+			watchListDetail=watchListPage.watchListExecution(model,reporter);
+			}catch(NullPointerException e) {
+				continue;
+			}
 			//watchListPage.pageVerify(model.getWatchListName(),model.getKeyword());
-			if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
+			if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
 				
 				reporter=watchListReport.watchListReportExecution(model, reporter,driver);
 			}else {
-			reporter=reporter.watchListReport(model, reporter, driver,msg);
+			reporter=reporter.watchListReport(model, reporter, driver,watchListDetail);
 			}
 		}
 		reporter.logFlush();

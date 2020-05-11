@@ -2,9 +2,7 @@ package com.shreeya.watchlistPages;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
@@ -40,7 +38,7 @@ public class WatchListPage extends SeleniumCoder{
 	public static  String [] exchangeArray;
 	public static  String [] applicationScriptArray;
 	public static String errorMsg="no";
-	String predifineWatchMsg="no predefine msg";
+	public static String predifineWatchMsg="no predefine msg";
 	String deleteOption="present";
 	
 	String scriptNames;
@@ -49,8 +47,11 @@ public class WatchListPage extends SeleniumCoder{
 	private String ErrorMsg;
 	Scroll scroll;
 	
+	List<String> predefineWatchListDetailList;
+	
 	PredefineWatchList predefineWatchList;
 	WatchListHelper watchListHelper;
+	WatchListKeywords watchListKeyword;
 
 	public WatchListPage(WebDriver driver) throws IOException {
 		super(driver);
@@ -58,6 +59,8 @@ public class WatchListPage extends SeleniumCoder{
 		scroll=new Scroll(driver);
 		predefineWatchList=new PredefineWatchList(driver);
 		watchListHelper=new WatchListHelper(driver);
+		watchListKeyword=new WatchListKeywords();
+		predefineWatchListDetailList=new ArrayList<String>();
 	}
 	
 	public WatchListPage() {}
@@ -129,66 +132,6 @@ public class WatchListPage extends SeleniumCoder{
 		
 	}
 	
-	public List<String> keywordProccess(String keyword){
-		List<String> stepsList=new ArrayList<String>();
-		Map<String,List<String>> keywordSteps=new HashMap<String,List<String>>();
-		List<String> createSteps=new ArrayList<String>();
-		createSteps.add("Create");
-		createSteps.add("Verfiy");
-		List<String> createDeleteSteps=new ArrayList<String>();
-		createDeleteSteps.add("Create");
-		createDeleteSteps.add("Verfiy");
-		createDeleteSteps.add("Delete");
-	
-		List<String> createAddScriptSteps=new ArrayList<String>();
-		createAddScriptSteps.add("Create");
-		createAddScriptSteps.add("AddScript");
-		createAddScriptSteps.add("Verfiy");
-		List<String> createAddScriptDeleteSteps=new ArrayList<String>();
-		createAddScriptDeleteSteps.add("Create");
-		createAddScriptDeleteSteps.add("AddScript");
-		createAddScriptDeleteSteps.add("Verfiy");
-		createAddScriptDeleteSteps.add("Delete");
-		
-		List<String> createDuplicateSteps=new ArrayList<String>();
-		createDuplicateSteps.add("Create");
-		createDuplicateSteps.add("Create");
-		
-		List<String> predefineWatchList=new ArrayList<String>();
-		predefineWatchList.add("PredefineWatchList");
-		predefineWatchList.add("Verfiy");
-		
-		List<String> createAddScriptDeleteScript=new ArrayList<String>();
-		createAddScriptDeleteScript.add("Create");
-		createAddScriptDeleteScript.add("AddScript");
-		createAddScriptDeleteScript.add("DeleteScript");
-		createAddScriptDeleteScript.add("Verfiy");
-		
-		
-		
-		keywordSteps.put("create", createSteps);
-		keywordSteps.put("CreateDelete", createDeleteSteps);
-		keywordSteps.put("CreateAddScript", createAddScriptSteps);
-		keywordSteps.put("CreateAddScriptDelete", createAddScriptDeleteSteps);
-		keywordSteps.put("CreateDuplicate",createDuplicateSteps);
-		keywordSteps.put("ClickPredineWatchList",predefineWatchList);
-		keywordSteps.put("CreateAddScriptDeleteScript",createAddScriptDeleteScript);
-		
-		
-		
-		for (Map.Entry<String,List<String>> entry : keywordSteps.entrySet()) {
-			String mapStep=entry.getKey();
-			Reporter.log("Keyword : "+mapStep, true);
-			if(mapStep.equalsIgnoreCase(keyword.trim())) {
-				stepsList=entry.getValue();
-				break;
-			}
-		}
-		for(String steps:stepsList) {
-			Reporter.log(steps, true);
-		}
-		return stepsList;
-	}
 	
 	public void deleteWatchList(WatchListModel model)  {
 		
@@ -267,7 +210,7 @@ public class WatchListPage extends SeleniumCoder{
 		}
 		
 		addScriptTextfield=fluentWaitCodeXpath(xpathString, "Add Script textfield");
-		staticWait(100);
+		staticWait(600);
 		clearAndSendKey(addScriptTextfield, model.getScriptName(), "Add Script textfield");
 		
 		clickElement(dropdownOptionStr, model.getScriptName()+"Dropdown option");
@@ -327,7 +270,7 @@ public class WatchListPage extends SeleniumCoder{
 		}else if(keyword.equalsIgnoreCase("ClickPredineWatchList")) {
 			
 			
-			scroll.scrollToSpecificLocation("0", "1500");
+			
 		}
 		else {
 			scriptList=new ArrayList<String>();
@@ -347,7 +290,7 @@ public class WatchListPage extends SeleniumCoder{
 		watchListHelper.deleteScript(model);
 	}
 	
-	public void predefineWatchList(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
+	public List<String> predefineWatchList(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
 		int orderNo = 0;
 		try {
 		 orderNo=Integer.valueOf(model.getReferNo());
@@ -366,8 +309,10 @@ public class WatchListPage extends SeleniumCoder{
 		predifineWatchMsg=fetchTextFromElement(predifineWatchMsgLabel);
 		predifineWatchMsg=removeExtrahmtlCode(predifineWatchMsg);
 		errorMsg=predifineWatchMsg;
-		//reporter.addScreenshotMethodInfo(driver, MyTestLauncher.reportFolderPath[0], "WatchList", orderNo);
-		predefineWatchList.trading(model,reporter);
+		
+		predefineWatchListDetailList=predefineWatchList.predefineWatchListExecution(model,reporter);
+		
+		return predefineWatchListDetailList;
 	}
 	
 	public void tabNotFound(String watchListName) throws InterruptedException {
@@ -376,8 +321,8 @@ public class WatchListPage extends SeleniumCoder{
 		clickElement(watchListOptionxpath, watchListName+" option ");
 	}
 	
-	public String watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
-		List<String> stepsList=keywordProccess(model.getKeyword());
+	public List<String> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
+		List<String> stepsList=watchListKeyword.keywordProccess(model.getKeyword());
 		
 		for(String steps:stepsList) {
 			Reporter.log("Step ===================================================>>> "+steps+"\n=======================================>>> "+model.getKeyword(), true);
@@ -400,7 +345,7 @@ public class WatchListPage extends SeleniumCoder{
 				verifyCode(model.getKeyword());
 				break;
 			case "PredefineWatchList":
-				predefineWatchList(model,reporter);
+				predefineWatchListDetailList=predefineWatchList(model,reporter);
 				break;
 			case "DeleteScript":
 				deleteScript(model);
@@ -408,7 +353,7 @@ public class WatchListPage extends SeleniumCoder{
 			}
 		}
 		
-		return predifineWatchMsg;
+		return predefineWatchListDetailList;
 		
 	}
 }

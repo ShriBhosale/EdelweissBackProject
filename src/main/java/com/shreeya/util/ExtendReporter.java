@@ -308,7 +308,7 @@ public class ExtendReporter {
 		//System.exit(0);
 	}
 	
-	public ExtendReporter watchListReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver,String msg) throws IOException, InterruptedException {
+	public ExtendReporter watchListReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver,List<String> detailList) throws IOException, InterruptedException {
 		Reporter.log("watchListReport start", true);
 		int orderNo=0;
 		try {
@@ -317,8 +317,10 @@ public class ExtendReporter {
 			
 		}
 		htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
-		if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
-			predefineWatchReport(model, htmlReport, driver, orderNo,msg);
+		if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
+			predefineWatchReport(model, htmlReport, driver, orderNo,WatchListPage.predifineWatchMsg);
+		}else if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
+			predefineWatchDetaiReport(model, htmlReport, driver, orderNo,detailList);
 		}else{
 		test.log(Status.INFO, "WatchList name : "+model.getWatchListName());
 		if(model.getDafaultWatchList().equalsIgnoreCase("Yes"))
@@ -333,6 +335,14 @@ public class ExtendReporter {
 		return htmlReport;
 	}
 	
+	private void predefineWatchDetaiReport(WatchListModel model, ExtendReporter htmlReport, WebDriver driver,
+			int orderNo, List<String> detailList) {
+		for(String detail:detailList)
+		test.log(Status.INFO, detail);
+		
+		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
+	}
+
 	public void compareScriptAndExchange(WatchListModel model) {
 		Reporter.log("Inside compareScriptAndExchange ", true);
 		

@@ -1,6 +1,7 @@
 package com.shreeya.orderdetailpages;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
@@ -204,7 +205,9 @@ public class LoginPage extends SeleniumCoder {
 	}
 
 	public void logout(WebDriver driver) throws InterruptedException {
-
+		int noTab=noTabs(driver);
+//		for(int i=0;i<noTab;i++) {
+			
 		closeButton = fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[1]/a",5,"Close Button (x)");
 		if(closeButton!=null)
 		clickElement(closeButton, "Close order status popup");
@@ -214,9 +217,14 @@ public class LoginPage extends SeleniumCoder {
 
 		logoutlink = fluentWaitCodeXpath(driver, "//a[text()=' Logout']","Logout link");
 		clickElement(logoutlink, "logout link");
-
+		/*
+		 * if(noTab==2) { driver.close(); }
+		 */
+		/* } */
 		// logoutlink.click();
 	}
+	
+	
 
 	public void headerInExcel(CSVWriter writer) throws IOException {
 		CsvReaderCode reader = new CsvReaderCode();

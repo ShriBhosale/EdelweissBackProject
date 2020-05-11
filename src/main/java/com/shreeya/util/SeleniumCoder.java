@@ -964,4 +964,17 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 	}
 
+	public int noTabs(WebDriver driver) {
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		System.out.println("No. of tabs: " + tabs.size());
+		return tabs.size();
+	}
+	
+	public WebDriver switchWindow() {
+		 
+		for (String handle : driver.getWindowHandles()) {
+			 
+			driver.switchTo().window(handle);}
+		return driver;
+	}
 }

@@ -33,7 +33,7 @@ public class WatchListHelper extends SeleniumCoder{
 		scriptNameArray=watchListPage.scriptNames(model.getVerifyScript());
 		int scriptCount=scriptNameArray.length+2;
 		for(int i=2;i<scriptCount;i++) {
-			scriptNameLabel=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div['"+i+"']/div[1]/div[1]/a", "Script Name");
+			scriptNameLabel=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a", "Script Name");
 			scriptName=fetchTextFromElement(scriptNameLabel);
 			if(scriptName.contains(model.getDeleteScript())) {
 				
