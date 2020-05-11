@@ -291,6 +291,7 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 	public List<String> predefineWatchList(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
+		Reporter.log("predefineWatchList", true);
 		int orderNo = 0;
 		try {
 		 orderNo=Integer.valueOf(model.getReferNo());
