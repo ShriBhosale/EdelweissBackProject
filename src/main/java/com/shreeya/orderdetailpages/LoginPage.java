@@ -15,6 +15,7 @@ import org.testng.Reporter;
 
 import com.opencsv.CSVWriter;
 import com.shreeya.MyTestLauncher;
+import com.shreeya.model.LatestLoginModel;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.util.BrowserLaunch;
@@ -61,7 +62,7 @@ public class LoginPage extends SeleniumCoder {
 
 	}
 
-	public void loginExecution(String scenario, LoginModel loginModelObject) throws InterruptedException, IOException {
+	public void loginExecution(String scenario, LatestLoginModel loginModelObject) throws InterruptedException, IOException {
 		// driver=browserLaunch(scenario);
 		LoginTestModel loginTestModel=null;
 		if (!loginModelObject.getModule().equalsIgnoreCase("login")) {
@@ -92,16 +93,20 @@ public class LoginPage extends SeleniumCoder {
 		// return driver;
 	}
 
-	public boolean loginCodeExecution(String scenario, LoginModel loginModelObject)throws InterruptedException, IOException {
+	public boolean loginCodeExecution(String scenario, LatestLoginModel loginModelObject)throws InterruptedException, IOException {
 
 		Reporter.log("LoginPage : loginExecution ", true);
 		clickOnLoginButton(driver);
-
+		if (equityCommodityPoppup(driver,loginModelObject.getSegment())) {
+			Reporter.log("Popup handlyed", true);
+		}
 		do {
 			try {
 				Reporter.log("Before userId", true);
 				Reporter.log("LoginModel data " + loginModelObject.toString(), true);
+				
 				userIdTextField = fluentWaitCodeId(driver, "userID", 50);
+				
 				Reporter.log("After locate userId", true);
 			} catch (TimeoutException e) {
 				Reporter.log("User id not found now again click onLogin button");
@@ -110,14 +115,15 @@ public class LoginPage extends SeleniumCoder {
 		} while (userIdTextField == null);
 		try {
 			Reporter.log("User id : " + loginModelObject.getUserId(), true);
-			clearAndSendKey(userIdTextField, loginModelObject.getUserId(), loginModelObject.getReferNo());
+			
+			clearAndSendKey(userIdTextField, loginModelObject.getUserId(), loginModelObject.getUserId());
 		} catch (Exception e) {
 			editButton = fluentWaitCodeXpath(driver,
 					"//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[1]/a/i","Edit Button");
 			clickElement(editButton, "Edit button");
 			clearAndSendKey(userIdTextField, loginModelObject.getUserId(), "User Id");
 		}
-		if (equityCommodityPoppup(driver))
+		if (equityCommodityPoppup(driver,loginModelObject.getSegment()))
 			Reporter.log("Handly semement popup!!", true);
 		else
 			Reporter.log("NO Handly semement popup!!", true);
@@ -128,7 +134,7 @@ public class LoginPage extends SeleniumCoder {
 			
 			passwordTextField = fluentWaitCodeId(driver, "password", 30);
 		} catch (TimeoutException e) {
-			if (equityCommodityPoppup(driver)) {
+			if (equityCommodityPoppup(driver,loginModelObject.getSegment())) {
 
 				Reporter.log("Segement Poppup handly", true);
 				passwordTextField = fluentWaitCodeId(driver, "password", 30);
@@ -139,15 +145,15 @@ public class LoginPage extends SeleniumCoder {
 		proceedButton = fluentWaitCodeXpath(driver, "//button[text()='Proceed']","Proceed Button");
 		clickElement(proceedButton, "Proceed Button");
 		if (logError("//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span", driver)) {
-			Thread.sleep(4000);
+			//Thread.sleep(4000);
 
 			yobTextField = fluentWaitCodeXpath(driver, "//*[@id='ans']","Yob textfield");
-			sendKey(yobTextField, loginModelObject.getYob(), loginModelObject.getReferNo());
+			sendKey(yobTextField, loginModelObject.getYob(), loginModelObject.getYob());
 
 			continueButton = fluentWaitCodeXpath(driver, "//button[text()='Continue']","Continue Button");
 			clickElement(continueButton, "ContinueButton");
 
-			notNowButton = fluentWaitCodeXpath(driver, "//a[text()='Not now']","Not now button");
+			notNowButton = fluentWaitCodeXpath(driver, "//a[text()='Not now']",40,"Not now button");
 			if (notNowButton != null) {
 				popupFlag=true;
 				clickElement(notNowButton, "Not now popup button");
@@ -159,7 +165,7 @@ public class LoginPage extends SeleniumCoder {
 			 * clickElement(popUpButton); }
 			 */
 
-			popupOkButton = fluentWaitCodeXpath(driver,"//button[text()='Ok']","Ok popup button");
+			popupOkButton = fluentWaitCodeXpath(driver,"//button[text()='Ok']",20,"Ok popup button");
 			if (popupOkButton != null) {
 				popupFlag=true;
 				clickElement(popupOkButton, "Ok popup button");
@@ -167,25 +173,29 @@ public class LoginPage extends SeleniumCoder {
 		} else {
 
 			// notNowButton=fluentWaitCodeXpath(driver, "//button[text()='Not Now']");
-			notNowButton = fluentWaitCodeXpath(driver, "//*[@id=\"loginModal\"]/div/div[1]/div/div/div/div[2]/p[1]/a","Not now popup button");
+			notNowButton = fluentWaitCodeXpath(driver, "//*[@id=\"loginModal\"]/div/div[1]/div/div/div/div[2]/p[1]/a",40,"Not now popup button");
 			clickElement(notNowButton, "Not now popup button");
 			popupFlag=true;
 		}
+		
+			popupButton = fluentWaitCodeXpath(driver, "//button[text()='No thanks']", 40,"No thans popup button");
+			if (popupButton != null) {
+				clickElement(popupButton, "No thans popup button");
+			}
 		Reporter.log("PopupError flag================================================> "+popupFlag, true);
 		return popupFlag;
 		
 	}
 
-	private boolean equityCommodityPoppup(WebDriver driver) {
+	private boolean equityCommodityPoppup(WebDriver driver,String segment) {
 		boolean elementFlag = false;
 		WebElement segmentRadioButton = null;
-		ConfigReader configReader = new ConfigReader();
-		String segement = configReader.configReader("segement");
+		
 		try {
-			if (segement.equalsIgnoreCase("EQ")) {
+			if (segment.equalsIgnoreCase("Equity")) {
 				segmentRadioButton = fluentWaitCodeXpathCheckElement(driver,
 						"//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[1]/div[1]/label", 1,"Eq segement Button");
-			} else if (segement.equalsIgnoreCase("CO")) {
+			} else if (segment.equalsIgnoreCase("Commodity")) {
 				segmentRadioButton = fluentWaitCodeXpathCheckElement(driver,
 						"//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[1]/div[2]/label", 1,"CO segement Button");
 			}
@@ -196,7 +206,7 @@ public class LoginPage extends SeleniumCoder {
 			elementFlag = true;
 			WebElement proceedButton = fluentWaitCodeXpath(driver, "//button[text()='Proceed']","Procced Button for segement info popup");
 			
-				clickElement(segmentRadioButton, segement + " RadioButton");
+				clickElement(segmentRadioButton, segment + " RadioButton");
 				clickElement(proceedButton, "Proceed Button");
 			
 		}
@@ -213,8 +223,11 @@ public class LoginPage extends SeleniumCoder {
 		clickElement(closeButton, "Close order status popup");
 		Thread.sleep(3000);
 		logoutOption = fluentWaitCodeXpath(driver, "//*[@id='caUser']/span[1]","Logout option");
+		if(logoutOption!=null) {
 		clickElement(logoutOption, "Logout option");
-
+		}else {
+			driver.navigate().refresh();
+		}
 		logoutlink = fluentWaitCodeXpath(driver, "//a[text()=' Logout']","Logout link");
 		clickElement(logoutlink, "logout link");
 		/*
@@ -316,7 +329,7 @@ public class LoginPage extends SeleniumCoder {
 
 		logErrorChecker = logError("//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[1]/span",
 				driver);
-		if (equityCommodityPoppup(driver)) {
+		if (equityCommodityPoppup(driver,"Equity")) {
 			Reporter.log("Segement Poppup", true);
 		}
 		Reporter.log("After Userid and than processed " + logErrorChecker, true);

@@ -17,6 +17,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.shreeya.model.ExecutionModel;
 import com.shreeya.model.FundTransferModel;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.LoginTestModel;
@@ -101,7 +102,7 @@ public class CsvReaderCode {
 		
 	}
 	
-	public ArrayList<LoginModel> LoginFileReader() {
+	public ArrayList<ExecutionModel> LoginFileReader() {
 		ConfigReader configReader=new ConfigReader();
 		String testDataPath=configReader.configReader("TestData")+"\\Execution";
 		CSVReader reader = null;
@@ -113,12 +114,12 @@ public class CsvReaderCode {
 			e.printStackTrace();
 		}
 
-		CsvToBean<LoginModel> csvToBean = new CsvToBeanBuilder(reader).withType(LoginModel.class).build();
-		ArrayList<LoginModel> arrayListObject=new ArrayList<LoginModel>();
-		Iterator<LoginModel> csvTestDataModelIterator = csvToBean.iterator();
+		CsvToBean<ExecutionModel> csvToBean = new CsvToBeanBuilder(reader).withType(ExecutionModel.class).build();
+		ArrayList<ExecutionModel> arrayListObject=new ArrayList<ExecutionModel>();
+		Iterator<ExecutionModel> csvTestDataModelIterator = csvToBean.iterator();
 		
-		  while(csvTestDataModelIterator.hasNext()) { LoginModel some=
-		  csvTestDataModelIterator.next(); arrayListObject.add(some);
+		  while(csvTestDataModelIterator.hasNext()) { 
+			  ExecutionModel some=csvTestDataModelIterator.next(); arrayListObject.add(some);
 		 // System.out.println(some.toString());
 		  }
 		 

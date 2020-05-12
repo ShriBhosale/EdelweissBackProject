@@ -25,7 +25,7 @@ public class PartialOrderPage extends SeleniumCoder {
 		Reporter.log("Partial Order Execution Method",true);
 		LoginPage loginObject=new LoginPage(driver);
 		NewOrderPage newObect=new NewOrderPage(driver);
-		loginObject.loginExecution("Partial Order",loginModel);
+	//	loginObject.loginExecution("Partial Order",loginModel);
 		newObect.newOrderExecution(model, driver, orderNo);
 		loginObject.logout(driver);
 		driver.close();

@@ -19,7 +19,7 @@ public class SeeMarginExecution extends SeleniumCoder {
 		this.driver=driver;
 	}
 	
-	public void seeMarginExecute(LoginModel loginModel) throws InterruptedException, IOException {
+	public void seeMarginExecute() throws InterruptedException, IOException {
 		
 		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']", "See Margin Tab");
 		  clickElement(seeMarginTab, "See Margin Tab");

@@ -218,7 +218,7 @@ public class WatchListPage extends SeleniumCoder{
 		clickElement("//h4[text()='"+text+"']//following::button[2]", "Add Script button");
 		Thread.sleep(500);
 		//clickElement("//button[text()='Ok']", "OK button");
-		okButton=fluentWaitCodeXpath("//button[text()='Ok']", "Ok button");
+		okButton=fluentWaitCodeXpath("//button[text()='Ok']",40,"Ok button");
 		if(okButton!=null) {
 			clickElement(okButton, "Ok button");
 		}else {

@@ -1,7 +1,11 @@
 package com.shreeya;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
@@ -17,6 +21,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.shreeya.fundtransferpages.FundTransferExecution;
+import com.shreeya.model.LatestLoginModel;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.MasterTestModel;
 import com.shreeya.model.TestDataModel;
@@ -49,11 +54,14 @@ public class FunctionKeyword {
 	BrowserLaunch browserLunch;
 	private String step;
 	boolean skipScenario=false;
-	
-
+	Map<String,ArrayList<String>> loginMap;
+	ArrayList<String> equtiyLoginList;
+	ArrayList<String> commodityLoginList;
+	ArrayList<String> mergeIdLoginList;
 	
 	public static ApacheCode apacheCodeObj;
 	public static FolderStructure folderCreationObj;
+	LatestLoginModel latestLoginModel;
 
 	@BeforeSuite
 	public void beforeSuite() throws IOException {
@@ -71,8 +79,10 @@ public class FunctionKeyword {
 		orderActioObj = new OrderAction(driver);
 		testDataObject = new TestDataModel();
 		helperObject = new HelperCode();
-
-		
+		loginMap=new HashMap<String,ArrayList<String>>();
+		equtiyLoginList=new ArrayList<String>();
+		commodityLoginList=new ArrayList<String>();
+		mergeIdLoginList=new ArrayList<String>();
 		apacheCodeObj = new ApacheCode();
 
 		// apacheCodeObj.outputFileWriterHeader(folderPath[0]);
@@ -85,19 +95,49 @@ public class FunctionKeyword {
 		Reporter.log("BeforeMethod", true);
 	}
 
-	@Parameters({ "Reference", "UserId", "Pwd", "Yob", "StartNo", "EndNo", "Module" })
+	@Parameters({ "Reference", "UserIdEQ", "PasswordEQ", "YobEQ", "UserIdCO", "PasswordCO", "YobCO", "UserIdMI", "PasswordMI", "YobMI", "Module" })
 	@Test
-	public void executionWithKeyword(String referenceNo, String userId, String pwd, String yob, String startNo,
-			String endNo, String module) throws InterruptedException, IOException {
+	public void executionWithKeyword(String referenceNo, String userIdEQ, String pwdEQ, String yobEQ, String userIdCO, String pwdCO, String yobCO,String userIdMI, String pwdMI, String yobMI, String module) throws InterruptedException, IOException {
 		
 		CsvReaderCode code = new CsvReaderCode();
 		Reporter.log("<b><==================== Function KeyWord : executionWithKeyword ================></b>", true);
 		Reporter.log("Before Iterator " + referenceNo);
 
 		Reporter.log("After Iterator", true);
-
-		LoginModel loginModelObj = new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, module);
-		Reporter.log("Login Data ====> " + loginModelObj.toString(), true);
+		equtiyLoginList.add(referenceNo);
+		equtiyLoginList.add(userIdEQ);
+		equtiyLoginList.add(pwdEQ);
+		equtiyLoginList.add(yobEQ);
+		equtiyLoginList.add(module);
+		
+		commodityLoginList.add(referenceNo);
+		commodityLoginList.add(userIdCO);
+		commodityLoginList.add(pwdCO);
+		commodityLoginList.add(yobCO);
+		commodityLoginList.add(module);
+		
+		mergeIdLoginList.add(referenceNo);
+		mergeIdLoginList.add(userIdMI);
+		mergeIdLoginList.add(pwdMI);
+		mergeIdLoginList.add(yobMI);
+		mergeIdLoginList.add(module);
+		
+		loginMap.put("Equity", equtiyLoginList);
+		loginMap.put("Commodity", commodityLoginList);
+		loginMap.put("MergeId", mergeIdLoginList);
+		
+		for(Map.Entry<String,ArrayList<String>> entry : loginMap.entrySet()) {
+			List<String> login=entry.getValue();
+			int referNo=Integer.valueOf(login.get(0));
+			if(!login.get(1).equalsIgnoreCase("No")) {
+			latestLoginModel=new LatestLoginModel(referNo, login.get(1), login.get(2), login.get(3), login.get(4),entry.getKey());
+			
+			}else {
+				continue;
+			}
+		
+		//LoginModel loginModelObj = new LoginModel(referenceNo, userId, pwd, yob, startNo, endNo, module);
+		Reporter.log("Login Data ====> " + latestLoginModel.toString(), true);
 
 		Reporter.log("KeyWord before process  ====> " + module, true);
 
@@ -115,7 +155,7 @@ public class FunctionKeyword {
 			case "login":
 				LoginExecution loginPageObj = new LoginExecution(driver);
 				Reporter.log("Login functionality", true);
-				skipScenario=loginPageObj.loginExecution("normal", loginModelObj);
+				skipScenario=loginPageObj.loginExecution("normal", latestLoginModel);
 				if(skipScenario) {
 					Reporter.log("<b><u>Login step fail</b></u>", true);
 					continue;
@@ -126,7 +166,7 @@ public class FunctionKeyword {
 				OrderAction orderActionObj = new OrderAction(driver);
 				Reporter.log("Order detail functionality", true);
 				if(skipScenario==false)
-				orderActionObj.orderActionStart(loginModelObj);
+				//orderActionObj.orderActionStart(loginModelObj);
 				break;
 
 			case "fundtransfer":
@@ -138,19 +178,19 @@ public class FunctionKeyword {
 			case "mypositions":
 				MyPositionsExecution myPositionObj = new MyPositionsExecution(driver);
 				if(skipScenario==false)
-				myPositionObj.myPositionsExecute(loginModelObj);
+				myPositionObj.myPositionsExecute();
 				Reporter.log("My Position Module", true);
 				break;
 			case "seemargin":
 				SeeMarginExecution seeMarginObj = new SeeMarginExecution(driver);
 				if(skipScenario==false)
-				seeMarginObj.seeMarginExecute(loginModelObj);
+				seeMarginObj.seeMarginExecute();
 				Reporter.log("See Margin Module", true);
 				break;
 			case "seeholdings":
 				SeeHoldingsExecution seeHoldingsObj = new SeeHoldingsExecution(driver);
 				if(skipScenario==false)
-				seeHoldingsObj.seeHoldingsExecute(loginModelObj);
+				seeHoldingsObj.seeHoldingsExecute();
 				Reporter.log("See Holdings Module", true);
 				break;
 				
@@ -174,7 +214,7 @@ public class FunctionKeyword {
 
 		}
 		
-		
+		}
 
 	}
 
@@ -194,6 +234,7 @@ public class FunctionKeyword {
 				reporter.reporter(driver, module, MyTestLauncher.reportFolderPath,referNo);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}
+			htmlReport.captureScreen(driver, MyTestLauncher.reportFolderPath[2], "beforLogout", 1);
 			if(!module.equalsIgnoreCase("login"))
 			login.logout(driver);
 			

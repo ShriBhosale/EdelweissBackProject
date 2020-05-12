@@ -33,6 +33,7 @@ public class WatchListKeywords {
 		
 		List<String> createDuplicateSteps=new ArrayList<String>();
 		createDuplicateSteps.add("Create");
+		createDuplicateSteps.add("Verfiy");
 		createDuplicateSteps.add("Create");
 		
 		List<String> predefineWatchList=new ArrayList<String>();

@@ -22,7 +22,7 @@ public class MyPositionsExecution extends SeleniumCoder {
 	}
 
 
-	public void myPositionsExecute(LoginModel loginModel) throws InterruptedException, IOException {
+	public void myPositionsExecute() throws InterruptedException, IOException {
 
 
 		myPositionsTab=fluentWaitCodeXpath(driver, "//a[text()='Place Order']//following::a[text()='My Positions']","My Positions Tab");

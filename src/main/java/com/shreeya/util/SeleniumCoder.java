@@ -806,9 +806,25 @@ public class SeleniumCoder extends ExceptionHandler {
 		WebElement parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
 		Actions action = new Actions(driver);
 		action.moveToElement(parentElement).click().perform();
+		Reporter.log("click on ParentElement", true);
 		childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
 		staticWait(500);
-		clickElement(childElement,  "Child Element");
+		try {
+		clickElementWithoutException(childElementStr,  "Child Element");
+		}catch(ElementClickInterceptedException e) {
+			parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
+			Actions action1 = new Actions(driver);
+			action1.moveToElement(parentElement).click().perform();
+			childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
+			clickElement(childElementStr, "Again chile link");
+		}catch(ElementNotInteractableException e) {
+			staticWait(300);
+			parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
+			Actions action1 = new Actions(driver);
+			action1.moveToElement(parentElement).click().perform();
+			childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
+			clickElement(childElementStr, "Again chile link");
+		}
 	}
 	
 	public void iconButton(String xpathString,String iconName) {
@@ -914,12 +930,12 @@ public class SeleniumCoder extends ExceptionHandler {
 		return element;
 	}
 	
-	public void clickElementWithoutException(String xpathString, String elementName) throws InterruptedException{
-		Thread.sleep(500);
+	public void clickElementWithoutException(String xpathString, String elementName) {
+		staticWait(500);
 		
 		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
 		try {
-			Thread.sleep(500);
+			staticWait(500);
 			if (element.isEnabled() == true) {
 				element.click();
 				Reporter.log(elementName + " Click ", true);

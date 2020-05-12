@@ -7,9 +7,11 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
 import com.shreeya.MyTestLauncher;
+import com.shreeya.model.LatestLoginModel;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.util.CsvReaderCode;
@@ -30,15 +32,18 @@ public class LoginExecution extends SeleniumCoder{
 		report=new ExtendReporter();
 	}
 	
-	public boolean loginExecution(String scenario, LoginModel loginModelObject) throws InterruptedException, IOException {
+	public boolean loginExecution(String scenario, LatestLoginModel loginModelObject) throws InterruptedException, IOException {
 		boolean skipScenario=false;
 		// driver=browserLaunch(scenario);
 		
 		if (!loginModelObject.getModule().equalsIgnoreCase("login")) {
 			try {
 			loginPage.loginCodeExecution(scenario, loginModelObject);
-			if(!loginPage.popupFlag)
+			if(!loginPage.popupFlag) {
+				WebElement placeOrderLink=fluentWaitCodeXpath("//a[text()='Place Order']", 10, "Place order tab");
+				if(placeOrderLink==null)
 				skipScenario=true;
+			}
 			}catch(TimeoutException e) {
 				report.abnormalErrorHandling(driver, elementNameError,loginModelObject.getModule());
 				skipScenario=true;
@@ -53,7 +58,7 @@ public class LoginExecution extends SeleniumCoder{
 		return skipScenario;
 	}
 	
-	public void loginRegressionExecution(LoginModel loginModelObject) throws IOException, InterruptedException {
+	public void loginRegressionExecution(LatestLoginModel loginModelObject) throws IOException, InterruptedException {
 
 		ExtendReporter extend = new ExtendReporter(MyTestLauncher.reportFolderPath[1], "LoginRegression", 0);
 		CsvReaderCode csvReader = new CsvReaderCode();
@@ -83,7 +88,7 @@ public class LoginExecution extends SeleniumCoder{
 	
 	}
 	
-	public void loginStepExecution(String scenario, LoginModel loginModelObject) throws InterruptedException, IOException {
+	public void loginStepExecution(String scenario, LatestLoginModel loginModelObject) throws InterruptedException, IOException {
 		try {
 		loginPage.loginCodeExecution(scenario, loginModelObject);
 		}catch(NullPointerException e) {

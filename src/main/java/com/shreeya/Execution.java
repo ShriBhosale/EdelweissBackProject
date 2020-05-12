@@ -72,7 +72,7 @@ public class Execution {
 			Reporter.log("Login Data ====> "+loginModelObj.toString(),true);
 			if(referenceNo.equals(loginModelObj.getReferNo())) {
 				try {
-					login.loginExecution("Normal",loginModelObj);
+				//	login.loginExecution("Normal",loginModelObj);
 					//driver=orderActioObj.orderActionStart(driver,loginModelObj);
 					terminateExecution(driver);
 				} catch (InterruptedException e) { // TODO Auto-generated catch block

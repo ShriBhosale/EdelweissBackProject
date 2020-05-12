@@ -351,7 +351,7 @@ public class ExtendReporter {
 		String [] sheetSriptNameArray=WatchListPage.scriptArray;
 		List<String> scriptList=WatchListPage.scriptList;
 		List<String> exchangeList=WatchListPage.exchangeList;
-		String scriptZero=scriptList.get(0);
+		//String scriptZero=scriptList.get(0);
 		if(model.getKeyword().trim().equalsIgnoreCase("CreateAddScript")||model.getKeyword().trim().equalsIgnoreCase("CreateAddScriptDelete")) {
 			
 			for(int i=0;i<scriptList.size();i++) {
