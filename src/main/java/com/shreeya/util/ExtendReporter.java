@@ -316,7 +316,7 @@ public class ExtendReporter {
 		}catch(NumberFormatException e) {
 			
 		}
-		htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
+		htmlReport.testCreation(model.getReferNo());
 		if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
 			predefineWatchReport(model, htmlReport, driver, orderNo,WatchListPage.predifineWatchMsg);
 		}else if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {

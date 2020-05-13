@@ -43,7 +43,7 @@ public class BrowserLaunch {
 			driver=new ChromeDriver(capabilities);
 		}
 		//((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
-		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 
 		// driver.get("https://www.google.com/");
 		driver.get("https://ewuat.edelbusiness.in/ewhtml/");

@@ -58,12 +58,13 @@ public class WatchListExecution extends SeleniumCoder{
 				continue;
 			}
 			//watchListPage.pageVerify(model.getWatchListName(),model.getKeyword());
-			if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
-				
-				reporter=watchListReport.watchListReportExecution(model, reporter,driver);
-			}else {
-			reporter=reporter.watchListReport(model, reporter, driver,watchListDetail);
-			}
+			/*
+			 * if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
+			 * 
+			 * reporter=watchListReport.watchListReportExecution(model, reporter,driver);
+			 * }else { reporter=reporter.watchListReport(model, reporter,
+			 * driver,watchListDetail); }
+			 */
 		}
 		reporter.logFlush();
 	}

@@ -67,8 +67,8 @@ public class WatchListReport extends ExtendReporter {
 		}catch(NumberFormatException e) {
 			
 		}
-		test=htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
-		if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
+		test=htmlReport.testCreation("Watchlist"+"_"+model.getReferNo());
+		if("Watchlist".equalsIgnoreCase("TradeWithpredefineWatchList")) {
 			predefineWatchListReport(model);
 			htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "PredefineWatchList", orderNo);
 			
@@ -86,9 +86,9 @@ public class WatchListReport extends ExtendReporter {
 		}catch(NumberFormatException e) {
 			
 		}
-		test=htmlReport.testCreation(model.getTestCaseName()+"_"+model.getReferNo());
+		test=htmlReport.testCreation(model.getReferNo());
 		test.log(Status.FAIL, "Abnormal condition");
-		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], model.getTestCaseName(), orderNo);
+		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],"Watchlist", orderNo);
 		return htmlReport;
 	}
 	

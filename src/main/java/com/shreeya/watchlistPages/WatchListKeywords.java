@@ -9,68 +9,37 @@ import org.testng.Reporter;
 
 public class WatchListKeywords {
 
-	public List<String> keywordProccess(String keyword){
+	public List<String> keywordProccess(String predefineWatchList){
 		List<String> stepsList=new ArrayList<String>();
-		Map<String,List<String>> keywordSteps=new HashMap<String,List<String>>();
-		List<String> createSteps=new ArrayList<String>();
-		createSteps.add("Create");
-		createSteps.add("Verfiy");
-		
-		List<String> createDeleteSteps=new ArrayList<String>();
-		createDeleteSteps.add("Create");
-		createDeleteSteps.add("Verfiy");
-		createDeleteSteps.add("Delete");
-	
-		List<String> createAddScriptSteps=new ArrayList<String>();
-		createAddScriptSteps.add("Create");
-		createAddScriptSteps.add("AddScript");
-		createAddScriptSteps.add("Verfiy");
-		List<String> createAddScriptDeleteSteps=new ArrayList<String>();
-		createAddScriptDeleteSteps.add("Create");
-		createAddScriptDeleteSteps.add("AddScript");
-		createAddScriptDeleteSteps.add("Verfiy");
-		createAddScriptDeleteSteps.add("Delete");
-		
-		List<String> createDuplicateSteps=new ArrayList<String>();
-		createDuplicateSteps.add("Create");
-		createDuplicateSteps.add("Verfiy");
-		createDuplicateSteps.add("Create");
-		
-		List<String> predefineWatchList=new ArrayList<String>();
-		predefineWatchList.add("PredefineWatchList");
-		predefineWatchList.add("Verfiy");
-		
-		List<String> createAddScriptDeleteScript=new ArrayList<String>();
-		createAddScriptDeleteScript.add("Create");
-		createAddScriptDeleteScript.add("AddScript");
-		createAddScriptDeleteScript.add("DeleteScript");
-		createAddScriptDeleteScript.add("Verfiy");
-		
-		List<String> tradeWithpredefineWatchList=new ArrayList<String>();
-		tradeWithpredefineWatchList.add("PredefineWatchList");
-		tradeWithpredefineWatchList.add("Verfiy");
-		
-		keywordSteps.put("create", createSteps);
-		keywordSteps.put("CreateDelete", createDeleteSteps);
-		keywordSteps.put("CreateAddScript", createAddScriptSteps);
-		keywordSteps.put("CreateAddScriptDelete", createAddScriptDeleteSteps);
-		keywordSteps.put("CreateDuplicate",createDuplicateSteps);
-		keywordSteps.put("ClickPredineWatchList",predefineWatchList);
-		keywordSteps.put("CreateAddScriptDeleteScript",createAddScriptDeleteScript);
-		keywordSteps.put("TradeWithpredefineWatchList",tradeWithpredefineWatchList);
+		List<String> normalWatchList=new ArrayList<String>();
+		normalWatchList.add("Create");
+		normalWatchList.add("AddScript");
+		normalWatchList.add("Verfiy_1");
+		normalWatchList.add("Create");
+		normalWatchList.add("AddScript");
+		normalWatchList.add("Verfiy_2");
+		normalWatchList.add("DeleteScript");
+		normalWatchList.add("Delete");
+		normalWatchList.add("Verfiy_3");
 		
 		
-		for (Map.Entry<String,List<String>> entry : keywordSteps.entrySet()) {
-			String mapStep=entry.getKey();
-			Reporter.log("Keyword : "+mapStep, true);
-			if(mapStep.equalsIgnoreCase(keyword.trim())) {
-				stepsList=entry.getValue();
-				break;
-			}
+		List<String> predWatchList=new ArrayList<String>();
+		predWatchList.add("PredefineWatchList");
+		predWatchList.add("Verfiy_4");
+		predWatchList.add("PredefineWatchListTrade");
+		predWatchList.add("Verfiy_5");
+		
+		if(predefineWatchList.equalsIgnoreCase("Yes")) {
+			stepsList=predWatchList;
+		}else {
+			
+			stepsList=normalWatchList;
 		}
+		
 		for(String steps:stepsList) {
 			Reporter.log(steps, true);
 		}
+		
 		return stepsList;
 	}
 	

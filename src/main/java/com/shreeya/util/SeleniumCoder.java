@@ -1001,4 +1001,17 @@ public class SeleniumCoder extends ExceptionHandler {
 			driver.switchTo().alert().dismiss();
 		}
 	}
+	public List<String> elementsTextFilter(List<String> listObject) {
+		Reporter.log("elementsTextFilter : listObject length : "+listObject.size(), true);
+		List<String> fiterList=new ArrayList<String>(); ;
+		for(String elementString:listObject) {
+			
+			String [] arr=elementString.trim().split(" ");
+			String ans=arr[0].replace("\n", "");
+			Reporter.log(ans.trim(), true);
+			fiterList.add(ans.trim());
+		}
+		
+		return fiterList;
+	}
 }

@@ -12,6 +12,7 @@ import org.testng.Reporter;
 
 import com.shreeya.model.WatchListModel;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.Scroll;
 import com.shreeya.util.SeleniumCoder;
 
@@ -39,10 +40,13 @@ public class WatchListPage extends SeleniumCoder{
 	public static  String [] applicationScriptArray;
 	public static String errorMsg="no";
 	public static String predifineWatchMsg="no predefine msg";
+	String [] watchListNameArray;
 	String deleteOption="present";
 	
-	String scriptNames;
-	String exchanges;
+	private static String scriptNames;
+	private static String exchanges;
+	private static String watchListName;
+	private static ArrayList<String> errorList;
 	private WebElement okButton;
 	private String ErrorMsg;
 	Scroll scroll;
@@ -52,6 +56,9 @@ public class WatchListPage extends SeleniumCoder{
 	PredefineWatchList predefineWatchList;
 	WatchListHelper watchListHelper;
 	WatchListKeywords watchListKeyword;
+	WatchListStepVerify watchListStepVerify;
+	String [] verfiyArray= {"verify","verifyCount"};
+	private static int count=0;
 
 	public WatchListPage(WebDriver driver) throws IOException {
 		super(driver);
@@ -59,22 +66,31 @@ public class WatchListPage extends SeleniumCoder{
 		scroll=new Scroll(driver);
 		predefineWatchList=new PredefineWatchList(driver);
 		watchListHelper=new WatchListHelper(driver);
+		watchListStepVerify=new WatchListStepVerify(driver);
 		watchListKeyword=new WatchListKeywords();
 		predefineWatchListDetailList=new ArrayList<String>();
+		errorList=new ArrayList<String>();
 	}
 	
 	public WatchListPage() {}
 	
 	
 	public void createWatchList(WatchListModel model) throws InterruptedException {
+		count++;
 		Reporter.log(model.toString(), true);
-		scriptNames=model.getScriptName();
-		exchanges=model.getExchange();
-		scriptArray=scriptNames(model.getScriptName());
-		exchangeArray=scriptNames(model.getExchange());
+		if(count==1) {
+			watchListName=model.getWatchListName();
+			scriptNames=model.getScriptName();
+			exchanges=model.getExchange();
+		}
+		scriptArray=scriptNames(scriptNames);
+		exchangeArray=scriptNames(exchanges);
 		applicationScriptArray=scriptNames(model.getVerifyScript());
+		watchListNameArray=scriptNames(watchListName);
 		model.setScriptName(scriptArray[0]);
 		model.setExchange(exchangeArray[0]);
+		
+		for(String watchListName:watchListNameArray) {
 		newWatchListTab=fluentWaitCodeXpath("//span[text()='New Watchlist']", "New Watchlist tab");
 		clickElement(newWatchListTab, "New Watch list tab");
 		Thread.sleep(1000);
@@ -82,15 +98,17 @@ public class WatchListPage extends SeleniumCoder{
 		
 		if(watchListNameTextfield==null)
 			watchListNameTextfield=fluentWaitCodeXpath("//label[text()='Create a Watchlist']//following::input[1]", "WatchListName Textfield");
-		clearAndSendKey(watchListNameTextfield, model.getWatchListName(), "WatchListName Textfield");
+		clearAndSendKey(watchListNameTextfield, watchListName, "WatchListName Textfield");
 		Thread.sleep(1000);
-		if(model.getDafaultWatchList().equalsIgnoreCase("Yes")) {
+		if(count==1) {
 			defaultWatchListCheckBox=fluentWaitCodeXpath("//label[@class='default-watchlist']", "Default WatchList CheckBox");
 			clickElement(defaultWatchListCheckBox,  "Default WatchList CheckBox");
 		}
 		clickElement("//button[text()='Create']", "Create buttons");
+		model.setWatchListName(watchListName);
 		addScript(model,"create");
 		pageVerify(model,"Create");
+		}
 		/*
 		 * Thread.sleep(20000);
 		 * createWatchListPath=ScreenshortProvider.captureScreen(driver,"WatchList-"+
@@ -101,7 +119,7 @@ public class WatchListPage extends SeleniumCoder{
 	
 	public void pageVerify(WatchListModel model,String step) throws InterruptedException {
 		driver.navigate().refresh();
-		if(!(step.contains("Delete")||model.getDafaultWatchList().equalsIgnoreCase("Yes"))) {
+		if(!(step.contains("Delete"))) {
 		String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName()+"']";
 		try {
 		clickElement(createdWatchlistTab,model.getWatchListName()+" Watchlist Tab");
@@ -178,10 +196,14 @@ public class WatchListPage extends SeleniumCoder{
 		return scriptArray;
 	}
 	public void addScriptExecution(WatchListModel model) throws InterruptedException {
-		String [] scriptArray=scriptNames(scriptNames);
-		String [] exchangeArray=scriptNames(exchanges);
+		/*
+		 * String [] scriptArray=scriptNames(scriptNames); String []
+		 * exchangeArray=scriptNames(exchanges);
+		 */
 		//pageVerify(model);
-		
+		for(String watchListName:watchListNameArray) {
+			model.setWatchListName(watchListName);
+			pageVerify(model, "addScript");
 		for(int i=1;i<scriptArray.length;i++) {
 			addScriptButton=fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add script button");
 			try {
@@ -194,6 +216,7 @@ public class WatchListPage extends SeleniumCoder{
 			model.setScriptName(scriptArray[i]);
 			model.setExchange(exchangeArray[i]);
 			addScript(model,"addScript");
+		}
 		}
 	}
 	
@@ -223,9 +246,13 @@ public class WatchListPage extends SeleniumCoder{
 			clickElement(okButton, "Ok button");
 		}else {
 			if(step.equalsIgnoreCase("addScript")) {
-				errorMsg="User should not be allowed to add duplicate script.";
+				errorMsg=model.getScriptName()+" script already present. User should not be allowed to add duplicate script.";
+				errorList.add("Script_"+errorMsg);
+				errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 			}else {
-			errorMsg="User should not be allowed to create duplicate watchlist.";
+			errorMsg=model.getWatchListName()+" watchList already present. User should not be allowed to create duplicate watchlist.";
+			errorList.add("WatchList_"+errorMsg);
+			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 			}
 			
 			driver.navigate().refresh();
@@ -236,19 +263,7 @@ public class WatchListPage extends SeleniumCoder{
 		}
 	}
 	
-	public List<String> elementsTextFilter(List<String> listObject) {
-		Reporter.log("elementsTextFilter : listObject length : "+listObject.size(), true);
-		List<String> fiterList=new ArrayList<String>(); ;
-		for(String elementString:listObject) {
-			
-			String [] arr=elementString.trim().split(" ");
-			String ans=arr[0].replace("\n", "");
-			Reporter.log(ans.trim(), true);
-			fiterList.add(ans.trim());
-		}
-		
-		return fiterList;
-	}
+	
 	
 	public String removeExtrahmtlCode(String text) {
 		String [] textArray=text.split("<");
@@ -259,20 +274,15 @@ public class WatchListPage extends SeleniumCoder{
 		return msg;
 	}
 	
-	public void verifyCode(String keyword) {
+	public void verifyCode(WatchListModel model,String verifyNo) {
 		Reporter.log("VerifyCodeMethod::top if else ", true);
-		if(keyword.trim().equalsIgnoreCase("CreateAddScript")||keyword.trim().equalsIgnoreCase("CreateAddScriptDelete")) {
-			Reporter.log("VerifyCodeMethod::inside if else ", true);
-			scriptList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::a","Script Names");
-			scriptList=elementsTextFilter(scriptList);
-			exchangeList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::span//small","Exchanges");
-			exchangeList=elementsTextFilter(exchangeList);
-		}else if(keyword.equalsIgnoreCase("ClickPredineWatchList")) {
-			
-			
-			
+		
+		for(String watchLsitName:watchListNameArray) {	
+			model.setWatchListName(watchLsitName);
+			watchListStepVerify.verfitySteps(model, verifyNo,errorList);
 		}
-		else {
+			
+		if(verifyNo.equalsIgnoreCase("100")) {
 			scriptList=new ArrayList<String>();
 			exchangeList=new ArrayList<String>();
 		exchangeLabel=fluentWaitCodeXpath("//div[@class='ed-td ed-stock text-left']//following-sibling::span//small", "Exchange label");
@@ -322,11 +332,25 @@ public class WatchListPage extends SeleniumCoder{
 		clickElement(watchListOptionxpath, watchListName+" option ");
 	}
 	
+	public String [] verifyNo(String step) {
+		
+		if(step.contains("Verfiy")) {
+			verfiyArray=step.split("_");
+			
+		}else {
+			verfiyArray[0]=step;
+		}
+		return verfiyArray;
+	}
+	
 	public List<String> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
-		List<String> stepsList=watchListKeyword.keywordProccess(model.getKeyword());
+		List<String> stepsList=watchListKeyword.keywordProccess(model.getPredefineWatchList());
 		errorMsg="no";
+		
 		for(String steps:stepsList) {
-			Reporter.log("Step ===================================================>>> "+steps+"\n=======================================>>> "+model.getKeyword(), true);
+			verfiyArray=verifyNo(steps);
+			steps=verfiyArray[0];
+			Reporter.log("Step ===================================================>>> "+steps, true);
 			switch(steps) {
 			
 			case "Create":
@@ -343,9 +367,12 @@ public class WatchListPage extends SeleniumCoder{
 			break;
 			
 			case "Verfiy":
-				verifyCode(model.getKeyword());
+				verifyCode(model,verfiyArray[1]);
 				break;
 			case "PredefineWatchList":
+				predefineWatchListDetailList=predefineWatchList(model,reporter);
+				break;
+			case "PredefineWatchListTrade":
 				predefineWatchListDetailList=predefineWatchList(model,reporter);
 				break;
 			case "DeleteScript":
