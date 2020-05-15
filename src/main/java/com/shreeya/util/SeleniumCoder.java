@@ -82,7 +82,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			staticWait(700);
 			System.out.println("Convert driver into javascript than click on element  " + elementName);
 			elementNameError=elementName;
-			
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -101,7 +101,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("TimeoutException for this  " + elementName, true);
 			ExtendReporter reporter = new ExtendReporter();
 			elementNameError=elementName;
-			
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -137,6 +137,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("element : "+elementName+" msg : "+msg, true);
 		} catch (ElementNotInteractableException e1) {
 			elementNameError = elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			try {
 			elementNotInteractableExceptionHandling(element, elementName,msg);
 			
@@ -154,6 +155,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 		}catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception location : </b>", true);
@@ -252,8 +254,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		try {
 			if (attributeForXpath.equalsIgnoreCase("xpath"))
 				element = fluentWaitCodeXpath(driver, xpathString, 10, elementName);
-			if (element.isDisplayed())
-				displayFlag = true;
+			
 		} catch (NoSuchElementException e) {
 			System.out.println(e);
 		} catch (TimeoutException e) {
@@ -261,6 +262,8 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (ElementNotVisibleException e) {
 			System.out.println(e);
 		}
+		if (element.isDisplayed())
+			displayFlag = true;
 		return displayFlag;
 
 	}
@@ -308,6 +311,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (TimeoutException e) {
 			timeOutExceptionHandler(elementName);
 			elementNameError = elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -348,6 +352,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (TimeoutException e) {
 			Reporter.log("Timeout exception " + elementName, true); // timeOutExceptionHandler(elementName);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -359,6 +364,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (StaleElementReferenceException e) {
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -370,6 +376,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (ElementNotInteractableException e) {
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -381,6 +388,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		}catch(NoSuchSessionException e) {
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -417,7 +425,9 @@ public class SeleniumCoder extends ExceptionHandler {
 		
 		}catch(TimeoutException e) {
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:elementNameError : "+elementNameError, true);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -524,6 +534,7 @@ public class SeleniumCoder extends ExceptionHandler {
 
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -539,7 +550,7 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	}
 
-	public void clickElementWithOutChecking(WebElement element, String elementName) throws InterruptedException {
+	public void clickElementWithOutChecking(WebElement element, String elementName){
 		try {
 			if (element.isSelected()) {
 				Reporter.log(elementName + " is selected already...", true);
@@ -551,6 +562,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (ElementNotInteractableException e) {
 			System.out.println("Convert driver into javascript than click on element  " + elementName);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -566,7 +578,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("TimeoutException for this  " + elementName, true);
 			ExtendReporter reporter = new ExtendReporter();
 			elementNameError=elementName;
-			
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e1.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e1.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -579,6 +591,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log(e.getMessage(), true);
 			explicityWaitMethod(element, elementName,"No");
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			Reporter.log(elementName + " is selected already...", true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
@@ -655,7 +668,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (ElementNotInteractableException e) {
 			System.out.println("Convert driver into javascript than click on element  " + elementName);
 			elementNameError=elementName;
-			
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -672,7 +685,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("TimeoutException for this  " + elementName, true);
 			ExtendReporter reporter = new ExtendReporter();
 			elementNameError=elementName;
-			
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -698,6 +711,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("element : "+elementName+" msg : "+msg, true);
 		} catch (ElementNotInteractableException e1) {
 			elementNameError = elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			try {
 			elementNotInteractableExceptionHandling(element, elementName,msg);
 			
@@ -715,6 +729,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 		}catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception location : </b>", true);
@@ -753,6 +768,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (TimeoutException e) {
 			Reporter.log("Timeout exception " + elementName, true); // timeOutExceptionHandler(elementName);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -764,6 +780,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (StaleElementReferenceException e) {
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -775,6 +792,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (ElementNotInteractableException e) {
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -786,6 +804,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		}catch(NoSuchSessionException e) {
 			Reporter.log("Timeout exception " + elementName, true);
 			elementNameError=elementName;
+			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
 			Reporter.log("<b>Exception location : </b>", true);
@@ -1013,5 +1032,23 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 		
 		return fiterList;
+	}
+	
+	public static void staticWaitStatic(int timeout) {
+		try {
+			Thread.sleep(timeout);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String removeExtrahmtlCode(String text) {
+		String [] textArray=text.split("<");
+		String msg=textArray[0];
+		 textArray=textArray[1].split(">");
+		 msg=msg+textArray[1];
+		Reporter.log("Predefine msg : "+msg, true);
+		return msg;
 	}
 }

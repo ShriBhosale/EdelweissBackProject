@@ -3,6 +3,7 @@ package com.shreeya.watchlistPages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
@@ -11,6 +12,7 @@ import com.shreeya.model.WatchListModel;
 import com.shreeya.orderdetailpages.OrderDetail;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.SeleniumCoder;
 
 public class PredefineWatchList extends SeleniumCoder{
@@ -46,6 +48,8 @@ public class PredefineWatchList extends SeleniumCoder{
 	OrderDetail orderDetail;
 	ConfigReader configReader;
 	WatchListPage watchListPage;
+	String predifineWatchMsg;
+	String errorMsg;
 	
 	public static String [] orderDetailArray;
 	
@@ -117,10 +121,11 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 	}
 	
-	public void trading(WatchListModel model,ExtendReporter reporter)  {
-		
-		
-		String tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+model.getScriptName()+" ']";
+	public List<String> trading(WatchListModel model)  {
+		predefineWatchListDetail=new ArrayList<String>();
+		clickOnPredefineWatchList(model);
+		String scriptName=model.getScriptName().trim().replace(" ", "  ");
+		String tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+scriptName+" ']";
 		try {
 			clickElement(tradeButtonxpath,model.getScriptName()+" Trade button");
 			orderPlaceSearchTextField=fluentWaitCodeXpath("//input[@id='tocsearch']", "Order Place Textfield");
@@ -134,17 +139,53 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 		
 		for(String orderDetail:orderDetailArray) {
-			Reporter.log(orderDetail, true);
+			predefineWatchListDetail.add(orderDetail);
 		}
-		
+		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "watchList"));
+		return predefineWatchListDetail;
 	}
 	
+	public void clickOnPredefineWatchList(WatchListModel model) {
+		Reporter.log(model.toString(), true);
+		String predefineWatchXpath="//a[text()='"+model.getWatchListName()+"']";
+		try {
+			WebElement predefineWatchTab=fluentWaitCodeXpath(predefineWatchXpath, "Predefine WatchList tab");
+			clickElementWithOutChecking(predefineWatchTab, "Predefine watchList tab");
+		}catch(TimeoutException e) {
+			tabNotFound(model.getWatchListName());
+		}
+	}
 	
+	public void tabNotFound(String watchListName) {
+		clickElement("//a[text()='Select Watchlist']", "Select watchList button");
+		String watchListOptionxpath="//a[text()='"+watchListName+"']";
+		clickElement(watchListOptionxpath, watchListName+" option ");
+	}
 	
-	public List<String> clickAnyOption(WatchListModel model,ExtendReporter reporter) {
+	public int compareNoScriptAndNoScriptLable() {
+		List<WebElement> predefineScript=multipleElementLocator("//div[@class='ed-td ed-stock text-left']", "Scripts");
+		int numberScript=predefineScript.size();
+		WebElement predifineWatchMsgLabel=fluentWaitCodeXpath("//span[text()='Your watchlist has ']", "Predefine WatchList massage");
+		predifineWatchMsg=fetchTextFromElement(predifineWatchMsgLabel);
+		predifineWatchMsg=removeExtrahmtlCode(predifineWatchMsg);
+		errorMsg=predifineWatchMsg;
+		String [] numberScriptArray=errorMsg.split(" ");
+		int totalScript=Integer.valueOf(numberScriptArray[3]);
+		if(numberScript==totalScript) {
+			errorMsg=errorMsg+"-PASS";
+		}else {
+			errorMsg=errorMsg+"-FAIL";
+		}
+		return numberScript;
+	}
+	
+	public List<String> clickAnyOption(WatchListModel model) {
+		
+		clickOnPredefineWatchList(model);
+		int totalScript=compareNoScriptAndNoScriptLable();
 		
 		String [] scriptCountArray=watchListPage.predifineWatchMsg.split(" ");
-		int noScript=Integer.valueOf(scriptCountArray[3])+1;
+		int noScript=totalScript;
 		for(int i=2;i<noScript;i++) {
 			String xpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 			WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
@@ -185,18 +226,11 @@ public class PredefineWatchList extends SeleniumCoder{
 		String xpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[1]/a";
 		WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
 		//clickElement(xpath, "Script link");
-		
+		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 		return predefineWatchListDetail;
 	}
 	
-	public List<String> predefineWatchListExecution(WatchListModel model,ExtendReporter reporter) {
-		if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
-			trading(model, reporter);
-		}else if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
-			predefineWatchListDetail=clickAnyOption(model, reporter);
-		}
-		return predefineWatchListDetail;
-	}
+	
 	
 	
 }

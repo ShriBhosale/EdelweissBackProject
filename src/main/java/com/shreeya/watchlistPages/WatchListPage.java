@@ -18,6 +18,8 @@ import com.shreeya.util.SeleniumCoder;
 
 public class WatchListPage extends SeleniumCoder{
 
+	WebDriver driver;
+	
 	WebElement newWatchListTab;
 	WebElement watchListNameTextfield;
 	WebElement defaultWatchListCheckBox;
@@ -28,7 +30,14 @@ public class WatchListPage extends SeleniumCoder{
 	WebElement exchangeLabel;
 	WebElement addScriptButton;
 	WebElement addScriptTextfield;
-	WebDriver driver;
+	String [] scriptNameArray;
+	String scriptName;
+	WebElement scriptNameLabel;
+	WebElement scriptCheckBox;
+	WebElement deleteButton;
+	WebElement popupDeleteButton;
+	WebElement deleleokButton;
+
 	public static String createWatchListPath;
 	public static String deleteWatchListPath;
 	public static List<String> exchangeList;
@@ -40,7 +49,7 @@ public class WatchListPage extends SeleniumCoder{
 	public static  String [] applicationScriptArray;
 	public static String errorMsg="no";
 	public static String predifineWatchMsg="no predefine msg";
-	String [] watchListNameArray;
+	String [] watchListNameArray= {"Def1"};
 	String deleteOption="present";
 	
 	private static String scriptNames;
@@ -117,7 +126,7 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 	
-	public void pageVerify(WatchListModel model,String step) throws InterruptedException {
+	public void pageVerify(WatchListModel model,String step) {
 		driver.navigate().refresh();
 		if(!(step.contains("Delete"))) {
 		String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName()+"']";
@@ -132,9 +141,9 @@ public class WatchListPage extends SeleniumCoder{
 		
 	}
 	
-	public void selectExchange(String segement,String step) throws InterruptedException {
+	public void selectExchange(String segement,String step) {
 		
-		Thread.sleep(500);
+		staticWait(500);
 		nseRadioButton=fluentWaitCodeXpathCheckElement(driver,"//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/label[2]/label[1]/div/input",20, "NSE Radio button");
 		bseRadioButton=fluentWaitCodeXpathCheckElement(driver,"//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/label[2]/label[2]/div/input",20, "BSE Radio button");
 		if(step.equalsIgnoreCase("AddScript")) {
@@ -153,12 +162,17 @@ public class WatchListPage extends SeleniumCoder{
 	
 	public void deleteWatchList(WatchListModel model)  {
 		
+		for(String watchListName:watchListNameArray) {
+			model.setWatchListName(watchListName);
+			pageVerify(model,"abc");
 		staticWait(500);
-		String deleteButtonxpath="//span[text()='New Watchlist']//following::li//a[text()='"+model.getWatchListName()+"']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
-		String defaultWatchxpath="//span[text()='New Watchlist']//following::li//a[text()='"+model.getWatchListName()+"']//following::ul//li//span[@class='fa fa-star']";
+		errorList.add("Delete WatchListName : "+watchListName+"-"+watchListName);
+		String deleteButtonxpath="//span[text()='New Watchlist']//following::li//a[text()='"+watchListName+"']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
+		String defaultWatchxpath="//span[text()='New Watchlist']//following::li//a[text()='"+watchListName+"']//following::ul//li//span[@class='fa fa-star']";
 		defaultWatchList=fluentWaitCodeXpath(defaultWatchxpath,30,"Default WatchList tab");
 		if(defaultWatchList!=null) {
-			errorMsg=model.getWatchListName()+" watchList is default watchList you cannot delete";
+			errorMsg="Error msg : "+model.getWatchListName()+" watchList is default watchList you cannot delete";
+			errorList.add(errorMsg+"-"+watchListName);
 		}else {
 		try {
 		
@@ -169,17 +183,15 @@ public class WatchListPage extends SeleniumCoder{
 				deleteOption="not present";
 			
 		}
-		
 		clickElement("//button[text()='Delete']", "delete button");
 		clickElement("//button[text()='Ok']", "Ok button");
+		}
 		
+		
+		errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+watchListName);
 		}
-		try {
-			pageVerify(model,"Delete");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		
 		/*
 		 * Thread.sleep(2000);
 		 * deleteWatchListPath=ScreenshortProvider.captureScreen(driver,"WatchList_"+
@@ -220,7 +232,8 @@ public class WatchListPage extends SeleniumCoder{
 		}
 	}
 	
-	public void addScript(WatchListModel model,String step) throws InterruptedException {
+	public void addScript(WatchListModel model,String step) {
+		
 		String xpathString="no xpath for script";
 		String dropdownOptionStr="//*[@id='watchlist']/div/div/div[2]/div[2]/div/div/div/ul/li/a[text()='"+model.getScriptName()+"']";
 		String text="Add a Scrip to "+model.getWatchListName();
@@ -239,48 +252,48 @@ public class WatchListPage extends SeleniumCoder{
 		clickElement(dropdownOptionStr, model.getScriptName()+"Dropdown option");
 		selectExchange(model.getExchange(),step);
 		clickElement("//h4[text()='"+text+"']//following::button[2]", "Add Script button");
-		Thread.sleep(500);
+		staticWait(500);
 		//clickElement("//button[text()='Ok']", "OK button");
 		okButton=fluentWaitCodeXpath("//button[text()='Ok']",40,"Ok button");
 		if(okButton!=null) {
 			clickElement(okButton, "Ok button");
 		}else {
 			if(step.equalsIgnoreCase("addScript")) {
-				errorMsg=model.getScriptName()+" script already present. User should not be allowed to add duplicate script.";
-				errorList.add("Script_"+errorMsg);
-				errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
+				errorMsg=model.getScriptName()+" script already present. User should not be allowed to add duplicate script.-"+model.getWatchListName();
+				errorList.add(errorMsg);
+				errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+model.getWatchListName());
 			}else {
-			errorMsg=model.getWatchListName()+" watchList already present. User should not be allowed to create duplicate watchlist.";
-			errorList.add("WatchList_"+errorMsg);
-			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
+			errorMsg=model.getWatchListName()+" watchList already present. User should not be allowed to create duplicate watchlist.-"+model.getWatchListName();
+			errorList.add(errorMsg);
+			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+model.getWatchListName());
 			}
 			
 			driver.navigate().refresh();
 			staticWait(50);
 			driver.navigate().refresh();
-			pageVerify(model,"AddScript");
-			staticWait(500);
+			
+			
+	
 		}
 	}
 	
 	
 	
-	public String removeExtrahmtlCode(String text) {
-		String [] textArray=text.split("<");
-		String msg=textArray[0];
-		 textArray=textArray[1].split(">");
-		 msg=msg+textArray[1];
-		Reporter.log("Predefine msg : "+msg, true);
-		return msg;
-	}
+	
 	
 	public void verifyCode(WatchListModel model,String verifyNo) {
 		Reporter.log("VerifyCodeMethod::top if else ", true);
-		
+		if(model.getPredefineWatchList().equalsIgnoreCase("Yes")) {
+			
+			watchListStepVerify.predefineWatchListVerify(model, verifyNo, predefineWatchListDetailList);
+			
+		}else {
 		for(String watchLsitName:watchListNameArray) {	
 			model.setWatchListName(watchLsitName);
 			watchListStepVerify.verfitySteps(model, verifyNo,errorList);
 		}
+		}
+		
 			
 		if(verifyNo.equalsIgnoreCase("100")) {
 			scriptList=new ArrayList<String>();
@@ -297,7 +310,37 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 	public void deleteScript(WatchListModel model) {
-		watchListHelper.deleteScript(model);
+		Reporter.log("deleteScript", true);
+		errorList=new ArrayList<String>();
+		for(String watchListName:watchListNameArray) {
+			model.setWatchListName(watchListName);
+			pageVerify(model,"AddScript");
+			errorList.add("Before Delete Script and WatchList...."+"-"+watchListName);
+			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+watchListName);
+		scriptNameArray=scriptNames(model.getVerifyScript());
+		int scriptCount=scriptNameArray.length+2;
+		for(int i=2;i<scriptCount;i++) {
+			scriptNameLabel=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a", "Script Name");
+			scriptName=fetchTextFromElement(scriptNameLabel);
+			if(scriptName.contains(scriptNameArray[scriptNameArray.length-1])) {
+				errorList.add("Deleted Script Name : "+scriptNameArray[scriptNameArray.length-1]+"-"+watchListName);
+				String scriptBox="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/div[1]/input";
+				scriptCheckBox=fluentWaitCodeXpath(scriptBox, "Script checkBox");
+					clickElement(scriptCheckBox, "ScriptCheckBox");
+					break;
+			}
+		}
+		if(scriptNameArray.length<2) {
+			errorList.add("You can't delete beacause this watchList contain only single script -"+watchListName);
+		}
+		deleteButton=fluentWaitCodeXpath("//a[text()='Delete Scrip']", "Delete Button");
+		clickElement(deleteButton, "Delete Button");
+		popupDeleteButton=fluentWaitCodeXpath("//button[text()='Delete']", "popup Delete Button");
+		clickElement(popupDeleteButton, "popup Delete Button");
+		deleleokButton=fluentWaitCodeXpath("//button[text()='Ok']", "Ok button");
+		clickElement(deleleokButton, "Ok button");
+		errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+watchListName);
+		}
 	}
 	
 	public List<String> predefineWatchList(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
@@ -321,12 +364,25 @@ public class WatchListPage extends SeleniumCoder{
 		predifineWatchMsg=removeExtrahmtlCode(predifineWatchMsg);
 		errorMsg=predifineWatchMsg;
 		
-		predefineWatchListDetailList=predefineWatchList.predefineWatchListExecution(model,reporter);
+		
 		
 		return predefineWatchListDetailList;
 	}
 	
-	public void tabNotFound(String watchListName) throws InterruptedException {
+	public List<String> clickpredefineWatchList(WatchListModel model) {
+		Reporter.log("predefineWatchList", true);
+		Reporter.log(model.toString(), true);
+		predefineWatchListDetailList=predefineWatchList.clickAnyOption(model);
+		return predefineWatchListDetailList;
+	}
+	
+	public List<String> tradingWithPredefineWatchList(WatchListModel model) {
+		Reporter.log("tradingWithPredefineWatchList", true);
+		predefineWatchListDetailList=predefineWatchList.trading(model);
+		return predefineWatchListDetailList;
+	}
+	
+	public void tabNotFound(String watchListName) {
 		clickElement("//a[text()='Select Watchlist']", "Select watchList button");
 		String watchListOptionxpath="//a[text()='"+watchListName+"']";
 		clickElement(watchListOptionxpath, watchListName+" option ");
@@ -341,6 +397,24 @@ public class WatchListPage extends SeleniumCoder{
 			verfiyArray[0]=step;
 		}
 		return verfiyArray;
+	}
+	
+	private void duplicateScript(WatchListModel model) {
+		model.setScriptName(scriptArray[scriptArray.length-1]);
+		model.setExchange(exchangeArray[exchangeArray.length-1]);
+		for(String watchListName:watchListNameArray) {
+			model.setWatchListName(watchListName);
+			pageVerify(model,"AddScript");
+			addScriptButton=fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add script button");
+			try {
+			clickElement(addScriptButton, "Add script button");
+			}catch(ElementClickInterceptedException e) {
+				staticWait(600);
+				addScriptButton=fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add script button");
+				clickElement(addScriptButton, "Add script button");
+			}
+		addScript(model,"addScript");
+		}
 	}
 	
 	public List<String> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
@@ -366,17 +440,20 @@ public class WatchListPage extends SeleniumCoder{
 				addScriptExecution(model);
 			break;
 			
+			case "DeleteScript":
+				deleteScript(model);
+				break;
+			case "DuplicateScript":
+				duplicateScript(model);
+				break;
 			case "Verfiy":
 				verifyCode(model,verfiyArray[1]);
 				break;
 			case "PredefineWatchList":
-				predefineWatchListDetailList=predefineWatchList(model,reporter);
+				predefineWatchListDetailList=clickpredefineWatchList(model);
 				break;
 			case "PredefineWatchListTrade":
-				predefineWatchListDetailList=predefineWatchList(model,reporter);
-				break;
-			case "DeleteScript":
-				deleteScript(model);
+				predefineWatchListDetailList=tradingWithPredefineWatchList(model);
 				break;
 			}
 		}
@@ -384,4 +461,6 @@ public class WatchListPage extends SeleniumCoder{
 		return predefineWatchListDetailList;
 		
 	}
+
+	
 }

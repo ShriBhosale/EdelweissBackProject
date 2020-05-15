@@ -24,11 +24,13 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement productType;
 	private WebElement status;
 	private WebElement orderPrice;
-	private WebElement orderType;
-	private WebElement exchange;
-	private WebElement validity;
+	private WebElement userIdLable;
 	private WebElement detailsTab;
 	private WebElement nestIdLable;
+	private WebElement TriggerPriceLable;
+	private WebElement orderTypeLable;
+	private WebElement exchangeLable;
+	private WebElement validityLable;
 	String text;
 
 	private WebElement QtyLabel;
@@ -126,26 +128,30 @@ public class OrderDetail extends SeleniumCoder {
 			Thread.sleep(3000);
 			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 		}
-
-		orderDetailList[6] = fetchTextFromElement(orderPrice,"Order Price");
+		orderPrice=fluentWaitCodeXpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[5]/div/span[2]", "Order price");
+		orderDetailList[6] =fetchTextFromElement(orderPrice,"Order Price");
 		try {
 			Thread.sleep(2000);
-		orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2),"Order Type");
+			orderTypeLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[3]/div/span[2]", "Order Type");
+		orderDetailList[7] = fetchTextFromElement(orderTypeLable,"Order Type");
 		}catch(IndexOutOfBoundsException e) {
 			//clickElement(detailsTab);
 			Thread.sleep(7000);
-			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
+			//orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 			orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2),"Order Type");
 		}
-		orderDetailList[8] = fetchTextFromElement(orderInfoList.get(3),"User Id");
+		userIdLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[4]/div/span[2]", "UserId");
+		orderDetailList[8] = fetchTextFromElement(userIdLable,"User Id");
 
-		orderDetailList[9] = fetchTextFromElement(orderInfoList.get(4),"Exchange");
+		exchangeLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[5]/div/span[2]", "Exchange");
+		orderDetailList[9] = fetchTextFromElement(exchangeLable,"Exchange");
 
-		orderDetailList[10] = fetchTextFromElement(orderInfoList.get(5),"Validity");
+		validityLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[6]/div/span[2]", "Validity");
+		orderDetailList[10] = fetchTextFromElement(exchangeLable,"Validity");
 		if(orderDetailList[2].equalsIgnoreCase("Rejected")) {
 		/*if(rejectionFlag==true) {*/
-			//orderDetailList[11]=fetchTextFromElement(orderInfoList.get(7));
-			orderDetailList[14]=fetchTextFromElement(orderInfoList.get(6),"Rejection Reasone");
+			WebElement rejectReasoneLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[2]/div/span[2]", "rejection reasone");
+			orderDetailList[14]=fetchTextFromElement(rejectReasoneLabel,"Rejection Reasone");
 		}
 		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")))) {
 		try {

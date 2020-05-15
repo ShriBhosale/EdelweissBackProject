@@ -1,5 +1,9 @@
 package com.shreeya.watchlistPages;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -87,9 +91,26 @@ public class WatchListReport extends ExtendReporter {
 			
 		}
 		test=htmlReport.testCreation(model.getReferNo());
-		test.log(Status.FAIL, "Abnormal condition");
+		test.log(Status.INFO, "Abnormal condition");
+		test.log(Status.FAIL, SeleniumCoder.elementNameError+"Element not found or element not interactable");
 		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],"Watchlist", orderNo);
 		return htmlReport;
+	}
+
+	public ExtendReporter watchListReportGenerator(WatchListModel model, ExtendReporter reporter) throws IOException {
+		Map<String,List<String>> detailMap=WatchListStepVerify.verfiyMap;
+		for (Map.Entry<String,List<String>> entry : detailMap.entrySet()) {
+			ExtentTest test=reporter.testCreation(entry.getKey());
+			int i=0;
+			for(String str:entry.getValue()) {
+				i++;
+				if(str.contains("WorkingE2")) {
+					test.log(Status.INFO,"screenshot : str"+test.addScreencastFromPath(str));
+				}
+				test.log(Status.INFO, str+" : "+i);
+			}
+		}
+		return reporter;
 	}
 	
 }

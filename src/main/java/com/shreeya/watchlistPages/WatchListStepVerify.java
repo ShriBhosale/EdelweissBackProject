@@ -16,11 +16,11 @@ import com.shreeya.util.SeleniumCoder;
 
 public class WatchListStepVerify extends SeleniumCoder {
 	WebDriver driver;
-	private static Map<String,ArrayList<String>> verfiyMap;
+	public static Map<String,List<String>> verfiyMap;
 	private static int count=0;
 	List<String> scriptList;
 	List<String> exchangeList;
-	ArrayList<String> detailList;
+	List<String> detailList;
 	
 	public WatchListStepVerify() {
 		
@@ -30,7 +30,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 	{
 		super(driver);
 		this.driver=driver;
-		verfiyMap=new HashMap<String,ArrayList<String>>();
+		verfiyMap=new HashMap<String,List<String>>();
 		scriptList=new ArrayList<String>();
 		exchangeList=new ArrayList<String>();
 		
@@ -43,17 +43,31 @@ public class WatchListStepVerify extends SeleniumCoder {
 			verifyCreateAdd(model,count);
 			break;
 		case 2:
-			verifyDuplicateScriptWatchList(errorList);
+			verifyDuplicateScriptWatchList(errorList,count,model,"DuplicateScriptWatchList");
+			break;
+		case 3:
+			verifyDuplicateScriptWatchList(errorList,count,model,"DeleteScriptWatchList");
+			break;
 		default:
 			break;
 		}
 	}
 
-	private void verifyDuplicateScriptWatchList(ArrayList<String> errorList) {
-		detailList=new ArrayList<String>();
-		detailList=errorList;
-		verfiyMap.put("DuplicateScriptWatchList", detailList);
+	private void verifyDuplicateScriptWatchList(ArrayList<String> errorList,int count,WatchListModel model,String keyName) {
 		
+		detailList=new ArrayList<String>();
+		Reporter.log("verifyDuplicateScriptWatchList", true);
+		for(String errorMsg:errorList) {
+			String [] errorMsgArray=errorMsg.split("-");
+			if(errorMsgArray[1].equalsIgnoreCase(model.getWatchListName())) {
+				
+				detailList.add(errorMsgArray[0]);
+				Reporter.log(errorMsgArray[0], true);
+			}
+			
+		
+		}
+		verfiyMap.put(keyName+count, detailList);
 	}
 
 	public String watchListCreateProve(WatchListModel model) {
@@ -65,7 +79,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		return "WatchList Name : "+watchListName;
 	}
 	
-	private Map<String,ArrayList<String>> verifyCreateAdd(WatchListModel model,int count) {
+	private Map<String,List<String>> verifyCreateAdd(WatchListModel model,int count) {
 		detailList=new ArrayList<String>();
 		String watchName=watchListCreateProve(model);
 		
@@ -86,4 +100,22 @@ public class WatchListStepVerify extends SeleniumCoder {
 	}
 	
 	
+	public void predefineWatchListVerify(WatchListModel model,String verifyNo,List<String> predefindWatchListDetailList) {
+		switch(verifyNo) {
+		case "4":
+			simpleClickPredefineWatchList(model,predefindWatchListDetailList);
+			break;
+		case "5":
+			tradingWithPredefineWatchList(model, predefindWatchListDetailList);
+			break;
+		}
+	}
+
+	private void simpleClickPredefineWatchList(WatchListModel model,List<String> predefindWatchListDetailList) {
+		verfiyMap.put("Click on "+model.getWatchListName(), predefindWatchListDetailList);
+		
+	}
+	private void tradingWithPredefineWatchList(WatchListModel model,List<String> predefindWatchListDetailList) {
+		verfiyMap.put("Trade With "+model.getWatchListName(), predefindWatchListDetailList);
+	}
 }
