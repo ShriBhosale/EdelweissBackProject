@@ -29,12 +29,12 @@ public class AbsoluteReportPath {
 		reportObj.errroMsg("hello shreeya");
 		String reportPath=reportObj.addScreenshotMethod(driver,folderPathArray[2],"abc",0);
 		driver.close();
-		ApacheCode coder=new ApacheCode(folderPathArray[0]);
-		coder.excelFile();
+		//ApacheCode coder=new ApacheCode(folderPathArray[0]);
+		//coder.excelFile();
 		//String [] orderDetail= {"../ReportABC/"+"Abc"+".html",reportPath};
-		String [] orderDetail= {"../ReportABC/Abc.html",reportPath};
-		coder.excelWriter1(folderPathArray, 2);
-		coder.closeExcelWriting();
+		String [] orderDetail= {"../WorkingE2/Report1589554560040/Abc.html",reportPath};
+		//coder.excelWriter1(folderPathArray, 2);
+		//coder.closeExcelWriting();
 		reportObj.logFlush();
 		
 	}

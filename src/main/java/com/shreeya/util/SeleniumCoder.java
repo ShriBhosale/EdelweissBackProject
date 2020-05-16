@@ -262,8 +262,10 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (ElementNotVisibleException e) {
 			System.out.println(e);
 		}
+		if(element!=null) {
 		if (element.isDisplayed())
 			displayFlag = true;
+		}
 		return displayFlag;
 
 	}
@@ -1032,6 +1034,13 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 		
 		return fiterList;
+	}
+	
+	public String elementsTextFilter(String scriptName) {
+			String [] arr=scriptName.trim().split(" ");
+			String ans=arr[0].replace("\n", "");
+			Reporter.log(ans.trim(), true);
+		return ans;
 	}
 	
 	public static void staticWaitStatic(int timeout) {

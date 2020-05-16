@@ -13,6 +13,7 @@ import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.shreeya.MyTestLauncher;
@@ -30,6 +31,8 @@ public class ExtendReporter {
 	private String reportPathString;
 	static int count=0;
 	int timestamp;
+	
+	public static String abc="";
 	
 	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
 		
@@ -87,16 +90,38 @@ public class ExtendReporter {
 		ConfigReader reader=new ConfigReader();
 		String path=reader.configReader("Result");
 		
-		screenshotPath=screenshotPath.replace("../WorkingE2",path);
-		screenshotPath=screenshotPath.replace("/", "//");
+		
+		  screenshotPath=screenshotPath.replace("../WorkingE2",path);
+		  screenshotPath=screenshotPath.replace("/", "//");
+		 
 		System.out.println(screenshotPath);
 		
 			test.log(Status.INFO,""+test.addScreenCaptureFromPath(screenshotPath));
+			test.log(Status.INFO, "ABC", MediaEntityBuilder.createScreenCaptureFromPath(removeReportString(screenshotPath)).build());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		 return screenshotPath;
+	}
+	
+
+	
+	public String removeReportString(String path) {
+		
+		String [] varray=path.split("/");
+		for(String v2:varray) {
+			if(v2.contains("Report")) {
+				
+			}else {
+				if(v2.contains(".."))
+					abc=v2;
+				else
+				abc=abc+"/"+v2;
+			}
+		}
+		System.out.println(abc);
+		return abc;
 	}
 	
 	public String addScreenshotMethod(String screenshotPath) throws IOException {
@@ -308,32 +333,29 @@ public class ExtendReporter {
 		//System.exit(0);
 	}
 	
-	public ExtendReporter watchListReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver,List<String> detailList) throws IOException, InterruptedException {
-		Reporter.log("watchListReport start", true);
-		int orderNo=0;
-		try {
-			orderNo=Integer.valueOf(model.getReferNo());
-		}catch(NumberFormatException e) {
-			
-		}
-		htmlReport.testCreation(model.getReferNo());
-		if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
-			predefineWatchReport(model, htmlReport, driver, orderNo,WatchListPage.predifineWatchMsg);
-		}else if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
-			predefineWatchDetaiReport(model, htmlReport, driver, orderNo,detailList);
-		}else{
-		test.log(Status.INFO, "WatchList name : "+model.getWatchListName());
-		if(model.getDafaultWatchList().equalsIgnoreCase("Yes"))
-			test.log(Status.INFO, "With Deafault mode");
-		test.log(Status.INFO, "Exchange : "+model.getExchange());
-		Reporter.log("Before compareScriptAndExchange method", true);
-		compareScriptAndExchange(model);
-		Thread.sleep(3000);
-		
-		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
-		}
-		return htmlReport;
-	}
+	/*
+	 * public ExtendReporter watchListReport(WatchListModel model,ExtendReporter
+	 * htmlReport,WebDriver driver,List<String> detailList) throws IOException,
+	 * InterruptedException { Reporter.log("watchListReport start", true); int
+	 * orderNo=0; try { orderNo=Integer.valueOf(model.getReferNo());
+	 * }catch(NumberFormatException e) {
+	 * 
+	 * } htmlReport.testCreation(model.getReferNo());
+	 * if(model.getKeyword().equalsIgnoreCase("TradeWithpredefineWatchList")) {
+	 * predefineWatchReport(model, htmlReport, driver,
+	 * orderNo,WatchListPage.predifineWatchMsg); }else
+	 * if(model.getKeyword().equalsIgnoreCase("ClickPredineWatchList")) {
+	 * predefineWatchDetaiReport(model, htmlReport, driver, orderNo,detailList);
+	 * }else{ test.log(Status.INFO, "WatchList name : "+model.getWatchListName());
+	 * if(model.getDafaultWatchList().equalsIgnoreCase("Yes")) test.log(Status.INFO,
+	 * "With Deafault mode"); test.log(Status.INFO,
+	 * "Exchange : "+model.getExchange());
+	 * Reporter.log("Before compareScriptAndExchange method", true);
+	 * compareScriptAndExchange(model); Thread.sleep(3000);
+	 * 
+	 * htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],
+	 * "WatchList", orderNo); } return htmlReport; }
+	 */
 	
 	private void predefineWatchDetaiReport(WatchListModel model, ExtendReporter htmlReport, WebDriver driver,
 			int orderNo, List<String> detailList) {
@@ -343,75 +365,62 @@ public class ExtendReporter {
 		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
 	}
 
-	public void compareScriptAndExchange(WatchListModel model) {
-		Reporter.log("Inside compareScriptAndExchange ", true);
-		
-		String [] scriptArray=WatchListPage.applicationScriptArray;
-		String [] exchangeArray=WatchListPage.exchangeArray;
-		String [] sheetSriptNameArray=WatchListPage.scriptArray;
-		List<String> scriptList=WatchListPage.scriptList;
-		List<String> exchangeList=WatchListPage.exchangeList;
-		//String scriptZero=scriptList.get(0);
-		if(model.getKeyword().trim().equalsIgnoreCase("CreateAddScript")||model.getKeyword().trim().equalsIgnoreCase("CreateAddScriptDelete")) {
-			
-			for(int i=0;i<scriptList.size();i++) {
-				test.log(Status.INFO, "Script : "+sheetSriptNameArray[i]);
-				String script=scriptList.get(i).replace("\n", "");
-				Reporter.log(scriptList.get(i), true);
-				if(script.equalsIgnoreCase(scriptArray[i]) && exchangeList.get(i).equalsIgnoreCase(exchangeArray[i])) {
-					test.log(Status.PASS, "ScriptName : "+scriptList.get(i)+" Exchange : "+exchangeList.get(i));
-				}else {
-					test.log(Status.FAIL, "ScriptName : "+scriptList.get(i)+" Exchange : "+exchangeList.get(i));
-				}
-			}
-			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
-			{
-				test.log(Status.PASS,"MSg : "+WatchListPage.errorMsg);
-			}
-			defaultWatchList(model.getDafaultWatchList());
-		}else if(model.getKeyword().equalsIgnoreCase("CreateDuplicate")) {
-			test.log(Status.INFO, "Script : "+sheetSriptNameArray[0]);
-			if(scriptList.get(0).equalsIgnoreCase(scriptArray[0])&& exchangeList.get(0).equalsIgnoreCase(exchangeArray[0])) {
-				test.log(Status.PASS, "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]);
-			}
-			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
-			{
-				test.log(Status.PASS,WatchListPage.errorMsg);
-			}else {
-				
-				test.log(Status.FAIL, "User can create duplicate watchlist.");
-			
-			}
-		}else if(model.getKeyword().equalsIgnoreCase("CreateDelete")) {
-			if(scriptList.get(0).equalsIgnoreCase(scriptArray[0])&& exchangeList.get(0).equalsIgnoreCase(exchangeArray[0])) {
-				test.log(Status.PASS, "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]);
-			}
-			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
-			{
-				test.log(Status.FAIL,WatchListPage.errorMsg);
-			}
-		}
-		else {
-			int a=0;
-			if(scriptArray.length!=1) {
-				for(int i=0;i<scriptArray.length;i++) {
-					if(!scriptArray[i].equalsIgnoreCase(model.getDeleteScript())) {
-						a=i;
-					}
-				}
-			}
-			test.log(Status.INFO, "Script : "+sheetSriptNameArray[0]);
-			if(scriptList.get(0).equalsIgnoreCase(scriptArray[a])&& exchangeList.get(0).equalsIgnoreCase(exchangeArray[a])) {
-				test.log(Status.PASS, "Script Name : "+scriptArray[a]+" Exchange : "+exchangeArray[a]);
-			}else
-			{
-				test.log(Status.FAIL, "Script Name : "+scriptArray[a]+" Exchange : "+exchangeArray[a]);
-			}
-			defaultWatchList(model.getDafaultWatchList());
-		}
-		
-	}
-
+	/*
+	 * public void compareScriptAndExchange(WatchListModel model) {
+	 * Reporter.log("Inside compareScriptAndExchange ", true);
+	 * 
+	 * String [] scriptArray=WatchListPage.applicationScriptArray; String []
+	 * exchangeArray=WatchListPage.exchangeArray; String []
+	 * sheetSriptNameArray=WatchListPage.scriptArray; List<String>
+	 * scriptList=WatchListPage.scriptList; List<String>
+	 * exchangeList=WatchListPage.exchangeList; //String
+	 * scriptZero=scriptList.get(0);
+	 * if(model.getKeyword().trim().equalsIgnoreCase("CreateAddScript")||model.
+	 * getKeyword().trim().equalsIgnoreCase("CreateAddScriptDelete")) {
+	 * 
+	 * for(int i=0;i<scriptList.size();i++) { test.log(Status.INFO,
+	 * "Script : "+sheetSriptNameArray[i]); String
+	 * script=scriptList.get(i).replace("\n", ""); Reporter.log(scriptList.get(i),
+	 * true); if(script.equalsIgnoreCase(scriptArray[i]) &&
+	 * exchangeList.get(i).equalsIgnoreCase(exchangeArray[i])) {
+	 * test.log(Status.PASS,
+	 * "ScriptName : "+scriptList.get(i)+" Exchange : "+exchangeList.get(i)); }else
+	 * { test.log(Status.FAIL,
+	 * "ScriptName : "+scriptList.get(i)+" Exchange : "+exchangeList.get(i)); } }
+	 * if(!WatchListPage.errorMsg.equalsIgnoreCase("no")) {
+	 * test.log(Status.PASS,"MSg : "+WatchListPage.errorMsg); }
+	 * defaultWatchList(model.getDafaultWatchList()); }else
+	 * if(model.getKeyword().equalsIgnoreCase("CreateDuplicate")) {
+	 * test.log(Status.INFO, "Script : "+sheetSriptNameArray[0]);
+	 * if(scriptList.get(0).equalsIgnoreCase(scriptArray[0])&&
+	 * exchangeList.get(0).equalsIgnoreCase(exchangeArray[0])) {
+	 * test.log(Status.PASS,
+	 * "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]); }
+	 * if(!WatchListPage.errorMsg.equalsIgnoreCase("no")) {
+	 * test.log(Status.PASS,WatchListPage.errorMsg); }else {
+	 * 
+	 * test.log(Status.FAIL, "User can create duplicate watchlist.");
+	 * 
+	 * } }else if(model.getKeyword().equalsIgnoreCase("CreateDelete")) {
+	 * if(scriptList.get(0).equalsIgnoreCase(scriptArray[0])&&
+	 * exchangeList.get(0).equalsIgnoreCase(exchangeArray[0])) {
+	 * test.log(Status.PASS,
+	 * "Script Name : "+scriptArray[0]+" Exchange : "+exchangeArray[0]); }
+	 * if(!WatchListPage.errorMsg.equalsIgnoreCase("no")) {
+	 * test.log(Status.FAIL,WatchListPage.errorMsg); } } else { int a=0;
+	 * if(scriptArray.length!=1) { for(int i=0;i<scriptArray.length;i++) {
+	 * if(!scriptArray[i].equalsIgnoreCase(model.getDeleteScript())) { a=i; } } }
+	 * test.log(Status.INFO, "Script : "+sheetSriptNameArray[0]);
+	 * if(scriptList.get(0).equalsIgnoreCase(scriptArray[a])&&
+	 * exchangeList.get(0).equalsIgnoreCase(exchangeArray[a])) {
+	 * test.log(Status.PASS,
+	 * "Script Name : "+scriptArray[a]+" Exchange : "+exchangeArray[a]); }else {
+	 * test.log(Status.FAIL,
+	 * "Script Name : "+scriptArray[a]+" Exchange : "+exchangeArray[a]); }
+	 * defaultWatchList(model.getDafaultWatchList()); }
+	 * 
+	 * }
+	 */
 	public void defaultWatchList(String defaultWList) {
 		if(defaultWList.equalsIgnoreCase("Yes")) {
 			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))

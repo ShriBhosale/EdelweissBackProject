@@ -9,12 +9,15 @@ import org.testng.Reporter;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.shreeya.model.WatchListModel;
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.ExtendReporter;
 
 public class ReportWatchlist extends ExtendReporter{
 	
 	Map<String,List<String>> verifyMap;
 	ExtentTest test;
+	
+	String screenshotPath="Screenshot";
 	
 	public ReportWatchlist() {
 		this.verifyMap=WatchListStepVerify.verfiyMap;
@@ -27,18 +30,38 @@ public class ReportWatchlist extends ExtendReporter{
 			if(entry.getKey().contains("Trade With")) {
 				predefineTrading(model,entry.getValue(),test);
 			}
+			else if(entry.getKey().contains("Click on")){
+				clickOnPredefineWatchList(model,entry.getValue(),test);
+			}
 		}
 	}
 	
 	
 
+	private void clickOnPredefineWatchList(WatchListModel model, List<String> detailList, ExtentTest test2) {
+		test.log(Status.INFO, "<b>============@@> Click On PredefineWatchList  <@@============</b>");
+		test.log(Status.INFO, detailList.get(0));
+		String [] array=detailList.get(1).split("-");
+		if(array[1].trim().equalsIgnoreCase("PASS")) {
+			test.log(Status.PASS, array[0]);
+		}else {
+			test.log(Status.FAIL, array[1]);
+		}
+		for(int i=2;i<11;i++) {
+			test.log(Status.INFO, detailList.get(i));
+		}
+		screenshotFullPath(detailList.get(11),test);
+	}
+
 	public void predefineTrading(WatchListModel model,List<String> detail,ExtentTest test) {
 		test.log(Status.INFO, "<b>============@@> Trading With PredefineWatchList <@@============</b>");
-		if(detail.get(2).equalsIgnoreCase("Open")) {
+		if(detail.get(2).equalsIgnoreCase("Open")||detail.get(2).equalsIgnoreCase("Complete")) {
 			test.log(Status.PASS, "Order Status : "+detail.get(2));
 		}else if(detail.get(2).equalsIgnoreCase("rejected")) {
 			test.log(Status.FAIL, "Order Status : "+detail.get(2));
 			test.log(Status.FAIL, "Rejection reason : "+detail.get(14));
+		}else {
+			test.log(Status.FAIL, "Order Status : "+detail.get(2));
 		}
 		test.log(Status.INFO, "Order action : "+detail.get(3));
 		if(detail.get(4).equalsIgnoreCase(model.getScriptName().trim())) {
@@ -63,14 +86,25 @@ public class ReportWatchlist extends ExtendReporter{
 			}else {
 				test.log(Status.FAIL, "Order price : "+detail.get(9));
 			}
+		screenshotFullPath(detail.get(18),test);
+	}
+	
+	public String screenshotFullPath(String screenshotPath,ExtentTest test) {
+	
+		ConfigReader reader=new ConfigReader();
+		String path=reader.configReader("Result");
+	
+		 screenshotPath=screenshotPath.replace("../WorkingE2",path);
+		  screenshotPath=screenshotPath.replace("/", "//");
+		Reporter.log("Screenshot : "+screenshotPath, true);
 		try {
-			Reporter.log("Screenshot : "+detail.get(18), true);
-			test.addScreencastFromPath(detail.get(18));
+			
+			 test.addScreenCaptureFromPath(screenshotPath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return screenshotPath;
 	}
-	
 	
 }

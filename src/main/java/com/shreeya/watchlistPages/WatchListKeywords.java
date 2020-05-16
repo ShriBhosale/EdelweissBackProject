@@ -25,11 +25,11 @@ public class WatchListKeywords {
 		
 		
 		List<String> predWatchList=new ArrayList<String>();
-		/*
-		 * predWatchList.add("PredefineWatchList"); predWatchList.add("Verfiy_4");
-		 */
-		predWatchList.add("PredefineWatchListTrade");
-		predWatchList.add("Verfiy_5");
+		
+		  predWatchList.add("PredefineWatchList");
+		  predWatchList.add("Verfiy_4");
+		  predWatchList.add("PredefineWatchListTrade");
+		  predWatchList.add("Verfiy_5");
 		
 		if(predefineWatchList.equalsIgnoreCase("Yes")) {
 			stepsList=predWatchList;

@@ -77,12 +77,14 @@ public class FolderStructure {
 	public String reportPathProvider() {
 		ConfigReader reader=new ConfigReader();
 		String reportPath=reader.configReader("Result");
-		Reporter.log("Report Path ======> "+reportPath,true);
-		String replaceStr=reportPath.replace("\\", "-");
-		String [] reportPathArray=replaceStr.split("-");
-		String path="../"+reportPathArray[reportPathArray.length-1]+"/Report";
 		
-		Reporter.log("Path ====> "+path, true);
+		  Reporter.log("Report Path ======> "+reportPath,true); String
+		  replaceStr=reportPath.replace("\\", "-"); String []
+		  reportPathArray=replaceStr.split("/"); String
+		  path="../"+reportPathArray[reportPathArray.length-1]+"/Report";
+		  
+		  Reporter.log("Path ====> "+path, true);
+		 
 		return path;
 	}
 

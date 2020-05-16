@@ -34,6 +34,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	private WebElement askPriceLabel;
 	private WebElement lowLabel;
 	private WebElement hightabel;
+	private WebElement exchangeLabel;
 	
 	String lastTradePriceText;
 	String changeText;
@@ -42,6 +43,8 @@ public class PredefineWatchList extends SeleniumCoder{
 	String askPriceText;
 	String lowText;
 	String hightText;
+	String scriptName="ScriptName:PredefineWatchList";
+	String exchange;
 	
 	List<String> predefineWatchListDetail;
 	
@@ -173,14 +176,16 @@ public class PredefineWatchList extends SeleniumCoder{
 		int totalScript=Integer.valueOf(numberScriptArray[3]);
 		if(numberScript==totalScript) {
 			errorMsg=errorMsg+"-PASS";
+			predefineWatchListDetail.add(errorMsg);
 		}else {
 			errorMsg=errorMsg+"-FAIL";
+			predefineWatchListDetail.add(errorMsg);
 		}
 		return numberScript;
 	}
 	
 	public List<String> clickAnyOption(WatchListModel model) {
-		
+		predefineWatchListDetail.add("PredefineWatchList Name : "+model.getWatchListName());
 		clickOnPredefineWatchList(model);
 		int totalScript=compareNoScriptAndNoScriptLable();
 		
@@ -189,12 +194,18 @@ public class PredefineWatchList extends SeleniumCoder{
 		for(int i=2;i<noScript;i++) {
 			String xpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 			WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
-			String scriptName=fetchTextFromElement(scriptLable);
-			if(scriptName.contains(model.getVerifyScript())) {
+			 scriptName=fetchTextFromElement(scriptLable);
+			if(scriptName.contains("NESTLEIND")){
 				noScript=i;
 				break;
 			}
 		}
+		Reporter.log("PredefineWatchList : scriptName : "+scriptName, true);
+		predefineWatchListDetail.add("Script Name : "+elementsTextFilter(scriptName));
+		
+		exchangeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/a/span/small", "Exchange");
+		predefineWatchListDetail.add(fetchTextFromElement(exchangeLabel));
+		
 		lastTradePriceLabel=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[2]/span", "Last trade price");
 		lastTradePriceText=fetchTextFromElement(lastTradePriceLabel);
 		predefineWatchListDetail.add("Last Traded Price : "+lastTradePriceText);
