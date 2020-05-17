@@ -14,7 +14,7 @@ public class WatchListHelper extends SeleniumCoder{
 	
 	WebDriver driver;
 	WatchListPage watchListPage;
-	public WatchListHelper(WebDriver driver) throws IOException {
+	public WatchListHelper(WebDriver driver){
 		super(driver);
 		this.driver=driver;
 		watchListPage=new WatchListPage();

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchSessionException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -294,7 +295,12 @@ public class LoginPage extends SeleniumCoder {
 			Reporter.log("Again click on login button", true);
 			clickElement(loginButton, "Login button");
 		}
+		try {
 		clickElement(buyAndSellButton, "Buy/Sell link");
+		}catch(StaleElementReferenceException e) {
+			buyAndSellButton = fluentWaitCodeXpath(driver, "//a[text()='Buy/Sell']", 50,"Buy/Sell link");
+			clickElement(buyAndSellButton, "Buy/Sell link");
+		}
 	}
 
 	public WebDriver loginCodeExecution(WebDriver driver, LoginTestModel loginModelObject, ExtendReporter extend)

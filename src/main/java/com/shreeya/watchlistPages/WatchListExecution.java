@@ -9,6 +9,7 @@ import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import com.shreeya.MyTestLauncher;
 import com.shreeya.model.WatchListModel;
@@ -51,6 +52,10 @@ public class WatchListExecution extends SeleniumCoder{
 			watchListDetail=watchListPage.watchListExecution(model,reporter);
 			}catch(NullPointerException e) {
 				reporter=continueExecution(reporter,model,driver);
+				StackTraceElement [] s=e.getStackTrace();
+				for(StackTraceElement s1:s) {
+					Reporter.log(s1.toString(), true);
+				}
 				continue;
 			}catch(ElementClickInterceptedException e) {
 				reporter=continueExecution(reporter,model,driver);

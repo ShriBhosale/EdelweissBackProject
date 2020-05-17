@@ -16,12 +16,11 @@ public class WatchListKeywords {
 		  normalWatchList.add("Create");
 		  normalWatchList.add("AddScript");
 		  normalWatchList.add("Verfiy_1"); 
-		  normalWatchList.add("Create");
-		  normalWatchList.add("DuplicateScript"); 
-		  normalWatchList.add("Verfiy_2");
-		  normalWatchList.add("DeleteScript");
-		  normalWatchList.add("Delete");
-		  normalWatchList.add("Verfiy_3");
+			/*
+			 * normalWatchList.add("Create"); normalWatchList.add("DuplicateScript");
+			 * normalWatchList.add("Verfiy_2"); normalWatchList.add("DeleteScript");
+			 * normalWatchList.add("Delete"); normalWatchList.add("Verfiy_3");
+			 */
 		
 		
 		List<String> predWatchList=new ArrayList<String>();
