@@ -2,8 +2,10 @@ package com.shreeya.watchlistPages;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
@@ -48,8 +50,9 @@ public class WatchListExecution extends SeleniumCoder{
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
 			List<String> watchListDetail=new ArrayList<String>();
+			Map<String,List<String>> verfiyMap=new HashMap<String,List<String>>();
 			try {
-			watchListDetail=watchListPage.watchListExecution(model,reporter);
+				verfiyMap=watchListPage.watchListExecution(model,reporter);
 			}catch(NullPointerException e) {
 				reporter=continueExecution(reporter,model,driver);
 				StackTraceElement [] s=e.getStackTrace();
@@ -66,7 +69,7 @@ public class WatchListExecution extends SeleniumCoder{
 			}
 			 
 			//reporter=watchListReport.watchListReportGenerator(model,reporter);
-			watchListReport1.report(model,reporter);
+			watchListReport1.report(model,reporter,verfiyMap);
 			 
 		}
 		reporter.logFlush();

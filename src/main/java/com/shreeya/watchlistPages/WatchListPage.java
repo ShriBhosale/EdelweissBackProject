@@ -2,7 +2,9 @@ package com.shreeya.watchlistPages;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
@@ -45,8 +47,8 @@ public class WatchListPage extends SeleniumCoder{
 	public static List<String> scriptList;
 	public static String scriptLabelStr;
 	public static String exchangeLabelStr;
-	public static  String [] scriptArray;
-	public static  String [] exchangeArray;
+	public static  String [] scriptArray= {"Tata Consumer Products Ltd","Adinath Textiles Ltd"};
+	public static  String [] exchangeArray= {"BSE","BSE"};
 	public static  String [] applicationScriptArray;
 	public static String errorMsg="no";
 	public static String predifineWatchMsg="no predefine msg";
@@ -112,9 +114,10 @@ public class WatchListPage extends SeleniumCoder{
 		}
 		for(String watchListName:watchListNameArray) {
 		//newWatchListTab=fluentWaitCodeXpath("//span[text()='New Watchlist']", "New Watchlist tab");
-			staticWait(500);	
+			staticWait(1000);	
 		newWatchListTab=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/ul/li[1]/a/span[2]", "New Watchlist tab");
-		clickElement(newWatchListTab, "New Watch list tab");
+		//clickElement(newWatchListTab, "New Watch list tab");
+		clickUsingAction(newWatchListTab,"New Watch list tab");
 		staticWait(1000);
 		watchListNameTextfield=fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]", "WatchListName Textfield");
 		
@@ -175,13 +178,14 @@ public class WatchListPage extends SeleniumCoder{
 		 */
 		watchListCommon.pageVerify(model,"abc");
 		staticWait(500);
-		errorList.add("Delete WatchListName : "+model.getWatchListName()+"-"+model.getWatchListName());
+		errorList.add("Delete watchList");
+		errorList.add("WatchList Name : "+model.getWatchListName());
 		String deleteButtonxpath="//span[text()='New Watchlist']//following::li//a[text()='"+model.getWatchListName()+"']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
 		String defaultWatchxpath="//span[text()='New Watchlist']//following::li//a[text()='"+model.getWatchListName()+"']//following::ul//li//span[@class='fa fa-star']";
 		defaultWatchList=fluentWaitCodeXpath(defaultWatchxpath,30,"Default WatchList tab");
 		if(defaultWatchList!=null) {
-			errorMsg="Error msg : "+model.getWatchListName()+" watchList is default watchList you cannot delete";
-			errorList.add(errorMsg+"-"+model.getWatchListName());
+			errorMsg="Error msg : "+model.getWatchListName()+" watchList is default watchList you cannot delete"+"-PASS";
+			errorList.add(errorMsg);
 		}else {
 		try {
 		
@@ -194,10 +198,11 @@ public class WatchListPage extends SeleniumCoder{
 		}
 		clickElement("//button[text()='Delete']", "delete button");
 		clickElement("//button[text()='Ok']", "Ok button");
+		errorList.add(model.getWatchListName()+" watchList deleted sccessfully....."+"-Check");
 		}
 		
 		
-		errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+model.getWatchListName());
+		errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 		/* } */
 		
 		
@@ -236,7 +241,7 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 	public void addScript(WatchListModel model,String step) {
-		
+		String [] verifyScriptArray=help.commaSeparater(model.getVerifyScript());
 		String xpathString="no xpath for script";
 		String dropdownOptionStr="//*[@id='watchlist']/div/div/div[2]/div[2]/div/div/div/ul/li/a[text()='"+model.getScriptName()+"']";
 		String text="Add a Scrip to "+model.getWatchListName();
@@ -247,7 +252,7 @@ public class WatchListPage extends SeleniumCoder{
 			xpathString="//h4[text()='"+text+"']//following::input";
 			dropdownOptionStr="//*[@id=\"addScripPopup\"]/div/div/div[2]/div/div/div/div/ul/li[1]/a[text()='"+model.getScriptName()+"']";
 		}
-		
+		staticWait(600);
 		addScriptTextfield=fluentWaitCodeXpath(xpathString, "Add Script textfield");
 		staticWait(600);
 		clearAndSendKey(addScriptTextfield, model.getScriptName(), "Add Script textfield");
@@ -262,13 +267,14 @@ public class WatchListPage extends SeleniumCoder{
 			clickElement(okButton, "Ok button");
 		}else {
 			if(step.equalsIgnoreCase("addScript")) {
-				errorMsg=model.getScriptName()+" script already present. User should not be allowed to add duplicate script.-"+model.getWatchListName();
+				errorList.add("Trading Sysmbol : "+verifyScriptArray[0]);
+				errorMsg=model.getScriptName()+" script already present. User should not be allowed to add duplicate script.-PASS";
 				errorList.add(errorMsg);
-				errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+model.getWatchListName());
+				//errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 			}else {
-			errorMsg=model.getWatchListName()+" watchList already present. User should not be allowed to create duplicate watchlist.-"+model.getWatchListName();
+			errorMsg=model.getWatchListName()+" watchList already present. User should not be allowed to create duplicate watchlist.-PASS";
 			errorList.add(errorMsg);
-			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+model.getWatchListName());
+			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 			}
 			
 			driver.navigate().refresh();
@@ -277,10 +283,7 @@ public class WatchListPage extends SeleniumCoder{
 		}
 	}
 	
-	
-	
-	
-	
+
 	public void verifyCode(WatchListModel model,String verifyNo) {
 		Reporter.log("VerifyCodeMethod::top if else ", true);
 		
@@ -324,28 +327,28 @@ public class WatchListPage extends SeleniumCoder{
 	public void deleteScript(WatchListModel model) {
 		Reporter.log("deleteScript", true);
 		errorList=new ArrayList<String>();
-		/*
-		 * for(String watchListName:watchListNameArray) {
-		 * model.setWatchListName(watchListName);
-		 */
+		
 		watchListCommon.pageVerify(model,"AddScript");
-			errorList.add("Before Delete Script and WatchList...."+"-"+watchListName);
-			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+watchListName);
+		/* errorList.add("Before Delete Script and WatchList...."+"-"+watchListName); */
+			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 		scriptNameArray=help.commaSeparater(model.getVerifyScript());
 		int scriptCount=scriptNameArray.length+2;
 		for(int i=2;i<scriptCount;i++) {
 			scriptNameLabel=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a", "Script Name");
 			scriptName=fetchTextFromElement(scriptNameLabel);
 			if(scriptName.contains(scriptNameArray[scriptNameArray.length-1])) {
-				errorList.add("Deleted Script Name : "+scriptNameArray[scriptNameArray.length-1]+"-"+watchListName);
-				String scriptBox="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/div[1]/input";
+				Reporter.log("Script : "+scriptArray[scriptArray.length-1]);
+				errorList.add("Script Name : "+scriptArray[scriptArray.length-1]);
+				errorList.add("TradingSysmbol : "+scriptNameArray[scriptNameArray.length-1]);
+				errorList.add("Exchange Name : "+exchangeArray[exchangeArray.length-1]);
+				String scriptBox="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/div[1]/input";
 				scriptCheckBox=fluentWaitCodeXpath(scriptBox, "Script checkBox");
 					clickElement(scriptCheckBox, "ScriptCheckBox");
 					break;
 			}
 		}
 		if(scriptNameArray.length<2) {
-			errorList.add("You can't delete beacause this watchList contain only single script -"+watchListName);
+			errorList.add("You can't delete beacause this watchList contain only single script -"+"PASS");
 		}else {
 			deleteButton=fluentWaitCodeXpath("//a[text()='Delete Scrip']", "Delete Button");
 			clickElement(deleteButton, "Delete Button");
@@ -353,7 +356,8 @@ public class WatchListPage extends SeleniumCoder{
 			clickElement(popupDeleteButton, "popup Delete Button");
 			deleleokButton=fluentWaitCodeXpath("//button[text()='Ok']", "Ok button");
 			clickElement(deleleokButton, "Ok button");
-			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList")+"-"+watchListName);
+			
+			errorList.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
 		 } 
 	}
 	
@@ -392,6 +396,7 @@ public class WatchListPage extends SeleniumCoder{
 	
 	public List<String> tradingWithPredefineWatchList(WatchListModel model) {
 		Reporter.log("tradingWithPredefineWatchList", true);
+		Reporter.log(model.toString(), true);
 		predefineWatchListDetailList=predefineWatchList.trading(model);
 		return predefineWatchListDetailList;
 	}
@@ -410,12 +415,8 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 	private void duplicateScript(WatchListModel model) {
-		/*
-		 * model.setScriptName(scriptArray[scriptArray.length-1]);
-		 * model.setExchange(exchangeArray[exchangeArray.length-1]); for(String
-		 * watchListName:watchListNameArray) { model.setWatchListName(watchListName);
-		 */
 		
+		errorList.add("duplicateScript");
 		watchListCommon.pageVerify(model,"AddScript");
 			addScriptButton=fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add script button");
 			try {
@@ -426,17 +427,19 @@ public class WatchListPage extends SeleniumCoder{
 				clickElement(addScriptButton, "Add script button");
 			}
 		addScript(model,"addScript");
-		/* } */
+		
 	}
 	
-	public List<String> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
+	public Map<String,List<String>> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
 		List<String> stepsList=watchListKeyword.keywordProccess(model.getPredefineWatchList());
 		errorMsg="no";
-		
+		Map<String,List<String>> inputMap=new HashMap<String, List<String>>();
+		watchListStepVerify.setVerifyMap(inputMap);
 		/*
-		 * model.setWatchListName("Watch3"); model.setExchange("BSE");
-		 * model.setScriptName("Tata Consumer Products Ltd");
+		 * model.setWatchListName("Watch3"); model.setExchange("BSE,BSE");
+		 * model.setScriptName("Tata Consumer Products Ltd,Adinath Textiles Ltd");
 		 */
+		  
 		 
 		for(String steps:stepsList) {
 			
@@ -476,7 +479,7 @@ public class WatchListPage extends SeleniumCoder{
 			}
 		}
 		
-		return predefineWatchListDetailList;
+		return watchListStepVerify.verifyMapGiver();
 		
 	}
 

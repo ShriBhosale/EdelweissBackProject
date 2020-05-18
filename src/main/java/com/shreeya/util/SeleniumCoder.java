@@ -1060,4 +1060,10 @@ public class SeleniumCoder extends ExceptionHandler {
 		Reporter.log("Predefine msg : "+msg, true);
 		return msg;
 	}
+	
+	public void clickUsingAction(WebElement element,String elementName) {
+		Actions action=new Actions(driver);
+		action.moveToElement(element).click().build().perform();
+		Reporter.log(elementName+" click", true);
+	}
 }

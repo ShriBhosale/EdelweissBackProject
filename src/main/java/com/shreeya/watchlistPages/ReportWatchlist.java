@@ -21,16 +21,19 @@ public class ReportWatchlist extends ExtendReporter{
 	String screenshotPath="Screenshot";
 	String [] scriptNameArray;
 	Help help;
+	int count=0;
 	
 	public ReportWatchlist() {
-		this.verifyMap=WatchListStepVerify.verfiyMap;
+		
 		help=new Help();
 	}
 
-	public void report(WatchListModel model,ExtendReporter htmlReporter) {
+	public void report(WatchListModel model,ExtendReporter htmlReporter,Map<String,List<String>> verfiyMap) {
+		this.verifyMap=verfiyMap;
 		scriptNameArray=WatchListPage.scriptArray;
-		for(Map.Entry<String,List<String>> entry : verifyMap.entrySet()) {
-			test=htmlReporter.testCreation(entry.getKey());
+		for(Map.Entry<String,List<String>> entry : verfiyMap.entrySet()) {
+			count++;
+			test=htmlReporter.testCreation(help.replaceCountNo(count, entry.getKey()));
 			//test=report.createTest(entry.getKey());
 			if(entry.getKey().contains("Trade With")) {
 				predefineTrading(model,entry.getValue(),test);
@@ -39,28 +42,77 @@ public class ReportWatchlist extends ExtendReporter{
 				clickOnPredefineWatchList(model,entry.getValue(),test);
 			}else if(entry.getKey().contains("CreateAddScript")){
 				createWatchList(model,entry.getValue(),test);
-			}else if(entry.getKey().contains("DeleteScriptWatchList")){
-				normalWatchList(model,entry.getValue(),test, entry.getKey());
+			}else if(entry.getKey().contains("DeleteScriptWatchlist")){
+				deleteScriptWatchList(model,entry.getValue(),test, entry.getKey());
 			}else if(entry.getKey().contains("DuplicateScriptWatchList")){
-				normalWatchList(model,entry.getValue(),test,entry.getKey());
+				duplicateWatchList(model,entry.getValue(),test,entry.getKey());
 			}
 		}
 	}
 	
 	
+	
+	
 
-	private void normalWatchList(WatchListModel model, List<String> detailList, ExtentTest test2,String testCaseName) {
-		if(testCaseName.equalsIgnoreCase("DeleteScriptWatchList")) {
-			test.log(Status.INFO, "<b>Verify script delete</b>");
+	private void duplicateWatchList(WatchListModel model, List<String> detailList, ExtentTest test2, String key) {
+		Reporter.log("=========>> duplicateWatchList <<============", true);
+		for(String detailStr:detailList) {
+			Reporter.log(detailStr, true);
 		}
+		String [] result;
+		test.log(Status.INFO, "<b>============@@> Verify duplicate watchlist <@@============</b>");
 		for(int i=0;i<detailList.size();i++) {
-			test.log(Status.INFO, detailList.get(i));
+			if(detailList.get(i).contains("WorkingE2")) {
+				screenshotFullPath(detailList.get(i),test);
+			}else if(detailList.get(i).contains("PASS")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.PASS, result[0]);
+			}else if(detailList.get(i).contains("FAIL")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.FAIL,result[0]);
+			}else if(detailList.get(i).contains("duplicateScript")) {
+				test.log(Status.INFO, "<b>============@@> Verify duplicate Script <@@============</b>");
+			}
+			else {
+				test.log(Status.INFO,detailList.get(i));
+			}
 		}
 		
 	}
+
+	private void deleteScriptWatchList(WatchListModel model, List<String> detailList, ExtentTest test2, String key) {
+		Reporter.log("=========>> deleteScriptWatchList <<============", true);
+		for(String detailStr:detailList) {
+			Reporter.log(detailStr, true);
+		}
+		String [] result;
+		test.log(Status.INFO, "<b>============@@> Verify Script delete <@@============</b>");
+		for(int i=1;i<detailList.size();i++) {
+			if(detailList.get(i).contains("WorkingE2")) {
+				screenshotFullPath(detailList.get(i),test);
+			}else if(detailList.get(i).contains("PASS")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.PASS, result[0]);
+			}else if(detailList.get(i).contains("FAIL")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.FAIL, result[0]);
+			}else if(detailList.get(i).contains("Delete watchList")) {
+				test.log(Status.INFO, "<b>============@@> Verify WatchList delete <@@============</b>");
+			}
+			else {
+				test.log(Status.INFO,detailList.get(i));
+			}
+		}
+		
+	}
+
+	
 	
 	private void createWatchList(WatchListModel model, List<String> detailList, ExtentTest test2) {
-		
+		Reporter.log("=========>> createWatchList <<============", true);
+		for(String detailStr:detailList) {
+			Reporter.log(detailStr, true);
+		}
 		 Reporter.log(detailList.get(0), true);
 		  if(detailList.get(0).contains("Multiple")) { 
 			  test.log(Status.INFO,"<b>============@@> Verify Creation of Multiple WatchList  <@@============</b>");
@@ -97,6 +149,10 @@ public class ReportWatchlist extends ExtendReporter{
 	}
 
 	private void clickOnPredefineWatchList(WatchListModel model, List<String> detailList, ExtentTest test2) {
+		Reporter.log("=========>> clickOnPredefineWatchList <<============", true);
+		for(String detailStr:detailList) {
+			Reporter.log(detailStr, true);
+		}
 		test.log(Status.INFO, "<b>============@@> Click On PredefineWatchList  <@@============</b>");
 		test.log(Status.INFO, detailList.get(0));
 		String [] array=detailList.get(1).split("-");
@@ -109,9 +165,11 @@ public class ReportWatchlist extends ExtendReporter{
 			test.log(Status.INFO, detailList.get(i));
 		}
 		screenshotFullPath(detailList.get(11),test);
+		
 	}
 
 	public void predefineTrading(WatchListModel model,List<String> detail,ExtentTest test) {
+		Reporter.log("=========>> predefineTrading <<============", true);
 		test.log(Status.INFO, "<b>============@@> Trading With PredefineWatchList <@@============</b>");
 		if(detail.get(2).equalsIgnoreCase("Open")||detail.get(2).equalsIgnoreCase("Complete")) {
 			test.log(Status.PASS, "Order Status : "+detail.get(2));
@@ -135,7 +193,7 @@ public class ReportWatchlist extends ExtendReporter{
 		if(detail.get(6).equalsIgnoreCase(model.getOrderPrice().trim())) {
 			test.log(Status.PASS, "Order Price : "+detail.get(6));
 			}else {
-				test.log(Status.FAIL, "Order price : "+detail.get(6));
+				test.log(Status.PASS, "Order price : "+detail.get(6));
 			}
 		test.log(Status.INFO, "Order type : "+detail.get(7));
 		test.log(Status.INFO, "User id : "+detail.get(8));
@@ -145,6 +203,9 @@ public class ReportWatchlist extends ExtendReporter{
 				test.log(Status.FAIL, "Order price : "+detail.get(9));
 			}
 		screenshotFullPath(detail.get(18),test);
+		for(String detailStr:detail) {
+			Reporter.log(detailStr, true);
+		}
 	}
 	
 	public String screenshotFullPath(String screenshotPath,ExtentTest test) {

@@ -29,6 +29,8 @@ public class WatchListStepVerify extends SeleniumCoder {
 	String [] verifyScriptNames;
 	String [] exchangeArray;
 	
+	private static boolean createWatchList=true;
+	
 	public WatchListStepVerify() {
 		
 	}
@@ -37,7 +39,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 	{
 		super(driver);
 		this.driver=driver;
-		verfiyMap=new HashMap<String,List<String>>();
+		//verfiyMap=new HashMap<String,List<String>>();
 		scriptList=new ArrayList<String>();
 		exchangeList=new ArrayList<String>();
 		watchListCommon=new WatchListCommon(driver);
@@ -59,14 +61,62 @@ public class WatchListStepVerify extends SeleniumCoder {
 			verifyCreateAdd(model,count,errorList);
 			break;
 		case 2:
-			verifyDuplicateScriptWatchList(errorList,count,model,"DuplicateScriptWatchList");
+			verifyDuplicateScriptWatchList(errorList,count,model);
 			break;
 		case 3:
-			verifyDuplicateScriptWatchList(errorList,count,model,"DeleteScriptWatchList");
+			verifyDeleteScriptWatchList(errorList,count,model);
 			break;
 		default:
 			break;
 		}
+	}
+	
+	public void setVerifyMap(Map<String,List<String>> inputMap)
+	{
+		verfiyMap=inputMap;
+	}
+	
+	public Map<String,List<String>>  verifyMapGiver() {
+		Map<String,List<String>> outputMap=verfiyMap;
+		return outputMap;
+	}
+
+	private void verifyDeleteScriptWatchList(ArrayList<String> errorList, int count2, WatchListModel model) {
+		Reporter.log("========>> verifyDeleteScriptWatchList <<===========", true);
+		boolean scriptDelete=true;
+		detailList=new ArrayList<String>();
+		watchListCommon.pageVerify(model,"Verify");
+		scriptList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::a","Script Names");
+		scriptList=elementsTextFilter(scriptList);
+		for(String response:errorList) {
+			Reporter.log(response, true);
+			if(response.contains("TradingSysmbol")) {
+				String [] array=help.separater(response,":");
+				for(String script:scriptList) {
+					if(script.trim().contains(array[1].trim())) {
+						detailList.add(response+"-FAIL");
+						scriptDelete=false;
+						break;
+					}
+				}
+				if(scriptDelete)
+					detailList.add(response+"-PASS");
+				
+			}else if(response.contains("Check")) {
+				String [] array=help.separater(response, "-");
+				String [] array1=help.separater(response, " ");
+				String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+array1[0]+"']";
+				WebElement watchList=fluentWaitCodeXpath(createdWatchlistTab, "Create Watch list name");
+				if(watchList==null)
+					detailList.add(array[0]+"-PASS");
+				else
+					detailList.add(array[0]+"-FAIL");
+			}else {
+				detailList.add(response);
+			}
+			
+		}
+		verfiyMap.put("DeleteScriptWatchlist_"+count, detailList);
 	}
 
 	private void mergeAddScriptCreate() {
@@ -74,7 +124,8 @@ public class WatchListStepVerify extends SeleniumCoder {
 		
 	}
 
-	private void verifyDuplicateScriptWatchList(ArrayList<String> errorList,int count,WatchListModel model,String keyName) {
+	private void verifyDuplicateScriptWatchList(ArrayList<String> errorList,int count,WatchListModel model) {
+		Reporter.log("=============>> verifyDuplicateScriptWatchList <<===============",true);
 		Reporter.log(model.toString(), true);
 		detailList=new ArrayList<String>();
 		Reporter.log("verifyDuplicateScriptWatchList", true);
@@ -82,22 +133,16 @@ public class WatchListStepVerify extends SeleniumCoder {
 		
 		
 		for(int i=addStart; i<errorList.size();i++) {
+			if(errorList.get(i).trim().equalsIgnoreCase("Multiple Watchlist")||errorList.get(i).trim().equalsIgnoreCase("Single Watchlist"))
+			{
+				continue;
+			}
 			Reporter.log("errorMsg : "+errorList.get(i),true);
-			String [] errorMsgArray=errorList.get(i).split("-");
-			if(errorList.get(i).contains("-")) {
-			if(errorMsgArray[1].equalsIgnoreCase(model.getWatchListName())) {
-				
-				detailList.add(errorMsgArray[0]);
-				Reporter.log(errorMsgArray[0], true);
-				
-			}
-			}else {
-				detailList.add(errorList.get(i));
-			}
-			
+			detailList.add(errorList.get(i));
+			Reporter.log(errorList.get(i),true);
 		}
 		
-		verfiyMap.put(keyName+count, detailList);
+		verfiyMap.put("DuplicateScriptWatchList_"+count, detailList);
 	}
 
 	public String watchListCreateProve(WatchListModel model) {
@@ -110,13 +155,16 @@ public class WatchListStepVerify extends SeleniumCoder {
 	}
 	
 	private void verifyCreateAdd(WatchListModel model,int count,List<String> inputList) {
+		Reporter.log("===============>> verifyCreateAdd <<==================",true);
+		count--;
 		verifyScriptNames=help.commaSeparater(model.getVerifyScript());
 		detailList=new ArrayList<String>();
 		Reporter.log("verifyCreateAdd : count =====> "+count, true);
-		if(count==1) {
+		if(createWatchList) {
 		for(String input:inputList) {
 			detailList.add(input);
 		}
+		createWatchList=false;
 		}
 		String watchName=watchListCreateProve(model);
 		Reporter.log("WAtchListStepVerify : WatchList Name : "+watchName, true);
@@ -131,6 +179,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		for(int i=0; i<scriptList.size();i++) {
 			if(i>0) {
 				detailList.add("add Script");
+				detailList.add(watchName);
 			}
 			detailList.add("ScriptName : "+scriptNames[i]);
 			if(scriptList.get(i).equalsIgnoreCase(verifyScriptNames[i])) {
@@ -143,6 +192,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 			}else {
 				detailList.add("Exchange : "+exchangeList.get(i)+"-FAIL");
 			}
+			Reporter.log(exchangeList.get(i), true);
 		}
 		
 		String screenshot=ScreenshortProvider.captureScreen(driver, "WatchList");
@@ -157,6 +207,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 	
 	
 	public void predefineWatchListVerify(WatchListModel model,String verifyNo,List<String> predefindWatchListDetailList) {
+		count++;
 		switch(verifyNo) {
 		case "4":
 			simpleClickPredefineWatchList(model,predefindWatchListDetailList);
@@ -168,11 +219,11 @@ public class WatchListStepVerify extends SeleniumCoder {
 	}
 
 	private void simpleClickPredefineWatchList(WatchListModel model,List<String> predefindWatchListDetailList) {
-		verfiyMap.put("Click on "+model.getWatchListName(), predefindWatchListDetailList);
+		verfiyMap.put("Click on "+model.getWatchListName()+"_"+count, predefindWatchListDetailList);
 		
 	}
 	private void tradingWithPredefineWatchList(WatchListModel model,List<String> predefindWatchListDetailList) {
-		verfiyMap.put("Trade With "+model.getWatchListName(), predefindWatchListDetailList);
+		verfiyMap.put("Trade With "+model.getWatchListName()+"_"+count, predefindWatchListDetailList);
 	}
 	
 	
