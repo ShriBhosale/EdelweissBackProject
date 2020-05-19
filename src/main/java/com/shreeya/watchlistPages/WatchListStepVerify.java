@@ -49,6 +49,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 	}
 	public void verfitySteps(WatchListModel model,String verifyNo,ArrayList<String> errorList) {
 		Reporter.log(model.toString(), true);
+		
 		count++;
 		scriptNames=WatchListPage.scriptArray;
 		exchangeArray=WatchListPage.exchangeArray;
@@ -61,16 +62,26 @@ public class WatchListStepVerify extends SeleniumCoder {
 			verifyCreateAdd(model,count,errorList);
 			break;
 		case 2:
-			verifyDuplicateScriptWatchList(errorList,count,model);
+			tradingWithWatchlist(errorList,count,model);
 			break;
 		case 3:
+			verifyDuplicateScriptWatchList(errorList,count,model);
+			break;
+		case 4:
 			verifyDeleteScriptWatchList(errorList,count,model);
 			break;
+		
 		default:
 			break;
 		}
 	}
 	
+	private void tradingWithWatchlist(ArrayList<String> errorList, int count2, WatchListModel model) {
+		// TODO Auto-generated method stub
+		verfiyMap.put("TradingWithWatchList "+model.getWatchListName()+"_"+count, errorList);
+		errorList=new ArrayList<String>();
+	}
+
 	public void setVerifyMap(Map<String,List<String>> inputMap)
 	{
 		verfiyMap=inputMap;
@@ -209,10 +220,10 @@ public class WatchListStepVerify extends SeleniumCoder {
 	public void predefineWatchListVerify(WatchListModel model,String verifyNo,List<String> predefindWatchListDetailList) {
 		count++;
 		switch(verifyNo) {
-		case "4":
+		case "5":
 			simpleClickPredefineWatchList(model,predefindWatchListDetailList);
 			break;
-		case "5":
+		case "6":
 			tradingWithPredefineWatchList(model, predefindWatchListDetailList);
 			break;
 		}

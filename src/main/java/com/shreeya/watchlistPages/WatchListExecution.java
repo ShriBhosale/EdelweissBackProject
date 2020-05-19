@@ -46,7 +46,7 @@ public class WatchListExecution extends SeleniumCoder{
 		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']", "Close popup button");
 		clickElement(closePopupButton,  "Close popup button");
 		hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
-		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[0], "WatchList", 0);
+		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
 			List<String> watchListDetail=new ArrayList<String>();

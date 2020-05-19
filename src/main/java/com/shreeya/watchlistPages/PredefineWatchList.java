@@ -35,6 +35,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	private WebElement lowLabel;
 	private WebElement hightabel;
 	private WebElement exchangeLabel;
+	private WebElement closeButton;
 	
 	String lastTradePriceText;
 	String changeText;
@@ -141,6 +142,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			Reporter.log("orderPlaceSearchTextField : "+scriptNametext , true);
 			placeOrder(model);
 			orderDetailArray=orderDetail.orderDetailProvider(driver, "New", "NO order sheet");
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,6 +152,9 @@ public class PredefineWatchList extends SeleniumCoder{
 			predefineWatchListDetail.add(orderDetail);
 		}
 		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "watchList"));
+		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a",5,"Close Button (x)");
+		if(closeButton!=null)
+		clickElement(closeButton, "Close order status popup");
 		return predefineWatchListDetail;
 	}
 	

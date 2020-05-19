@@ -45,4 +45,24 @@ public class Help {
 		}
 		return ans;
 	}
+	
+	public String tradeXpath(String scriptName) {
+		String [] array=scriptName.split(" ");
+		if(array[0].trim().equalsIgnoreCase("Hdfc")) {
+			scriptName="Hdfc  Bank  Ltd";
+		}
+		else {
+			scriptName=scriptName.replace(" ", "  ");
+		}
+		return scriptName;
+	}
+	
+	public String absolutePathProvider(String inputPath) {
+		ConfigReader reader=new ConfigReader();
+		String path=reader.configReader("Result");
+	
+		String screenshotPath=inputPath.replace("../WorkingE2",path);
+		  screenshotPath=screenshotPath.replace("/", "//");
+		  return screenshotPath;
+	}
 }

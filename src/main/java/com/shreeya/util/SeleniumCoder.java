@@ -35,10 +35,12 @@ public class SeleniumCoder extends ExceptionHandler {
 	int maximumDelay = 100;
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
+	Help help;
 
 	public SeleniumCoder(WebDriver driver) {
 
 		this.driver = driver;
+		help=new Help();
 	}
 	
 	public SeleniumCoder() {
@@ -130,7 +132,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 
 	public void clearAndSendKey(WebElement element, String msg, String elementName) {
-
+		
 		try {
 			element.clear();
 			element.sendKeys(msg);
@@ -912,6 +914,8 @@ public class SeleniumCoder extends ExceptionHandler {
 		Reporter.log("multipleElementsTextProvider : elementsList length : "+elements.size(), true);
 		for(WebElement element:elements) {
 			String elementString=fetchTextFromElement(element);
+			Reporter.log("multipleElementsTextProvider : elementString : "+elementString, true);
+			if(!elementString.equalsIgnoreCase("Click here"))
 			elementStringList.add(elementString);
 		}
 		
@@ -1065,5 +1069,11 @@ public class SeleniumCoder extends ExceptionHandler {
 		Actions action=new Actions(driver);
 		action.moveToElement(element).click().build().perform();
 		Reporter.log(elementName+" click", true);
+	}
+	
+	public void screenshortAttach(String screeenshotName) {
+		String screenshot=ScreenshortProvider.captureScreen(driver, screeenshotName);
+		screenshot=help.absolutePathProvider(screenshot);
+		String pathAttach="\"<img src=\"\\\"file://\"\" alt=\"\\\"\\\"/\" />\";";
 	}
 }

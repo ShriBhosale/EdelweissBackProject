@@ -93,7 +93,7 @@ public class WatchListReport extends ExtendReporter {
 		test=htmlReport.testCreation("Abnormal condition"+model.getReferNo());
 		test.log(Status.INFO, "Abnormal condition");
 		test.log(Status.FAIL, SeleniumCoder.elementNameError+"Element not found or element not interactable");
-		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],"Watchlist", orderNo);
+		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],"WatchListAbnormal", orderNo);
 		return htmlReport;
 	}
 
