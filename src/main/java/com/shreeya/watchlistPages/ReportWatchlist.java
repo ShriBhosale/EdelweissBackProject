@@ -251,7 +251,7 @@ public class ReportWatchlist extends ExtendReporter{
 		}else {
 			test.log(Status.FAIL, "Product Name : "+detail.get(4));
 		}
-		if(detail.get(5).equalsIgnoreCase(model.getOrderPrice().trim())) {
+		if(help.removeComma(detail.get(5)).equalsIgnoreCase(help.ditgitConverter(model.getOrderPrice().trim()))) {
 			test.log(Status.PASS, "Order Price : "+detail.get(5));
 			}else {
 				test.log(Status.PASS, "Order price : "+detail.get(5));

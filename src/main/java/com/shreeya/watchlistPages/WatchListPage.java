@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
 import com.shreeya.model.WatchListModel;
+import com.shreeya.orderdetailpages.ModOrderPage;
 import com.shreeya.orderdetailpages.OrderDetail;
 import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.Help;
@@ -43,6 +44,7 @@ public class WatchListPage extends SeleniumCoder{
 	WebElement deleleokButton;
 	WebElement orderPlaceSearchTextField;
 	WebElement closeButton;
+	WebElement tradeButton;
 
 	public static String createWatchListPath;
 	public static String deleteWatchListPath;
@@ -460,15 +462,33 @@ public class WatchListPage extends SeleniumCoder{
 		String scriptName=help.tradeXpath(model.getScriptName());
 		String tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+model.getWatchListName()+" ']";
 		try {
-			WebElement tradeButton=fluentWaitCodeXpath(tradeButtonxpath,30,"Trading button");
-			if(tradeButton==null) {
-				 tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+scriptName+" ']";
-				tradeButton=fluentWaitCodeXpath(tradeButtonxpath, "Trading button");
+			/*
+			 * WebElement
+			 * tradeButton=fluentWaitCodeXpath(tradeButtonxpath,30,"Trading button");
+			 * if(tradeButton==null) {
+			 * tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "
+			 * +scriptName+" ']"; tradeButton=fluentWaitCodeXpath(tradeButtonxpath,
+			 * "Trading button"); }
+			 */
+			
+			
+			
+			scriptList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::a","Script Names");
+			scriptList=elementsTextFilter(scriptList);
+			int addScript=0;
+			for(int i=1;i<scriptList.size();i++)
+			{
+				if(scriptList.get(i).equalsIgnoreCase(model.getScriptName().trim())) {
+					addScript=i;
+					break;
+				}
+				
 			}
+			tradeButtonxpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+addScript+"]/div[1]/div[11]/a";
+			tradeButton=fluentWaitCodeXpath(tradeButtonxpath, "Trade button");
+			
 			clickElement(tradeButton,model.getScriptName()+" Trade button");
-			orderPlaceSearchTextField=fluentWaitCodeXpath("//input[@id='tocsearch']", "Order Place Textfield");
-			scriptNametext=fetchTextFromElement(orderPlaceSearchTextField);
-			Reporter.log("orderPlaceSearchTextField : "+scriptNametext , true);
+			
 			predefineWatchList.placeOrder(model);
 			
 			orderDetailArray=orderDetail.orderDetailProvider(driver, "New", "NO order sheet");

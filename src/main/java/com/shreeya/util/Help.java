@@ -65,4 +65,37 @@ public class Help {
 		  screenshotPath=screenshotPath.replace("/", "//");
 		  return screenshotPath;
 	}
+	
+	public String removeComma(String number) {
+		String ans="";
+		if(number.contains(",")) {
+			char [] ditgitArray=number.toCharArray();
+			for(char c:ditgitArray) {
+				if(c==',')
+					continue;
+				else
+				ans=ans+c;	
+			}
+		}
+		System.out.println("Ans : "+ans);
+		return ans;
+	}
+	
+	public String ditgitConverter(String number) {
+		String ans="";
+		if(!number.contains(".")) {
+			ans=number+".00";
+		}
+		return ans;
+	}
+	public static void main(String[] args) {
+		Help help=new Help();
+		String price="2,456.00";
+		String sheetPrice="2456";
+		if(help.ditgitConverter(sheetPrice).equalsIgnoreCase(help.removeComma(price))) {
+			System.out.println("Price match");
+		}else {
+			System.out.println("Does not match...");
+		}
+	}
 }
