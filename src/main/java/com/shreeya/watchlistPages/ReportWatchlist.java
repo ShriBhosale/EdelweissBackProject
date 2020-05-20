@@ -119,9 +119,9 @@ public class ReportWatchlist extends ExtendReporter{
 		  if(detailList.get(0).contains("Multiple")) { 
 			  test.log(Status.INFO,"<b>============@@> Verify Creation of Multiple WatchList  <@@============</b>");
 			 
-		  }else if(detailList.get(0).equalsIgnoreCase("Single")) {
+		  }else/* if(detailList.get(0).equalsIgnoreCase("Single")) {*/
 		  test.log(Status.INFO,"<b>============@@> Verify Create WatchList  <@@============</b>"); 
-		  }
+		  
 		 
 			for(int i=1;i<detailList.size();i++) {
 				if(detailList.get(i).contains("WorkingE2")) {
@@ -230,6 +230,7 @@ public class ReportWatchlist extends ExtendReporter{
 	
 	public void tradingWithWatchList(WatchListModel model,List<String> detail,ExtentTest test) {
 		Reporter.log("=========>> tradingWithWatchList <<============", true);
+		String [] ScriptNameArray=WatchListPage.scriptArray;
 		test.log(Status.INFO, "<b>============@@> Trading With Normal WatchList <@@============</b>");
 		test.log(Status.INFO, "WatchName : "+model.getWatchListName());
 		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")) {
@@ -241,7 +242,7 @@ public class ReportWatchlist extends ExtendReporter{
 			test.log(Status.FAIL, "Order Status : "+detail.get(1));
 		}
 		test.log(Status.INFO, "Order action : "+detail.get(2));
-		if(detail.get(3).toLowerCase().equalsIgnoreCase(model.getScriptName().trim().toLowerCase())) {
+		if(detail.get(3).toLowerCase().equalsIgnoreCase(ScriptNameArray[1].trim().toLowerCase())) {
 			test.log(Status.PASS, "Script Name : "+detail.get(3));
 		}else {
 			test.log(Status.PASS, "Script Name : "+detail.get(3));

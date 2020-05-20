@@ -57,6 +57,7 @@ public class WatchListPage extends SeleniumCoder{
 	public static String predifineWatchMsg="no predefine msg";
 	String [] watchListNameArray= {"Def1"};
 	String deleteOption="present";
+	private static int rowStartCount=0;
 	
 	private static String scriptNames;
 	private static String exchanges;
@@ -142,7 +143,7 @@ public class WatchListPage extends SeleniumCoder{
 		}
 		clearAndSendKey(watchListNameTextfield, watchListName, "WatchListName Textfield");
 		Thread.sleep(1000);
-		if(count==1) {
+		if(model.getReferNo().equalsIgnoreCase("1")) {
 			defaultWatchListCheckBox=fluentWaitCodeXpath("//label[@class='default-watchlist']", "Default WatchList CheckBox");
 			clickElement(defaultWatchListCheckBox,  "Default WatchList CheckBox");
 		}
@@ -301,7 +302,7 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 
-	public void verifyCode(WatchListModel model,String verifyNo) {
+	public void verifyCode(WatchListModel model,String verifyNo,int rowStartCount) {
 		Reporter.log("VerifyCodeMethod::top if else ", true);
 		
 		if(model.getPredefineWatchList().equalsIgnoreCase("Yes")) {
@@ -313,35 +314,37 @@ public class WatchListPage extends SeleniumCoder{
 			
 			if(i==watchListNameArray.length) {
 				
-				watchListStepVerify.verfitySteps(model, "0",errorList);
+				watchListStepVerify.verfitySteps(model, "0",errorList,rowStartCount);
 			}else {
 				model.setWatchListName(watchListNameArray[i]);
-			watchListStepVerify.verfitySteps(model, verifyNo,errorList);
+			watchListStepVerify.verfitySteps(model, verifyNo,errorList,rowStartCount);
 			}
 		}
 		}else {
 				
 				
 				Reporter.log(model.toString(), true);
-				watchListStepVerify.verfitySteps(model, verifyNo,errorList);
+				watchListStepVerify.verfitySteps(model, verifyNo,errorList,rowStartCount);
 			
 		}
 			
-		if(verifyNo.equalsIgnoreCase("100")) {
-			scriptList=new ArrayList<String>();
-			exchangeList=new ArrayList<String>();
-		exchangeLabel=fluentWaitCodeXpath("//div[@class='ed-td ed-stock text-left']//following-sibling::span//small", "Exchange label");
-		scriptLabel=fluentWaitCodeXpath("//div[@class='ed-td ed-stock text-left']//following-sibling::a", "Segement label");
-		scriptLabelStr=fetchTextFromElement(scriptLabel, "Exchange label");
-		exchangeLabelStr=fetchTextFromElement(exchangeLabel, "Exchange label");
-		scriptList.add(scriptLabelStr);
-		exchangeList.add(exchangeLabelStr);
-		scriptList=elementsTextFilter(scriptList);
-		exchangeList=elementsTextFilter(exchangeList);
-		}
+		/*
+		 * if(verifyNo.equalsIgnoreCase("100")) { scriptList=new ArrayList<String>();
+		 * exchangeList=new ArrayList<String>(); exchangeLabel=
+		 * fluentWaitCodeXpath("//div[@class='ed-td ed-stock text-left']//following-sibling::span//small"
+		 * , "Exchange label"); scriptLabel=
+		 * fluentWaitCodeXpath("//div[@class='ed-td ed-stock text-left']//following-sibling::a"
+		 * , "Segement label"); scriptLabelStr=fetchTextFromElement(scriptLabel,
+		 * "Exchange label"); exchangeLabelStr=fetchTextFromElement(exchangeLabel,
+		 * "Exchange label"); scriptList.add(scriptLabelStr);
+		 * exchangeList.add(exchangeLabelStr);
+		 * scriptList=elementsTextFilter(scriptList);
+		 * exchangeList=elementsTextFilter(exchangeList); }
+		 */
 	}
 	
 	public void deleteScript(WatchListModel model) {
+		String logScriptName="No",exchangeName="No",tradingSysmbol="No";
 		Reporter.log("deleteScript", true);
 		errorList=new ArrayList<String>();
 		
@@ -355,9 +358,12 @@ public class WatchListPage extends SeleniumCoder{
 			scriptName=fetchTextFromElement(scriptNameLabel);
 			if(scriptName.contains(scriptNameArray[scriptNameArray.length-1])) {
 				Reporter.log("Script : "+scriptArray[scriptArray.length-1]);
-				errorList.add("Script Name : "+scriptArray[scriptArray.length-1]);
-				errorList.add("TradingSysmbol : "+scriptNameArray[scriptNameArray.length-1]);
-				errorList.add("Exchange Name : "+exchangeArray[exchangeArray.length-1]);
+				logScriptName="Script Name : "+scriptArray[scriptArray.length-1];
+				exchangeName="Exchange Name : "+exchangeArray[exchangeArray.length-1];
+				tradingSysmbol="TradingSysmbol : "+scriptNameArray[scriptNameArray.length-1];
+				
+				//errorList.add("TradingSysmbol : "+scriptNameArray[scriptNameArray.length-1]);
+				
 				String scriptBox="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/div[1]/input";
 				
 				scriptCheckBox=fluentWaitCodeXpath(scriptBox, "Script checkBox");
@@ -368,6 +374,7 @@ public class WatchListPage extends SeleniumCoder{
 					clickElement(scriptCheckBox, "ScriptCheckBox");
 					break;
 			}
+			
 		}
 		if(scriptNameArray.length<2) {
 			errorList.add("You can't delete beacause this watchList contain only single script -"+"PASS");
@@ -381,6 +388,31 @@ public class WatchListPage extends SeleniumCoder{
 			
 			errorList.add(ScreenshortProvider.captureScreen(driver, "AfterScriptDelete"));
 		 } 
+		boolean scriptDelete=true;
+		errorList.add(logScriptName);
+		errorList.add(tradingSysmbol);
+		scriptList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::a","Script Names");
+		scriptList=elementsTextFilter(scriptList);
+		for(String response:errorList) {
+			Reporter.log(response, true);
+			if(response.contains("TradingSysmbol")) {
+				String [] array=help.separater(response,":");
+				for(String script:scriptList) {
+					if(script.trim().contains(array[1].trim())) {
+						errorList.set(3, response+"-FAIL");
+						//errorList.add(response+"-FAIL");
+						scriptDelete=false;
+						break;
+					}
+				}
+				if(scriptDelete) {
+					errorList.set(3, response+"-PASS");
+					//errorList.add(response+"-PASS");
+				}
+			}
+		}
+		
+		errorList.add("Exchange Name : "+exchangeArray[exchangeArray.length-1]);
 	}
 	
 	public List<String> predefineWatchList(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
@@ -498,7 +530,10 @@ public class WatchListPage extends SeleniumCoder{
 		errorMsg="no";
 		Map<String,List<String>> inputMap=new HashMap<String, List<String>>();
 		watchListStepVerify.setVerifyMap(inputMap);
-		
+		errorList=new ArrayList<String>();
+		 boolean newRowFlag=true;
+		 rowStartCount++;
+		 Reporter.log("Row Start count ======>> "+rowStartCount, true);
 		/*
 		 * model.setWatchListName("Auto3"); model.setExchange("BSE");
 		 * model.setScriptName("Tata Consumer Products Ltd");
@@ -535,7 +570,7 @@ public class WatchListPage extends SeleniumCoder{
 				duplicateScript(model);
 				break;
 			case "Verfiy":
-				verifyCode(model,verfiyArray[1]);
+				verifyCode(model,verfiyArray[1],rowStartCount);
 				break;
 			case "PredefineWatchList":
 				predefineWatchListDetailList=clickpredefineWatchList(model);

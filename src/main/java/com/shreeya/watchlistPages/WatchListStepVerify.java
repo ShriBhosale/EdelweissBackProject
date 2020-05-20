@@ -30,7 +30,8 @@ public class WatchListStepVerify extends SeleniumCoder {
 	String [] exchangeArray;
 	
 	private static boolean createWatchList=true;
-	
+	private static boolean newRowFlag;
+	private static int createCount=1;
 	public WatchListStepVerify() {
 		
 	}
@@ -47,9 +48,9 @@ public class WatchListStepVerify extends SeleniumCoder {
 		
 		help=new Help();
 	}
-	public void verfitySteps(WatchListModel model,String verifyNo,ArrayList<String> errorList) {
+	public void verfitySteps(WatchListModel model,String verifyNo,ArrayList<String> errorList,int rowStartCount) {
 		Reporter.log(model.toString(), true);
-		
+		//this.newRowFlag=newRowFlag;
 		count++;
 		scriptNames=WatchListPage.scriptArray;
 		exchangeArray=WatchListPage.exchangeArray;
@@ -59,7 +60,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 			mergeAddScriptCreate();
 		break;
 		case 1:
-			verifyCreateAdd(model,count,errorList);
+			verifyCreateAdd(model,count,errorList,rowStartCount);
 			break;
 		case 2:
 			tradingWithWatchlist(errorList,count,model);
@@ -96,24 +97,20 @@ public class WatchListStepVerify extends SeleniumCoder {
 		Reporter.log("========>> verifyDeleteScriptWatchList <<===========", true);
 		boolean scriptDelete=true;
 		detailList=new ArrayList<String>();
-		watchListCommon.pageVerify(model,"Verify");
+		watchListCommon.pageVerify(model,"Delete");
 		scriptList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::a","Script Names");
 		scriptList=elementsTextFilter(scriptList);
 		for(String response:errorList) {
 			Reporter.log(response, true);
-			if(response.contains("TradingSysmbol")) {
-				String [] array=help.separater(response,":");
-				for(String script:scriptList) {
-					if(script.trim().contains(array[1].trim())) {
-						detailList.add(response+"-FAIL");
-						scriptDelete=false;
-						break;
-					}
-				}
-				if(scriptDelete)
-					detailList.add(response+"-PASS");
-				
-			}else if(response.contains("Check")) {
+			/*
+			 * if(response.contains("TradingSysmbol")) { String []
+			 * array=help.separater(response,":"); for(String script:scriptList) {
+			 * if(script.trim().contains(array[1].trim())) {
+			 * detailList.add(response+"-FAIL"); scriptDelete=false; break; } }
+			 * if(scriptDelete) detailList.add(response+"-PASS");
+			 * 
+			 * }else
+			 */if(response.contains("Check")) {
 				String [] array=help.separater(response, "-");
 				String [] array1=help.separater(response, " ");
 				String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+array1[0]+"']";
@@ -131,7 +128,9 @@ public class WatchListStepVerify extends SeleniumCoder {
 	}
 
 	private void mergeAddScriptCreate() {
+		
 		verfiyMap.put("CreateAddScript_1", createAddDetailList);
+		
 		
 	}
 
@@ -165,17 +164,21 @@ public class WatchListStepVerify extends SeleniumCoder {
 		return "WatchList Name : "+watchListName;
 	}
 	
-	private void verifyCreateAdd(WatchListModel model,int count,List<String> inputList) {
+	private void verifyCreateAdd(WatchListModel model,int count,List<String> inputList,int rowStartCount) {
 		Reporter.log("===============>> verifyCreateAdd <<==================",true);
 		count--;
 		verifyScriptNames=help.commaSeparater(model.getVerifyScript());
 		detailList=new ArrayList<String>();
 		Reporter.log("verifyCreateAdd : count =====> "+count, true);
-		if(createWatchList) {
+		Reporter.log("createCount=================> "+createCount+"\rowStartCount===============> "+rowStartCount, true);
+		if(createCount==rowStartCount) {
+			
 		for(String input:inputList) {
 			detailList.add(input);
+			
 		}
-		createWatchList=false;
+		createAddDetailList=new ArrayList<String>();
+		createCount++;
 		}
 		String watchName=watchListCreateProve(model);
 		Reporter.log("WAtchListStepVerify : WatchList Name : "+watchName, true);

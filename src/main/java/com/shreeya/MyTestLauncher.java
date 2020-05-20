@@ -14,7 +14,6 @@ import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
 import com.shreeya.model.ExecutionModel;
-import com.shreeya.model.LoginModel;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.FolderStructure;
 
