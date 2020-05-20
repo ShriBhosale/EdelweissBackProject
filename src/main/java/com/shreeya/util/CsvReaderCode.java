@@ -17,6 +17,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.shreeya.model.AlertAndNotificationModel;
 import com.shreeya.model.ExecutionModel;
 import com.shreeya.model.FundTransferModel;
 import com.shreeya.model.LoginModel;
@@ -242,6 +243,26 @@ public class CsvReaderCode {
 		CsvToBean<WatchListModel> csvToBean = new CsvToBeanBuilder(reader).withType(WatchListModel.class).build();
 
 		Iterator<WatchListModel> csvWatchListTestIterator = csvToBean.iterator();
+		
+		
+		return csvWatchListTestIterator;
+	}
+	
+	public Iterator<AlertAndNotificationModel> alertAndNotificationTestDataProvider() {
+		ConfigReader configReader=new ConfigReader();
+		String testDataPath=configReader.configReader("TestData")+"\\AlertAndNotification";
+		CSVReader reader = null;
+		System.out.println("Test Data ======> "+testDataPath);
+		try {
+			reader = new CSVReader(new FileReader(testDataPath+".txt"), '\t');
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CsvToBean<AlertAndNotificationModel> csvToBean = new CsvToBeanBuilder(reader).withType(AlertAndNotificationModel.class).build();
+
+		Iterator<AlertAndNotificationModel> csvWatchListTestIterator = csvToBean.iterator();
 		
 		
 		return csvWatchListTestIterator;

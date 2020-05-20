@@ -200,7 +200,10 @@ public class FunctionKeyword {
 					watchListObj.watchListExecute();
 				Reporter.log("Watchlist Module", true);
 				break;
-
+				
+			case "alertAndnotification":
+				
+				break;
 			case "logout":
 				if(skipScenario==false)
 				terminateExecution(module, driver,referenceNo);
