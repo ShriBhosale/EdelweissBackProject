@@ -31,6 +31,15 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement orderTypeLable;
 	private WebElement exchangeLable;
 	private WebElement validityLable;
+	private WebElement orderLogsLabel;
+	private WebElement tradingSymbolLabel;
+	private WebElement disclosedLabel;
+	private WebElement triggerPriceLabel;
+	private WebElement orderTypeLabel;
+	private WebElement userIdLabelCo;
+	private WebElement exchangeLabel;
+	private WebElement validityLabel;
+	private WebElement rejectReasonLable;
 	String text;
 
 	private WebElement QtyLabel;
@@ -42,6 +51,7 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement partialQtyLabel;
 	private List<WebElement> orderInfoList;
 	private List<WebElement> listForNestId;
+	private WebElement scriptNameLabel;
 	
 	
 	public OrderDetail(WebDriver driver) {
@@ -237,5 +247,34 @@ public class OrderDetail extends SeleniumCoder {
 	 * orderDetailProvider(driver, "New"); for (String element : orderDetailArray) {
 	 * Reporter.log(element); } }
 	 */
+	
+	public void commodityorderDetail() {
+		List<String> orderDetailList=new ArrayList<String>();
+		orderLogsLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/a", "Order Logs link");
+		clickElement(orderLogsLabel,  "Order Logs link");
+		orderStatusLink=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/span[1]", "Order status");
+		String status=fetchTextFromElement(orderStatusLink);
+		orderDetailList.add("Order status : "+status);
+		if(status.equalsIgnoreCase("rejected")) {
+			rejectReasonLable=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[3]/ul/li/span[2]", "Reject reason");
+			orderDetailList.add("Rejection reason : "+fetchTextFromElement(rejectReasonLable));
+		}
+		disclosedLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[1]/ul/li[1]/span[2]", "Disclosed");
+		orderDetailList.add("Disclosed Qty : "+fetchTextFromElement(disclosedLabel));
+		triggerPriceLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[1]/ul/li[2]/span[2]", "Trigger price");
+		orderDetailList.add("Trigger Price : "+fetchTextFromElement(triggerPriceLabel));
+		orderTypeLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[1]/ul/li[3]/span[2]", "Order type");
+		orderDetailList.add("Order type : "+fetchTextFromElement(orderTypeLabel));
+		exchangeLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[2]/ul/li[2]/span[2]", "Exchange");
+		orderDetailList.add("Exchange : "+fetchTextFromElement(exchangeLabel));
+		userIdLabelCo=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[2]/ul/li[1]/span[2]", "Order placed by");
+		orderDetailList.add("User id : "+fetchTextFromElement(userIdLabelCo));
+		scriptNameLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[2]/div/span[1]", "Script Name");
+		orderDetailList.add("Script Name : "+fetchTextFromElement(scriptNameLabel));
+		tradingSymbol=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[2]/div/span[2]", "Trading Symbol");
+		orderDetailList.add("Trading symbol : "+fetchTextFromElement(tradingSymbol));
+		productType=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[4]/div/span[2]", "Product type");
+		orderDetailList.add("Product type : "+fetchTextFromElement(productType));
+	}
 
 }

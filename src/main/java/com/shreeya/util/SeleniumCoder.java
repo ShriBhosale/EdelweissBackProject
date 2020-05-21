@@ -1,7 +1,9 @@
 package com.shreeya.util;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -1011,11 +1013,22 @@ public class SeleniumCoder extends ExceptionHandler {
 		return tabs.size();
 	}
 	
-	public WebDriver switchWindow() {
+	public WebDriver switchTab(int windowNo) {
+		 Set<String> tabName=driver.getWindowHandles();
 		 
-		for (String handle : driver.getWindowHandles()) {
-			 
-			driver.switchTo().window(handle);}
+		 int counter=0;
+		for(String tab:tabName) {
+			counter++;
+			if(counter==windowNo) {
+			driver.switchTo().window(tab);
+			}
+		}
+		return driver;
+	}
+	
+	public WebDriver switchTabAction() {
+		Actions action= new Actions(driver);
+		action.keyDown(Keys.CONTROL).sendKeys(Keys.TAB).build().perform();
 		return driver;
 	}
 	
@@ -1075,5 +1088,17 @@ public class SeleniumCoder extends ExceptionHandler {
 		String screenshot=ScreenshortProvider.captureScreen(driver, screeenshotName);
 		screenshot=help.absolutePathProvider(screenshot);
 		String pathAttach="\"<img src=\"\\\"file://\"\" alt=\"\\\"\\\"/\" />\";";
+	}
+	
+	public void closeTab(int tabNo) {
+		Set<String> tabName=driver.getWindowHandles();
+		 
+		 int counter=0;
+		for(String tab:tabName) {
+			counter++;
+			if(counter==tabNo) {
+			driver.close();
+			}
+		}
 	}
 }

@@ -48,6 +48,8 @@ public class ReportWatchlist extends ExtendReporter{
 				duplicateWatchList(model,entry.getValue(),test,entry.getKey());
 			}else if(entry.getKey().contains("TradingWithWatchList")) {
 				tradingWithWatchList(model, entry.getValue(), test);
+			}else if(entry.getKey().contains("CodePage_")) {
+				codePage(model, entry.getValue(), test);
 			}
 		}
 	}
@@ -55,6 +57,26 @@ public class ReportWatchlist extends ExtendReporter{
 	
 	
 	
+
+	private void codePage(WatchListModel model, List<String> detailList, ExtentTest test2) {
+		String [] result;
+		test.log(Status.INFO, "<b>============@@> Verify Code Page <@@============</b>");
+		for(int i=0;i<detailList.size();i++) {
+			if(detailList.get(i).contains("WorkingE2")) {
+				screenshotFullPath(detailList.get(i),test);
+			}else if(detailList.get(i).contains("PASS")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.PASS, result[0]);
+			}else if(detailList.get(i).contains("FAIL")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.FAIL,result[0]);
+			}
+			else {
+				test.log(Status.INFO,detailList.get(i));
+			}
+		}
+
+	}
 
 	private void duplicateWatchList(WatchListModel model, List<String> detailList, ExtentTest test2, String key) {
 		Reporter.log("=========>> duplicateWatchList <<============", true);
@@ -233,11 +255,11 @@ public class ReportWatchlist extends ExtendReporter{
 		String [] ScriptNameArray=WatchListPage.scriptArray;
 		test.log(Status.INFO, "<b>============@@> Trading With Normal WatchList <@@============</b>");
 		test.log(Status.INFO, "WatchName : "+model.getWatchListName());
-		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")) {
+		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")||detail.get(1).equalsIgnoreCase("Cancelled")) {
 			test.log(Status.PASS, "Order Status : "+detail.get(1));
 		}else if(detail.get(1).equalsIgnoreCase("rejected")) {
-			test.log(Status.FAIL, "Order Status : "+detail.get(1));
-			test.log(Status.FAIL, "Rejection reason : "+detail.get(13));
+			test.log(Status.PASS, "Order Status : "+detail.get(1));
+			test.log(Status.PASS, "Rejection reason : "+detail.get(13));
 		}else {
 			test.log(Status.FAIL, "Order Status : "+detail.get(1));
 		}

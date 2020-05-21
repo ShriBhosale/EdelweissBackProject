@@ -1,5 +1,7 @@
 package com.shreeya.util;
 
+import org.testng.Reporter;
+
 public class Help {
 
 	public String [] commaSeparater(String scriptName) {
@@ -64,5 +66,15 @@ public class Help {
 		String screenshotPath=inputPath.replace("../WorkingE2",path);
 		  screenshotPath=screenshotPath.replace("/", "//");
 		  return screenshotPath;
+	}
+
+	public String removeHtmlCode(String ltp) {
+		String [] htmlSpliter=ltp.split(">");
+		String [] ltpArray=htmlSpliter[3].split("<");
+		String ltpPrice=ltpArray[0];
+		 ltpArray=htmlSpliter[5].split("<");
+		ltpPrice=ltpPrice+ltpArray[0];
+		Reporter.log("LTP price : "+ltpPrice, true);
+		return ltpPrice;	
 	}
 }

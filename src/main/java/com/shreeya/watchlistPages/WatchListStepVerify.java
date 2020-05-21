@@ -66,9 +66,12 @@ public class WatchListStepVerify extends SeleniumCoder {
 			tradingWithWatchlist(errorList,count,model);
 			break;
 		case 3:
-			verifyDuplicateScriptWatchList(errorList,count,model);
+			verifyCodePage(errorList,count,model);
 			break;
 		case 4:
+			verifyDuplicateScriptWatchList(errorList,count,model);
+			break;
+		case 5:
 			verifyDeleteScriptWatchList(errorList,count,model);
 			break;
 		
@@ -77,10 +80,41 @@ public class WatchListStepVerify extends SeleniumCoder {
 		}
 	}
 	
+	private void verifyCodePage(ArrayList<String> errorList, int count2, WatchListModel model) {
+		detailList=new ArrayList<String>();
+		Reporter.log("<========== verifyCodePage ==============>", true);
+		String [] scritNameArr=help.separater(errorList.get(0),"&");
+		String [] scriptNameArray=help.commaSeparater(model.getScriptName());
+		String [] tradingSymbolArray=help.commaSeparater(model.getVerifyScript());
+		String [] exchangeArray=help.commaSeparater(model.getExchange());
+		if(scritNameArr[0].equalsIgnoreCase(scriptNameArray[1])){
+			detailList.add("Script Name : "+scritNameArr[0]+"-PASS");
+		}else {
+			detailList.add("Script Name : "+scritNameArr[0]+"-FAIL");
+		}
+		if(errorList.get(1).equalsIgnoreCase(tradingSymbolArray[1])) {
+			detailList.add("Trading symbol : "+errorList.get(1)+"-PASS");
+		}else {
+			detailList.add("Trading symbol : "+errorList.get(1)+"-FAIL");
+		}
+		if(exchangeArray[1].equalsIgnoreCase(errorList.get(2))){
+			detailList.add("Exchange : "+errorList.get(2)+"-PASS");
+		}else {
+			detailList.add("Exchange : "+errorList.get(2)+"-FAIL");
+		}
+		detailList.add("Ltp : "+errorList.get(3));
+		for(int i=4;i<errorList.size();i++) {
+			detailList.add(errorList.get(i));
+		}
+		
+		
+		verfiyMap.put("CodePage_"+model.getWatchListName()+"_"+count, detailList);
+	}
+
 	private void tradingWithWatchlist(ArrayList<String> errorList, int count2, WatchListModel model) {
 		// TODO Auto-generated method stub
 		verfiyMap.put("TradingWithWatchList "+model.getWatchListName()+"_"+count, errorList);
-		errorList=new ArrayList<String>();
+		/* errorList=new ArrayList<String>(); */
 	}
 
 	public void setVerifyMap(Map<String,List<String>> inputMap)

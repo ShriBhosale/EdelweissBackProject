@@ -43,7 +43,20 @@ public class WatchListPage extends SeleniumCoder{
 	WebElement deleleokButton;
 	WebElement orderPlaceSearchTextField;
 	WebElement closeButton;
-
+	WebElement tradingSymbolLabel;
+	WebElement scriptCountLabel;
+	WebElement sharePriceLabel;
+	WebElement keyRadioLabel;
+	WebElement comparewithPeersLabel;
+	WebElement ltpLabel;
+	WebElement marketcapLabel;
+	WebElement smallCaseLabel;
+	WebElement keyRatiosLabel;
+	WebElement balanceSheetLabel;
+	WebElement cashFlowLabel;
+	WebElement profitandLossBanksLabel;
+	WebElement exchangeLabelCode;
+	WebElement tradingSymbolCodeLabel;
 	public static String createWatchListPath;
 	public static String deleteWatchListPath;
 	public static List<String> exchangeList;
@@ -66,8 +79,11 @@ public class WatchListPage extends SeleniumCoder{
 	private WebElement okButton;
 	private String ErrorMsg;
 	String scriptNametext;
+	String tradingSymbolstr;
+	String sharePriceCompanyName;
 	Scroll scroll;
 	String [] orderDetailArray;
+	String [] verifyScriptArray;
 	
 	List<String> predefineWatchListDetailList;
 	List<String> predefineWatchListDetail;
@@ -79,6 +95,7 @@ public class WatchListPage extends SeleniumCoder{
 	WatchListCommon watchListCommon;
 	OrderDetail orderDetail;
 	Help help;
+	
 	String [] verfiyArray= {"verify","verifyCount"};
 	private static int count=0;
 
@@ -259,7 +276,7 @@ public class WatchListPage extends SeleniumCoder{
 	}
 	
 	public void addScript(WatchListModel model,String step) {
-		String [] verifyScriptArray=help.commaSeparater(model.getVerifyScript());
+		 verifyScriptArray=help.commaSeparater(model.getVerifyScript());
 		String xpathString="no xpath for script";
 		String dropdownOptionStr="//*[@id='watchlist']/div/div/div[2]/div[2]/div/div/div/ul/li/a[text()='"+model.getScriptName()+"']";
 		String text="Add a Scrip to "+model.getWatchListName();
@@ -268,7 +285,7 @@ public class WatchListPage extends SeleniumCoder{
 		else if(step.equalsIgnoreCase("AddScript")) {
 			text="Add a Scrip to "+model.getWatchListName().toUpperCase();
 			xpathString="//h4[text()='"+text+"']//following::input";
-			dropdownOptionStr="//*[@id=\"addScripPopup\"]/div/div/div[2]/div/div/div/div/ul/li[1]/a[text()='"+model.getScriptName()+"']";
+			dropdownOptionStr="//*[@id='addScripPopup']/div/div/div[2]/div/div/div/div/ul/li[1]/a[text()='"+model.getScriptName()+"']";
 		}
 		staticWait(600);
 		addScriptTextfield=fluentWaitCodeXpath(xpathString, "Add Script textfield");
@@ -525,6 +542,73 @@ public class WatchListPage extends SeleniumCoder{
 	
 	} 
 	
+	public void redirectTocodePage(WatchListModel model) {
+		verifyScriptArray=help.commaSeparater(model.getVerifyScript());
+		switchTab(1);
+		watchListCommon.pageVerify(model, "codingPage");
+		 scriptCountLabel=fluentWaitCodeXpath("//span[text()='Your watchlist has ']", "Script Count");
+		String scriptCount=fetchTextFromElement(scriptCountLabel);
+		String [] noOfScript =help.separater(scriptCount, " ");
+		noOfScript=noOfScript[4].split(">");
+		int noScript=Integer.valueOf(noOfScript[1]);
+		int matchScirptNo=0;
+		for(int i=2;i<noScript+2;i++) {
+			String tradingSymbolString="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
+			tradingSymbolLabel=fluentWaitCodeXpath(tradingSymbolString, "Script Name");
+			tradingSymbolstr=fetchTextFromElement(tradingSymbolLabel);
+			if(tradingSymbolstr.contains(verifyScriptArray[verifyScriptArray.length-1])) {
+				clickElement(tradingSymbolLabel, "Trading symbol link");
+				break;
+			}
+		}
+		switchTab(2);
+		sharePriceLabel=fluentWaitCodeXpath("//h1[@class='comp_name ib ng-binding']", "Share Price label");
+		sharePriceCompanyName=fetchTextFromElement(sharePriceLabel);
+		if(sharePriceCompanyName.contains(scriptArray[scriptArray.length-1])) {
+			errorList.add(sharePriceCompanyName+"-PASS");
+		}else {
+			errorList.add(sharePriceCompanyName);
+		}
+		
+		tradingSymbolCodeLabel=fluentWaitCodeXpath("//label[@class='sym  ng-binding']", "TradingSymbol");
+		errorList.add(fetchTextFromElement(tradingSymbolCodeLabel));
+		
+		exchangeLabelCode=fluentWaitCodeXpath("//div[@class='dropdown exchangeDD qtDD']//button//span", "exchange label");
+		errorList.add(fetchTextFromElement(exchangeLabelCode));
+		
+		ltpLabel=fluentWaitCodeXpath("//div[@class='realVals']//label[@class='ltp']", "LTP no");
+		String ltp=fetchTextFromElement(ltpLabel);
+		errorList.add(help.removeHtmlCode(ltp));
+		
+		//scroll.scrollToSpecificLocation(0,250);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_1"));
+		marketcapLabel=fluentWaitCodeXpath("//label[text()='Market Cap (in crs.)']", "Market Cap");
+		scroll.scrollAndPointToElement(marketcapLabel);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_2"));
+		
+		smallCaseLabel=fluentWaitCodeXpath("//h2[text()='Smallcase']", "small case");
+		scroll.scrollAndPointToElement(smallCaseLabel);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_3"));
+		
+		keyRadioLabel=fluentWaitCodeXpath("//h2[text()='Key Ratios']", "Key ratios");
+		scroll.scrollAndPointToElement(keyRadioLabel);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_4"));
+		
+		balanceSheetLabel=fluentWaitCodeXpath("//h2[text()='Balance Sheet']", "balance sheet");
+		scroll.scrollAndPointToElement(balanceSheetLabel);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_5"));
+		
+		cashFlowLabel=fluentWaitCodeXpath("//h2[text()='Cash Flow']", "cash flow");
+		scroll.scrollAndPointToElement(cashFlowLabel);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_6"));
+		
+		profitandLossBanksLabel=fluentWaitCodeXpath("//label[text()='Profit and Loss (Banks)']", "balance sheet");
+		scroll.scrollAndPointToElement(profitandLossBanksLabel);
+		errorList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_7"));
+		closeTab(2);
+		switchTab(1);
+	}
+	
 	public Map<String,List<String>> watchListExecution(WatchListModel model,ExtendReporter reporter) throws InterruptedException, IOException {
 		List<String> stepsList=watchListKeyword.keywordProccess(model.getPredefineWatchList());
 		errorMsg="no";
@@ -558,11 +642,13 @@ public class WatchListPage extends SeleniumCoder{
 			
 			case "AddScript":
 				addScriptExecution(model);
-			break;
+				break;
 			case "TradingWithWatchList":
 				tradingWatchList(model);
 				break;
-			
+			case "CodePage":
+				redirectTocodePage(model);
+				break;
 			case "DeleteScript":
 				deleteScript(model);
 				break;
