@@ -1,6 +1,5 @@
 package com.shreeya.orderdetailpages;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.model.WatchListModel;
 import com.shreeya.util.ConfigReader;
+import com.shreeya.util.Help;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
@@ -53,15 +54,18 @@ public class OrderDetail extends SeleniumCoder {
 	private List<WebElement> listForNestId;
 	private WebElement scriptNameLabel;
 	
+	Help help;
+	
 	
 	public OrderDetail(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
-		
+		help=new Help();
 	}
 
 	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet) throws InterruptedException {
 		Reporter.log("*<==== orderDetailProvider Method Start ====>*",true);
+		
 		Reporter.log("===<<<<<*** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" ***>>>>>===>",true);
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
@@ -209,8 +213,11 @@ public class OrderDetail extends SeleniumCoder {
 		/* orderDetailList[13]=fetchTextFromElement(partialQtyLabel); */
 		Reporter.log("Nest id : "+orderDetailList[11],true);
 		Reporter.log("Inside orderDetailProvider method......",true);
+		
 		return orderDetailList;
 	}
+	
+	
 	
 	public void amoCheckbox(String checked) throws InterruptedException {
 		Reporter.log("AMO CheckBox checking....",true);
@@ -248,17 +255,25 @@ public class OrderDetail extends SeleniumCoder {
 	 * Reporter.log(element); } }
 	 */
 	
-	public void commodityorderDetail() {
-		List<String> orderDetailList=new ArrayList<String>();
-		orderLogsLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/a", "Order Logs link");
-		clickElement(orderLogsLabel,  "Order Logs link");
+	public ArrayList<String> commodityorderDetail(WatchListModel model) {
+		ArrayList<String> orderDetailList=new ArrayList<String>();
+		String [] fullScriptName=help.commaSeparater(model.getFullScriptName());
+		String [] verifyScriptName=help.commaSeparater(model.getVerifyScript());
+		/*orderLogsLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/a", "Order Logs link");
+		clickElement(orderLogsLabel,  "Order Logs link");*/
 		orderStatusLink=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/span[1]", "Order status");
 		String status=fetchTextFromElement(orderStatusLink);
+		String [] expectedStatusArray= {"open","complete","rejected","cancelled"};
+	    status=help.commpareMultStrWithSinStr(status, expectedStatusArray);
 		orderDetailList.add("Order status : "+status);
-		if(status.equalsIgnoreCase("rejected")) {
+		expectedStatusArray=help.separater(status, "-");
+		detailsTab = fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[8]/div/a","Details tab");
+		clickElement(detailsTab,"Details tab");
+		if(expectedStatusArray[0].equalsIgnoreCase("rejected")) {
 			rejectReasonLable=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[3]/ul/li/span[2]", "Reject reason");
 			orderDetailList.add("Rejection reason : "+fetchTextFromElement(rejectReasonLable));
 		}
+		
 		disclosedLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[1]/ul/li[1]/span[2]", "Disclosed");
 		orderDetailList.add("Disclosed Qty : "+fetchTextFromElement(disclosedLabel));
 		triggerPriceLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[1]/ul/li[2]/span[2]", "Trigger price");
@@ -266,15 +281,20 @@ public class OrderDetail extends SeleniumCoder {
 		orderTypeLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[1]/ul/li[3]/span[2]", "Order type");
 		orderDetailList.add("Order type : "+fetchTextFromElement(orderTypeLabel));
 		exchangeLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[2]/ul/li[2]/span[2]", "Exchange");
-		orderDetailList.add("Exchange : "+fetchTextFromElement(exchangeLabel));
+		
+		orderDetailList.add("Exchange : "+help.commpareTwoString(fetchTextFromElement(exchangeLabel), model.getExchange()));
 		userIdLabelCo=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[2]/ul/li[1]/span[2]", "Order placed by");
 		orderDetailList.add("User id : "+fetchTextFromElement(userIdLabelCo));
 		scriptNameLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[2]/div/span[1]", "Script Name");
-		orderDetailList.add("Script Name : "+fetchTextFromElement(scriptNameLabel));
+		
+		orderDetailList.add("Script Name : "+help.commpareTwoString(fetchTextFromElement(scriptNameLabel),fullScriptName[fullScriptName.length-1]));
 		tradingSymbol=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[2]/div/span[2]", "Trading Symbol");
+		help.commpareTwoString(fetchTextFromElement(tradingSymbol),verifyScriptName[verifyScriptName.length-1]);
 		orderDetailList.add("Trading symbol : "+fetchTextFromElement(tradingSymbol));
 		productType=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[4]/div/span[2]", "Product type");
-		orderDetailList.add("Product type : "+fetchTextFromElement(productType));
+		orderDetailList.add("Product type : "+help.commpareTwoString(fetchTextFromElement(productType), model.getProductType()));
+		
+		return orderDetailList;
 	}
 
 }

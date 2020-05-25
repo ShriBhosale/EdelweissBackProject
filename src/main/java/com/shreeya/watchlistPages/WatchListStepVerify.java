@@ -31,7 +31,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 	
 	private static boolean createWatchList=true;
 	private static boolean newRowFlag;
-	private static int createCount=1;
+	private static int createCount=2;
 	public WatchListStepVerify() {
 		
 	}
@@ -48,7 +48,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		
 		help=new Help();
 	}
-	public void verfitySteps(WatchListModel model,String verifyNo,ArrayList<String> errorList,int rowStartCount) {
+	public void verfitySteps(WatchListModel model,String verifyNo,List<String> errorList,int rowStartCount) {
 		Reporter.log(model.toString(), true);
 		//this.newRowFlag=newRowFlag;
 		count++;
@@ -80,13 +80,17 @@ public class WatchListStepVerify extends SeleniumCoder {
 		}
 	}
 	
-	private void verifyCodePage(ArrayList<String> errorList, int count2, WatchListModel model) {
+	public void verifyCodePage(List<String> errorList, int count2, WatchListModel model) {
+		verfiyMap.put("CodePage_3", errorList);
+	}
+	
+	private void verifyCodePage1(List<String> errorList, int count2, WatchListModel model) {
 		detailList=new ArrayList<String>();
 		Reporter.log("<========== verifyCodePage ==============>", true);
 		String [] scritNameArr=help.separater(errorList.get(0),"&");
-		String [] scriptNameArray=help.commaSeparater(model.getScriptName());
+		String [] scriptNameArray=help.commaSeparater(model.getFullScriptName());
 		String [] tradingSymbolArray=help.commaSeparater(model.getVerifyScript());
-		String [] exchangeArray=help.commaSeparater(model.getExchange());
+		String [] exchangeArray=WatchListPage.exchangeArray;
 		if(scritNameArr[0].equalsIgnoreCase(scriptNameArray[1])){
 			detailList.add("Script Name : "+scritNameArr[0]+"-PASS");
 		}else {
@@ -97,10 +101,18 @@ public class WatchListStepVerify extends SeleniumCoder {
 		}else {
 			detailList.add("Trading symbol : "+errorList.get(1)+"-FAIL");
 		}
-		if(exchangeArray[1].equalsIgnoreCase(errorList.get(2))){
-			detailList.add("Exchange : "+errorList.get(2)+"-PASS");
+		if(model.getExchange().contains("CDS")||model.getExchange().contains("NFO")||model.getExchange().contains("FNO")) {
+		if(exchangeArray[1].equalsIgnoreCase(watchListCommon.exchangeFilter(errorList.get(2)))){
+			detailList.add("Exchange : "+watchListCommon.exchangeFilter(errorList.get(2))+"-PASS");
 		}else {
-			detailList.add("Exchange : "+errorList.get(2)+"-FAIL");
+			detailList.add("Exchange : "+watchListCommon.exchangeFilter(errorList.get(2))+"-FAIL");
+		}
+		}else {
+			if(exchangeArray[1].equalsIgnoreCase(errorList.get(2))){
+				detailList.add("Exchange : "+errorList.get(2)+"-PASS");
+			}else {
+				detailList.add("Exchange : "+errorList.get(2)+"-FAIL");
+			}
 		}
 		detailList.add("Ltp : "+errorList.get(3));
 		for(int i=4;i<errorList.size();i++) {
@@ -111,7 +123,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		verfiyMap.put("CodePage_"+model.getWatchListName()+"_"+count, detailList);
 	}
 
-	private void tradingWithWatchlist(ArrayList<String> errorList, int count2, WatchListModel model) {
+	private void tradingWithWatchlist(List<String> errorList, int count2, WatchListModel model) {
 		// TODO Auto-generated method stub
 		verfiyMap.put("TradingWithWatchList "+model.getWatchListName()+"_"+count, errorList);
 		/* errorList=new ArrayList<String>(); */
@@ -127,7 +139,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		return outputMap;
 	}
 
-	private void verifyDeleteScriptWatchList(ArrayList<String> errorList, int count2, WatchListModel model) {
+	private void verifyDeleteScriptWatchList(List<String> errorList, int count2, WatchListModel model) {
 		Reporter.log("========>> verifyDeleteScriptWatchList <<===========", true);
 		boolean scriptDelete=true;
 		detailList=new ArrayList<String>();
@@ -168,7 +180,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		
 	}
 
-	private void verifyDuplicateScriptWatchList(ArrayList<String> errorList,int count,WatchListModel model) {
+	private void verifyDuplicateScriptWatchList(List<String> errorList,int count,WatchListModel model) {
 		Reporter.log("=============>> verifyDuplicateScriptWatchList <<===============",true);
 		Reporter.log(model.toString(), true);
 		detailList=new ArrayList<String>();
@@ -190,33 +202,48 @@ public class WatchListStepVerify extends SeleniumCoder {
 	}
 
 	public String watchListCreateProve(WatchListModel model) {
-		String watchListName=model.getWatchListName()+" not create";
-		String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName()+"']";
-		WebElement watchList=fluentWaitCodeXpath(createdWatchlistTab, "Create Watch list name");
-		if(watchList!=null) 
-			watchListName=fetchTextFromElement(watchList);
-		return "WatchList Name : "+watchListName;
+		String [] watchListArray = {"Watchlist"};
+		/*
+		 * String watchListName=model.getWatchListName()+" not create"; String
+		 * createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"
+		 * +model.getWatchListName()+"']"; WebElement
+		 * watchList=fluentWaitCodeXpath(createdWatchlistTab,20,
+		 * "Create Watch list name"); if(watchList!=null) {
+		 * watchListName=fetchTextFromElement(watchList);
+		 * clickElement(watchList,watchListName+ " WatchList tab"); } else {
+		 */
+			String watchListName=watchListCommon.pageVerify(model, "watchList Checker");
+			/* } */
+		
+		if(watchListName.contains("<")) {
+			watchListArray=watchListName.split("<");
+		}else {
+			watchListArray[0]= watchListName;
+		}
+		return "WatchList Name : "+watchListArray[0];
 	}
 	
 	private void verifyCreateAdd(WatchListModel model,int count,List<String> inputList,int rowStartCount) {
 		Reporter.log("===============>> verifyCreateAdd <<==================",true);
 		count--;
+		//createCount=2;
+		createAddDetailList=new ArrayList<String>();
 		verifyScriptNames=help.commaSeparater(model.getVerifyScript());
 		detailList=new ArrayList<String>();
 		Reporter.log("verifyCreateAdd : count =====> "+count, true);
-		Reporter.log("createCount=================> "+createCount+"\rowStartCount===============> "+rowStartCount, true);
-		if(createCount==rowStartCount) {
+		Reporter.log("createCount=================> "+createCount+"\nrowStartCount===============> "+rowStartCount, true);
+		if(rowStartCount==2) {
 			
 		for(String input:inputList) {
 			detailList.add(input);
 			
 		}
 		createAddDetailList=new ArrayList<String>();
-		createCount++;
+		rowStartCount++;
 		}
 		String watchName=watchListCreateProve(model);
 		Reporter.log("WAtchListStepVerify : WatchList Name : "+watchName, true);
-		watchListCommon.pageVerify(model,"Verify");
+		//watchListCommon.pageVerify(model,"Verify");
 		Reporter.log("VerifyCodeMethod::inside if else ", true);
 		scriptList=multipleElementsTextProvider("//div[@class='ed-td ed-stock text-left']//following-sibling::a","Script Names");
 		scriptList=elementsTextFilter(scriptList);
@@ -229,17 +256,18 @@ public class WatchListStepVerify extends SeleniumCoder {
 				detailList.add("add Script");
 				detailList.add(watchName);
 			}
+			
 			detailList.add("ScriptName : "+scriptNames[i]);
-			if(scriptList.get(i).equalsIgnoreCase(verifyScriptNames[i])) {
-				detailList.add("TradingSysmbol : "+scriptList.get(i)+"-PASS");
-			}else {
-				detailList.add("TradingSysmbol : "+scriptList.get(i)+"-FAIL");
-			}
-			if(exchangeList.get(i).equalsIgnoreCase(exchangeArray[i])) {
-				detailList.add("Exchange : "+exchangeList.get(i)+"-PASS");
-			}else {
-				detailList.add("Exchange : "+exchangeList.get(i)+"-FAIL");
-			}
+			detailList.add("TradingSysmbol : "+help.commpareTwoString(scriptList.get(i), verifyScriptNames[i]));
+			detailList.add("Exchange : "+help.commpareTwoString(exchangeList.get(i),exchangeArray[i]));
+			/*
+			 * if(scriptList.get(i).equalsIgnoreCase(verifyScriptNames[i])) {
+			 * detailList.add("TradingSysmbol : "+scriptList.get(i)+"-PASS"); }else {
+			 * detailList.add("TradingSysmbol : "+scriptList.get(i)+"-FAIL"); }
+			 * if(exchangeList.get(i).equalsIgnoreCase(exchangeArray[i])) {
+			 * detailList.add("Exchange : "+exchangeList.get(i)+"-PASS"); }else {
+			 * detailList.add("Exchange : "+exchangeList.get(i)+"-FAIL"); }
+			 */
 			Reporter.log(exchangeList.get(i), true);
 		}
 		

@@ -250,46 +250,73 @@ public class ReportWatchlist extends ExtendReporter{
 		return screenshotPath;
 	}
 	
-	public void tradingWithWatchList(WatchListModel model,List<String> detail,ExtentTest test) {
+	
+	
+	public void tradingWithWatchList1(WatchListModel model,List<String> detail,ExtentTest test) {
+		String [] fullScriptName=help.commaSeparater(model.getFullScriptName());
 		Reporter.log("=========>> tradingWithWatchList <<============", true);
 		String [] ScriptNameArray=WatchListPage.scriptArray;
 		test.log(Status.INFO, "<b>============@@> Trading With Normal WatchList <@@============</b>");
 		test.log(Status.INFO, "WatchName : "+model.getWatchListName());
-		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")||detail.get(1).equalsIgnoreCase("Cancelled")) {
-			test.log(Status.PASS, "Order Status : "+detail.get(1));
-		}else if(detail.get(1).equalsIgnoreCase("rejected")) {
-			test.log(Status.PASS, "Order Status : "+detail.get(1));
-			test.log(Status.PASS, "Rejection reason : "+detail.get(13));
+		if(detail.get(0).equalsIgnoreCase("Open")||detail.get(0).equalsIgnoreCase("Complete")||detail.get(0).equalsIgnoreCase("Cancelled")) {
+			test.log(Status.PASS, "Order Status : "+detail.get(0));
+		}else if(detail.get(0).equalsIgnoreCase("rejected")) {
+			test.log(Status.PASS, "Order Status : "+detail.get(0));
+			test.log(Status.PASS, "Rejection reason : "+detail.get(12));
 		}else {
-			test.log(Status.FAIL, "Order Status : "+detail.get(1));
+			test.log(Status.FAIL, "Order Status : "+detail.get(0));
 		}
-		test.log(Status.INFO, "Order action : "+detail.get(2));
-		if(detail.get(3).toLowerCase().equalsIgnoreCase(ScriptNameArray[1].trim().toLowerCase())) {
-			test.log(Status.PASS, "Script Name : "+detail.get(3));
+		test.log(Status.INFO, "Order action : "+detail.get(1));
+		if(fullScriptName[fullScriptName.length-1].trim().contains(detail.get(2))) {
+			test.log(Status.PASS, "Script Name : "+detail.get(2));
 		}else {
-			test.log(Status.PASS, "Script Name : "+detail.get(3));
+			test.log(Status.PASS, "Script Name : "+detail.get(2));
 		}
-		if(detail.get(4).equalsIgnoreCase(model.getProductType().trim())) {
-		test.log(Status.PASS, "Product Name : "+detail.get(4));
+		if(detail.get(3).equalsIgnoreCase(model.getProductType().trim())) {
+		test.log(Status.PASS, "Product Name : "+detail.get(3));
 		}else {
-			test.log(Status.FAIL, "Product Name : "+detail.get(4));
+			test.log(Status.FAIL, "Product Name : "+detail.get(3));
 		}
-		if(detail.get(5).equalsIgnoreCase(model.getOrderPrice().trim())) {
-			test.log(Status.PASS, "Order Price : "+detail.get(5));
+		if(detail.get(4).equalsIgnoreCase(model.getOrderPrice().trim())) {
+			test.log(Status.PASS, "Order Price : "+detail.get(4));
 			}else {
-				test.log(Status.PASS, "Order price : "+detail.get(5));
+				test.log(Status.PASS, "Order price : "+detail.get(4));
 			}
-		test.log(Status.INFO, "Order type : "+detail.get(6));
-		test.log(Status.INFO, "User id : "+detail.get(7));
-		if(detail.get(8).equalsIgnoreCase(model.getExchange().trim())) {
-			test.log(Status.PASS, "Exchange : "+detail.get(8));
+		test.log(Status.INFO, "Order type : "+detail.get(5));
+		test.log(Status.INFO, "User id : "+detail.get(6));
+		if(detail.get(7).equalsIgnoreCase(model.getExchange().trim())) {
+			test.log(Status.PASS, "Exchange : "+detail.get(7));
 			}else {
-				test.log(Status.FAIL, "Exchange : "+detail.get(8));
+				test.log(Status.PASS, "Exchange : "+detail.get(7));
 			}
-		screenshotFullPath(detail.get(17),test);
+		screenshotFullPath(detail.get(16),test);
 		for(String detailStr:detail) {
 			Reporter.log(detailStr, true);
 		}
+	}
+	
+	private void tradingWithWatchList(WatchListModel model, List<String> detailList, ExtentTest test2) {
+		Reporter.log("=========>> tradingWithWatchList <<============", true);
+		for(String detailStr:detailList) {
+			Reporter.log(detailStr, true);
+		}
+		String [] result;
+		test.log(Status.INFO, "<b>============@@> Trading With Normal WatchList <@@============</b>");
+		for(int i=0;i<detailList.size();i++) {
+			if(detailList.get(i).contains("WorkingE2")) {
+				screenshotFullPath(detailList.get(i),test);
+			}else if(detailList.get(i).contains("PASS")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.PASS, result[0]);
+			}else if(detailList.get(i).contains("FAIL")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.FAIL, result[0]);
+			}
+			else {
+				test.log(Status.INFO,detailList.get(i));
+			}
+		}
+		
 	}
 	
 }

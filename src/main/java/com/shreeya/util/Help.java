@@ -53,6 +53,10 @@ public class Help {
 		if(array[0].trim().equalsIgnoreCase("Hdfc")) {
 			scriptName="Hdfc  Bank  Ltd";
 		}
+		else if(scriptName.equalsIgnoreCase("Aditya Birla Capital Ltd")) {
+			scriptName=scriptName.replace(" ", "  ");
+			scriptName=scriptName+".";
+		}
 		else {
 			scriptName=scriptName.replace(" ", "  ");
 		}
@@ -77,4 +81,71 @@ public class Help {
 		Reporter.log("LTP price : "+ltpPrice, true);
 		return ltpPrice;	
 	}
+	
+	public String removeFutureFromScript(String scriptName) {
+		if(scriptName.contains("Future")) {
+		String [] scriptNameArray=separater(scriptName, " ");
+		Reporter.log("ScriptName : "+scriptNameArray[0], true);
+		scriptName=scriptNameArray[0];
+		}
+		return scriptName;
+	}
+
+	public String commpareTwoString(String applicationStr, String testDataStr) {
+		String result;
+		if(applicationStr.trim().equalsIgnoreCase(testDataStr)) {
+			result=applicationStr+"-PASS";
+			Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+		}
+		else {
+			result=applicationStr+"-FAIL";
+			Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+		}
+		return result;
+	}
+	
+	public String commpareMultStrWithSinStr(String applicationStr, String [] testDataArray) {
+		String result="No";
+		for(String testDatastr:testDataArray) {
+			if(applicationStr.trim().equalsIgnoreCase(testDatastr)) {
+				result=applicationStr+"-PASS";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDatastr+"\nResult : "+result, true);
+				break;
+			}
+			else {
+				result=applicationStr+"-FAIL";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDatastr+"\nResult : "+result, true);
+			}
+		}
+		return result;
+	}
+	
+	public String testStrContainInAppliStr(String applicationStr,String testDataStr) {
+		String result="No Result";
+		char [] applicaitonCharArray=applicationStr.toCharArray();
+		char [] testDataCharArray=testDataStr.toCharArray();
+		if(applicaitonCharArray.length>testDataCharArray.length) {
+			if(applicationStr.contains(testDataStr)) {
+				result=applicationStr+"-PASS";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+			}else {
+				result=applicationStr+"-FAIL";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+			}
+			
+		}else if(applicaitonCharArray.length<testDataCharArray.length) {
+			if(testDataStr.contains(applicationStr)) {
+				result=applicationStr+"-PASS";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+			}
+		else {
+				result=applicationStr+"-FAIL";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+			}
+		}
+		return result;
+	}
+	
+	
+
 }

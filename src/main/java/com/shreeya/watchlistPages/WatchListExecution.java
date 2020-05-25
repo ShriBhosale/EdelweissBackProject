@@ -46,12 +46,18 @@ public class WatchListExecution extends SeleniumCoder{
 		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']", "Close popup button");
 		clickElement(closePopupButton,  "Close popup button");
 		hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
+		WebElement watchlistTitle=fluentWaitCodeXpath("//h3[text()='Watchlist']",30, "WatchList title");
+		if(watchlistTitle==null) {
+			hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
+		}
 		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
 			List<String> watchListDetail=new ArrayList<String>();
 			Map<String,List<String>> verfiyMap=new HashMap<String,List<String>>();
 			try {
+				Reporter.log("<h2>ExcelRow"+model.getReferNo()+" Start Execution</h2>", true);
+				Reporter.log("<h2>"+model.toString()+"</h2>", true);
 				verfiyMap=watchListPage.watchListExecution(model,reporter);
 			}catch(NullPointerException e) {
 				reporter=continueExecution(reporter,model,driver);

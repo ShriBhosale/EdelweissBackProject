@@ -49,7 +49,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		
 	}
 
-	public void sendKey(WebElement element, String msg, String elementName) throws InterruptedException {
+	public void sendKey(WebElement element, String msg, String elementName){
 		/* Thread.sleep(2000); */
 
 		element.sendKeys(msg);
@@ -88,7 +88,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -107,7 +107,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -147,7 +147,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 			}catch(ElementNotInteractableException e) {
 				StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -160,7 +160,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		}catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
-			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName,true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
@@ -213,7 +213,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (TimeoutException e) {
 			Reporter.log("fluentWaitMethodID", true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -319,7 +319,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -360,7 +360,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -372,7 +372,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -384,7 +384,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -396,7 +396,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -542,7 +542,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -570,7 +570,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -586,7 +586,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e1.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e1.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e1.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -600,7 +600,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			Reporter.log(elementName + " is selected already...", true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -652,7 +652,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 	}
 	
-	public void clickElement(String xpathString, String elementName) {
+	public void clickElement(String xpathString, String elementName) throws ElementClickInterceptedException {
 		staticWait(500);
 		
 		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
@@ -676,7 +676,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -693,7 +693,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -723,7 +723,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 			}catch(ElementNotInteractableException e) {
 				StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -736,7 +736,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		}catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
-			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName,true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
@@ -776,7 +776,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -788,7 +788,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -800,7 +800,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -812,7 +812,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -946,7 +946,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		
 		}catch(TimeoutException e) {
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -982,7 +982,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -1080,7 +1080,9 @@ public class SeleniumCoder extends ExceptionHandler {
 	
 	public void clickUsingAction(WebElement element,String elementName) {
 		Actions action=new Actions(driver);
-		action.moveToElement(element).click().build().perform();
+		action.moveToElement(element).build().perform();
+		staticWait(500);
+		action.click(element).build().perform();
 		Reporter.log(elementName+" click", true);
 	}
 	

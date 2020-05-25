@@ -179,7 +179,7 @@ public class LoginPage extends SeleniumCoder {
 			popupFlag=true;
 		}
 		
-			popupButton = fluentWaitCodeXpath(driver, "//button[text()='No thanks']", 40,"No thans popup button");
+			popupButton = fluentWaitCodeXpath(driver, "//button[text()='No thanks']", 5,"No thans popup button");
 			if (popupButton != null) {
 				clickElement(popupButton, "No thans popup button");
 			}
@@ -223,6 +223,7 @@ public class LoginPage extends SeleniumCoder {
 		if(closeButton!=null)
 		clickElement(closeButton, "Close order status popup");
 		Thread.sleep(3000);
+		driver.navigate().refresh();
 		logoutOption = fluentWaitCodeXpath(driver, "//*[@id='caUser']/span[1]","Logout option");
 		if(logoutOption!=null) {
 		clickElement(logoutOption, "Logout option");

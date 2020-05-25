@@ -68,7 +68,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	
 	public PredefineWatchList() {}
 	
-	public void placeOrder(WatchListModel model) throws InterruptedException {
+	public String placeOrder(WatchListModel model) throws InterruptedException {
 		String amoFlag=configReader.configReader("amoFlag");
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
 			buyButton=fluentWaitCodeXpath("//a[text()='Buy']","Buy button");
@@ -77,23 +77,13 @@ public class PredefineWatchList extends SeleniumCoder{
 				buyButton=fluentWaitCodeXpath("//a[text()='Sell']","Sell button");
 				clickElement(buyButton,"Sell button");
 			}
-			/*Thread.sleep(4000);*/
-			
+		
+			String screenshot=ScreenshortProvider.captureScreen(driver, "OrderPlacementPage");
 			Thread.sleep(1000);
-			productType(model.getProductType());
-			noOfSharesTextField=fluentWaitCodeXpath("//input[@placeholder='No. of Shares']","NO of shares textfield");
+			productType(model.getProductType(),model.getExchange());
+			qtyTextfield(model.getQty(),model.getExchange());
+			priceTextField(model.getOrderPrice(), model.getExchange());
 			
-			clearAndSendKey(noOfSharesTextField,model.getQty(),"No of shares Textfield ");
-			/*Thread.sleep(2000);*/
-			enterPriceTextField=fluentWaitCodeXpath("//input[@placeholder='Enter Price']","Enter Price TextField");
-			sendKey(enterPriceTextField, model.getOrderPrice(),"Enter Price TextField");
-			
-			/*
-			 * OptionalFieldsLabel=fluentWaitCodeXpath(
-			 * "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]","OptionalFields Label"
-			 * ); clickElement(OptionalFieldsLabel,"OptionalFields Label");
-			 */
-			/*Thread.sleep(1000);*/
 			
 			orderDetail.amoCheckbox(amoFlag);
 			placeOrderButton=fluentWaitCodeXpath("//input[@value ='Place Order']","Place Order Button");
@@ -108,11 +98,44 @@ public class PredefineWatchList extends SeleniumCoder{
 			//confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 			clickElement(confirmButton,"Confirm Button");
 			
-
+			return screenshot;
 	}
 	
-	public void productType(String productTypeStr) {
+	public void qtyTextfield(String qty,String exchange) {
+		
+	Reporter.log("<========== qtyTextfield =========>", true);
+		if(exchange.contains("CDS")||exchange.contains("NFO")||exchange.contains("FNO")||exchange.contains("NCDEX")||exchange.contains("MCX")) 
+			noOfSharesTextField=fluentWaitCodeXpath("//input[@id='tocshare']", "Quantity");
+		else 
+			noOfSharesTextField=fluentWaitCodeXpath("//input[@placeholder='No. of Shares']","NO of shares textfield");
+		
+		clearAndSendKey(noOfSharesTextField,qty,"No of shares Textfield ");
+	}
+	
+	public void priceTextField(String price,String exchange) {
+		Reporter.log("<========== priceTextField =========>", true);
+	
+		if(exchange.contains("CDS")||exchange.contains("NFO")||exchange.contains("FNO")||exchange.contains("NCDEX")||exchange.contains("MCX")) 
+			enterPriceTextField=fluentWaitCodeXpath("//input[@name='pricePerShare']","Enter Price TextField");
+		else
+			enterPriceTextField=fluentWaitCodeXpath("//input[@placeholder='Enter Price']","Enter Price TextField");
+		
+		sendKey(enterPriceTextField,price,"Enter Price TextField");
+		
+	}
+	
+	public void productType(String productTypeStr,String exchange) {
 		Reporter.log("This is product type ====> "+productTypeStr,true);
+		if(exchange.contains("CDS")||exchange.contains("NFO")||exchange.contains("FNO")||
+				exchange.contains("NCDEX")||exchange.contains("MCX")) {
+			if(productTypeStr.equalsIgnoreCase("NRML")) {
+				productTypeRadioButton=fluentWaitCodeXpath("//label[text()='FNO Plus -  NRML']", "FNO NRML");
+				selectRadioButton(productTypeRadioButton, "FNO NRML");
+			}else if(productTypeStr.equalsIgnoreCase("Intraday MIS")) {
+				productTypeRadioButton=fluentWaitCodeXpath("//label[text()='Intraday MIS']", "Intraday MIS");
+				selectRadioButton(productTypeRadioButton, "Intraday MIS");
+			}
+		}else {
 		if(productTypeStr.equalsIgnoreCase("CNC")) {
 			productTypeRadioButton=fluentWaitCodeXpath("//label[text()='Delivery CNC']", "CNS Product type");
 			selectRadioButton(productTypeRadioButton, "CNS Product type");
@@ -122,6 +145,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		}else if(productTypeStr.endsWith("NRML")) {
 			productTypeRadioButton=fluentWaitCodeXpath("//label[text()='Delivery Plus -  NRML']", "NRML Product type");
 			selectRadioButton(productTypeRadioButton, "NRML Product type");
+		}
 		}
 	}
 	
