@@ -285,10 +285,10 @@ public class WatchListStepVerify extends SeleniumCoder {
 	public void predefineWatchListVerify(WatchListModel model,String verifyNo,List<String> predefindWatchListDetailList) {
 		count++;
 		switch(verifyNo) {
-		case "5":
+		case "6":
 			simpleClickPredefineWatchList(model,predefindWatchListDetailList);
 			break;
-		case "6":
+		case "7":
 			tradingWithPredefineWatchList(model, predefindWatchListDetailList);
 			break;
 		}

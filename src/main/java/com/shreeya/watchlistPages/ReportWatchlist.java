@@ -195,38 +195,39 @@ public class ReportWatchlist extends ExtendReporter{
 	public void predefineTrading(WatchListModel model,List<String> detail,ExtentTest test) {
 		Reporter.log("=========>> predefineTrading <<============", true);
 		test.log(Status.INFO, "<b>============@@> Trading With PredefineWatchList <@@============</b>");
-		if(detail.get(2).equalsIgnoreCase("Open")||detail.get(2).equalsIgnoreCase("Complete")) {
-			test.log(Status.PASS, "Order Status : "+detail.get(2));
-		}else if(detail.get(2).equalsIgnoreCase("rejected")) {
-			test.log(Status.FAIL, "Order Status : "+detail.get(2));
-			test.log(Status.FAIL, "Rejection reason : "+detail.get(14));
+		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")) {
+			test.log(Status.PASS, "Order Status : "+detail.get(1));
+		}else if(detail.get(1).equalsIgnoreCase("rejected")) {
+			test.log(Status.FAIL, "Order Status : "+detail.get(1));
+			test.log(Status.FAIL, "Rejection reason : "+detail.get(13));
 		}else {
-			test.log(Status.FAIL, "Order Status : "+detail.get(2));
+			test.log(Status.FAIL, "Order Status : "+detail.get(1));
 		}
-		test.log(Status.INFO, "Order action : "+detail.get(3));
-		if(detail.get(4).equalsIgnoreCase(model.getScriptName().trim())) {
-			test.log(Status.PASS, "Script Name : "+detail.get(4));
+		test.log(Status.INFO, "Order action : "+detail.get(2));
+		if(detail.get(3).equalsIgnoreCase(model.getScriptName().trim())) {
+			test.log(Status.PASS, "Script Name : "+detail.get(3));
 		}else {
-			test.log(Status.FAIL, "Script Name : "+detail.get(4));
+			test.log(Status.FAIL, "Script Name : "+detail.get(3));
 		}
-		if(detail.get(5).equalsIgnoreCase(model.getProductType().trim())) {
-		test.log(Status.PASS, "Product Name : "+detail.get(5));
+		if(detail.get(4).equalsIgnoreCase(model.getProductType().trim())) {
+		test.log(Status.PASS, "Product Name : "+detail.get(4));
 		}else {
-			test.log(Status.FAIL, "Product Name : "+detail.get(5));
+			test.log(Status.FAIL, "Product Name : "+detail.get(4));
 		}
-		if(detail.get(6).equalsIgnoreCase(model.getOrderPrice().trim())) {
-			test.log(Status.PASS, "Order Price : "+detail.get(6));
+		if(detail.get(5).equalsIgnoreCase(model.getOrderPrice().trim())) {
+			test.log(Status.PASS, "Order Price : "+detail.get(5));
 			}else {
-				test.log(Status.PASS, "Order price : "+detail.get(6));
+				test.log(Status.PASS, "Order price : "+detail.get(5));
 			}
-		test.log(Status.INFO, "Order type : "+detail.get(7));
-		test.log(Status.INFO, "User id : "+detail.get(8));
-		if(detail.get(9).equalsIgnoreCase(model.getExchange().trim())) {
-			test.log(Status.PASS, "Exchange : "+detail.get(9));
+		test.log(Status.INFO, "Order type : "+detail.get(6));
+		test.log(Status.INFO, "User id : "+detail.get(7));
+		if(detail.get(8).equalsIgnoreCase(model.getExchange().trim())) {
+			test.log(Status.PASS, "Exchange : "+detail.get(8));
 			}else {
-				test.log(Status.FAIL, "Exchange : "+detail.get(9));
+				test.log(Status.FAIL, "Exchange : "+detail.get(8));
 			}
-		screenshotFullPath(detail.get(18),test);
+		screenshotFullPath(detail.get(14),test);
+		screenshotFullPath(detail.get(0),test);
 		for(String detailStr:detail) {
 			Reporter.log(detailStr, true);
 		}

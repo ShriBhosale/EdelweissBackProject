@@ -150,6 +150,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	}
 	
 	public List<String> trading(WatchListModel model)  {
+		String screenshot = null;
 		predefineWatchListDetail=new ArrayList<String>();
 		//clickOnPredefineWatchList(model);
 		String scriptName=model.getScriptName().trim().replace(" ", "  ");
@@ -164,15 +165,18 @@ public class PredefineWatchList extends SeleniumCoder{
 			orderPlaceSearchTextField=fluentWaitCodeXpath("//input[@id='tocsearch']", "Order Place Textfield");
 			scriptNametext=fetchTextFromElement(orderPlaceSearchTextField);
 			Reporter.log("orderPlaceSearchTextField : "+scriptNametext , true);
-			placeOrder(model);
+			 screenshot=placeOrder(model);
 			orderDetailArray=orderDetail.orderDetailProvider(driver, "New", "NO order sheet");
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		predefineWatchListDetail.add(screenshot);
 		for(String orderDetail:orderDetailArray) {
+			if(!(orderDetail.equalsIgnoreCase("no id")||orderDetail.equalsIgnoreCase("no Action")||
+			orderDetail.equalsIgnoreCase("ScriptResult")||orderDetail.equalsIgnoreCase("Report link")||
+			orderDetail.equalsIgnoreCase("Screenshot link1")))
 			predefineWatchListDetail.add(orderDetail);
 		}
 		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "watchList"));

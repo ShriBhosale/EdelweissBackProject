@@ -497,6 +497,7 @@ public class WatchListPage extends SeleniumCoder {
 	public List<String> tradingWithPredefineWatchList(WatchListModel model) {
 		Reporter.log("tradingWithPredefineWatchList", true);
 		Reporter.log(model.toString(), true);
+		predefineWatchListDetailList=new ArrayList<String>();
 		predefineWatchListDetailList = predefineWatchList.trading(model);
 		return predefineWatchListDetailList;
 	}
@@ -529,6 +530,7 @@ public class WatchListPage extends SeleniumCoder {
 	}
 
 	private List<String> tradingWatchList(WatchListModel model) {
+		Reporter.log("=============> tradingWatchList <============", true);
 		errorList = new ArrayList<String>();
 		watchListCommon.pageVerify(model, "Trading");
 		String tradeButtonxpath;
@@ -563,7 +565,9 @@ public class WatchListPage extends SeleniumCoder {
 			if (!model.getExchange().equalsIgnoreCase("MCX") || model.getExchange().equalsIgnoreCase("NCDEX")) {
 				orderDetailArray = orderDetail.orderDetailProvider(driver, "New", "NO order sheet");
 				for (String orderDetail : orderDetailArray) {
-					if (orderDetail.equalsIgnoreCase("no id") || orderDetail.equalsIgnoreCase("no Action")) {
+					if (orderDetail.equalsIgnoreCase("no id")||orderDetail.equalsIgnoreCase("no Action")||
+							orderDetail.equalsIgnoreCase("ScriptResult")||orderDetail.equalsIgnoreCase("Report link")||
+							orderDetail.equalsIgnoreCase("Screenshot link1")) {
 						continue;
 					} else {
 						errorList.add(orderDetail);

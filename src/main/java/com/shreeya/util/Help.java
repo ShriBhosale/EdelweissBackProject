@@ -51,7 +51,7 @@ public class Help {
 	public String tradeXpath(String scriptName) {
 		String [] array=scriptName.split(" ");
 		if(array[0].trim().equalsIgnoreCase("Hdfc")) {
-			scriptName="Hdfc  Bank  Ltd";
+			scriptName="Hdfc  Bank  Ltd.";
 		}
 		else if(scriptName.equalsIgnoreCase("Aditya Birla Capital Ltd")) {
 			scriptName=scriptName.replace(" ", "  ");

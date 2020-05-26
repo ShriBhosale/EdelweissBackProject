@@ -13,9 +13,10 @@ public class WatchListKeywords {
 		List<String> stepsList = new ArrayList<String>();
 		List<String> normalWatchList = new ArrayList<String>();
 
-		normalWatchList.add("Create");
-		normalWatchList.add("AddScript");
-		normalWatchList.add("Verfiy_1");
+		/*
+		 * normalWatchList.add("Create"); normalWatchList.add("AddScript");
+		 * normalWatchList.add("Verfiy_1");
+		 */
 
 		normalWatchList.add("TradingWithWatchList");
 		normalWatchList.add("Verfiy_2");

@@ -27,8 +27,10 @@ public class WatchListCommon extends SeleniumCoder{
 		String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName()+"']";
 		
 		WebElement createWatchList=fluentWaitCodeXpath(createdWatchlistTab,10,"watchList");	
-		if(createWatchList!=null)
+		if(createWatchList!=null) {
 		clickElement(createWatchList,model.getWatchListName()+" Watchlist Tab");
+		tabName=model.getWatchListName();
+		}
 		else {
 			tabName=commodityTabClicker(model.getWatchListName(),model.getExchange());
 			if(tabName.equalsIgnoreCase("tab")) 
