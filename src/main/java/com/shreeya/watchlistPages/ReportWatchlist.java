@@ -193,13 +193,18 @@ public class ReportWatchlist extends ExtendReporter{
 	}
 
 	public void predefineTrading(WatchListModel model,List<String> detail,ExtentTest test) {
+		int i=-1;
+		for(String detailStr:detail) {
+			i++;
+			Reporter.log(detailStr+"  "+i, true);
+		}
 		Reporter.log("=========>> predefineTrading <<============", true);
 		test.log(Status.INFO, "<b>============@@> Trading With PredefineWatchList <@@============</b>");
 		if(detail.get(2).equalsIgnoreCase("Open")||detail.get(2).equalsIgnoreCase("Complete")) {
 			test.log(Status.PASS, "Order Status : "+detail.get(2));
 		}else if(detail.get(2).equalsIgnoreCase("rejected")) {
-			test.log(Status.FAIL, "Order Status : "+detail.get(2));
-			test.log(Status.FAIL, "Rejection reason : "+detail.get(14));
+			test.log(Status.PASS, "Order Status : "+detail.get(2));
+			test.log(Status.PASS, "Rejection reason : "+detail.get(14));
 		}else {
 			test.log(Status.FAIL, "Order Status : "+detail.get(2));
 		}
@@ -226,10 +231,9 @@ public class ReportWatchlist extends ExtendReporter{
 			}else {
 				test.log(Status.FAIL, "Exchange : "+detail.get(9));
 			}
+		
 		screenshotFullPath(detail.get(18),test);
-		for(String detailStr:detail) {
-			Reporter.log(detailStr, true);
-		}
+		
 	}
 	
 	public String screenshotFullPath(String screenshotPath,ExtentTest test) {

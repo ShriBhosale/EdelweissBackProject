@@ -149,6 +149,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 		
 		for(String orderDetail:orderDetailArray) {
+			
 			predefineWatchListDetail.add(orderDetail);
 		}
 		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "watchList"));

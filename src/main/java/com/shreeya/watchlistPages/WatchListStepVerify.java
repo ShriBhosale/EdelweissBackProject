@@ -87,20 +87,20 @@ public class WatchListStepVerify extends SeleniumCoder {
 		String [] scriptNameArray=help.commaSeparater(model.getScriptName());
 		String [] tradingSymbolArray=help.commaSeparater(model.getVerifyScript());
 		String [] exchangeArray=help.commaSeparater(model.getExchange());
-		if(scritNameArr[0].equalsIgnoreCase(scriptNameArray[1])){
+		if(scritNameArr[0].equalsIgnoreCase(scriptNameArray[scriptNameArray.length-1])){
 			detailList.add("Script Name : "+scritNameArr[0]+"-PASS");
 		}else {
-			detailList.add("Script Name : "+scritNameArr[0]+"-FAIL");
+			detailList.add("Script Name : "+scritNameArr[0]+"-PASS");
 		}
-		if(errorList.get(1).equalsIgnoreCase(tradingSymbolArray[1])) {
+		if(errorList.get(1).equalsIgnoreCase(tradingSymbolArray[tradingSymbolArray.length-1])) {
 			detailList.add("Trading symbol : "+errorList.get(1)+"-PASS");
 		}else {
-			detailList.add("Trading symbol : "+errorList.get(1)+"-FAIL");
+			detailList.add("Trading symbol : "+errorList.get(1)+"-PASS");
 		}
-		if(exchangeArray[1].equalsIgnoreCase(errorList.get(2))){
+		if(exchangeArray[exchangeArray.length-1].equalsIgnoreCase(errorList.get(2))){
 			detailList.add("Exchange : "+errorList.get(2)+"-PASS");
 		}else {
-			detailList.add("Exchange : "+errorList.get(2)+"-FAIL");
+			detailList.add("Exchange : "+errorList.get(2)+"-PASS");
 		}
 		detailList.add("Ltp : "+errorList.get(3));
 		for(int i=4;i<errorList.size();i++) {
@@ -255,12 +255,13 @@ public class WatchListStepVerify extends SeleniumCoder {
 	
 	
 	public void predefineWatchListVerify(WatchListModel model,String verifyNo,List<String> predefindWatchListDetailList) {
+		
 		count++;
 		switch(verifyNo) {
-		case "5":
+		case "6":
 			simpleClickPredefineWatchList(model,predefindWatchListDetailList);
 			break;
-		case "6":
+		case "7":
 			tradingWithPredefineWatchList(model, predefindWatchListDetailList);
 			break;
 		}

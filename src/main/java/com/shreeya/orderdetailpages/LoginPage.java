@@ -179,7 +179,7 @@ public class LoginPage extends SeleniumCoder {
 			popupFlag=true;
 		}
 		
-			popupButton = fluentWaitCodeXpath(driver, "//button[text()='No thanks']", 40,"No thans popup button");
+			popupButton = fluentWaitCodeXpath(driver, "//button[text()='No thanks']", 5,"No thans popup button");
 			if (popupButton != null) {
 				clickElement(popupButton, "No thans popup button");
 			}

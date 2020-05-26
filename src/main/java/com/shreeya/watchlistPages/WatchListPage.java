@@ -468,6 +468,7 @@ public class WatchListPage extends SeleniumCoder{
 	public List<String> tradingWithPredefineWatchList(WatchListModel model) {
 		Reporter.log("tradingWithPredefineWatchList", true);
 		Reporter.log(model.toString(), true);
+		predefineWatchListDetailList=new ArrayList<String>();
 		predefineWatchListDetailList=predefineWatchList.trading(model);
 		return predefineWatchListDetailList;
 	}
@@ -543,6 +544,7 @@ public class WatchListPage extends SeleniumCoder{
 	} 
 	
 	public void redirectTocodePage(WatchListModel model) {
+		errorList=new ArrayList<String>();
 		verifyScriptArray=help.commaSeparater(model.getVerifyScript());
 		switchTab(1);
 		watchListCommon.pageVerify(model, "codingPage");
