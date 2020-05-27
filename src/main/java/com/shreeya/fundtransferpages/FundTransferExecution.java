@@ -80,6 +80,7 @@ public class FundTransferExecution extends SeleniumCoder{
 	}
 	
 	public void fundTransferReport(String referNo,String errorMsg,String result) throws IOException {
+		errorMsg="no";
 		int referenceNo=Integer.valueOf(referNo);
 		if(referenceNo==1) {
 			MyTestLauncher.folderCreationObj.copyFile(folderPathArray[0],"FundTransfer");

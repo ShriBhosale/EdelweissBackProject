@@ -166,7 +166,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			scriptNametext=fetchTextFromElement(orderPlaceSearchTextField);
 			Reporter.log("orderPlaceSearchTextField : "+scriptNametext , true);
 			 screenshot=placeOrder(model);
-			orderDetailArray=orderDetail.orderDetailProvider(driver, "New", "NO order sheet");
+			orderDetailArray=orderDetail.orderDetailProvider(driver, "New", "NO order sheet",model);
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -174,9 +174,9 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 		predefineWatchListDetail.add(screenshot);
 		for(String orderDetail:orderDetailArray) {
-			if(!(orderDetail.equalsIgnoreCase("no id")||orderDetail.equalsIgnoreCase("no Action")||
+			if(!(orderDetail.equalsIgnoreCase("no id")||orderDetail.contains("no")||
 			orderDetail.equalsIgnoreCase("ScriptResult")||orderDetail.equalsIgnoreCase("Report link")||
-			orderDetail.equalsIgnoreCase("Screenshot link1")))
+			orderDetail.equalsIgnoreCase("Screenshot link1")||orderDetail.equalsIgnoreCase("Partial Qty")))
 			predefineWatchListDetail.add(orderDetail);
 		}
 		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "watchList"));

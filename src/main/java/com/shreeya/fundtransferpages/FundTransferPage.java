@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
 import com.shreeya.model.FundTransferModel;
+import com.shreeya.util.Help;
 import com.shreeya.util.SeleniumCoder;
 
 public class FundTransferPage extends SeleniumCoder {
@@ -23,9 +24,11 @@ public class FundTransferPage extends SeleniumCoder {
 	WebElement okButton;
 	WebElement yesBankAlert;
 	WebElement upiRadioButton;
+	WebElement qickSelectAmountLabel;
 	
 	Payment payment;
-	
+	FundTransferCommon fundTransferCommon;
+	Help help;
 	public FundTransferPage() {
 		
 	}
@@ -33,7 +36,9 @@ public class FundTransferPage extends SeleniumCoder {
 	public FundTransferPage(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
+		help=new Help();
 		payment=new Payment(driver);
+		fundTransferCommon=new FundTransferCommon();
 	}
 	
 	public void paymentModeSelect(String paymentMode,String bankName) throws InterruptedException {
@@ -65,24 +70,41 @@ public class FundTransferPage extends SeleniumCoder {
 			
 	}
 	
-	public void bankAccountSelect(String bankName) throws InterruptedException {
-		
+	public void bankAccountSelect(FundTransferModel model) throws InterruptedException {
+		staticWait(4000);
+		String bankName=fundTransferCommon.bankNameGiver(model.getBank());
 		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
-		clickElement(bankAccountRedionButton, bankName+" Radio button");
+		if(bankAccountRedionButton.isEnabled()==false)
+			clickElement(bankAccountRedionButton, bankName+" Radio button");
+		model.setBank(bankName);
 	}
 	
 	public void fillAmount(String amount) throws InterruptedException {
-		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
-		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
+		String [] amountArray=fundTransferCommon.amountEnter(amount);
+		if(!amountArray[1].equalsIgnoreCase("EnterAmount")) {
+			amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
+			clearAndSendKey(amountToTransferTextField,amountArray[1] , "Amount To Transfer TextField");
+			}
+		if(!amountArray[0].equalsIgnoreCase("QickSelectAmount")) {
+			String [] qickSelectAmountArray=help.commaSeparater(amountArray[0]);
+			for(String qickSelect:qickSelectAmountArray) {
+			String quickSelectAmountStr="//a[@gtmdir-label='Quick Select | "+qickSelect+"']";
+			qickSelectAmountLabel=fluentWaitCodeXpath(quickSelectAmountStr, qickSelect+" QickSelect ");
+			clickElement(qickSelectAmountLabel,  qickSelect+" QickSelect ");
+			}
+		}
+		
 		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 		clickElement(submitButton, "Submit button");
 	}
 	
 	
 	
+	
+	
 	public void fundTransferexecute(FundTransferModel model) throws InterruptedException {
 		Reporter.log(model.toString(), true);
-		bankAccountSelect(model.getBank());
+		bankAccountSelect(model);
 		paymentModeSelect(model.getPaymentMode(),model.getBank());
 		if(model.getBank().equalsIgnoreCase("HDFC BANK LTD")) {
 		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","ok Button");

@@ -227,7 +227,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 		Reporter.log("===============>> verifyCreateAdd <<==================",true);
 		count--;
 		//createCount=2;
-		createAddDetailList=new ArrayList<String>();
+		/* createAddDetailList=new ArrayList<String>(); */
 		verifyScriptNames=help.commaSeparater(model.getVerifyScript());
 		detailList=new ArrayList<String>();
 		Reporter.log("verifyCreateAdd : count =====> "+count, true);

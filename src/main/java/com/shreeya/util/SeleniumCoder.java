@@ -1103,4 +1103,9 @@ public class SeleniumCoder extends ExceptionHandler {
 			}
 		}
 	}
+	
+	public String currentUrl() {
+		String currentUrl=driver.getCurrentUrl();
+		return currentUrl;
+	}
 }

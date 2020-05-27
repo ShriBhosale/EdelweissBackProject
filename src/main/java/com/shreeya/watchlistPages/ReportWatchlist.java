@@ -130,7 +130,33 @@ public class ReportWatchlist extends ExtendReporter{
 		
 	}
 
-	
+	private void predefineTrading(WatchListModel model, List<String> detailList, ExtentTest test2) {
+		Reporter.log("=========>> predefineTrading <<============", true);
+		for(String detailStr:detailList) {
+			Reporter.log(detailStr, true);
+		}
+		String [] result;
+		test.log(Status.INFO, "<b>============@@> PredefineWatchList Trading <@@============</b>");
+		for(int i=0;i<detailList.size();i++) {
+			if(detailList.get(i).contains("WorkingE2")) {
+				screenshotFullPath(detailList.get(i),test);
+			}else if(detailList.get(i).contains("PASS")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.PASS, result[0]);
+			}else if(detailList.get(i).contains("FAIL")) {
+				result=help.separater(detailList.get(i),"-");
+				test.log(Status.FAIL, result[0]);
+			} 
+			else if(detailList.get(i).contains("Rejection Reason")) {
+				  continue;
+				  }
+				 
+			else {
+				test.log(Status.INFO,detailList.get(i));
+			}
+		}
+		
+	}
 	
 	private void createWatchList(WatchListModel model, List<String> detailList, ExtentTest test2) {
 		Reporter.log("=========>> createWatchList <<============", true);
@@ -192,7 +218,7 @@ public class ReportWatchlist extends ExtendReporter{
 		
 	}
 
-	public void predefineTrading(WatchListModel model,List<String> detail,ExtentTest test) {
+	public void predefineTrading1(WatchListModel model,List<String> detail,ExtentTest test) {
 		Reporter.log("=========>> predefineTrading <<============", true);
 		test.log(Status.INFO, "<b>============@@> Trading With PredefineWatchList <@@============</b>");
 		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")) {
@@ -259,10 +285,10 @@ public class ReportWatchlist extends ExtendReporter{
 		String [] ScriptNameArray=WatchListPage.scriptArray;
 		test.log(Status.INFO, "<b>============@@> Trading With Normal WatchList <@@============</b>");
 		test.log(Status.INFO, "WatchName : "+model.getWatchListName());
-		if(detail.get(0).equalsIgnoreCase("Open")||detail.get(0).equalsIgnoreCase("Complete")||detail.get(0).equalsIgnoreCase("Cancelled")) {
-			test.log(Status.PASS, "Order Status : "+detail.get(0));
-		}else if(detail.get(0).equalsIgnoreCase("rejected")) {
-			test.log(Status.PASS, "Order Status : "+detail.get(0));
+		if(detail.get(1).equalsIgnoreCase("Open")||detail.get(1).equalsIgnoreCase("Complete")||detail.get(1).equalsIgnoreCase("Cancelled")) {
+			test.log(Status.PASS, "Order Status : "+detail.get(1));
+		}else if(detail.get(1).equalsIgnoreCase("rejected")) {
+			test.log(Status.PASS, "Order Status : "+detail.get(1));
 			test.log(Status.PASS, "Rejection reason : "+detail.get(12));
 		}else {
 			test.log(Status.FAIL, "Order Status : "+detail.get(0));
@@ -312,6 +338,8 @@ public class ReportWatchlist extends ExtendReporter{
 			}else if(detailList.get(i).contains("FAIL")) {
 				result=help.separater(detailList.get(i),"-");
 				test.log(Status.FAIL, result[0]);
+			}else if(detailList.get(i).equalsIgnoreCase("Rejection Reason")) {
+				continue;
 			}
 			else {
 				test.log(Status.INFO,detailList.get(i));

@@ -59,26 +59,29 @@ public class WatchListCodePage extends SeleniumCoder {
 	}
 	
 	public List<String> equityCodePageVerification(List<String> codePageDetailList,WatchListModel model) {
-		scriptArray=WatchListPage.scriptArray;
+		verifyScriptArray=help.commaSeparater(model.getVerifyScript());
+		String [] fullScriptNameArray=help.commaSeparater(model.getFullScriptName());
+		staticWait(500);
 		sharePriceLabel=fluentWaitCodeXpath("//h1[@class='comp_name ib ng-binding']", "Share Price label");
 		sharePriceCompanyName=fetchTextFromElement(sharePriceLabel);
-		codePageDetailList.add(help.testStrContainInAppliStr(sharePriceCompanyName,scriptArray[scriptArray.length-1]));
+		String [] scriptS=help.separater(sharePriceCompanyName, "Share");
+		codePageDetailList.add("Script Name : "+help.testStrContainInAppliStr(scriptS[0],fullScriptNameArray[fullScriptNameArray.length-1]));
 		
 		
 		tradingSymbolCodeLabel=fluentWaitCodeXpath("//label[@class='sym  ng-binding']", "TradingSymbol");
-		codePageDetailList.add(help.commpareTwoString(fetchTextFromElement(tradingSymbolCodeLabel), model.getVerifyScript()));
+		codePageDetailList.add("Trading symbol : "+help.commpareTwoString(fetchTextFromElement(tradingSymbolCodeLabel), verifyScriptArray[verifyScriptArray.length-1]));
 		
 		if(model.getExchange().contains("CDS")||model.getExchange().contains("NFO")||model.getExchange().contains("FNO")) 
 			exchangeLabelCode=fluentWaitCodeXpath("//*[@id='eqQuotes']/section/div[1]/div[1]/div/div[2]/div[1]/div[1]/div/button/span", "exchange label");
 		else
 			exchangeLabelCode=fluentWaitCodeXpath("//div[@class='dropdown exchangeDD qtDD']//button//span", "exchange label");
 		
-		codePageDetailList.add(help.commpareTwoString(fetchTextFromElement(exchangeLabelCode), model.getExchange()));
+		codePageDetailList.add("Exchange :  "+help.commpareTwoString(fetchTextFromElement(exchangeLabelCode), model.getExchange()));
 		
 		
 		ltpLabel=fluentWaitCodeXpath("//div[@class='realVals']//label[@class='ltp']", "LTP no");
 		String ltp=fetchTextFromElement(ltpLabel);
-		codePageDetailList.add(help.removeHtmlCode(ltp));
+		codePageDetailList.add("LTP : "+help.removeHtmlCode(ltp));
 		codePageDetailList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_1"));
 		
 		if(model.getExchange().contains("CDS")||model.getExchange().contains("NFO")||model.getExchange().contains("FNO")) {

@@ -2,8 +2,10 @@ package com.shreeya.fundtransferpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import com.shreeya.model.FundTransferModel;
+import com.shreeya.util.Help;
 import com.shreeya.util.SeleniumCoder;
 
 public class Payment extends SeleniumCoder{
@@ -19,11 +21,27 @@ public class Payment extends SeleniumCoder{
 	WebElement completTransaction;
 	WebElement successButtonRazor;
 	WebElement failureButtonRazor;
+	WebElement monthDropDown;
+	WebElement yearDropDown;
+	WebElement CardSecurityCodeTextfield;
+	WebElement submitButton;
+	WebElement otpTexfield;
+	WebElement nextButton;
+	
+	String monthDropDownStr;
+	String yearDropDownStr;
+	
+	FundTransferCommon fundTransferCommon;
+	
+	Help help;
 	
 	WebDriver driver;
+	private WebElement cardCell;
 	public Payment(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
+		help=new Help();
+		fundTransferCommon=new FundTransferCommon();
 	}
 	
 	public Payment() {}
@@ -49,33 +67,76 @@ public class Payment extends SeleniumCoder{
 	}
 	
 	public void atomPayment(FundTransferModel model) {
-		if(model.getNegative().equalsIgnoreCase("Yes")) {
-		failureRadioButton=fluentWaitCodeXpath("//input[@value='F']", "Failure radio button");
-		clickElement(failureRadioButton,  "Failure radio button");
-		}
+		/*
+		 * if(model.getNegative().equalsIgnoreCase("Yes")) {
+		 * failureRadioButton=fluentWaitCodeXpath("//input[@value='F']",
+		 * "Failure radio button"); clickElement(failureRadioButton,
+		 * "Failure radio button"); }
+		 */
 		completTransaction=fluentWaitCodeXpath("//input[@value='Click To Complete Transaction']", "Complete Transaction button");
 		clickElement(completTransaction, "Complete Transaction button");
 		browserPopup(true);
 	}
 	
 	public void razorPayment(FundTransferModel model) {
-		if(model.getNegative().equalsIgnoreCase("Yes")) {
+		/*if(model.getNegative().equalsIgnoreCase("Yes")) {
 			failureButtonRazor=fluentWaitCodeXpath("//button[text()='Failure']", "Razor Failure button");
 			clickElement(failureButtonRazor, "Razor Failure button");	
-		}
-		else {
+		}*/
+		/* else { */
 		successButtonRazor=fluentWaitCodeXpath("//button[text()='Success']", "Razor Success button");
 		clickElement(successButtonRazor, "Razor Success button");
-		}
+		/* } */
 	}
 	
 	public void paymentCodeExecution(FundTransferModel model) {
-		if(model.getBank().equalsIgnoreCase("ICICI BANK LTD")&&model.getTranscationMode().equalsIgnoreCase("Native")) {
-			paymentForICICI(model);
-		}else if(model.getTranscationMode().trim().equalsIgnoreCase("atom")) {
+		String currentUrl=currentUrl();
+		 if(currentUrl.contains("AtomBank")) {
 			atomPayment(model);
-		}else if(model.getTranscationMode().trim().equalsIgnoreCase("Razor")) {
+		}else if(currentUrl.contains("razorpay")) {
 			razorPayment(model);
+		}else if(model.getBank().equalsIgnoreCase("ICICI BANK LTD")) {
+			paymentForICICI(model);
+		}else if(model.getBank().equalsIgnoreCase("Citibank Na")) {
+			payementForCitibank(model);
 		}
+	}
+
+	private void payementForCitibank(FundTransferModel model) {
+		String [] exprieDate=help.commaSeparater(model.getExpireDate());
+		cardEnterNo(model.getDebitCardNo());
+		expiryDate(model.getExpireDate());
+		CardSecurityCodeTextfield=fluentWaitCodeXpath("//div[@id='CITI_CREDIT_DIV']//input[@name='HtmlCVVNum']", "card security code");
+		clearAndSendKey(CardSecurityCodeTextfield, model.getCardSecurityCode(), "Card security code");
+		submitButton=fluentWaitCodeXpath("//input[@id='submitciti']", "Submit button");
+		clickElement(submitButton, "Submit button");
+		
+		  otpTexfield=fluentWaitCodeXpath("//input[@id='otpcode']",150, "OTP texfield");
+		  clearAndSendKey(otpTexfield, model.getOtp(), "Otp texfield");
+		 nextButton=fluentWaitCodeXpath("//a[@id='next']", "next button");
+		 clickElement(nextButton, "Next");
+	}
+	
+	public void cardEnterNo(String cardNo) {
+		String cardCellxapth;
+		Reporter.log("Card No : "+cardNo, true);
+		int cellNo=0;
+		String [] cardArray=fundTransferCommon.cardNumberArray(cardNo);
+		for(int i=0;i<cardArray.length;i++) {
+			cellNo=i+1;
+			cardCellxapth="//input[@name='cardNum"+cellNo+"']";
+			cardCell=fluentWaitCodeXpath(cardCellxapth,120,"Card cell "+i+1);
+			clearAndSendKey(cardCellxapth,cardArray[i],"Card cell "+i+1);
+		}
+	}
+	
+	public void expiryDate(String expireDate) {
+		String [] expireDateArray=help.commaSeparater(expireDate);
+		monthDropDownStr="//div[@id='CITI_CREDIT_DIV']//select[@name='HtmlMonth']//option[@value='0"+expireDateArray[0]+"']";
+		yearDropDownStr="//div[@id='CITI_CREDIT_DIV']//select[@name='HtmlYear']//option[@value="+expireDateArray[1]+"]";
+		monthDropDown=fluentWaitCodeXpath(monthDropDownStr, expireDateArray[0]+" month");
+		clickElement(monthDropDown,expireDateArray[0]+" month");
+		yearDropDown=fluentWaitCodeXpath(yearDropDownStr, expireDateArray[1]+"Year");
+		clickElement(yearDropDown,expireDateArray[1]+"Year");
 	}
 }

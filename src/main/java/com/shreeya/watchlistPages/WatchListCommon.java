@@ -23,9 +23,13 @@ public class WatchListCommon extends SeleniumCoder{
 	
 	public String pageVerify(WatchListModel model,String step) {
 		driver.navigate().refresh();
+		String createdWatchlistTab=null;
 		if(!(step.contains("Delete"))) {
-		String createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName()+"']";
-		
+		if(model.getPredefineWatchList().equalsIgnoreCase("No")) {	
+		 createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName().toLowerCase()+"']";
+		}else {
+			 createdWatchlistTab="//span[text()='New Watchlist']//following::a[text()='"+model.getWatchListName()+"']";
+		}
 		WebElement createWatchList=fluentWaitCodeXpath(createdWatchlistTab,10,"watchList");	
 		if(createWatchList!=null) {
 		clickElement(createWatchList,model.getWatchListName()+" Watchlist Tab");

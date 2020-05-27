@@ -55,7 +55,7 @@ public class OrderDetail extends SeleniumCoder {
 	private WebElement scriptNameLabel;
 	
 	Help help;
-	
+	String orderPriceStr;
 	
 	public OrderDetail(WebDriver driver) {
 		super(driver);
@@ -63,9 +63,9 @@ public class OrderDetail extends SeleniumCoder {
 		help=new Help();
 	}
 
-	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet) throws InterruptedException {
+	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet,WatchListModel model) throws InterruptedException {
 		Reporter.log("*<==== orderDetailProvider Method Start ====>*",true);
-		
+		String [] verifyScriptArray= help.commaSeparater(model.getVerifyScript());
 		Reporter.log("===<<<<<*** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" ***>>>>>===>",true);
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
@@ -124,15 +124,19 @@ public class OrderDetail extends SeleniumCoder {
 				rejectionFlag=true;
 			}
 		}
-		orderDetailList[2] = fetchTextFromElement(status,"Status");
+		String [] expectedStatusArray= {"open","complete","rejected","cancelled"};
+	    
+		orderDetailList[2] = "Order status : "+help.commpareMultStrWithSinStr(fetchTextFromElement(status,"Status"), expectedStatusArray);
 		}
 		
 		buyAndSell = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']","Buy or Sell");
-		orderDetailList[3] = fetchTextFromElement(buyAndSell,"Buy or Sell");
-		tradingSymbol = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']","Trading symbol");
-		orderDetailList[4] = fetchTextFromElement(tradingSymbol,"Trading symbol");
+		orderDetailList[3] ="Order action : "+fetchTextFromElement(buyAndSell,"Buy or Sell");
+		tradingSymbol =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']","Trading symbol");
+		
+		orderDetailList[4] = "Script Name : "+help.commpareTwoString(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(model.getScriptName()));
 		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']","Product type");
-		orderDetailList[5] = fetchTextFromElement(productType,"Product type");
+		
+		orderDetailList[5] = "Product : "+help.commpareTwoString(fetchTextFromElement(productType,"Product type"),model.getProductType());
 		orderPrice = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']","Order parice");
 		Thread.sleep(2000);
 		try {
@@ -143,37 +147,40 @@ public class OrderDetail extends SeleniumCoder {
 			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 		}
 		orderPrice=fluentWaitCodeXpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[5]/div/span[2]", "Order price");
-		orderDetailList[6] =fetchTextFromElement(orderPrice,"Order Price");
+		orderPriceStr=help.commoRemove(fetchTextFromElement(orderPrice,"Order Price"));
+		orderDetailList[6] ="OrderPrice : "+help.commpareTwoString(orderPriceStr, help.digitConvert(model.getOrderPrice()));
 		try {
 			Thread.sleep(2000);
 			orderTypeLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[3]/div/span[2]", "Order Type");
-		orderDetailList[7] = fetchTextFromElement(orderTypeLable,"Order Type");
+		orderDetailList[7] = "Order type : "+fetchTextFromElement(orderTypeLable,"Order Type");
 		}catch(IndexOutOfBoundsException e) {
 			//clickElement(detailsTab);
 			Thread.sleep(7000);
 			//orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
-			orderDetailList[7] = fetchTextFromElement(orderInfoList.get(2),"Order Type");
+			orderDetailList[7] = "Order type : "+fetchTextFromElement(orderInfoList.get(2),"Order Type");
 		}
 		userIdLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[4]/div/span[2]", "UserId");
-		orderDetailList[8] = fetchTextFromElement(userIdLable,"User Id");
+		orderDetailList[8] = "User id : "+fetchTextFromElement(userIdLable,"User Id");
 
 		exchangeLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[5]/div/span[2]", "Exchange");
-		orderDetailList[9] = fetchTextFromElement(exchangeLable,"Exchange");
+		
+		orderDetailList[9] ="Exchange : "+help.commpareTwoString(fetchTextFromElement(exchangeLable,"Exchange"), model.getExchange());
 
 		validityLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[6]/div/span[2]", "Validity");
-		orderDetailList[10] = fetchTextFromElement(exchangeLable,"Validity");
-		if(orderDetailList[2].equalsIgnoreCase("Rejected")) {
+		//orderDetailList[10] = "Validity : "+fetchTextFromElement(exchangeLable,"Validity");
+		if(orderDetailList[2].contains("rejected")) {
 		/*if(rejectionFlag==true) {*/
 			WebElement rejectReasoneLabel=fluentWaitCodeXpath("//*[@id='accitem']/div/div/div[2]/div/span[2]", "rejection reasone");
-			orderDetailList[14]=fetchTextFromElement(rejectReasoneLabel,"Rejection Reasone");
+			orderDetailList[14]="Reject reason :  "+fetchTextFromElement(rejectReasoneLabel,"Rejection Reasone");
 		}
 		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")))) {
 		try {
-			qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span","Order Qty");
-			orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order Qty");
+			qtyLabel = fluentWaitCodeXpath(driver,"//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]","Order Qty");
+			
+			orderDetailList[12]="Qty : "+help.commpareTwoString(fetchTextFromElement(qtyLabel,"Order Qty"), model.getQty());
 		}catch(TimeoutException e) {
 			qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]","Order qty");
-			orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order qty");
+			orderDetailList[12]="Qty : "+help.commpareTwoString(fetchTextFromElement(qtyLabel,"Order Qty"), model.getQty());
 		}
 		try {
 			Thread.sleep(2000);
@@ -184,7 +191,7 @@ public class OrderDetail extends SeleniumCoder {
 		}
 		WebElement abc = listForNestId.get(0);
 		text = abc.getAttribute("innerHTML");
-		orderDetailList[11] = helper.nestIdProvider(text);
+		//orderDetailList[11] = "Nest id : "+helper.nestIdProvider(text);
 		Reporter.log("Nest id : "+orderDetailList[11], true);
 		}else {
 			WebElement nestIdLabel=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span","NestId");
@@ -200,7 +207,7 @@ public class OrderDetail extends SeleniumCoder {
 				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]","Order Qty");
 			 }
 			
-			 orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order Qty");
+			 orderDetailList[12]="Qty : "+fetchTextFromElement(qtyLabel,"Order Qty");
 
 			if(!orderDetailList[2].equalsIgnoreCase("Rejected")) {
 			WebElement executedSharesLable=fluentWaitCodeXpath(driver, "//*[@id=\"ordertree\"]/ul/li[2]/span[3]/span[2]/span","executed Shares Lable");
@@ -295,6 +302,14 @@ public class OrderDetail extends SeleniumCoder {
 		orderDetailList.add("Product type : "+help.commpareTwoString(fetchTextFromElement(productType), model.getProductType()));
 		
 		return orderDetailList;
+	}
+	
+	public String scriptName(String scriptName) {
+		
+		if(scriptName.equalsIgnoreCase("HDFC Bank Ltd")) {
+			scriptName="Hdfc Bank Ltd.";
+		}
+		return scriptName;
 	}
 
 }

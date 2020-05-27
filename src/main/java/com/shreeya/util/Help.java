@@ -146,6 +146,39 @@ public class Help {
 		return result;
 	}
 	
+	public String digitConvert(String number) {
+		if(number.contains(".")) {
+			String [] numberArray=number.split("\\.");
+			char [] digtiArray=numberArray[1].toCharArray();
+			if(digtiArray.length==1) {
+				number=number+"0";
+			}
+		}else {
+			number=number+".00";
+		}
+		number=commoRemove(number);
+		return number;
+	}
 	
-
+	public String commoRemove(String number) {
+		String ans="";
+		char [] numberArray=number.toCharArray();
+		for(char a:numberArray) {
+			if(a==',') {
+				continue;
+			}else {
+				ans=ans+a;
+			}
+		}
+		
+		Reporter.log("Ans : "+ans, true);
+		return ans;
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		String number="2,015.00";
+		
+	}
 }
