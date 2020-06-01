@@ -222,8 +222,9 @@ public class LoginPage extends SeleniumCoder {
 		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a",5,"Close Button (x)");
 		if(closeButton!=null)
 		clickElement(closeButton, "Close order status popup");
-		Thread.sleep(3000);
+		staticWait(3000);
 		driver.navigate().refresh();
+		staticWait(200);
 		logoutOption = fluentWaitCodeXpath(driver, "//*[@id='caUser']/span[1]","Logout option");
 		if(logoutOption!=null) {
 		clickElement(logoutOption, "Logout option");

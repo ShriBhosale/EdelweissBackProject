@@ -17,6 +17,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.shreeya.MyTestLauncher;
+import com.shreeya.fundtransferpages.FundTransferPage;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.TestDataModel;
 import com.shreeya.model.WatchListModel;
@@ -29,8 +30,11 @@ public class ExtendReporter {
 	public  ExtentTest test = null;
 	HelperCode helperObject;
 	private String reportPathString;
+	List<String> detailList;
 	static int count=0;
 	int timestamp;
+	
+	Help help;
 	
 	public static String abc="";
 	
@@ -51,7 +55,7 @@ public class ExtendReporter {
 		report = new ExtentReports();
 		htmlextent.config().setReportName(scenario);
 		report.attachReporter(htmlextent);
-		
+		help=new Help();
 	}
 	
 	public ExtendReporter() {
@@ -151,13 +155,18 @@ public class ExtendReporter {
 		 return screenshotPath;
 	}
 	
-	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {
+	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo){
 		Reporter.log("Capture Screenshot",true);
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
 		String dest =folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".png";
 		File target = new File(dest);
-		FileUtils.copyFile(src, target);
+		try {
+			FileUtils.copyFile(src, target);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return dest;
 	}
 
@@ -242,6 +251,30 @@ public class ExtendReporter {
 		test.log(Status.FAIL, msg);
 	}
 	
+	public void print(List<String> printList) {
+		help=new Help();
+		int i=-1;
+		for(String msg:printList) {
+			i++;
+		String [] array=help.separater(msg, "-");
+		if(msg.contains("-")) {
+			if(array[1].equalsIgnoreCase("PASS")) {
+				test.log(Status.PASS, array[0]);
+			}else {
+				test.log(Status.FAIL, array[0]);
+			}
+		}else if(msg.contains("@@>")) {
+			Reporter.log(msg, true);
+			test.log(Status.INFO, "<b>==="+msg+"===</b>");
+		}else if(msg.contains("WorkingE2")) {
+			help.screenshotFullPath(msg,test);
+		}
+		else {
+			test.log(Status.INFO, array[0]);
+		}
+		}
+	}
+	
 	public void abnormalErrorHandling(WebDriver driver) throws IOException{
 		Reporter.log("Abnormal Error Handly",true);
 		HelperCode helperCode=new HelperCode();
@@ -276,16 +309,20 @@ public class ExtendReporter {
 		
 		
 	}
-	public String reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO,String errorMsg) throws IOException{
+	public String reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO,String errorMsg){
+		detailList=FundTransferPage.detailList;
 		Reporter.log(moduleName,true);
 		String screenshotPath;
 		ExtendReporter report=new  ExtendReporter(folderArray[1],moduleName,1); 
-		report.testCreation(moduleName);
-		report.errroMsg(moduleName+" this executed....");
+		test=report.testCreation(moduleName);
+		print(detailList);
+		//report.errroMsg(moduleName+" this executed....");
+		if(!errorMsg.equalsIgnoreCase("no")) {
 		report.errorFail(errorMsg);
 		report.errroMsg("ReferNo from execution file : "+referNO);
+		}
 		if(!moduleName.equalsIgnoreCase("FundTransfer"))
-		 screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);
+		 screenshotPath=report.addScreenshotMethod(driver,folderArray[2],"AbnormalTermination",1);
 		report.logFlush();
 		
 		Reporter.log("Driver close",true);

@@ -11,7 +11,7 @@ import org.testng.Reporter;
 import com.shreeya.model.WatchListModel;
 import com.shreeya.orderdetailpages.OrderDetail;
 import com.shreeya.util.ConfigReader;
-import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.Help;
 import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.SeleniumCoder;
 
@@ -36,6 +36,8 @@ public class PredefineWatchList extends SeleniumCoder{
 	private WebElement hightabel;
 	private WebElement exchangeLabel;
 	private WebElement closeButton;
+	private WebElement tradingSymbolLabel;
+	
 	
 	String lastTradePriceText;
 	String changeText;
@@ -44,14 +46,17 @@ public class PredefineWatchList extends SeleniumCoder{
 	String askPriceText;
 	String lowText;
 	String hightText;
+	String tradingSymbolStr;
+	String tradingSymbolXpath;
 	String scriptName="ScriptName:PredefineWatchList";
 	String exchange;
-	
+	String [] predefineWatchListArray;
 	List<String> predefineWatchListDetail;
 	
 	OrderDetail orderDetail;
 	ConfigReader configReader;
 	WatchListPage watchListPage;
+	Help help;
 	String predifineWatchMsg;
 	String errorMsg;
 	
@@ -61,6 +66,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		super(driver);
 		this.driver=driver;
 		orderDetail=new OrderDetail(driver);
+		help=new Help();
 		configReader=new ConfigReader();
 		watchListPage=new WatchListPage();
 		predefineWatchListDetail=new ArrayList<String>();
@@ -152,7 +158,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	public List<String> trading(WatchListModel model)  {
 		String screenshot = null;
 		predefineWatchListDetail=new ArrayList<String>();
-		//clickOnPredefineWatchList(model);
+		clickOnPredefineWatchList(model);
 		String scriptName=model.getScriptName().trim().replace(" ", "  ");
 		String tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+model.getScriptName()+" ']";
 		try {
@@ -222,7 +228,53 @@ public class PredefineWatchList extends SeleniumCoder{
 		return numberScript;
 	}
 	
+	public void checkExchangeInPreWatchList(String watchListName,int noScript) {
+		Reporter.log("=============> checkExchangeInPreWatchList <============");
+		
+		boolean matchExchage=true;
+		String exchange = null;
+		if(watchListName.equalsIgnoreCase("Nifty 50")) {
+			exchange="NSE";
+		}else if(watchListName.equalsIgnoreCase("Sensex")){
+			exchange="BSE";
+		}
+		predefineWatchListDetail.add("============@@> Verify "+watchListName+" Contain "+exchange+"  <@@============");
+		for(int i=2;i<noScript+2;i++) {
+			String exchangeXapth="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a/span/small";
+			WebElement exchangeLabel=fluentWaitCodeXpath(exchangeXapth, "Exchange Label");
+			String exchangeStr=fetchTextFromElement(exchangeLabel);
+			tradingSymbolXpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
+			tradingSymbolLabel=fluentWaitCodeXpath(tradingSymbolXpath, "Trading symbol");
+			if(tradingSymbolLabel==null) {
+				int unMatchScriptNo=i-2;
+				predefineWatchListDetail.add("Script "+unMatchScriptNo+" no not found."+watchListName+" does't contain "+noScript+" script");
+			}
+			if(!exchangeStr.equalsIgnoreCase(exchange)) {
+				
+				tradingSymbolXpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
+				tradingSymbolLabel=fluentWaitCodeXpath(tradingSymbolXpath, "Trading symbol");
+				tradingSymbolStr=elementsTextFilter(fetchTextFromElement(tradingSymbolLabel));
+				
+				predefineWatchListDetail.add(exchange+" trading symbol : "+tradingSymbolStr+"-FAIL");
+				predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver,"UnmatchExchangeInPreWatch"));
+				Reporter.log("Unmatch exchange script name  : "+tradingSymbolStr, true);
+				matchExchage=false;
+				break;
+			}
+			
+			
+		}
+		if(matchExchage) {
+			predefineWatchListDetail.add(watchListName+" contain "+noScript+" "+exchange+" exchange script...-PASS");
+		}
+	}
+	
 	public List<String> clickAnyOption(WatchListModel model) {
+		predefineWatchListArray=help.commaSeparater(model.getWatchListName());
+		
+		for(String predefineWatchList:predefineWatchListArray) {
+			
+			model.setWatchListName(predefineWatchList);
 		predefineWatchListDetail.add("PredefineWatchList Name : "+model.getWatchListName());
 		clickOnPredefineWatchList(model);
 		int totalScript=compareNoScriptAndNoScriptLable();
@@ -233,7 +285,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			String xpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 			WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
 			 scriptName=fetchTextFromElement(scriptLable);
-			if(scriptName.contains("NESTLEIND")){
+			if(i==3){
 				noScript=i;
 				break;
 			}
@@ -246,37 +298,52 @@ public class PredefineWatchList extends SeleniumCoder{
 		predefineWatchListDetail.add("Exchange : "+fetchTextFromElement(exchangeLabel));
 		
 		lastTradePriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[2]/span", "Last trade price");
-		lastTradePriceText=fetchTextFromElement(lastTradePriceLabel);
-		predefineWatchListDetail.add("Last Traded Price : "+lastTradePriceText);
+		if(lastTradePriceLabel!=null) {
+			lastTradePriceText=fetchTextFromElement(lastTradePriceLabel);
+			predefineWatchListDetail.add("Last Traded Price : "+lastTradePriceText);
+		}
 		
 		changeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[3]/span", "change");
-		changeText=fetchTextFromElement(changeLabel);
-		predefineWatchListDetail.add("Change : "+changeText);
+		if(changeLabel!=null) {
+			changeText=fetchTextFromElement(changeLabel);
+			predefineWatchListDetail.add("Change : "+changeText);
+		}
 		
 		volumeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[4]/span", "volume");
-		volumeText=fetchTextFromElement(volumeLabel);
-		predefineWatchListDetail.add("Volume : "+volumeText);
-		
+		if(volumeLabel!=null) {
+			volumeText=fetchTextFromElement(volumeLabel);
+			predefineWatchListDetail.add("Volume : "+volumeText);
+		}
 		bidPriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[5]/span", "Bid Price");
-		bidPriceText=fetchTextFromElement(bidPriceLabel);
-		predefineWatchListDetail.add("Bid Price : "+bidPriceText);
-		
+		if(bidPriceLabel!=null) {
+			bidPriceText=fetchTextFromElement(bidPriceLabel);
+			predefineWatchListDetail.add("Bid Price : "+bidPriceText);
+		}
 		askPriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[6]/span", "Ask Price");
-		askPriceText=fetchTextFromElement(askPriceLabel);
-		predefineWatchListDetail.add("ask Price : "+askPriceText);
+		if(askPriceLabel!=null) {
+			askPriceText=fetchTextFromElement(askPriceLabel);
+			predefineWatchListDetail.add("ask Price : "+askPriceText);
+		}
 		
 		lowLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[7]/span", "Low");
-		lowText=fetchTextFromElement(lowLabel);
-		predefineWatchListDetail.add("Low : "+lowText);
+		if(lowLabel!=null) {
+			lowText=fetchTextFromElement(lowLabel);
+			predefineWatchListDetail.add("Low : "+lowText);
+		}
 		
 		hightabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[8]/span", "hight");
-		hightText=fetchTextFromElement(hightabel);
-		predefineWatchListDetail.add("hight : "+hightText);
-		
+		if(hightabel!=null) {
+			hightText=fetchTextFromElement(hightabel);
+			predefineWatchListDetail.add("hight : "+hightText);
+		}
 		String xpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[1]/a";
 		WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
 		//clickElement(xpath, "Script link");
 		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "WatchList"));
+		
+		checkExchangeInPreWatchList(model.getWatchListName(),totalScript);
+		}
+		model.setWatchListName(predefineWatchListArray[0]);
 		return predefineWatchListDetail;
 	}
 	

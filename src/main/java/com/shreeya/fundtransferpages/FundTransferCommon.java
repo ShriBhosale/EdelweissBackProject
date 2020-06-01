@@ -3,6 +3,8 @@ package com.shreeya.fundtransferpages;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.testng.Reporter;
+
 public class FundTransferCommon {
 
 	public String [] amountEnter(String amount) {
@@ -82,6 +84,25 @@ public class FundTransferCommon {
 		}
 		
 		return numberArray;
+	}
+	
+	public String removeHtmlTextCheckText(String text,String checkText) {
+		String msg="";
+		String result="FAIL";
+		if(text.contains("\n"))
+			text=text.replace("\n", "").trim();
+		String [] textArray=text.split("<");
+		 //msg=textArray[0];
+		for(String textStr:textArray) {
+			if(textStr.contains(checkText)) {
+				result="PASS";
+			}
+		 textArray=textStr.trim().split(">");
+		 Reporter.log(textStr, true);
+		 msg=msg+" "+textArray[textArray.length-1];
+		}
+		Reporter.log("removeHtmlText msg : "+msg+"-"+result, true);
+		return msg+"-"+result;
 	}
 	
 	}

@@ -12,7 +12,7 @@ import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.Scroll;
 import com.shreeya.util.SeleniumCoder;
 
-public class WatchListCodePage extends SeleniumCoder {
+public class WatchListQuotePage extends SeleniumCoder {
 
 	WebDriver driver;
 	
@@ -49,8 +49,10 @@ public class WatchListCodePage extends SeleniumCoder {
 	String [] scriptArray;
 
 	private String[] verifyScriptArray;
+
+	private String exchangeStr;
 	
-	public WatchListCodePage(WebDriver driver) {
+	public WatchListQuotePage(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		scroll=new Scroll(driver);
@@ -76,12 +78,19 @@ public class WatchListCodePage extends SeleniumCoder {
 		else
 			exchangeLabelCode=fluentWaitCodeXpath("//div[@class='dropdown exchangeDD qtDD']//button//span", "exchange label");
 		
-		codePageDetailList.add("Exchange :  "+help.commpareTwoString(fetchTextFromElement(exchangeLabelCode), model.getExchange()));
+		if(model.getExchange().equalsIgnoreCase("NFO")||model.getExchange().equalsIgnoreCase("FNO")) {
+			exchangeStr="F&Q";
+		}else {
+			exchangeStr=model.getExchange();
+		}
+		codePageDetailList.add("Exchange :  "+help.commpareTwoString(fetchTextFromElement(exchangeLabelCode), exchangeStr));
 		
 		
-		ltpLabel=fluentWaitCodeXpath("//div[@class='realVals']//label[@class='ltp']", "LTP no");
-		String ltp=fetchTextFromElement(ltpLabel);
-		codePageDetailList.add("LTP : "+help.removeHtmlCode(ltp));
+		/*
+		 * ltpLabel=fluentWaitCodeXpath("//div[@class='realVals']//label[@class='ltp']",
+		 * "LTP no"); String ltp=fetchTextFromElement(ltpLabel);
+		 * codePageDetailList.add("LTP : "+help.removeHtmlCode(ltp));
+		 */
 		codePageDetailList.add(ScreenshortProvider.captureScreen(driver, "CodePageScreenshort_1"));
 		
 		if(model.getExchange().contains("CDS")||model.getExchange().contains("NFO")||model.getExchange().contains("FNO")) {

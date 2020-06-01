@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.PageRanges;
+
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -51,6 +53,7 @@ public class WatchListExecution extends SeleniumCoder{
 			hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
 		}
 		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
+		pageRefresh();
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
 			List<String> watchListDetail=new ArrayList<String>();

@@ -258,13 +258,27 @@ public class ApacheCode {
 	
 	}
 	
-	 public void outputFileWriterHeader(String folderPathString,String outputFileName,int counter) throws IOException {
+	 public void outputFileWriterHeader(String folderPathString,String outputFileName,int counter){
 		// int counter=15;
 		 Reporter.log("Start Write in output excel file",true);
-		 InputStream inp = new FileInputStream(folderPathString+"/"+outputFileName+".xlsx");
+		 InputStream inp = null;
+		try {
+			inp = new FileInputStream(folderPathString+"/"+outputFileName+".xlsx");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			String[] headerArray = {"Rejection Reason",
 					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
-			wb= WorkbookFactory.create(inp);
+			try {
+				wb= WorkbookFactory.create(inp);
+			} catch (EncryptedDocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 			 outputsheet = wb.getSheetAt(0);
 			Row row = outputsheet.getRow(0);
@@ -282,7 +296,7 @@ public class ApacheCode {
 			//return fileOut;
 	 }
 	 
-	 public void outputFileWriter(String [] orderDetailArray,int rowNo,int counter) throws IOException {
+	 public void outputFileWriter(String [] orderDetailArray,int rowNo,int counter){
 		 try {
 			
 			Thread.sleep(2000);
@@ -326,11 +340,19 @@ public class ApacheCode {
 			}
 			
 	 }
-	 public void outputExcelFileClose(String folderPathString) throws IOException {
-			fileOut = new FileOutputStream(folderPathString+"/OutputFile.xlsx");
+	 public void outputExcelFileClose(String folderPathString) {
+			try {
+				fileOut = new FileOutputStream(folderPathString+"/OutputFile.xlsx");
+				wb.write(fileOut);
+				fileOut.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
-			wb.write(fileOut);
-			fileOut.close();
+			
 		}
 
 }

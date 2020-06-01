@@ -66,7 +66,7 @@ public class WatchListStepVerify extends SeleniumCoder {
 			tradingWithWatchlist(errorList,count,model);
 			break;
 		case 3:
-			verifyCodePage(errorList,count,model);
+			verifyQuotePage(errorList,count,model);
 			break;
 		case 4:
 			verifyDuplicateScriptWatchList(errorList,count,model);
@@ -74,14 +74,20 @@ public class WatchListStepVerify extends SeleniumCoder {
 		case 5:
 			verifyDeleteScriptWatchList(errorList,count,model);
 			break;
-		
+		case 6:
+			watchListTextfield(errorList);
 		default:
 			break;
 		}
 	}
 	
-	public void verifyCodePage(List<String> errorList, int count2, WatchListModel model) {
-		verfiyMap.put("CodePage_3", errorList);
+	private void watchListTextfield(List<String> errorList) {
+		
+		verfiyMap.put("WatchListTextfield__2", errorList);
+	}
+
+	public void verifyQuotePage(List<String> errorList, int count2, WatchListModel model) {
+		verfiyMap.put("QuotePage_3", errorList);
 	}
 	
 	private void verifyCodePage1(List<String> errorList, int count2, WatchListModel model) {
@@ -285,17 +291,17 @@ public class WatchListStepVerify extends SeleniumCoder {
 	public void predefineWatchListVerify(WatchListModel model,String verifyNo,List<String> predefindWatchListDetailList) {
 		count++;
 		switch(verifyNo) {
-		case "6":
+		case "7":
 			simpleClickPredefineWatchList(model,predefindWatchListDetailList);
 			break;
-		case "7":
+		case "8":
 			tradingWithPredefineWatchList(model, predefindWatchListDetailList);
 			break;
 		}
 	}
 
 	private void simpleClickPredefineWatchList(WatchListModel model,List<String> predefindWatchListDetailList) {
-		verfiyMap.put("Click on "+model.getWatchListName()+"_"+count, predefindWatchListDetailList);
+		verfiyMap.put("Click on PredefineWatchList"+"_"+count, predefindWatchListDetailList);
 		
 	}
 	private void tradingWithPredefineWatchList(WatchListModel model,List<String> predefindWatchListDetailList) {

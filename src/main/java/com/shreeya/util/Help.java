@@ -1,6 +1,11 @@
 package com.shreeya.util;
 
+import java.io.IOException;
+import java.util.Random;
+
 import org.testng.Reporter;
+
+import com.aventstack.extentreports.ExtentTest;
 
 public class Help {
 
@@ -175,10 +180,72 @@ public class Help {
 		return ans;
 	}
 	
+	public String randomNo() {
+		Random rnd = new Random();
+	    int number = rnd.nextInt(999999);
+
+	    // this will convert any number sequence into 6 character.
+	    return String.format("%06d", number);
+		
+	}
+	
+	public String screenshotFullPath(String screenshotPath,ExtentTest test) {
+		
+		ConfigReader reader=new ConfigReader();
+		String path=reader.configReader("Result");
+	
+		 screenshotPath=screenshotPath.replace("../WorkingE2",path);
+		  screenshotPath=screenshotPath.replace("/", "//");
+		Reporter.log("Screenshot : "+screenshotPath, true);
+		try {
+			
+			 test.addScreenCaptureFromPath(screenshotPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return screenshotPath;
+	}
 	
 	
 	public static void main(String[] args) {
-		String number="2,015.00";
+		}
+
+	public String addTwoStringNo(String number1, String number2) {
+		int ans=0;
+		try {
+		int no1=Integer.valueOf(number1);
+		int no2=Integer.valueOf(number2);
+		 ans=no1+no2;
+		 Reporter.log("Number 1 : "+no1+"\nNumber 2 : "+no2+"\nAns : "+ans,true);
+		}catch (Exception e) {
+			StackTraceElement [] locaString=e.getStackTrace();
+			Reporter.log("<b>Exception Name : </b>" + e.toString(),true);
+			Reporter.log("<b>Exception location : </b>", true);
+			for(StackTraceElement st:locaString) {
+				if(st.toString().contains("com.shreeya")) {
+					Reporter.log("<br>"+st.toString(), true);
+				}
+			}
+		}
+		return String.valueOf(ans);
+	}
+
+	public String removeHtmlText(String fetchTextFromElement) {
+		String ans="";
+		if(fetchTextFromElement.contains("\n")) {
+			fetchTextFromElement=fetchTextFromElement.replace("\n", "");
+		}
+		String [] elementArray=fetchTextFromElement.split(">");
 		
+		String [] textArray=elementArray[0].split("<");
+		ans=ans+textArray[0].trim();
+		textArray=elementArray[2].split("<");
+		ans=ans+" "+textArray[0].trim();
+		textArray=elementArray[6].split("<");
+		ans=ans+" "+textArray[0].trim();
+		
+		Reporter.log(ans, true);
+		return ans;
 	}
 }

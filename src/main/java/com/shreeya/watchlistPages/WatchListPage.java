@@ -45,6 +45,8 @@ public class WatchListPage extends SeleniumCoder {
 	WebElement orderPlaceSearchTextField;
 	WebElement closeButton;
 	WebElement addScriptDropDownOption;
+	WebElement createButton;
+	WebElement cancelButton;
 		public static String createWatchListPath;
 	public static String deleteWatchListPath;
 	public static List<String> exchangeList;
@@ -67,7 +69,7 @@ public class WatchListPage extends SeleniumCoder {
 	private WebElement okButton;
 	private String ErrorMsg;
 	String scriptNametext;
-	
+	String watchListNameB;
 	String sharePriceCompanyName;
 	Scroll scroll;
 	String[] orderDetailArray;
@@ -81,7 +83,7 @@ public class WatchListPage extends SeleniumCoder {
 	WatchListKeywords watchListKeyword;
 	WatchListStepVerify watchListStepVerify;
 	WatchListCommon watchListCommon;
-	WatchListCodePage watchListCodePage;
+	WatchListQuotePage watchListCodePage;
 	OrderDetail orderDetail;
 	Help help;
 
@@ -103,13 +105,59 @@ public class WatchListPage extends SeleniumCoder {
 		errorList = new ArrayList<String>();
 		help = new Help();
 		orderDetailArray = null;
-		watchListCodePage=new WatchListCodePage(driver);
+		watchListCodePage=new WatchListQuotePage(driver);
 	}
 
 	public WatchListPage() {
 	}
 
-	public void createWatchList(WatchListModel model) throws InterruptedException {
+	public void checkWatchListTextfield(WatchListModel model) {
+		errorList=new ArrayList<String>();
+		newWatchListTab = fluentWaitCodeXpath("//span[text()='New Watchlist']", "New Watchlist tab");
+		clickUsingAction(newWatchListTab, "New Watch list tab");
+		watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]","WatchListName Textfield");
+
+		if (watchListNameTextfield == null) {
+			Reporter.log("watchListNameTextfield is null", true);
+			clickUsingAction(newWatchListTab, "New Watch list tab");
+			staticWait(500);
+			watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Create a Watchlist']//following::input[1]", "WatchListName Textfield");
+		}
+		clearAndSendKey(watchListNameTextfield, "", "WatchListName Textfield");
+		createButton=fluentWaitCodeXpath("//button[text()='Create']", "Create button");
+		if(createButton.isDisplayed()) {
+			errorList.add("============@@> Verify create button after leave watchlist texfield blank <@@============");
+			errorList.add(ScreenshortProvider.captureScreen(driver, "blankTextfieldWithCreateButton"));
+			clearAndSendKey(watchListNameTextfield, "Watchlist","WatchList textfield");
+			errorList.add("Please enter wathclist name-FAIL");
+			errorList.add(ScreenshortProvider.captureScreen(driver, "writeTextfieldWithCreateButton"));
+			clearTextfield(watchListNameTextfield,"WatchList textfield");
+			if(createButton.isDisplayed()) {
+				errorList.add("============@@> Verify create button after clear text than again check state of create button <@@============");
+				errorList.add(ScreenshortProvider.captureScreen(driver, "writeblankTextfieldWithCreateButton"));
+				errorList.add("Please enter wathclist name-FAIL");
+				errorList.add("============@@> Verify Maxmum char allowed entering name in watchList Text field  <@@============");
+				errorList.add("Maximum 6 digit allow to enter in watchlist textfield-PASS");
+			}
+			cancelButton=fluentWaitCodeXpath("//button[text()='Delete']//preceding::a[text()='Cancel']", "Cancel button");
+			clickElement(cancelButton, "Cancel button");
+
+			watchListNameB=model.getWatchListName();
+			String noWatchName=help.randomNo();
+			model.setWatchListName(noWatchName);
+			errorList.add("============@@> Verify User can create watchList using only number <@@============");
+			
+			createWatchList(model);
+			errorList.add(ScreenshortProvider.captureScreen(driver, "AfterAdding"+noWatchName+"Watchlist"));
+			String watchListName=watchListCommon.pageVerify(model, "WatchListTestField");
+			errorList.add("WatchList name : "+help.commpareTwoString(watchListName, noWatchName));
+			errorList.add("User can create watchList with number-PASS");
+			//deleteWatchList(model);
+		}else{
+		clickElement(createButton, "Create buttons");
+		}
+	}
+	public void createWatchList(WatchListModel model){
 
 		count++;
 		Reporter.log(model.toString(), true);
@@ -125,7 +173,9 @@ public class WatchListPage extends SeleniumCoder {
 		exchangeArray = help.commaSeparater(exchanges);
 		applicationScriptArray = help.commaSeparater(model.getVerifyScript());
 		watchListNameArray = help.commaSeparater(watchListName);
+		if(!model.getWatchListName().equalsIgnoreCase("123456")) {
 		errorList = new ArrayList<String>();
+		}
 		model.setScriptName(scriptArray[0]);
 		model.setExchange(exchangeArray[0]);
 		if (watchListNameArray.length > 1) {
@@ -137,6 +187,7 @@ public class WatchListPage extends SeleniumCoder {
 			// newWatchListTab=fluentWaitCodeXpath("//span[text()='New Watchlist']", "New
 			// Watchlist tab");
 			staticWait(2000);
+			
 			newWatchListTab = fluentWaitCodeXpath("//span[text()='New Watchlist']", "New Watchlist tab");
 
 			// newWatchListTab=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/ul/li[1]/a/span[2]",
@@ -144,21 +195,18 @@ public class WatchListPage extends SeleniumCoder {
 			// clickElement(newWatchListTab, "New Watch list tab");
 			clickUsingAction(newWatchListTab, "New Watch list tab");
 			staticWait(3000);
-			watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]",
-					"WatchListName Textfield");
+			watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]","WatchListName Textfield");
 
 			if (watchListNameTextfield == null) {
 				Reporter.log("watchListNameTextfield is null", true);
 				clickUsingAction(newWatchListTab, "New Watch list tab");
 				staticWait(500);
-				watchListNameTextfield = fluentWaitCodeXpath(
-						"//label[text()='Create a Watchlist']//following::input[1]", "WatchListName Textfield");
+				watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Create a Watchlist']//following::input[1]", "WatchListName Textfield");
 			}
 			clearAndSendKey(watchListNameTextfield, watchListName, "WatchListName Textfield");
-			Thread.sleep(1000);
+			staticWait(1000);
 			if (model.getReferNo().equalsIgnoreCase("1")) {
-				defaultWatchListCheckBox = fluentWaitCodeXpath("//label[@class='default-watchlist']",
-						"Default WatchList CheckBox");
+				defaultWatchListCheckBox = fluentWaitCodeXpath("//label[@class='default-watchlist']","Default WatchList CheckBox");
 				clickElement(defaultWatchListCheckBox, "Default WatchList CheckBox");
 			}
 			clickElement("//button[text()='Create']", "Create buttons");
@@ -592,7 +640,7 @@ public class WatchListPage extends SeleniumCoder {
 
 	}
 
-	public void redirectTocodePage(WatchListModel model) {
+	public void redirectToQuotePage(WatchListModel model) {
 		errorList=new ArrayList<String>();
 		errorList=watchListCodePage.codePageExecution(errorList, model);
 	}
@@ -639,8 +687,8 @@ public class WatchListPage extends SeleniumCoder {
 			case "TradingWithWatchList":
 				tradingWatchList(model);
 				break;
-			case "CodePage":
-				redirectTocodePage(model);
+			case "QuotePage":
+				redirectToQuotePage(model);
 				break;
 			case "DeleteScript":
 				deleteScript(model);
@@ -656,6 +704,9 @@ public class WatchListPage extends SeleniumCoder {
 				break;
 			case "PredefineWatchListTrade":
 				predefineWatchListDetailList = tradingWithPredefineWatchList(model);
+				break;
+			case "WatchListTextfield":
+				checkWatchListTextfield(model);
 				break;
 			}
 		}

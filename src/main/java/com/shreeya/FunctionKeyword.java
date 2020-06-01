@@ -20,6 +20,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.shreeya.fundtransferpages.FundTransferBankExecution;
 import com.shreeya.fundtransferpages.FundTransferExecution;
 import com.shreeya.model.LatestLoginModel;
 import com.shreeya.model.LoginModel;

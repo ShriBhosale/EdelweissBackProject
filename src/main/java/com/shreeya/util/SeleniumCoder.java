@@ -1108,4 +1108,51 @@ public class SeleniumCoder extends ExceptionHandler {
 		String currentUrl=driver.getCurrentUrl();
 		return currentUrl;
 	}
+	
+	public void clearTextfield(WebElement element,String elementName) {
+		
+		element.clear();
+		Reporter.log(elementName+" clear textfield", true);
+		
+	}
+	
+	public void pageRefresh() {
+		driver.navigate().refresh();
+	}
+	
+	public String getValueFromAttribute(WebElement element,String attributeName,String elementName) {
+		
+		String elementStr=element.getAttribute(attributeName);
+		if(elementStr==null) {
+			elementStr=element.getText();
+		}
+		Reporter.log("Element Name : "+elementName+" Attribute name : "+attributeName+" Element str : "+elementStr);
+		return elementStr;
+	}
+	
+	public String removeHtmlText(String text) {
+		String msg="";
+		if(text.contains("\n"))
+			text=text.replace("\n", "").trim();
+		String [] textArray=text.split("<");
+		 //msg=textArray[0];
+		for(String textStr:textArray) {
+		 textArray=textStr.trim().split(">");
+		 Reporter.log(textStr, true);
+		 msg=msg+" "+textArray[textArray.length-1];
+		}
+		Reporter.log("removeHtmlText msg : "+msg, true);
+		return msg;
+	}
+	
+	public WebElement elementLocateBytag(String tagName) {
+		staticWait(200);
+		WebElement element=driver.findElement(By.tagName(tagName));
+		return element;
+	}
+	
+	public void redirectGivenUrl(String url) {
+		Reporter.log("Hit this Url : "+url);
+		driver.get(url);
+	}
 }
