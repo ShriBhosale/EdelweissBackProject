@@ -1,6 +1,7 @@
 package com.shreeya.util;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Random;
 
 import org.testng.Reporter;
@@ -10,10 +11,13 @@ import com.aventstack.extentreports.ExtentTest;
 public class Help {
 
 	public String [] commaSeparater(String scriptName) {
+		Reporter.log("== commaSeparater ===", true);
 		String [] scriptArray= {scriptName};
 		if(scriptName.contains(",")) {
 			scriptArray=scriptName.split(",");
 		}
+		for(String text:scriptArray)
+			Reporter.log(text, true);
 		return scriptArray;
 	}
 	
@@ -208,9 +212,7 @@ public class Help {
 	}
 	
 	
-	public static void main(String[] args) {
-		}
-
+	
 	public String addTwoStringNo(String number1, String number2) {
 		int ans=0;
 		try {
@@ -248,4 +250,84 @@ public class Help {
 		Reporter.log(ans, true);
 		return ans;
 	}
+	
+	public String removeSpanHtmlTag(String fetchTextFromElement) {
+		String ans="";
+		if(fetchTextFromElement.contains("\n")) {
+			fetchTextFromElement=fetchTextFromElement.replace("\n", "");
+		}
+		String [] elementArray=fetchTextFromElement.split(">");
+		for(String elementText:elementArray) {
+			if(elementText.contains("</")) {
+				String [] eleArray=elementText.split("</");
+				if(!ans.equalsIgnoreCase("")) {
+					ans=ans+" : ";
+				}
+				ans=ans+eleArray[0];
+			}
+		}
+		Reporter.log("ans : "+ans, true);
+		return ans;
+	}
+	
+	public String separeComparePrintApp(String applicationStr,String testDataStr) {
+		Reporter.log("===> separeComparePrintApp <===", true);
+		String result="";
+	   String [] colonArray=applicationStr.split(":");
+		if(colonArray[1].contains("₹")) {
+			colonArray[1]=colonArray[1].replace("₹", "");
+		}
+		Reporter.log("Application str: "+applicationStr,true);
+		Reporter.log("colonArray[1] : "+colonArray[1].trim()+"\nTestData : "+testDataStr, true);
+		if(colonArray[1].trim().equalsIgnoreCase(testDataStr)) {
+			result=applicationStr+"-PASS";
+		}else {
+			result=applicationStr+"-FAIL";
+		}
+		Reporter.log("Result : "+result, true);
+		return result;
+	}
+	
+	public String bigDataAddition(String bigNo,String noWantToAdd) {
+		Reporter.log("===> bigDataAddition <===", true);
+		Reporter.log("bigNo : "+bigNo+"\nnoWantToAdd : "+noWantToAdd, true);
+		String number="1,00,00,04,449.00";
+		String no1="0";
+		if(bigNo.contains(",")) 
+		 no1=bigNo.replace(",", "");
+		else
+			no1=bigNo;
+		BigDecimal bd1 =new BigDecimal(no1); 
+		BigDecimal bd2 =new BigDecimal(noWantToAdd);
+		System.out.println("no1 : "+bd1);
+		
+		Reporter.log("Addition : "+bd1.add(bd2),true);
+		return bd1.add(bd2).toEngineeringString();
+	}
+	
+	public String compareBigNo(String applicationNo,String testDataNo,String ansStr) {
+		Reporter.log("=== compareBigNo ===", true);
+		String result;
+		if(applicationNo.contains(",")) 
+			applicationNo=applicationNo.replace(",", "");
+		if(testDataNo.contains(",")) 
+			testDataNo=testDataNo.replace(",", "");
+		if(applicationNo.equalsIgnoreCase(testDataNo)) {
+			result=ansStr+"-PASS";
+			
+		 }else {
+			result=ansStr+"-FAIL";
+		 }
+		Reporter.log("applicationNo : "+applicationNo+"\ntestDataNo : "+testDataNo+"\nansStr : "+ansStr,true);
+		Reporter.log("Result : "+result);
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		Help h=new Help();
+		String a=h.bigDataAddition("1,00,00,04,449.00", "11");
+		System.out.println("a : "+a);
+	}
+
+	
 }

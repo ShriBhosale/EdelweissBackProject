@@ -78,6 +78,7 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		Reporter.log("===> checkGuidlinText <===", true);
 		detailList.add("@@> Verify guiding text is present for Upi ID text field. <@@");
 		locateUPITextfield();
+		upiTextfield=fluentWaitCodeXpath("//input[@id='upiIdTxt']", "UPI texfield");
 		detailList.add("Guid text : "+help.commpareTwoString(getValueFromAttribute(upiTextfield, "placeholder", "UPI texfield"), "Enter UPI id linked to above account"));
 		detailList.add(ScreenshortProvider.captureScreen(driver, "UPIGuidLine"));
 	}
@@ -175,7 +176,7 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 			submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 			clickElement(submitButton, "Submit button");
 			staticWait(90000);
-			upiServicePageLabel=elementLocateBytag("h5");
+			//upiServicePageLabel=elementLocateBytag("h5");
 			detailList.add(ScreenshortProvider.captureScreen(driver, "UPIServicePageNotExpected"));
 			upiServicePageLabel=elementLocateBytag("h5");
 			upiServiceProviderLabel=fetchTextFromElement(upiServicePageLabel);
@@ -191,18 +192,25 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		
 	}
 	
-	public void errorChecker(boolean negative) {
-		
+	public String errorChecker(boolean negative) {
+		String errorMsg="";
 		upiError=fluentWaitCodeXpath("//input[@id='upiIdTxt']//following::span[@class='icom-alert-triangle ng-binding'][1]",50, "UPI error msg");
+		if(upiError==null) {
+			upiError=fluentWaitCodeXpath("//label[@for='upi']//following::span[3]", "UPI error msg");
+		}
 		if(upiError!=null) {
 			if(upiError.isDisplayed()) {
 				if(negative) {
-					detailList.add("Error msg : "+fetchTextFromElement(upiError)+"-PASS");
+					errorMsg="Error msg : "+fetchTextFromElement(upiError)+"-PASS";
+					detailList.add(errorMsg);
+					
 				}else {
-					detailList.add("Error msg : "+fetchTextFromElement(upiError)+"-FAIL");
+					errorMsg="Error msg : "+fetchTextFromElement(upiError)+"-FAIL";
+					detailList.add(errorMsg);
 				}
 			}
 		}
+		return errorMsg;
 	}
 	
 	public void backToFundTransferModule() {
@@ -257,7 +265,10 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		}
 		
 	}
+	
+	
 	public void UPITextfieldExecution(FundTransferReport report) {
+		detailList=new ArrayList<String>();
 		Reporter.log("===> UPITextfieldExecution <===", true);
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']",10,"fundTransferTab");
 		if(fundTransferTab!=null) {

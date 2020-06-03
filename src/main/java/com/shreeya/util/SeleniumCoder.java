@@ -239,11 +239,11 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public String fetchTextFromElement(WebElement element) {
+		Reporter.log("===> fetchTextFromElement <===", true);
 		String elementText = "no element text";
 		try {
 			elementText = element.getAttribute("innerHTML");
-			
-
+			Reporter.log("elementText : "+elementText, true);
 		} catch (Exception e) {
 			
 			Reporter.log(e.getMessage(), true);
@@ -902,21 +902,22 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public List<WebElement> multipleElementLocator(String xpathString,String groupNameElement){
+		Reporter.log("*** multipleElementLocator ***", true);
 		staticWait(2000);
-		Reporter.log("multipleElementLocator : "+groupNameElement, true);
+		Reporter.log("groupNameElement : "+groupNameElement, true);
 		List<WebElement> elements=driver.findElements(By.xpath(xpathString));
 		return elements;
 		
 	}
 	
 	public List<String> multipleElementsTextProvider(String xpathString,String groupNameElement) {
-		Reporter.log("multipleElementsTextProvider : "+groupNameElement, true);
+		Reporter.log("*** multipleElementsTextProvider ***"+groupNameElement, true);
 		List<String> elementStringList=new ArrayList<String>();
 		List<WebElement> elements=multipleElementLocator(xpathString,groupNameElement);
-		Reporter.log("multipleElementsTextProvider : elementsList length : "+elements.size(), true);
+		Reporter.log("elementsList length : "+elements.size(), true);
 		for(WebElement element:elements) {
 			String elementString=fetchTextFromElement(element);
-			Reporter.log("multipleElementsTextProvider : elementString : "+elementString, true);
+			Reporter.log("elementString : "+elementString, true);
 			if(!elementString.equalsIgnoreCase("Click here"))
 			elementStringList.add(elementString);
 		}
@@ -1123,10 +1124,10 @@ public class SeleniumCoder extends ExceptionHandler {
 	public String getValueFromAttribute(WebElement element,String attributeName,String elementName) {
 		
 		String elementStr=element.getAttribute(attributeName);
-		if(elementStr==null) {
+		if(elementStr==null||elementStr.equalsIgnoreCase("")) {
 			elementStr=element.getText();
 		}
-		Reporter.log("Element Name : "+elementName+" Attribute name : "+attributeName+" Element str : "+elementStr);
+		Reporter.log("Element Name : "+elementName+"  Attribute name : "+attributeName+"  Element str : "+elementStr,true);
 		return elementStr;
 	}
 	

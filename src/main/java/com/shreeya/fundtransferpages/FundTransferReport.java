@@ -2,6 +2,7 @@ package com.shreeya.fundtransferpages;
 
 import java.util.List;
 
+import com.shreeya.model.FundTransferModel;
 import com.shreeya.util.ExtendReporter;
 
 public class FundTransferReport extends ExtendReporter {
@@ -22,7 +23,20 @@ public class FundTransferReport extends ExtendReporter {
 		print(detailList);
 	}
 	
+
+	public void upi_idReport(List<String> detailList) {
+		testCreation("UPI_Id");
+		print(detailList);	
+	}
+	
+
 	public void fundTransferLogFlush() {
 		logFlush();
+	}
+
+	public void fundTransferReport(List<String> detailList,FundTransferModel model) {
+		testCreation(model.getBank()+"_"+model.getReferNo());
+		print(detailList);
+		
 	}
 }

@@ -24,7 +24,7 @@ public class ScreenshortProvider extends SeleniumCoder{
 	public static String captureScreen(WebDriver driver,String moduleNameWithReferNo)  {
 		staticWaitStatic(800);
 		helperObject=new HelperCode();
-		Reporter.log("Capture Screenshot",true);
+		Reporter.log("Capture Screenshot : "+moduleNameWithReferNo,true);
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
 		String dest =MyTestLauncher.reportFolderPath[2]+"/"+moduleNameWithReferNo+"_"+helperObject.timeStampGenerator()+".png";

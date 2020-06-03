@@ -55,6 +55,7 @@ public class FundTransferCommon {
 		bankMap.put("icici", "ICICI BANK LTD");
 		bankMap.put("axis", "AXIS BANK");
 		bankMap.put("yes", " Yes Bank");
+		bankMap.put("andhra","ANDHRA BANK");
 		
 		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
 			if(bankName.toLowerCase().contains(entry.getKey())) {
@@ -105,4 +106,34 @@ public class FundTransferCommon {
 		return msg+"-"+result;
 	}
 	
+	public String verifAccountNo(String accountNo) {
+		int xNo=0;
+		String [] accountNoArray= {"","",""};
+		//String account="12345678901234";
+		char [] accountNoCharArray=accountNo.toCharArray();
+		int count=accountNoCharArray.length-5;
+		for(int i=0;i<accountNoCharArray.length;i++) {
+			if(i==0 || i==1) {
+				accountNoArray[0]=accountNoArray[0]+accountNoCharArray[i];
+			}
+			else if(i>count) {
+				accountNoArray[2]=accountNoArray[2]+accountNoCharArray[i];
+			}else {
+				if(xNo>0) 
+				accountNoArray[1]=accountNoArray[1]+"X";
+				
+				xNo++;
+			}
+		}
+		System.out.println("Account no : "+accountNoArray[0]+accountNoArray[1]+accountNoArray[2]);
+		return accountNoArray[0]+accountNoArray[1]+accountNoArray[2];
 	}
+	
+	public static void main(String[] args) {
+		FundTransferCommon c=new FundTransferCommon();
+		c.verifAccountNo("6911174021");
+	}
+		
+	}
+
+	

@@ -55,6 +55,7 @@ public class LoginPage extends SeleniumCoder {
 	static Logger log = Logger.getLogger(LoginPage.class.getName());
 	BrowserLaunch browserLunch;
 	public  boolean popupFlag=false;
+	private WebElement notNowWhatsApp;
 
 	public LoginPage(WebDriver driver) {
 
@@ -145,7 +146,7 @@ public class LoginPage extends SeleniumCoder {
 
 		proceedButton = fluentWaitCodeXpath(driver, "//button[text()='Proceed']","Proceed Button");
 		clickElement(proceedButton, "Proceed Button");
-		if (logError("//*[@id=\"loginModal\"]/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span", driver)) {
+		if (logError("//*[@id='loginModal']/div/div[1]/div/form/div[2]/div/div[1]/div[2]/div[5]/span", driver)) {
 			//Thread.sleep(4000);
 
 			yobTextField = fluentWaitCodeXpath(driver, "//*[@id='ans']","Yob textfield");
@@ -158,6 +159,12 @@ public class LoginPage extends SeleniumCoder {
 			if (notNowButton != null) {
 				popupFlag=true;
 				clickElement(notNowButton, "Not now popup button");
+			}else {
+				notNowWhatsApp=fluentWaitCodeXpath("//button[text()='Not Now']", "Not now whats app");
+				if(notNowWhatsApp!=null) {
+					popupFlag=true;
+					clickElement(notNowWhatsApp,"Not now whats app");
+				}
 			}
 
 			/*

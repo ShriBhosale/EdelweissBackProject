@@ -59,6 +59,12 @@ public class FundTransferPage extends SeleniumCoder {
 	private String upiDropdownText;
 
 	private WebElement upiDropdownBelowLabel;
+
+	private WebElement accountNoLabel;
+
+	private WebElement amountLabel;
+
+	public static String addFundAmountStr;
 	public FundTransferPage() {
 		
 	}
@@ -86,7 +92,7 @@ public class FundTransferPage extends SeleniumCoder {
 		upiTextfield=fluentWaitCodeXpath("//input[@id='upiIdTxt']", "UPI texfield");
 		
 		
-		clickUPICreatelink();
+		//clickUPICreatelink();
 		
 	}
 	
@@ -173,13 +179,16 @@ public class FundTransferPage extends SeleniumCoder {
 			
 	}
 	
-	public void bankAccountSelect(FundTransferModel model){
+	public String bankAccountSelect(FundTransferModel model){
 		staticWait(4000);
 		String bankName=fundTransferCommon.bankNameGiver(model.getBank());
 		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
-		if(bankAccountRedionButton.isEnabled()==false)
+		if(bankAccountRedionButton.isSelected()==false)
 			clickElement(bankAccountRedionButton, bankName+" Radio button");
+		accountNoLabel=fluentWaitCodeXpath("//span[text()='"+bankName+"']//following::span[1]", "account no");
+		
 		model.setBank(bankName);
+		return fetchTextFromElement(accountNoLabel);
 	}
 	
 	public void fillAmount(String amount){
@@ -193,17 +202,31 @@ public class FundTransferPage extends SeleniumCoder {
 		clickElement(submitButton, "Submit button");
 	}
 	
+	public void addFundPageAmount() {
+		Reporter.log("===> addFundPageAmount <===", true);
+		staticWait(500);
+		
+		 do {
+			 amountLabel=fluentWaitCodeXpath("//label[@class='amtBold ng-binding ng-scope']",100,"Add fund amount label");
+			 addFundAmountStr=fetchTextFromElement(amountLabel).replace("Rs", "").trim(); 
+			 Reporter.log("Inside do while for addFundAmountStr ", true);
+		 }while(addFundAmountStr.equalsIgnoreCase(""));
+		Reporter.log("addFundAmountStr : "+addFundAmountStr, true);
+	}
 
-	public void fundTransferexecute(FundTransferModel model) {
+	public void fundTransferexecute(FundTransferModel model,FundTransferReport report) {
+		detailList=new ArrayList<String>();
 		Reporter.log(model.toString(), true);
-		bankAccountSelect(model);
+		addFundPageAmount();
+		String accountNo=bankAccountSelect(model);
 		paymentModeSelect(model.getPaymentMode(),model.getBank());
 		if(model.getBank().equalsIgnoreCase("HDFC BANK LTD")) {
 		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","ok Button");
 		clickElement(okButton, "Ok button");
 		}
-		UPIRadioButtonTestCase();
+		//UPIRadioButtonTestCase();
 		fillAmount(model.getAmount());
-		//payment.paymentCodeExecution(model);
+		detailList=payment.paymentCodeExecution(model,accountNo);
+		report.fundTransferReport(detailList,model);
 	}
 }

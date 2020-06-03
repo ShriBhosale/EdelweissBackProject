@@ -23,23 +23,24 @@ public class FundTransferBankExecution extends SeleniumCoder{
 	Iterator<FundTransferModel> csvFundTransferIterator;
 	FundTransferModel fundTransferModel;
 	FundTransferPage fundTranferPage;
-	ExtendReporter report;
+	
 	String [] folderPathArray;
 	String [] reportArray;
 	WebElement seeMarginTab;
 	String errorMsg;
+	FundTransferReport report;
 	
 	public FundTransferBankExecution(WebDriver driver){
 		super(driver);
 		this.driver=driver;
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvFundTransferIterator=csvReader.FundTransferDataProvider();
-		report=new ExtendReporter();
+		
 		folderPathArray=MyTestLauncher.reportFolderPath;
 		
 	}
 	
-	public void fundTransferExecute() {
+	public void fundTransferExecute(FundTransferReport report) {
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
 		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
 		fundTranferPage=new FundTransferPage(driver);
@@ -52,7 +53,7 @@ public class FundTransferBankExecution extends SeleniumCoder{
 		  fundTransferModel=csvFundTransferIterator.next();
 		  Reporter.log("<a><font color='Yellow'>=========@@@@ FundTransfer_"+fundTransferModel.getReferNo()+" @@@@========</font></a>", true);
 		  try {
-		  fundTranferPage.fundTransferexecute(fundTransferModel);
+		  fundTranferPage.fundTransferexecute(fundTransferModel,report);
 		  }catch(ElementNotInteractableException e) {
 			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
 			  backFundTransferPage();
@@ -67,14 +68,14 @@ public class FundTransferBankExecution extends SeleniumCoder{
 			  backFundTransferPage();
 			  continue;
 		  }
-		  fundTransferReport(fundTransferModel.getReferNo(),errorMsg,"PASS");
+		  //fundTransferReport(fundTransferModel.getReferNo(),errorMsg,"PASS");
 		  backFundTransferPage();
 		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
 		  clickElement(seeMarginTab, "See Margin Tab");
 		  
 		  }
-		 
-		  outputFileClose();
+		
+		  //outputFileClose();
 		
 		staticWait(3000);
 	}

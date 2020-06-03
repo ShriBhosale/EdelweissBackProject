@@ -11,17 +11,19 @@ public class FundTransferExecution extends SeleniumCoder{
 	WebDriver driver;
 	List<String> keywordList;
 	FundTransferBankExecution fundTransferBankExecution;
-	FundTransferReport fundTransferReport;
+	FundTransferReport report;
 	FundTransferAmount FundTransferAmount;
 	FundTransferUPITextfield fundTransferUPITextfield;
+	FundTransferUPI_Id fundTransferUPI_Id;
 	public FundTransferExecution(WebDriver driver)
 	{
 		super(driver);
 		this.driver=driver;
 		fundTransferBankExecution=new FundTransferBankExecution(driver);
 		FundTransferAmount=new FundTransferAmount(driver);
-		fundTransferReport = new FundTransferReport(MyTestLauncher.reportFolderPath[1], "FundTransfer", 0);
+		report = new FundTransferReport(MyTestLauncher.reportFolderPath[1], "FundTransfer", 0);
 		fundTransferUPITextfield=new FundTransferUPITextfield(driver);
+		fundTransferUPI_Id=new FundTransferUPI_Id(driver);
 	}
 	public void fundTransferExecute() {
 		FundTransferKeyword keyword=new FundTransferKeyword();
@@ -29,19 +31,20 @@ public class FundTransferExecution extends SeleniumCoder{
 		for(String step:keywordList) {
 			switch(step) {
 			case "FundTransfer":
-				fundTransferBankExecution.fundTransferExecute();
+				fundTransferBankExecution.fundTransferExecute(report);
 				break;
 			case "AmountTextfield":
-				FundTransferAmount.amountTextfieldExecute(fundTransferReport);
+				FundTransferAmount.amountTextfieldExecute(report);
 				break;
 			case "UPITextfield":
-				fundTransferUPITextfield.UPITextfieldExecution(fundTransferReport);
+				fundTransferUPITextfield.UPITextfieldExecution(report);
 				break;
 			case "UPI_Id":
+				fundTransferUPI_Id.upi_idExecution(report);
 				break;
 				
 			}
 		}
-		fundTransferReport.fundTransferLogFlush();
+		report.fundTransferLogFlush();
 	}
 }
