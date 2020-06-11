@@ -3,9 +3,43 @@ package com.shreeya.fundtransferpages;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
-public class FundTransferCommon {
+import com.shreeya.util.ScreenshortProvider;
+import com.shreeya.util.SeleniumCoder;
+
+public class FundTransferCommon extends SeleniumCoder {
+	
+
+	WebDriver driver;
+	private WebElement bankAccountRedionButton;
+	private WebElement internetBankingRadioButton;
+	private WebElement okButton;
+	private WebElement amountToTransferTextField;
+	private WebElement submitButton;
+	private String addFundforScreenshot;
+	private WebElement bankAccountLabel;
+	private WebElement paymentModeLabel;
+	private WebElement upiRadioButton;
+	private WebElement upiDropdownButton;
+	public static String upiDropdownText;
+	private WebElement addNewUPIidLink;
+	private WebElement upiTextfield;
+	private WebElement redirectMsgLabel1;
+	
+	
+	public FundTransferCommon(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
+	
+	public FundTransferCommon() {}
 
 	public String [] amountEnter(String amount) {
 		String [] ansArray= {"QickSelectAmount","EnterAmount"};
@@ -56,6 +90,7 @@ public class FundTransferCommon {
 		bankMap.put("axis", "AXIS BANK");
 		bankMap.put("yes", " Yes Bank");
 		bankMap.put("andhra","ANDHRA BANK");
+		bankMap.put("state", "State bank of India");
 		
 		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
 			if(bankName.toLowerCase().contains(entry.getKey())) {
@@ -106,12 +141,17 @@ public class FundTransferCommon {
 		return msg+"-"+result;
 	}
 	
-	public String verifAccountNo(String accountNo) {
+	public String verifAccountNo(String accountNo,String bank) {
 		int xNo=0;
 		String [] accountNoArray= {"","",""};
+		int count;
 		//String account="12345678901234";
 		char [] accountNoCharArray=accountNo.toCharArray();
-		int count=accountNoCharArray.length-5;
+		/*
+		 * if(bank.equalsIgnoreCase("ICICI BANK LTD"))
+		 * count=accountNoCharArray.length-4; else
+		 */
+		 count=accountNoCharArray.length-5;
 		for(int i=0;i<accountNoCharArray.length;i++) {
 			if(i==0 || i==1) {
 				accountNoArray[0]=accountNoArray[0]+accountNoCharArray[i];
@@ -119,6 +159,7 @@ public class FundTransferCommon {
 			else if(i>count) {
 				accountNoArray[2]=accountNoArray[2]+accountNoCharArray[i];
 			}else {
+				
 				if(xNo>0) 
 				accountNoArray[1]=accountNoArray[1]+"X";
 				
@@ -129,9 +170,197 @@ public class FundTransferCommon {
 		return accountNoArray[0]+accountNoArray[1]+accountNoArray[2];
 	}
 	
+	
+	public String submitAddFundForm(String bankName,String amount) {
+		Reporter.log("===> submitAddFundForm <====", true);
+		String msg="No";
+		//String bankName="Kotak Mahindra Bank";
+		bankAccountLabel=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
+		bankAccountRedionButton=fluentWaitCodeXpath("//span[text()='"+bankName+"']//preceding::input[1]",bankName+ "radio button");
+		String selectedBankStr=getValueFromAttribute(bankAccountRedionButton, "gtmdir-text", "bank Radio button");
+		Reporter.log("bank selected bank : "+selectedBankStr, true);
+		if(!selectedBankStr.contains(bankName)) {
+			
+				clickElement(bankAccountLabel, bankName+"radio button");
+		}
+		
+		
+		Reporter.log("After click on bank acount radio button", true);
+		staticWait(200);
+		internetBankingRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']","internetBankingRadioButton");
+		if(internetBankingRadioButton==null)
+			msg="Internet banking option not present...";
+		staticWait(1000);
+		Reporter.log("Before okButton.", true);
+		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']",10,"ok Button");
+		if(okButton!=null)
+		clickElement(okButton, "Ok button");
+		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
+		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
+		addFundforScreenshot=ScreenshortProvider.captureScreen(driver, "AddFundScreenshot");
+		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
+		clickElement(submitButton, "Submit button");
+		return msg+"-"+addFundforScreenshot;
+	}
+	
+	public String checkingTransferMode() {
+		staticWait(1000);
+		int counter=0;
+		String currentUrl=null;
+		String transferMode="Native";
+		do {
+		 currentUrl=currentUrl();
+		if(currentUrl.contains("AtomBank")) {
+			transferMode="Atom";
+		}else if(currentUrl.contains("razorpay")) {
+			transferMode="Razor";
+		}
+		counter++;
+		Reporter.log("checkingTansfermode do while loop "+counter);
+		}while(transferMode=="Native" && counter<15);
+		Reporter.log("Transfer mode : "+transferMode, true);
+		return transferMode;
+	}
+	
+	public String transferSuccessullBank(String bank) {
+		String bankName="";
+		Map<String,String> bankMap=new HashMap<String,String>();
+		bankMap.put("Kotak Mahindra Bank", "Kotak Mahindra");
+		bankMap.put("State bank of India", "STATEBANKOFINDIA");
+		bankMap.put("ICICI BANK LTD", "ICICI BANK LTD");
+		
+		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
+			if(bank.toLowerCase().equalsIgnoreCase(entry.getKey())) {
+				bankName=entry.getValue();
+				break;
+			}
+		}
+		return bankName;
+	}
+	
+	public String romoveBrSpanFromText(String fetchTextFromElement) {
+		String result="";
+		Reporter.log("=== romoveBrSpanFromText ====", true);
+		if(fetchTextFromElement.contains("\n"))
+		fetchTextFromElement=fetchTextFromElement.replace("\n", "");
+		String [] array=fetchTextFromElement.split("span");
+		String [] primaryArray=array[0].split("<br>                        &nbsp;&nbsp;");
+		for(String text:primaryArray) {
+			Reporter.log(text,true);
+			if(text.contains("<"))
+				text=text.replace("<", "");
+			result=result+" "+text.trim();
+		}
+		return result.trim();
+	}
+	
+	public void backFundTransferPage(){
+		
+		staticWait(500);
+		boolean flag=true;
+		String currentUrl=driver.getCurrentUrl();
+		driver.navigate().back();
+		if(flag) {
+				driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+				staticWait(1000);
+				hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[3]/ul/li[2]/a");
+				
+		}
+		staticWait(500);
+	}
+	
+	
+	public void checkThenBackFundTransfer() {
+		paymentModeLabel=fluentWaitCodeXpath("//label[text()='Payment Mode']",10, "Payment mode");
+		if(paymentModeLabel==null) {
+		staticWait(500);
+		boolean flag=true;
+		String currentUrl=driver.getCurrentUrl();
+		driver.navigate().back();
+		if(flag) {
+				driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+				staticWait(1000);
+				try {
+				hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[3]/ul/li[2]/a");
+				}catch(JavascriptException e) {
+					staticWait(3000);
+					hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[3]/ul/li[2]/a");
+				}
+				
+		}
+		}
+		staticWait(500);
+	}
+	
+	public String fillFormForUPI(String bankName, String amount,String upiId) {
+		Reporter.log("===> submitAddFundForm <====", true);
+		String msg="No";
+		//String bankName="Kotak Mahindra Bank";
+		bankAccountLabel=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
+		bankAccountRedionButton=fluentWaitCodeXpath("//span[text()='"+bankName+"']//preceding::input[1]",bankName+ "radio button");
+		String selectedBankStr=getValueFromAttribute(bankAccountRedionButton, "gtmdir-text", "bank Radio button");
+		Reporter.log("bank selected bank : "+selectedBankStr, true);
+		if(!selectedBankStr.contains(bankName)) {
+			
+				clickElement(bankAccountLabel, bankName+"radio button");
+		}
+		
+		
+		Reporter.log("After click on bank acount radio button", true);
+		staticWait(200);
+		upiRadioButton=fluentWaitCodeXpath("//label[@for='upi']","UPI radio button");
+		if(upiRadioButton!=null)
+			clickElement(upiRadioButton, "UPI radio button");
+		
+		upiTextfiedOrDropdown(upiId);
+		staticWait(1000);
+		Reporter.log("Before okButton.", true);
+		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']",10,"ok Button");
+		if(okButton!=null)
+		clickElement(okButton, "Ok button");
+		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
+		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
+		addFundforScreenshot=ScreenshortProvider.captureScreen(driver, "AddFundScreenshot");
+		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
+		clickElement(submitButton, "Submit button");
+		return msg+"-"+addFundforScreenshot;
+	}
+	
+	public void upiTextfiedOrDropdown(String upiId) {
+		upiDropdownButton=fluentWaitCodeXpath("//label[@for='upi']//following::button[1]",10,"UPI dropdown button");
+		if(upiId.equalsIgnoreCase("")) {
+			
+			upiDropdownText=getValueFromAttribute(upiDropdownButton, "text", "UPI drop down");
+		}else {
+			if(upiDropdownButton!=null) {
+
+				clickElement(upiDropdownButton, "UPI dropdown");
+			addNewUPIidLink=fluentWaitCodeXpath("//a[text()='Add New UPI ID']", "Add new UPI id link");
+			clickElement(addNewUPIidLink,"Add new UPI id link");
+			okButton=fluentWaitCodeXpath("//input[@value='OK']",10,"Ok button");
+			if(okButton!=null) {
+				clickElement(okButton , "Ok button");
+			}
+			upiTextfield=fluentWaitCodeXpath("//input[@id='upiIdTxt']", "UPI textfield");
+			clearAndSendKey(upiTextfield,upiId, "UPI textfield");
+
+			}
+		}
+		
+	}
+	
+	public void disappearRedirectionMsg() {	
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='bank']//label[@class='redirectInfo']")));
+		staticWait(1000);
+	}
+	
+	
+	
+	
 	public static void main(String[] args) {
 		FundTransferCommon c=new FundTransferCommon();
-		c.verifAccountNo("6911174021");
+		
 	}
 		
 	}

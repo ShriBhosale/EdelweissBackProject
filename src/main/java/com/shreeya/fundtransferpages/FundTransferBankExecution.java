@@ -28,22 +28,36 @@ public class FundTransferBankExecution extends SeleniumCoder{
 	String [] reportArray;
 	WebElement seeMarginTab;
 	String errorMsg;
+	public static String seeMarginBalanceStr;
 	FundTransferReport report;
+	private WebElement seeMarginBalance;
 	
 	public FundTransferBankExecution(WebDriver driver){
 		super(driver);
 		this.driver=driver;
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvFundTransferIterator=csvReader.FundTransferDataProvider();
-		
+		fundTranferPage=new FundTransferPage(driver);
 		folderPathArray=MyTestLauncher.reportFolderPath;
 		
+	}
+	
+	public String seeMarginClearCashBalance() {
+		String seeMarginBalanceStr="";
+		do {
+		seeMarginBalance=fluentWaitCodeXpath("//*[@id='myModal']/div/div/div[3]/div[2]/div[4]/div/div[2]/div[1]/div[2]/div/div[2]/div[2]/label/span", "See margin balance");
+		seeMarginBalanceStr=fetchTextFromElement(seeMarginBalance);
+		staticWait(100);
+		}while(seeMarginBalance==null);
+		return seeMarginBalanceStr;
 	}
 	
 	public void fundTransferExecute(FundTransferReport report) {
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
 		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
-		fundTranferPage=new FundTransferPage(driver);
+		 clickElement(seeMarginTab, "See margin tab");
+		 seeMarginBalanceStr=seeMarginClearCashBalance();
+		
 		
 		
 		
@@ -68,10 +82,13 @@ public class FundTransferBankExecution extends SeleniumCoder{
 			  backFundTransferPage();
 			  continue;
 		  }
-		  //fundTransferReport(fundTransferModel.getReferNo(),errorMsg,"PASS");
+		  
 		  backFundTransferPage();
-		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
-		  clickElement(seeMarginTab, "See Margin Tab");
+			/*
+			 * seeMarginTab=fluentWaitCodeXpath(driver,
+			 * "//a[text()='See Margin']","seeMarginTab"); clickElement(seeMarginTab,
+			 * "See Margin Tab");
+			 */
 		  
 		  }
 		
@@ -100,12 +117,14 @@ public class FundTransferBankExecution extends SeleniumCoder{
 	
 	
 	public void backFundTransferPage(){
+		staticWait(500);
 		boolean flag=true;
 		String currentUrl=driver.getCurrentUrl();
 		driver.navigate().back();
 		if(flag) {
 		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
-		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
+		staticWait(600);
+		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id=\"headerCntr\"]/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[3]/ul/li[2]/a");
 		/*
 		 * fundTransferTab=fluentWaitCodeXpath(driver,
 		 * "//a[text()='Fund Transfer']","fundTransferTab");

@@ -14,7 +14,7 @@ import org.testng.annotations.Listeners;
 public class BrowserLaunch {
 	WebDriver driver = null;
 
-	public WebDriver browserLaunch(String scenario) throws MalformedURLException {
+	public WebDriver browserLaunch(String scenario) {
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\grid\\chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--incognito");
@@ -31,6 +31,7 @@ public class BrowserLaunch {
 				 * + ":" + hub.getConfiguration().port + "/wd/hub"), options);
 				 */
 				driver= new ChromeDriver(capabilities);
+				Reporter.log("if driver : "+driver, true);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -46,9 +47,11 @@ public class BrowserLaunch {
 		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 
 		 //driver.get("https://www.google.com/");
-		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+		//driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+		driver.get("https://ewuat.edelbusiness.in");
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
+		Reporter.log("After browser : "+driver, true);
 		Reporter.log("Browser Launch", true);
 		return driver;
 	}

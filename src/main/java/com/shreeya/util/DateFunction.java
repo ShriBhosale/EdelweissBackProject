@@ -30,7 +30,9 @@ public class DateFunction {
 	}
 
 	public static void main(String[] args) {
-		DateFunction f=new DateFunction();
-		f.dataProvider();
+		/*DateFunction f=new DateFunction();
+		f.dataProvider();*/
+		
+			} 
 	}
-}
+

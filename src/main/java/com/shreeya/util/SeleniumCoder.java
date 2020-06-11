@@ -34,7 +34,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	WebDriver driver = null;
 
 	ExtendReporter report = new ExtendReporter();
-	int maximumDelay = 100;
+	int maximumDelay = 120;
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
 	Help help;
@@ -248,7 +248,21 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 			Reporter.log(e.getMessage(), true);
 		}
-		return elementText;
+		return elementText.trim();
+	}
+	
+	public String fetchTextFromElement(String xpath,String elementName) {
+		Reporter.log("===> fetchTextFromElement <===", true);
+		WebElement element=fluentWaitCodeXpath(xpath, elementName);
+		String elementText = "no element text";
+		try {
+			elementText = element.getAttribute("innerHTML");
+			Reporter.log("elementText : "+elementText, true);
+		} catch (Exception e) {
+			
+			Reporter.log(e.getMessage(), true);
+		}
+		return elementText.trim();
 	}
 
 	public boolean elementPresentOrNot(WebDriver driver, String xpathString, String attributeForXpath,
@@ -409,26 +423,25 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	}
 
-	public WebElement fluentWaitCodeXpath(WebDriver driver, final String xpathString, int maxWaitTime,String elementName) {
+	public WebElement fluentWaitCodeXpath(WebDriver driver, final String xpathString, int maxWaitTime,final String elementName) {
 		WebElement element=null;
 		try {
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(maxWaitTime, TimeUnit.SECONDS)
 				.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
-
+		
 		 element = wait.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver driver) {
 				// WebElement searchTextField =driver.findElement(By.name("q"));
 				WebElement element = driver.findElement(By.xpath(xpathString));
 				if (element.isEnabled()) {
-					System.out.println("Element Found");
-
+					Reporter.log(elementName+" found", true);
 				}
 				return element;
 			}
 
 		});
 
-		
+		 
 		}catch(TimeoutException e) {
 			StackTraceElement [] locaString=e.getStackTrace();
 			elementNameError=elementName;
@@ -461,6 +474,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 
 	public void hoverAndClickOption(WebDriver driver, String parentElementStr, String childElementStr) {
+		staticWait(500);
 		Reporter.log("Click on Buy/Sell button and click on place order link", true);
 		WebElement childElement = null;
 		WebElement parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
@@ -1106,7 +1120,9 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public String currentUrl() {
+		staticWait(100);
 		String currentUrl=driver.getCurrentUrl();
+		Reporter.log("Cureent Url : "+currentUrl, true);
 		return currentUrl;
 	}
 	
@@ -1147,13 +1163,27 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public WebElement elementLocateBytag(String tagName) {
-		staticWait(200);
-		WebElement element=driver.findElement(By.tagName(tagName));
+		WebElement element=null;
+		do {
+		staticWait(20);
+		element=driver.findElement(By.tagName(tagName));
+		Reporter.log("elementLocateBytag do while", true);
+		}while(element==null);
 		return element;
 	}
 	
 	public void redirectGivenUrl(String url) {
 		Reporter.log("Hit this Url : "+url);
 		driver.get(url);
+	}
+	
+	protected void closeBrowser() {
+
+		driver.close();
+		
+	}
+	
+	public void moveGivenUrl(String urlStr) {
+		driver.get(urlStr);
 	}
 }

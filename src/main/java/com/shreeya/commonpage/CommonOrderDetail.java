@@ -1,4 +1,4 @@
-package com.shreeya.orderdetailpages;
+package com.shreeya.commonpage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.model.OrderPlaceModel;
 import com.shreeya.model.WatchListModel;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.Help;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
-public class OrderDetail extends SeleniumCoder {
+public class CommonOrderDetail extends SeleniumCoder {
 
 	WebDriver driver;
 	private WebElement buyAndSell;
@@ -57,15 +58,15 @@ public class OrderDetail extends SeleniumCoder {
 	Help help;
 	String orderPriceStr;
 	
-	public OrderDetail(WebDriver driver) {
+	public CommonOrderDetail(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		help=new Help();
 	}
 
-	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet,WatchListModel model) throws InterruptedException {
+	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet,OrderPlaceModel model)  {
 		Reporter.log("*<==== orderDetailProvider Method Start ====>*",true);
-		String [] verifyScriptArray= help.commaSeparater(model.getVerifyScript());
+		/* String [] verifyScriptArray= help.commaSeparater(model.getVerifyScript()); */
 		Reporter.log("===<<<<<*** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" ***>>>>>===>",true);
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
@@ -73,7 +74,7 @@ public class OrderDetail extends SeleniumCoder {
 				"no Product Type", "no Order Price", "no Order Type", "no User id", "no Exchange", "no Validity",
 				"no Nest Id","no qty","Partial Qty","Rejection Reason",
 				"ScriptResult", "Report link", "Screenshot link1"};
-		Thread.sleep(3000);
+		staticWait(3000);
 		if(action.equalsIgnoreCase("Partial Order")) {
 			Reporter.log("Partial Order\nRefresh page",true);
 			driver.navigate().refresh();
@@ -86,19 +87,19 @@ public class OrderDetail extends SeleniumCoder {
 
 		clickElement(detailsTab,"Details tab");
 		}catch(StaleElementReferenceException e) {
-			Thread.sleep(3000);
+			staticWait(3000);
 			detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a","Details tab");
 			clickElement(detailsTab,"Details tab");
 			Reporter.log("Click on 2nd time details button",true);
-			Thread.sleep(2000);
+			staticWait(2000);
 		}
 		ConfigReader configReader=new ConfigReader();
 		String amoFlag=configReader.configReader("amoFlag");
-		Thread.sleep(3000);
+		staticWait(3000);
 		if(action.equalsIgnoreCase("Mod")) {
 			Reporter.log("Action : "+action,true);
 			List<WebElement> statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
-			Thread.sleep(6000);
+			staticWait(6000);
 			for(WebElement statusElement:statusList) {
 				Reporter.log(fetchTextFromElement(statusElement,"Mod Status"),true);
 			}
@@ -138,24 +139,24 @@ public class OrderDetail extends SeleniumCoder {
 		
 		orderDetailList[5] = "Product : "+help.commpareTwoString(fetchTextFromElement(productType,"Product type"),model.getProductType());
 		orderPrice = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='fixed-price ng-binding']","Order parice");
-		Thread.sleep(2000);
+		staticWait(2000);
 		try {
 			//orderInfoList=FluentWaitForElementList("//span[@class='value ng-binding']", driver);
 		orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 		}catch(StaleElementReferenceException e) {
-			Thread.sleep(3000);
+			staticWait(3000);
 			orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 		}
 		orderPrice=fluentWaitCodeXpath("//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[5]/div/span[2]", "Order price");
 		orderPriceStr=help.commoRemove(fetchTextFromElement(orderPrice,"Order Price"));
 		orderDetailList[6] ="OrderPrice : "+help.commpareTwoString(orderPriceStr, help.digitConvert(model.getOrderPrice()));
 		try {
-			Thread.sleep(2000);
+			staticWait(2000);
 			orderTypeLable=fluentWaitCodeXpath("//*[@id=\"accitem\"]/div/div/div[1]/div[3]/div/span[2]", "Order Type");
 		orderDetailList[7] = "Order type : "+fetchTextFromElement(orderTypeLable,"Order Type");
 		}catch(IndexOutOfBoundsException e) {
 			//clickElement(detailsTab);
-			Thread.sleep(7000);
+			staticWait(7000);
 			//orderInfoList = driver.findElements(By.xpath("//span[@class='value ng-binding']"));
 			orderDetailList[7] = "Order type : "+fetchTextFromElement(orderInfoList.get(2),"Order Type");
 		}
@@ -183,10 +184,10 @@ public class OrderDetail extends SeleniumCoder {
 			orderDetailList[12]="Qty : "+help.commpareTwoString(fetchTextFromElement(qtyLabel,"Order Qty"), model.getQty());
 		}
 		try {
-			Thread.sleep(2000);
+			staticWait(2000);
 		listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
 		}catch(StaleElementReferenceException e) {
-			Thread.sleep(3000);
+			staticWait(3000);
 			listForNestId = driver.findElements(By.xpath("//span[@class='ng-scope'][2]"));
 		}
 		WebElement abc = listForNestId.get(0);
@@ -214,7 +215,7 @@ public class OrderDetail extends SeleniumCoder {
 			Reporter.log("Executed Shares =====>  "+fetchTextFromElement(executedSharesLable,"executed Shares Lable"),true);
 			}
 		}
-		Thread.sleep(4000);
+		staticWait(4000);
 		 //uncoment in partial order scenario 2 below line
 		 //partialQtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
 		/* orderDetailList[13]=fetchTextFromElement(partialQtyLabel); */
@@ -228,7 +229,7 @@ public class OrderDetail extends SeleniumCoder {
 	
 	public void amoCheckbox(String checked){
 		Reporter.log("AMO CheckBox checking....",true);
-		//Thread.sleep(3000);
+		//staticWait(3000);
 		if(checked.equalsIgnoreCase("true")) {
 			try {
 		boolean flag = elementPresentOrNot(driver,"//label[@class='amo-text rect-label']","xpath","AMO check box");
@@ -248,7 +249,7 @@ public class OrderDetail extends SeleniumCoder {
 		
 	}
 	
-	public void afterRefreshPage(WebDriver driver) throws InterruptedException {
+	public void afterRefreshPage(WebDriver driver){
 		
 		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
 		orderStatusLink=fluentWaitCodeXpath(driver, "//a[text()='Order Status' and @class='toc-tab-link']","Order Status Tab");

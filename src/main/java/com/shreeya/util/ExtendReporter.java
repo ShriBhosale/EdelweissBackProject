@@ -25,141 +25,143 @@ import com.shreeya.watchlistPages.WatchListPage;
 
 public class ExtendReporter {
 
-	public  ExtentHtmlReporter htmlextent = null;
-	public  ExtentReports report = null;
-	public  ExtentTest test = null;
+	public ExtentHtmlReporter htmlextent = null;
+	public ExtentReports report = null;
+	public ExtentTest test = null;
 	HelperCode helperObject;
 	private String reportPathString;
 	List<String> detailList;
-	static int count=0;
+	static int count = 0;
 	int timestamp;
-	
+
 	Help help;
-	
-	public static String abc="";
-	
-	public  ExtendReporter(String folderPathString,String scenario,int orderNo) {
-		
-		Reporter.log("<====ExtendReporter Constructor===>",true);
-		Reporter.log("Scenario : "+scenario,true);
-		helperObject=new HelperCode();
-		String timestamp=helperObject.timeStampGenerator();
-		if(orderNo!=0)
-		reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+timestamp+".html";
+
+	public static String abc = "";
+
+	public ExtendReporter(String folderPathString, String scenario, int orderNo) {
+
+		Reporter.log("<====ExtendReporter Constructor===>", true);
+		Reporter.log("Scenario : " + scenario, true);
+		helperObject = new HelperCode();
+		String timestamp = helperObject.timeStampGenerator();
+		if (orderNo != 0)
+			reportPathString = folderPathString + "/" + helperObject.removeExtraString(scenario, " ") + "_" + timestamp
+					+ ".html";
 		else
-			reportPathString=folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+timestamp+".html";
-		Reporter.log("Report Path String "+reportPathString,true);
+			reportPathString = folderPathString + "/" + helperObject.removeExtraString(scenario, " ") + "_" + timestamp
+					+ ".html";
+		Reporter.log("Report Path String " + reportPathString, true);
 		setReportPathString(reportPathString);
 		htmlextent = new ExtentHtmlReporter(getReportPathString());
-		
+
 		report = new ExtentReports();
 		htmlextent.config().setReportName(scenario);
 		report.attachReporter(htmlextent);
-		help=new Help();
+		help = new Help();
 	}
-	
+
 	public ExtendReporter() {
-		helperObject=new HelperCode();
+		helperObject = new HelperCode();
 	}
 
 	public void tearDown(String output) {
-		if(output.equalsIgnoreCase("PASS")) {
-			test.log(Status.PASS,"Test Pass....");
-		}else
+		if (output.equalsIgnoreCase("PASS")) {
+			test.log(Status.PASS, "Test Pass....");
+		} else
 			test.log(Status.FAIL, "Test Fail...");
 	}
-	
+
 	public String getReportPathString() {
 		return reportPathString;
 	}
-
-
 
 	public void setReportPathString(String reportPathString) {
 		this.reportPathString = reportPathString;
 	}
 
-
-
 	public ExtentTest testCreation(String testName) {
-		Reporter.log("Extend Report Test Name : "+testName,true);
+		Reporter.log("Extend Report Test Name : " + testName, true);
 		test = report.createTest(testName);
 		return test;
 	}
-	
-	public String addScreenshotMethod(WebDriver driver,String folderPathString,String scenario,int orderNo ){
-		String screenshotPath=null;
-		 try {
-		 screenshotPath=captureScreen(driver,folderPathString,scenario,orderNo);
-		ConfigReader reader=new ConfigReader();
-		String path=reader.configReader("Result");
-		
-		
-		  screenshotPath=screenshotPath.replace("../WorkingE2",path);
-		  screenshotPath=screenshotPath.replace("/", "//");
-		 
-		System.out.println(screenshotPath);
-		
-			test.log(Status.INFO,""+test.addScreenCaptureFromPath(screenshotPath));
-			test.log(Status.INFO, "ABC", MediaEntityBuilder.createScreenCaptureFromPath(removeReportString(screenshotPath)).build());
+
+	public String addScreenshotMethod(WebDriver driver, String folderPathString, String scenario, int orderNo) {
+		String screenshotPath = null;
+		try {
+			screenshotPath = captureScreen(driver, folderPathString, scenario, orderNo);
+			ConfigReader reader = new ConfigReader();
+			String path = reader.configReader("Result");
+
+			screenshotPath = screenshotPath.replace("../WorkingE2", path);
+			screenshotPath = screenshotPath.replace("/", "//");
+
+			System.out.println(screenshotPath);
+
+			test.log(Status.INFO, "" + test.addScreenCaptureFromPath(screenshotPath));
+			test.log(Status.INFO, "ABC",
+					MediaEntityBuilder.createScreenCaptureFromPath(removeReportString(screenshotPath)).build());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 return screenshotPath;
+		return screenshotPath;
 	}
-	
 
-	
 	public String removeReportString(String path) {
-		
-		String [] varray=path.split("/");
-		for(String v2:varray) {
-			if(v2.contains("Report")) {
-				
-			}else {
-				if(v2.contains(".."))
-					abc=v2;
+
+		String[] varray = path.split("/");
+		for (String v2 : varray) {
+			if (v2.contains("Report")) {
+
+			} else {
+				if (v2.contains(".."))
+					abc = v2;
 				else
-				abc=abc+"/"+v2;
+					abc = abc + "/" + v2;
 			}
 		}
 		System.out.println(abc);
 		return abc;
 	}
-	
+
 	public String addScreenshotMethod(String screenshotPath) throws IOException {
-		//testCreation("Login Error");
-		
-		ConfigReader reader=new ConfigReader();
-		String path=reader.configReader("Result");
-		
-		screenshotPath=screenshotPath.replace("../WorkingE2",path);
-		screenshotPath=screenshotPath.replace("//", "-");
-		//screenshotPath=screenshotPath.replace("-", "\");
+		// testCreation("Login Error");
+
+		ConfigReader reader = new ConfigReader();
+		String path = reader.configReader("Result");
+
+		screenshotPath = screenshotPath.replace("../WorkingE2", path);
+		screenshotPath = screenshotPath.replace("//", "-");
+		// screenshotPath=screenshotPath.replace("-", "\");
 		System.out.println(screenshotPath);
-		 test.addScreenCaptureFromPath(screenshotPath);
-		 return screenshotPath;
+		test.addScreenCaptureFromPath(screenshotPath);
+		return screenshotPath;
 	}
-	
-	public String addScreenshotMethodInfo(WebDriver driver,String folderPathString,String scenario,int orderNo) throws IOException {
-		//testCreation("Login Error");
-		String screenshotPath=captureScreen(driver,folderPathString,scenario,orderNo);
-		ConfigReader reader=new ConfigReader();
-		String path=reader.configReader("Result");
-		
-		screenshotPath=screenshotPath.replace("../WorkingE2",path);
-		screenshotPath=screenshotPath.replace("/", "//");
+
+	public String addScreenshotMethodInfo(WebDriver driver, String folderPathString, String scenario, int orderNo) {
+		// testCreation("Login Error");
+		String screenshotPath = captureScreen(driver, folderPathString, scenario, orderNo);
+		ConfigReader reader = new ConfigReader();
+		String path = reader.configReader("Result");
+
+		screenshotPath = screenshotPath.replace("../WorkingE2", path);
+		screenshotPath = screenshotPath.replace("/", "//");
 		System.out.println(screenshotPath);
-		 test.log(Status.INFO,""+test.addScreenCaptureFromPath(screenshotPath));
-		 return screenshotPath;
+		try {
+			test.log(Status.INFO, "" + test.addScreenCaptureFromPath(screenshotPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return screenshotPath;
 	}
-	
-	public String captureScreen(WebDriver driver,String folderPathString,String scenario,int orderNo){
-		Reporter.log("Capture Screenshot",true);
+
+	public String captureScreen(WebDriver driver, String folderPathString, String scenario, int orderNo) {
+		Reporter.log("Capture Screenshot", true);
 		TakesScreenshot screen = (TakesScreenshot) driver;
 		File src = screen.getScreenshotAs(OutputType.FILE);
-		String dest =folderPathString+"/"+helperObject.removeExtraString(scenario, " ")+"_"+orderNo+"_"+helperObject.timeStampGenerator()+".png";
+		String dest = folderPathString + "/" + helperObject.removeExtraString(scenario, " ") + "_" + orderNo + "_"
+				+ helperObject.timeStampGenerator() + ".png";
 		File target = new File(dest);
 		try {
 			FileUtils.copyFile(src, target);
@@ -171,205 +173,222 @@ public class ExtendReporter {
 	}
 
 	public void logsPrinter(ArrayList<String> msgs) {
-		
-		for(String msg:msgs) {
+
+		for (String msg : msgs) {
 			test.log(Status.INFO, msg);
-			Reporter.log(msg,true);
+			Reporter.log(msg, true);
 		}
 	}
-	
-	public void reportGenerator(String [] orderDetailArray,String [] passArray,TestDataModel model) throws InterruptedException {
-		Reporter.log("<=== ExtendReporter : Report Start generate "+model.getAction()+" "+model.getOrderNo()+" ===>",true);
-		
-		test.log(Status.INFO, "Action : "+orderDetailArray[1]);
-		test.log(Status.INFO, "Order Action :: "+orderDetailArray[3]);
-		test.log(Status.INFO, "Trading Symbol :: "+orderDetailArray[4]);
-		test.log(Status.INFO, "Product Type :: "+orderDetailArray[5]);
-		if(model.getScenario().equalsIgnoreCase("Modification Price")){
-			if(passArray[1].equalsIgnoreCase("PASS")) {
-				test.log(Status.PASS, "Order Price :: "+orderDetailArray[6]);
-			}else {
-				test.log(Status.FAIL, "Order Price :: "+orderDetailArray[6]);
+
+	public void reportGenerator(String[] orderDetailArray, String[] passArray, TestDataModel model)
+			throws InterruptedException {
+		Reporter.log(
+				"<=== ExtendReporter : Report Start generate " + model.getAction() + " " + model.getOrderNo() + " ===>",
+				true);
+
+		test.log(Status.INFO, "Action : " + orderDetailArray[1]);
+		test.log(Status.INFO, "Order Action :: " + orderDetailArray[3]);
+		test.log(Status.INFO, "Trading Symbol :: " + orderDetailArray[4]);
+		test.log(Status.INFO, "Product Type :: " + orderDetailArray[5]);
+		if (model.getScenario().equalsIgnoreCase("Modification Price")) {
+			if (passArray[1].equalsIgnoreCase("PASS")) {
+				test.log(Status.PASS, "Order Price :: " + orderDetailArray[6]);
+			} else {
+				test.log(Status.FAIL, "Order Price :: " + orderDetailArray[6]);
 			}
-			test.log(Status.INFO, "Order Qty :: "+orderDetailArray[12]);
-		}else if(model.getScenario().equalsIgnoreCase("Modification Qty")) {
-			test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
-			if(passArray[1].equalsIgnoreCase("PASS")) {
-				test.log(Status.PASS, "Order Qty :: "+orderDetailArray[12]);
-			}else {
-				test.log(Status.FAIL, "Order Qty :: "+orderDetailArray[12]);
+			test.log(Status.INFO, "Order Qty :: " + orderDetailArray[12]);
+		} else if (model.getScenario().equalsIgnoreCase("Modification Qty")) {
+			test.log(Status.INFO, "Order Price :: " + orderDetailArray[6]);
+			if (passArray[1].equalsIgnoreCase("PASS")) {
+				test.log(Status.PASS, "Order Qty :: " + orderDetailArray[12]);
+			} else {
+				test.log(Status.FAIL, "Order Qty :: " + orderDetailArray[12]);
 			}
-		}else if(model.getAction().equalsIgnoreCase("Partial Order")) {
-			test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
-			
-			if(passArray[1].equalsIgnoreCase("PASS")) {
-				test.log(Status.PASS, "Partial Qty :: "+orderDetailArray[13]);
-				test.log(Status.PASS, "Order Qty :: "+orderDetailArray[12]);
-			}else {
-				test.log(Status.FAIL, "Partial Qty :: "+orderDetailArray[13]);
-				test.log(Status.FAIL, "Order Qty :: "+orderDetailArray[12]);
+		} else if (model.getAction().equalsIgnoreCase("Partial Order")) {
+			test.log(Status.INFO, "Order Price :: " + orderDetailArray[6]);
+
+			if (passArray[1].equalsIgnoreCase("PASS")) {
+				test.log(Status.PASS, "Partial Qty :: " + orderDetailArray[13]);
+				test.log(Status.PASS, "Order Qty :: " + orderDetailArray[12]);
+			} else {
+				test.log(Status.FAIL, "Partial Qty :: " + orderDetailArray[13]);
+				test.log(Status.FAIL, "Order Qty :: " + orderDetailArray[12]);
 			}
-		}else {
-			test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
-			test.log(Status.INFO, "Order Qty :: "+orderDetailArray[12]);
-			}
-		test.log(Status.INFO, "Order Type :: "+orderDetailArray[7]);
-		test.log(Status.INFO, "User id :: "+orderDetailArray[8]);
-		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);
-		test.log(Status.INFO, "Validity :: "+orderDetailArray[10]);
-		test.log(Status.INFO, "NestId Order Numbe :: "+orderDetailArray[11]);
-		test.log(Status.INFO, "Rejection Reason : "+orderDetailArray[14]);
-		if(passArray[0].equalsIgnoreCase("PASS")) {
-			test.log(Status.PASS, "Status : "+orderDetailArray[2]);
+		} else {
+			test.log(Status.INFO, "Order Price :: " + orderDetailArray[6]);
+			test.log(Status.INFO, "Order Qty :: " + orderDetailArray[12]);
 		}
-		else {
-			test.log(Status.FAIL, "Status : "+orderDetailArray[2]);
+		test.log(Status.INFO, "Order Type :: " + orderDetailArray[7]);
+		test.log(Status.INFO, "User id :: " + orderDetailArray[8]);
+		test.log(Status.INFO, "Exchange : " + orderDetailArray[9]);
+		test.log(Status.INFO, "Validity :: " + orderDetailArray[10]);
+		test.log(Status.INFO, "NestId Order Numbe :: " + orderDetailArray[11]);
+		test.log(Status.INFO, "Rejection Reason : " + orderDetailArray[14]);
+		if (passArray[0].equalsIgnoreCase("PASS")) {
+			test.log(Status.PASS, "Status : " + orderDetailArray[2]);
+		} else {
+			test.log(Status.FAIL, "Status : " + orderDetailArray[2]);
 		}
 	}
-	
-	public void report(String [] arry) {
-		for(String str:arry) {
+
+	public void report(String[] arry) {
+		for (String str : arry) {
 			test.log(Status.INFO, str);
 		}
 	}
-	
+
 	public void logFlush() {
-		
-		Reporter.log("Extend Log Flush",true);
-		Reporter.log("Reporter path ===> "+reportPathString,true);
+
+		Reporter.log("Extend Log Flush", true);
+		Reporter.log("Reporter path ===> " + reportPathString, true);
 		report.flush();
-		Reporter.log("Report Object ==================================================================> "+report,true);
+		Reporter.log("Report Object ==================================================================> " + report,
+				true);
 	}
 
-	
 	public void errroMsg(String msg) {
 		test.log(Status.INFO, msg);
-		
+
 	}
-	
+
+	public void printLog(String msg) {
+		if (msg.contains("WorkingE2"))
+			help.screenshotFullPath(msg, test);
+		else
+			test.log(Status.INFO, msg);
+	}
+
 	public void errorFail(String msg) {
+
 		test.log(Status.FAIL, msg);
 	}
-	
+
 	public void print(List<String> printList) {
-		help=new Help();
-		int i=-1;
-		for(String msg:printList) {
+		help = new Help();
+		int i = -1;
+		for (String msg : printList) {
 			i++;
-		String [] array=help.separater(msg, "-");
-		if(msg.contains("-")) {
-			if(array[1].equalsIgnoreCase("PASS")) {
-				test.log(Status.PASS, array[0]);
-			}else {
-				test.log(Status.FAIL, array[0]);
+			if (msg != null) {
+				String[] array = help.separater(msg, "-");
+				if (msg.contains("-")) {
+					if (array[1].equalsIgnoreCase("PASS")) {
+						test.log(Status.PASS, array[0]);
+					} else {
+						test.log(Status.FAIL, array[0]);
+					}
+				} else if (msg.contains("@@>")) {
+					Reporter.log(msg, true);
+					test.log(Status.INFO, "<b>===" + msg + "===</b>");
+				} else if (msg.contains("WorkingE2")) {
+					help.screenshotFullPath(msg, test);
+				} else if (msg.equalsIgnoreCase("No")) {
+					continue;
+				} else {
+					test.log(Status.INFO, array[0]);
+				}
 			}
-		}else if(msg.contains("@@>")) {
-			Reporter.log(msg, true);
-			test.log(Status.INFO, "<b>==="+msg+"===</b>");
-		}else if(msg.contains("WorkingE2")) {
-			help.screenshotFullPath(msg,test);
-		}
-		else {
-			test.log(Status.INFO, array[0]);
-		}
 		}
 	}
-	
-	public void abnormalErrorHandling(WebDriver driver) throws IOException{
-		Reporter.log("Abnormal Error Handly",true);
-		HelperCode helperCode=new HelperCode();
+
+	public void abnormalErrorHandling(WebDriver driver) throws IOException {
+		Reporter.log("Abnormal Error Handly", true);
+		HelperCode helperCode = new HelperCode();
 		try {
-		 timestamp=Integer.valueOf(helperCode.timeStampGenerator());
-		}catch(NumberFormatException e) {
-			
+			timestamp = Integer.valueOf(helperCode.timeStampGenerator());
+		} catch (NumberFormatException e) {
+
 		}
-		ExtendReporter report=new  ExtendReporter(MyTestLauncher.reportFolderPath[1],"Abnormal Termination",timestamp); 
+		ExtendReporter report = new ExtendReporter(MyTestLauncher.reportFolderPath[1], "Abnormal Termination",
+				timestamp);
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
-		String screenshotPath=report.addScreenshotMethod(driver,MyTestLauncher.reportFolderPath[2],"Abnormal Termination",1);
+		String screenshotPath = report.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],
+				"Abnormal Termination", 1);
 		report.logFlush();
-		//driver.close();
-		Reporter.log("Driver close",true);
-		Reporter.log("Screenshot path =======> "+screenshotPath,true);
-		//System.exit(0);
+		// driver.close();
+		Reporter.log("Driver close", true);
+		Reporter.log("Screenshot path =======> " + screenshotPath, true);
+		// System.exit(0);
 	}
-	
-	public void reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO) throws IOException{
-		Reporter.log(moduleName,true);
+
+	public void reporter(WebDriver driver, String moduleName, String[] folderArray, String referNO) throws IOException {
+		Reporter.log(moduleName, true);
 		String screenshotPath;
-		ExtendReporter report=new  ExtendReporter(folderArray[1],moduleName,1); 
+		ExtendReporter report = new ExtendReporter(folderArray[1], moduleName, 1);
 		report.testCreation(moduleName);
-		report.errroMsg(moduleName+" this executed....");
-		report.errroMsg("ReferNo from execution file : "+referNO);
-		if(!moduleName.equalsIgnoreCase("FundTransfer"))
-		 screenshotPath=report.addScreenshotMethod(driver,folderArray[2],moduleName,1);
+		report.errroMsg(moduleName + " this executed....");
+		report.errroMsg("ReferNo from execution file : " + referNO);
+		if (!moduleName.equalsIgnoreCase("FundTransfer"))
+			screenshotPath = report.addScreenshotMethod(driver, folderArray[2], moduleName, 1);
 		report.logFlush();
-		
-		Reporter.log("Driver close",true);
-		
-		
+
+		Reporter.log("Driver close", true);
+
 	}
-	public String reporter(WebDriver driver,String moduleName,String [] folderArray,String referNO,String errorMsg){
-		detailList=FundTransferPage.detailList;
-		Reporter.log(moduleName,true);
+
+	public String reporter(WebDriver driver, String moduleName, String[] folderArray, String referNO, String errorMsg) {
+		detailList = FundTransferPage.detailList;
+		Reporter.log(moduleName, true);
 		String screenshotPath;
-		ExtendReporter report=new  ExtendReporter(folderArray[1],moduleName,1); 
-		test=report.testCreation(moduleName);
+		ExtendReporter report = new ExtendReporter(folderArray[1], moduleName, 1);
+		test = report.testCreation(moduleName);
 		print(detailList);
-		//report.errroMsg(moduleName+" this executed....");
-		if(!errorMsg.equalsIgnoreCase("no")) {
-		report.errorFail(errorMsg);
-		report.errroMsg("ReferNo from execution file : "+referNO);
+		// report.errroMsg(moduleName+" this executed....");
+		if (!errorMsg.equalsIgnoreCase("no")) {
+			report.errorFail(errorMsg);
+			report.errroMsg("ReferNo from execution file : " + referNO);
 		}
-		if(!moduleName.equalsIgnoreCase("FundTransfer"))
-		 screenshotPath=report.addScreenshotMethod(driver,folderArray[2],"AbnormalTermination",1);
+		if (!moduleName.equalsIgnoreCase("FundTransfer"))
+			screenshotPath = report.addScreenshotMethod(driver, folderArray[2], "AbnormalTermination", 1);
 		report.logFlush();
-		
-		Reporter.log("Driver close",true);
-		
+
+		Reporter.log("Driver close", true);
+
 		return report.getReportPathString();
 	}
-	
-	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr,String elementName) throws IOException {
-		extend.testCreation(loginModelObject.getTestScenario()+"_"+loginModelObject.getReference_no());
-		int orderNo=Integer.valueOf(loginModelObject.getReference_no());
-		extend.addScreenshotMethodInfo(driver, MyTestLauncher.reportFolderPath[2],"LoginError",orderNo);
-		extend.errroMsg("User Id : "+loginModelObject.getUser_Id());
-		extend.errroMsg("Password : "+loginModelObject.getPassword());
-		extend.errroMsg("Yob : "+loginModelObject.getYob());
-		
-		
-		if(!loginErrorStr.equalsIgnoreCase("No Error")) {
-			extend.errorFail(elementName+" element not found.....");
-			
+
+	public void loginReport(WebDriver driver, ExtendReporter extend, LoginTestModel loginModelObject,
+			String loginErrorStr, String elementName) {
+		extend.testCreation(loginModelObject.getTestScenario() + "_" + loginModelObject.getReference_no());
+		int orderNo = Integer.valueOf(loginModelObject.getReference_no());
+		extend.addScreenshotMethodInfo(driver, MyTestLauncher.reportFolderPath[2], "LoginError", orderNo);
+		extend.errroMsg("User Id : " + loginModelObject.getUser_Id());
+		extend.errroMsg("Password : " + loginModelObject.getPassword());
+		extend.errroMsg("Yob : " + loginModelObject.getYob());
+
+		if (!loginErrorStr.equalsIgnoreCase("No Error")) {
+			extend.errorFail(elementName + " element not found.....");
+
 			extend.tearDown("Fail");
-		}else {
+		} else {
 			extend.errroMsg("Login Successfully");
 			extend.tearDown("Pass");
 		}
 	}
-	
-	public void abnormalErrorHandling(WebDriver driver,String elementName,String moduleName) throws IOException{
-		Reporter.log("Abnormal Reporter creator",true);
-		HelperCode helperCode=new HelperCode();
+
+	public void abnormalErrorHandling(WebDriver driver, String elementName, String moduleName) throws IOException {
+		Reporter.log("Abnormal Reporter creator", true);
+		HelperCode helperCode = new HelperCode();
 		try {
-		 timestamp=Integer.valueOf(helperCode.timeStampGenerator());
-		}catch(NumberFormatException e) {
-			
+			timestamp = Integer.valueOf(helperCode.timeStampGenerator());
+		} catch (NumberFormatException e) {
+
 		}
-		ExtendReporter report=new  ExtendReporter(MyTestLauncher.reportFolderPath[1],"Abnormal Termination",timestamp); 
+		ExtendReporter report = new ExtendReporter(MyTestLauncher.reportFolderPath[1], "Abnormal Termination",
+				timestamp);
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
 		report.errorFail(elementName + " not found");
-		report.errroMsg("Module Name : "+moduleName);
-		String screenshotPath=report.addScreenshotMethod(driver,MyTestLauncher.reportFolderPath[2],"Abnormal Termination",1);
+		report.errroMsg("Module Name : " + moduleName);
+		String screenshotPath = report.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],
+				"Abnormal Termination", 1);
 		report.logFlush();
-		//driver.close();
-		Reporter.log("Driver close",true);
-		Reporter.log("Screenshot path =======> "+screenshotPath,true);
-		//System.exit(0);
+		// driver.close();
+		Reporter.log("Driver close", true);
+		Reporter.log("Screenshot path =======> " + screenshotPath, true);
+		// System.exit(0);
 	}
-	
+
 	/*
 	 * public ExtendReporter watchListReport(WatchListModel model,ExtendReporter
 	 * htmlReport,WebDriver driver,List<String> detailList) throws IOException,
@@ -393,12 +412,12 @@ public class ExtendReporter {
 	 * htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2],
 	 * "WatchList", orderNo); } return htmlReport; }
 	 */
-	
+
 	private void predefineWatchDetaiReport(WatchListModel model, ExtendReporter htmlReport, WebDriver driver,
 			int orderNo, List<String> detailList) {
-		for(String detail:detailList)
-		test.log(Status.INFO, detail);
-		
+		for (String detail : detailList)
+			test.log(Status.INFO, detail);
+
 		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
 	}
 
@@ -459,26 +478,26 @@ public class ExtendReporter {
 	 * }
 	 */
 	public void defaultWatchList(String defaultWList) {
-		if(defaultWList.equalsIgnoreCase("Yes")) {
-			if(!WatchListPage.errorMsg.equalsIgnoreCase("no"))
-			{
-				test.log(Status.PASS,WatchListPage.errorMsg);
-			}else { 
-					test.log(Status.FAIL, "Default watchList delete.");
+		if (defaultWList.equalsIgnoreCase("Yes")) {
+			if (!WatchListPage.errorMsg.equalsIgnoreCase("no")) {
+				test.log(Status.PASS, WatchListPage.errorMsg);
+			} else {
+				test.log(Status.FAIL, "Default watchList delete.");
 			}
-			}
+		}
 	}
-	
-	public void predefineWatchReport(WatchListModel model,ExtendReporter htmlReport,WebDriver driver,int orderNo,String msg) {
-		
-		test.log(Status.INFO, "Predefine WatchList : "+model.getWatchListName());
-		if(msg.equalsIgnoreCase("Your watchlist has 50 scrips")) {
-		test.log(Status.PASS, msg);
-		}else {
+
+	public void predefineWatchReport(WatchListModel model, ExtendReporter htmlReport, WebDriver driver, int orderNo,
+			String msg) {
+
+		test.log(Status.INFO, "Predefine WatchList : " + model.getWatchListName());
+		if (msg.equalsIgnoreCase("Your watchlist has 50 scrips")) {
+			test.log(Status.PASS, msg);
+		} else {
 			test.log(Status.FAIL, msg);
 		}
-		
-			htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList",orderNo);
-		
+
+		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
+
 	}
 }

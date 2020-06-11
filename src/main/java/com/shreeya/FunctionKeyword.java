@@ -173,7 +173,7 @@ public class FunctionKeyword {
 			case "fundtransfer":
 				FundTransferExecution fundTransferObj = new FundTransferExecution(driver);
 				if(skipScenario==false)
-				fundTransferObj.fundTransferExecute();
+				fundTransferObj.fundTransferExecute(latestLoginModel);
 				Reporter.log("fun transfer executin", true);
 				break;
 			case "mypositions":

@@ -4,13 +4,28 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Random;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentTest;
 
-public class Help {
+public class Help extends SeleniumCoder{
+	WebDriver driver;
+	
+	public Help(){}
+	
+	public Help(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+		
+	}
 
 	public String [] commaSeparater(String scriptName) {
+		
 		Reporter.log("== commaSeparater ===", true);
 		String [] scriptArray= {scriptName};
 		if(scriptName.contains(",")) {
@@ -22,9 +37,19 @@ public class Help {
 	}
 	
 	public String [] separater(String scriptName,String symbol) {
+		Reporter.log("*** separater ***", true);
+		
+		if(scriptName==null)
+			Reporter.log("Script name is null", true);
+		if(symbol==null)
+			Reporter.log("symbol is null", true);
+		
 		String [] scriptArray= {scriptName};
 		if(scriptName.contains(symbol)) {
 			scriptArray=scriptName.split(symbol);
+			for(String str:scriptArray) {
+				Reporter.log(str, true);
+			}
 		}
 		return scriptArray;
 	}
@@ -323,11 +348,94 @@ public class Help {
 		return result;
 	}
 	
+	public String elementPresent(WebElement element,String passMsg,String failMsg) {
+		String result="";
+		if(element!=null) {
+			result=passMsg+"-PASS";
+		}else {
+			result=failMsg+" is not present-FAIL";
+		}
+		return result;
+	}
+	
+	public String elementPresent(WebElement element,String msg) {
+		String result="";
+		if(element!=null) {
+			result=msg+"-PASS";
+		}else {
+			result=msg+"-FAIL";
+		}
+		return result;
+	}
+	
+	public String elementPresent(String xpathStr,String elementName) {
+		WebElement element=fluentWaitCodeXpath(xpathStr, elementName);
+		String result="";
+		if(element==null) {
+			result=elementName+"is present -PASS";
+		}else {
+			result=elementName+"is not present-FAIL";
+		}
+		return result;
+	}
+	
+	public String elementPresent(String xpathStr,String elementName,String msg) {
+		WebElement element=fluentWaitCodeXpath(xpathStr, elementName);
+		String result="";
+		if(element==null) {
+			result=msg+"is display -PASS";
+		}else {
+			result=msg+"is not display-FAIL";
+		}
+		return result;
+	}
+	
+	public String elementNotPresent(WebElement element,String passMsg,String failMsg) {
+		String result="";
+		if(element==null) {
+			result=passMsg+"-PASS";
+		}else {
+			result=failMsg+"-FAIL";
+		}
+		return result;
+	}
+	
+	public String removeHtmlReporter(String htmlStr) {
+		Reporter.log("=== removeHtmlReporter ===", true);
+		String ans="";
+		String [] array;
+		if(htmlStr.contains("<"))
+		{
+			array=htmlStr.split("<");
+			for(String str:array) {
+				if(!(str.contains("<")||str.contains(">"))) 
+					ans=ans+" "+str.trim();
+				else if(str.contains(">")) {
+					array=str.split(">");
+					ans=ans+" "+array[1].trim();		
+				}
+					
+			}
+		}
+		Reporter.log("ans : "+ans, true);
+		return ans;
+	}
+	
+	public void elementDisappear(String xpath,String elememntName,int timeOutSecount) {
+		Reporter.log("*** elementDisAppear ***", true);
+		Reporter.log("Wait for "+elememntName);
+		WebDriverWait wait = new WebDriverWait(driver, timeOutSecount);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
+		staticWait(1000);
+	}
+	
 	public static void main(String[] args) {
 		Help h=new Help();
 		String a=h.bigDataAddition("1,00,00,04,449.00", "11");
 		System.out.println("a : "+a);
 	}
+
+	
 
 	
 }

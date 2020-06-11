@@ -5,6 +5,7 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 
 import com.shreeya.MyTestLauncher;
+import com.shreeya.model.LatestLoginModel;
 import com.shreeya.util.SeleniumCoder;
 
 public class FundTransferExecution extends SeleniumCoder{
@@ -15,6 +16,8 @@ public class FundTransferExecution extends SeleniumCoder{
 	FundTransferAmount FundTransferAmount;
 	FundTransferUPITextfield fundTransferUPITextfield;
 	FundTransferUPI_Id fundTransferUPI_Id;
+	FundTransferInternetBanking internetBanking;
+	FundTransferProfile profile;
 	public FundTransferExecution(WebDriver driver)
 	{
 		super(driver);
@@ -24,8 +27,10 @@ public class FundTransferExecution extends SeleniumCoder{
 		report = new FundTransferReport(MyTestLauncher.reportFolderPath[1], "FundTransfer", 0);
 		fundTransferUPITextfield=new FundTransferUPITextfield(driver);
 		fundTransferUPI_Id=new FundTransferUPI_Id(driver);
+		internetBanking=new FundTransferInternetBanking(driver);
+		profile=new FundTransferProfile(driver);
 	}
-	public void fundTransferExecute() {
+	public void fundTransferExecute(LatestLoginModel model) {
 		FundTransferKeyword keyword=new FundTransferKeyword();
 		keywordList=keyword.keywordProvider();
 		for(String step:keywordList) {
@@ -42,7 +47,12 @@ public class FundTransferExecution extends SeleniumCoder{
 			case "UPI_Id":
 				fundTransferUPI_Id.upi_idExecution(report);
 				break;
-				
+			case "InternetBanking":
+				internetBanking.internetBankingExecute(report,model);
+				break;
+			case "Profile":
+				profile.profileExecution(report);
+				break;
 			}
 		}
 		report.fundTransferLogFlush();

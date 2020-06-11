@@ -49,6 +49,7 @@ public class FundTransferPage extends SeleniumCoder {
 	private WebElement amountErrorMsgLabel;
 	
 	public static List<String> detailList;
+	public static String bankName;
 
 	private Object amountErrorMsgStr;
 
@@ -63,6 +64,8 @@ public class FundTransferPage extends SeleniumCoder {
 	private WebElement accountNoLabel;
 
 	private WebElement amountLabel;
+
+	private String addFundScreenshot;
 
 	public static String addFundAmountStr;
 	public FundTransferPage() {
@@ -213,20 +216,31 @@ public class FundTransferPage extends SeleniumCoder {
 		 }while(addFundAmountStr.equalsIgnoreCase(""));
 		Reporter.log("addFundAmountStr : "+addFundAmountStr, true);
 	}
-
-	public void fundTransferexecute(FundTransferModel model,FundTransferReport report) {
-		detailList=new ArrayList<String>();
+	
+	public void fundTransfer(FundTransferModel model,FundTransferReport report,String optionAfterTransfer) {
+		Reporter.log("===> fundTransfer <===", true);
 		Reporter.log(model.toString(), true);
 		addFundPageAmount();
+		
 		String accountNo=bankAccountSelect(model);
 		paymentModeSelect(model.getPaymentMode(),model.getBank());
 		if(model.getBank().equalsIgnoreCase("HDFC BANK LTD")) {
 		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']","ok Button");
 		clickElement(okButton, "Ok button");
 		}
-		//UPIRadioButtonTestCase();
+		
 		fillAmount(model.getAmount());
-		detailList=payment.paymentCodeExecution(model,accountNo);
-		report.fundTransferReport(detailList,model);
+		addFundScreenshot=ScreenshortProvider.captureScreen(driver, "AddFundTransferForm");
+		detailList=payment.paymentCodeExecution(model,accountNo,optionAfterTransfer,addFundScreenshot);
+		report.fundTransferReport(detailList,model,optionAfterTransfer);
+	}
+
+	public void fundTransferexecute(FundTransferModel model,FundTransferReport report) {
+		Reporter.log("===> fundTransferexecute <====", true);
+		detailList=new ArrayList<String>();
+		
+		//fundTransfer(model, report, "See Margin");
+		
+		fundTransfer(model, report, "Place order");
 	}
 }

@@ -1,7 +1,6 @@
 package com.shreeya.orderdetailpages;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
@@ -17,12 +16,11 @@ import org.testng.Reporter;
 import com.opencsv.CSVWriter;
 import com.shreeya.MyTestLauncher;
 import com.shreeya.model.LatestLoginModel;
-import com.shreeya.model.LoginModel;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.util.BrowserLaunch;
-import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.Help;
 import com.shreeya.util.SeleniumCoder;
 
 public class LoginPage extends SeleniumCoder {
@@ -56,15 +54,16 @@ public class LoginPage extends SeleniumCoder {
 	BrowserLaunch browserLunch;
 	public  boolean popupFlag=false;
 	private WebElement notNowWhatsApp;
-
+	Help help;
 	public LoginPage(WebDriver driver) {
 
 		super(driver);
 		this.driver = driver;
+		help=new Help(driver);
 
 	}
 
-	public void loginExecution(String scenario, LatestLoginModel loginModelObject) throws InterruptedException, IOException {
+	public void loginExecution(String scenario, LatestLoginModel loginModelObject) {
 		// driver=browserLaunch(scenario);
 		LoginTestModel loginTestModel=null;
 		if (!loginModelObject.getModule().equalsIgnoreCase("login")) {
@@ -95,7 +94,7 @@ public class LoginPage extends SeleniumCoder {
 		// return driver;
 	}
 
-	public boolean loginCodeExecution(String scenario, LatestLoginModel loginModelObject)throws InterruptedException, IOException {
+	public boolean loginCodeExecution(String scenario, LatestLoginModel loginModelObject){
 
 		Reporter.log("LoginPage : loginExecution ", true);
 		clickOnLoginButton(driver);
@@ -222,10 +221,15 @@ public class LoginPage extends SeleniumCoder {
 
 	}
 
-	public void logout(WebDriver driver) throws InterruptedException {
+	public void logout(WebDriver driver) {
 		int noTab=noTabs(driver);
 //		for(int i=0;i<noTab;i++) {
-			
+		staticWait(1000);
+		String cureentUrlStr=help.currentUrl();	
+		if(cureentUrlStr.equalsIgnoreCase("https://ewuat.edelbusiness.in/")||cureentUrlStr.equalsIgnoreCase("https://ewuat.edelbusiness.in/ewhtml")) {
+			pageRefresh();
+			moveGivenUrl("https://ewuat.edelbusiness.in/");
+		}
 		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a",5,"Close Button (x)");
 		if(closeButton!=null)
 		clickElement(closeButton, "Close order status popup");
@@ -283,7 +287,7 @@ public class LoginPage extends SeleniumCoder {
 		this.loginErrorMsg = loginErrorMsg;
 	}
 
-	public void clickOnLoginButton(WebDriver driver) throws InterruptedException {
+	public void clickOnLoginButton(WebDriver driver) {
 
 		try {
 			popupButton = fluentWaitCodeXpath(driver, "//button[text()='No thanks']", 40,"No thans popup button");
@@ -313,7 +317,7 @@ public class LoginPage extends SeleniumCoder {
 	}
 
 	public WebDriver loginCodeExecution(WebDriver driver, LoginTestModel loginModelObject, ExtendReporter extend)
-			throws InterruptedException, IOException {
+	{
 
 		Reporter.log("LoginPage : loginExecution ", true);
 		Reporter.log(loginModelObject.toString(), true);
@@ -423,5 +427,7 @@ public class LoginPage extends SeleniumCoder {
 			
 		}
 	}
+	
+	
 	
 }

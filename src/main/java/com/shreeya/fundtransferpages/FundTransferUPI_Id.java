@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.model.FundTransferModel;
+import com.shreeya.util.DatePickers;
 import com.shreeya.util.Help;
 import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.SeleniumCoder;
@@ -18,6 +20,8 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	Help help;
 	FundTransferCommon fundTransferCommon;
 	FundTransferUPITextfield UPITextfieldObj;
+	Payment payment;
+	DatePickers datePickers;
 	List<String> detailList;
 
 	private WebElement bankAccountRedionButton;
@@ -93,17 +97,42 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	private WebElement bankNameLable;
 
 	private String bankNameStr;
+
+	private WebElement dateToTextbox;
+
+	private WebElement dateFromTextbox;
+
+	private WebElement transferStatusLabel;
+
+	private WebElement transferStatusTab;
+
+	private WebElement payMsgLabel;
+
+	private WebElement paymentTimerLabel;
+
+	private WebElement upiLableTradeMsg;
+
+	private WebElement retryButton;
+
+	private FundTransferModel model;
+
+	private String transferStatusScreenshot;
 	
 	
 	public FundTransferUPI_Id(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		help=new Help();
-		fundTransferCommon=new FundTransferCommon();
+		fundTransferCommon=new FundTransferCommon(driver);
 		UPITextfieldObj=new FundTransferUPITextfield(driver);
 		detailList=new ArrayList<String>();
+		datePickers=new DatePickers(driver);
+		payment=new Payment(driver);
+		model=new FundTransferModel();
 	}
 	
+	
+
 	public void primaryUPIId() {
 		Reporter.log("===> primaryUPIId <===",true);
 		detailList.add("@@> Verify Primary ID which is set as default is displayed in drop down. <@@");
@@ -283,6 +312,111 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		clickElement(bankAccountRedionButton, "bankRadion button");
 	}
 	
+	public void historyStatusChecking() {
+		Reporter.log("===> historyStatusChecking <===", true);
+		detailList.add("@@> Verify historical data is available when user selects the calendar date accordingly. <@@");
+		String dateTo="3-June-2020";
+		String dateFrom="4-June-2020";
+		transferStatusLabel=fluentWaitCodeXpath("//h5[text()='Transfer Status']", "Transfer status label");
+		if(transferStatusLabel==null) {
+			transferStatusTab=fluentWaitCodeXpath("//a[text()='TRANSFER STATUS']", "Transfer Status Tab");
+			clickElement(transferStatusTab, "Transfer Status Tab");
+		}
+		dateToTextbox=fluentWaitCodeXpath("//input[@name='fundStatusToDt']", "date to textbox");
+		dateFromTextbox=fluentWaitCodeXpath("//input[@name='fundStatusFromDt']", "date from textbox");
+		clickElement(dateToTextbox, "Data to textbox");
+		datePickers.dataPickersExecuter(dateTo);
+		clickElement(dateFromTextbox, "Data From textbox");
+		datePickers.dataPickersExecuter(dateFrom);
+		comparetDatePresentOrNot(dateTo,dateFrom);
+		
+	}
+	
+	public void comparetDatePresentOrNot(String dateOne,String dateTwo) {
+		boolean match=true;
+		List<String> TransferFundDateList=multipleElementsTextProvider("//*[@id='sub-tab4']/div/div[3]/div[1]/div/div[1]/div/span[1]", "Fund Transfer dates");
+		if(dateOne.equalsIgnoreCase(dateTwo)) {
+			
+			for(int i=2;i<TransferFundDateList.size();i++) {
+				if(!TransferFundDateList.get(i).equalsIgnoreCase(dateTwo)) {
+					bankNameLable=fluentWaitCodeXpath("//*[@id='sub-tab4']/div/div[3]/div[1]/div["+i+"]/div[3]/div/span[1]", "Bank name");
+					//detailList.add("The transfer status is not as selected calender-FAIL");
+					match=false;
+					break;
+				}
+			}
+		}else {
+			for(int i=2;i<TransferFundDateList.size();i++) {
+				if(!(TransferFundDateList.get(i).equalsIgnoreCase(dateTwo)||TransferFundDateList.get(i).equalsIgnoreCase(dateOne))) {
+					bankNameLable=fluentWaitCodeXpath("//*[@id='sub-tab4']/div/div[3]/div[1]/div["+i+"]/div[3]/div/span[1]", "Bank name");
+					//detailList.add("The transfer status is not as selected calender-FAIL");
+					match=false;
+					break;
+				}
+			}
+		}
+		
+		if(match) {
+			detailList.add("The transfer status is not as selected calender-FAIL");
+		}else {
+			detailList.add("The transfer status as per calender-PASS");
+		}
+	}
+	
+	public String verifyPayAmountWithAmout(String amount) {
+		String payInSentances;
+		int withOutAmountLenght;
+		do {
+		payMsgLabel=elementLocateBytag("h5");
+		payInSentances=help.removeHtmlReporter(fetchTextFromElement(payMsgLabel));
+		 withOutAmountLenght=payInSentances.length();
+		}while(withOutAmountLenght==22);
+		
+		return verifyPayAmount(amount,payInSentances);
+	}
+	
+	
+	
+	public void upiTimerPage() {
+		String paymentTimer;
+		detailList.add("@@> Verify when user initiate the UPI request and does not complete it within the specified time(5 min).  <@@");
+		Reporter.log("===> upiTimerPage <===", true);
+		fundTransferCommon.disappearRedirectionMsg();
+		fundTransferCommon.checkThenBackFundTransfer();
+		fundTransferCommon.fillFormForUPI("HDFC BANK LTD.", "60", "");
+		staticWait(4000);
+		detailList.add(verifyPayAmountWithAmout("60"));
+		detailList.add(ScreenshortProvider.captureScreen(driver, "UPITimer"));
+		do {
+			staticWait(5000);
+		paymentTimerLabel=fluentWaitCodeXpath("//p[text()='Approve the payment within']//following::p[1]", 30, "payment timer");
+		paymentTimer=fetchTextFromElement(paymentTimerLabel);	
+		Reporter.log(paymentTimer, true);
+		
+		}while(!paymentTimer.equalsIgnoreCase("00.00")&& paymentTimerLabel!=null);
+		upiLableTradeMsg=fluentWaitCodeXpath("//span[text()='UPI ID']//following::span[1]", "upiLableTradeMsg");
+		retryButton=fluentWaitCodeXpath("//a[text()='Retry']", "retry button");
+		clickElementWithOutChecking(retryButton, "Retry button");
+		model.setBank("HDFC BANK LTD.");
+		model.setPaymentMode("UPI");
+		transferStatusScreenshot=payment.verifyFundTransferStatus(model, "", "Not", "PASS");
+		detailList.add(transferStatusScreenshot);
+		detailList.add(Payment.iciciFundtransferStatus);
+		detailList.add(Payment.iciciFundtransferRemark);
+	}
+	
+	public String verifyPayAmount(String amount,String msg) {
+		String result;
+		String [] payArray=help.separater(msg, " ");
+		if(amount.equalsIgnoreCase(payArray[4])) {
+			result=msg+"-PASS";
+		}else {
+			result=msg+"-FAIL";
+		}
+		return result;
+	}
+	
+	
 	public void upi_idExecution(FundTransferReport report) {
 		detailList=new ArrayList<String>();
 		Reporter.log("===> UPI_idExecution <===", true);
@@ -290,13 +424,12 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		if(fundTransferTab!=null) {
 			clickElement(fundTransferTab, "FundTransferTab");
 		}
-		primaryUPIId();
-		redriectToUPIServicesPage();
-		upiIdTag();
-		eCollectBank();
-		deleteUPIExecution();
-		//selectAnotherBank();
-		
+		/*
+		 * primaryUPIId(); redriectToUPIServicesPage(); upiIdTag(); eCollectBank();
+		 * deleteUPIExecution();
+		 */
+		 /* historyStatusChecking(); */
+		upiTimerPage();
 		report.upi_idReport(detailList);
 		
 	}
