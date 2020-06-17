@@ -40,6 +40,7 @@ import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
 import com.shreeya.watchlistPages.WatchListExecution;
+import com.shreeya.watchlistPages.WatchListMainExecution;
 
 @Listeners(CustomListener.class)
 public class FunctionKeyword {
@@ -63,6 +64,7 @@ public class FunctionKeyword {
 	public static ApacheCode apacheCodeObj;
 	public static FolderStructure folderCreationObj;
 	LatestLoginModel latestLoginModel;
+	private String segmentStr;
 
 	@BeforeSuite
 	public void beforeSuite() throws IOException {
@@ -129,6 +131,7 @@ public class FunctionKeyword {
 		
 		for(Map.Entry<String,ArrayList<String>> entry : loginMap.entrySet()) {
 			List<String> login=entry.getValue();
+			segmentStr=entry.getKey();
 			int referNo=Integer.valueOf(login.get(0));
 			if(!login.get(1).equalsIgnoreCase("No")) {
 			latestLoginModel=new LatestLoginModel(referNo, login.get(1), login.get(2), login.get(3), login.get(4),entry.getKey());
@@ -196,9 +199,9 @@ public class FunctionKeyword {
 				break;
 				
 			case "watchlist":
-				WatchListExecution watchListObj = new WatchListExecution(driver);
+				WatchListMainExecution watchListObj = new WatchListMainExecution(driver);
 				if(skipScenario==false)
-					watchListObj.watchListExecute();
+					watchListObj.watchListExecute(segmentStr);
 				Reporter.log("Watchlist Module", true);
 				break;
 				

@@ -134,7 +134,7 @@ public class CommonOrderDetail extends SeleniumCoder {
 		orderDetailList[3] ="Order action : "+fetchTextFromElement(buyAndSell,"Buy or Sell");
 		tradingSymbol =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']","Trading symbol");
 		
-		orderDetailList[4] = "Script Name : "+help.commpareTwoString(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(model.getScriptName()));
+		orderDetailList[4] = "Script Name : "+checkScriptName(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(model.getScriptName()));
 		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']","Product type");
 		
 		orderDetailList[5] = "Product : "+help.commpareTwoString(fetchTextFromElement(productType,"Product type"),model.getProductType());
@@ -311,6 +311,14 @@ public class CommonOrderDetail extends SeleniumCoder {
 			scriptName="Hdfc Bank Ltd.";
 		}
 		return scriptName;
+	}
+	
+	public String checkScriptName(String applicationStr,String testDataStr) {
+		if(applicationStr.contains("Ltd")) {
+			applicationStr=applicationStr.replace("Ltd", "");
+		}
+		
+		return help.commpareTwoString(applicationStr,testDataStr);
 	}
 
 }

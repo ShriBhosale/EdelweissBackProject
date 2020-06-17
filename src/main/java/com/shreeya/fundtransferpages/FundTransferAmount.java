@@ -189,7 +189,7 @@ public class FundTransferAmount extends SeleniumCoder{
 	
 	public void amountTextfieldExecute(FundTransferReport fundTransferReport) {
 		detailList=new ArrayList<String>();
-		Reporter.log("=== amountTextfieldExecute ===", true);
+		Reporter.log("<b>======@@> amountTextfieldExecute <@@======</b>", true);
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
 		clickElement(fundTransferTab, "FundTransferTab");
 		 

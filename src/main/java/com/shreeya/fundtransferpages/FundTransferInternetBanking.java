@@ -177,7 +177,8 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 		Reporter.log("===> checkRedirectBankMsg <===", true);
 		detailList.add("@@> Verify the redirection for Add funds after entering the amount and clicked on submit. <@@");
 		common.backFundTransferPage();
-		String intenetBankMode = common.submitAddFundForm("Citibank Na", "51");
+		String bankName=cofigReader.configReaderFM("IBRedirectMsBank");
+		String intenetBankMode = common.submitAddFundForm(bankName, "51");
 		String[] separeArray = help.separater(intenetBankMode, "-");
 		if (separeArray[0].equalsIgnoreCase("No")) {
 			String transferMode = common.checkingTransferMode();
@@ -250,15 +251,16 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 		detailList.add(ScreenshortProvider.captureScreen(driver, "OneBankSelected"));
 	}
 
-	public void cancelFundTransferFromBankDetailPage(String bankName) {
+	public void cancelFundTransferFromBankDetailPage() {
 		Reporter.log("===> cancelFundTransferFromBankDetailPage <===", true);
 		detailList.add("@@> Verify after clicking on cancel when user is redirected to Add Fund  Page. <@@");
+		String bankName=cofigReader.configReaderFM("IBCancelFdBank");
 		common.backFundTransferPage();
 		common.submitAddFundForm(bankName, "60");
 		String transferMode = common.checkingTransferMode();
 		if (transferMode.equalsIgnoreCase("Native")) {
 			if (bankName.equalsIgnoreCase("Kotak Mahindra Bank")) {
-				cancelKotakTransactionScreenshot = payment.enterKotakCredential("10003540", "101010", false);
+				cancelKotakTransactionScreenshot = payment.enterKotakCredential("10003540", "101010","123456",false);
 				browserPopup(true);
 			}
 		}
@@ -300,6 +302,7 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 		String[] separeArray = help.separater(addFundScreeshot, "-");
 		Reporter.log(separeArray[separeArray.length - 1], true);
 		detailList.add(separeArray[separeArray.length - 1]);
+		staticWait(2000);
 		String transferStatus = common.checkingTransferMode();
 		model.setAmount("55");
 		model.setBank(bankForAtomic);
@@ -307,6 +310,7 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 		model.setReferNo("-1");
 		if (transferStatus.equalsIgnoreCase("Atom")) {
 			failureTranscationDetailList = payment.atomPayment(accoutnNoStr, model, "See Margin", false);
+
 		}
 		addFundTab = fluentWaitCodeXpath("//a[text()='TRANSFER STATUS']//preceding::a[text()='Add Funds']",
 				"add fund tab");
@@ -357,9 +361,15 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 	public void loginInvalidInfo() {
 		Reporter.log("===> loginInvalidInfo <===", true);
 		common.checkThenBackFundTransfer();
+		String errorMsg=null;
+		String bankName=cofigReader.configReaderFM("IBLoginInvalidBank");
 		detailList.add("@@> Verify by entering invalid details on bank page and clicked on submit. <@@");
-		String errorMsg=payment.enterAxisBank("SHOPTEST332", "d#demo123", false);
-		detailList.add("Axis Bank");
+		if(bankName.equalsIgnoreCase("AXIS BANK"))
+		 errorMsg=payment.enterAxisBank("SHOPTEST332", "d#demo123", false);
+		else if(bankName.equalsIgnoreCase("ICICI BANK LTD"))
+			errorMsg=payment.loginICICBank("testinfi8", "test$2018", "branchfree",true);
+		
+		detailList.add("Bank name : "+bankName);
 		detailList.add(errorMsg+"-PASS");
 		detailList.add(ScreenshortProvider.captureScreen(driver, "AxisBankPageWithError"));
 		common.checkThenBackFundTransfer();
@@ -389,7 +399,7 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 	public void amountEnterGreaterThenAccountBalance() {
 		Reporter.log("===> amountEnterGreaterThenAccountBalance <===", true);
 		detailList.add("@@> Verify payin request when amount entered is greater than the amount available in bank balance. <@@");
-		common.backFundTransferPage();
+		//common.backFundTransferPage();
 		amountLabel=fluentWaitCodeXpath("//label[@class='amtBold ng-binding ng-scope']",100,"Add fund amount label");
 		 addFundAmountStr=fetchTextFromElement(amountLabel).replace("Rs", "").trim(); 
 		 
@@ -405,31 +415,34 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 	public void internetBankingExecute(FundTransferReport report,LatestLoginModel loginModel) {
 		cofigReader.fundTransferConfig();
 		try {
-		Reporter.log("=== internetBankingExecute ===", true);
+		Reporter.log("<b>======@@>internetBankingExecute <@@=====</b>", true);
 		fundTransferTab = fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']", "fundTransferTab");
 		clickElement(fundTransferTab, "FundTransferTab");
 		
 		
-		/*
-		 * threeTabPresentOrNot();
-		 * 
-		 * primaryAccountLabelOnBank(); verifyFundTransferTabs();
-		 * bankNameAccountNoDisplay(); checkAmountAfterTwoDecimal();
-		 * 
-		 * 
-		 * checkRedirectBankMsg();
-		 * 
-		 * 
-		 * cancelFundTransferFromBankDetailPage("Kotak Mahindra Bank");
-		 * 
-		 * 
-		 * checkRetryInUnsuccessfullyTransaction();
-		 */
+		
+		  threeTabPresentOrNot();
+		  
+			
+			  primaryAccountLabelOnBank(); verifyFundTransferTabs();
+			  bankNameAccountNoDisplay();
+			 
+		  checkAmountAfterTwoDecimal();
+		  
+		  
+		 checkRedirectBankMsg();
+		  
+		  
+		 //cancelFundTransferFromBankDetailPage();
+		  
+		  
+		  checkRetryInUnsuccessfullyTransaction();
 		 
-		/* loginInvalidInfo(); */
+		 
+		 //loginInvalidInfo(); 
 		//loginBankAccoutCloseDriver.loginBankAcountCloseDriver(detailList, loginModel);
 			  
-		// verifyStatusFundTransferICIC(); 
+		 verifyStatusFundTransferICIC(); 
 			 
 		amountEnterGreaterThenAccountBalance();
 		report.internetBanking(detailList);

@@ -34,7 +34,7 @@ public class WatchListExecution extends SeleniumCoder{
 	WatchListPage watchListPage;
 	WatchListReport watchListReport;
 	ReportWatchlist watchListReport1;
-	public WatchListExecution(WebDriver driver) throws IOException {
+	public WatchListExecution(WebDriver driver){
 		super(driver);
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvLoginTestIterator=csvReader.WatchListTestDataProvider();
@@ -44,7 +44,7 @@ public class WatchListExecution extends SeleniumCoder{
 		watchListReport1=new ReportWatchlist();
 	}
 	
-	public void watchListExecute() throws InterruptedException, IOException {
+	public ExtendReporter watchListExecute(ExtendReporter reporter)  {
 		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']", "Close popup button");
 		clickElement(closePopupButton,  "Close popup button");
 		hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
@@ -52,7 +52,7 @@ public class WatchListExecution extends SeleniumCoder{
 		if(watchlistTitle==null) {
 			hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
 		}
-		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
+		
 		pageRefresh();
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
@@ -81,7 +81,7 @@ public class WatchListExecution extends SeleniumCoder{
 			watchListReport1.report(model,reporter,verfiyMap);
 			 
 		}
-		reporter.logFlush();
+		return reporter;
 	}
 
 	private ExtendReporter continueExecution(ExtendReporter htmlReport,WatchListModel mdoel,WebDriver driver) {

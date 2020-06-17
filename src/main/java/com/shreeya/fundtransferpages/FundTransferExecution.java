@@ -3,6 +3,7 @@ package com.shreeya.fundtransferpages;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 
 import com.shreeya.MyTestLauncher;
 import com.shreeya.model.LatestLoginModel;
@@ -31,6 +32,7 @@ public class FundTransferExecution extends SeleniumCoder{
 		profile=new FundTransferProfile(driver);
 	}
 	public void fundTransferExecute(LatestLoginModel model) {
+		Reporter.log("<b><font color='Yellow'>=========@@@@ FundTransfer_"+model.getReferNo()+" @@@@========</font></b>", true);
 		FundTransferKeyword keyword=new FundTransferKeyword();
 		keywordList=keyword.keywordProvider();
 		for(String step:keywordList) {

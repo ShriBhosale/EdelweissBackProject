@@ -1,12 +1,12 @@
 package com.shreeya.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -38,11 +38,13 @@ public class SeleniumCoder extends ExceptionHandler {
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
 	Help help;
+	ConfigReader configReader;
 
 	public SeleniumCoder(WebDriver driver) {
 
 		this.driver = driver;
 		help=new Help();
+		configReader=new ConfigReader();
 	}
 	
 	public SeleniumCoder() {
@@ -264,6 +266,21 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 		return elementText.trim();
 	}
+	
+	public String fetchTextFromElement(String xpath,int maxTime,String elementName) {
+		Reporter.log("===> fetchTextFromElement <===", true);
+		WebElement element=fluentWaitCodeXpath(xpath,maxTime,elementName);
+		
+		String elementText = "no element text";
+		try {
+			elementText = element.getAttribute("innerHTML");
+			Reporter.log("elementText : "+elementText, true);
+		} catch (Exception e) {
+			
+			Reporter.log(e.getMessage(), true);
+		}
+		return elementText.trim();
+	}
 
 	public boolean elementPresentOrNot(WebDriver driver, String xpathString, String attributeForXpath,
 			String elementName) {
@@ -475,14 +492,22 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	public void hoverAndClickOption(WebDriver driver, String parentElementStr, String childElementStr) {
 		staticWait(500);
-		Reporter.log("Click on Buy/Sell button and click on place order link", true);
+		Reporter.log("== hoverAndClickOption ==", true);
 		WebElement childElement = null;
 		WebElement parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
 		Actions action = new Actions(driver);
 		action.moveToElement(parentElement).click().perform();
 		childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
-
+		if(childElement.isDisplayed()) {
+			Reporter.log("Child element is display", true);
 		childElement.click();
+		
+		}else {
+			Reporter.log("Child element is not display", true);
+			 parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
+			 action = new Actions(driver);
+			 action.moveToElement(parentElement).click().perform();
+		}
 	}
 
 	protected List<WebElement> FluentWaitForElementList(final String xapthString, final WebDriver driverI) {
@@ -667,7 +692,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public void clickElement(String xpathString, String elementName) throws ElementClickInterceptedException {
-		staticWait(500);
+		staticWait(1000);
 		
 		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
 		try {
@@ -932,8 +957,26 @@ public class SeleniumCoder extends ExceptionHandler {
 		for(WebElement element:elements) {
 			String elementString=fetchTextFromElement(element);
 			Reporter.log("elementString : "+elementString, true);
-			if(!elementString.equalsIgnoreCase("Click here"))
+			if(!elementString.equalsIgnoreCase("Click here")) 
 			elementStringList.add(elementString);
+			
+		}
+		
+		return elementStringList;
+	}
+	
+	public List<String> multipleElementsTextProviderFilter(String xpathString,String groupNameElement) {
+		Reporter.log("*** multipleElementsTextProvider ***"+groupNameElement, true);
+		List<String> elementStringList=new ArrayList<String>();
+		List<WebElement> elements=multipleElementLocator(xpathString,groupNameElement);
+		Reporter.log("elementsList length : "+elements.size(), true);
+		for(WebElement element:elements) {
+			String elementString=fetchTextFromElement(element);
+			Reporter.log("elementString : "+elementString, true);
+			if(!elementString.equalsIgnoreCase("Click here")) {
+				elementString=help.removeHtmlReporter(elementString);
+			elementStringList.add(elementString);
+			}
 		}
 		
 		return elementStringList;
@@ -1015,7 +1058,8 @@ public class SeleniumCoder extends ExceptionHandler {
 	
 	public void staticWait(int timeout) {
 		try {
-			Thread.sleep(timeout);
+			int gobalWait=Integer.valueOf(configReader.configReader("StaticWait"));
+			Thread.sleep(timeout+gobalWait);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1185,5 +1229,62 @@ public class SeleniumCoder extends ExceptionHandler {
 	
 	public void moveGivenUrl(String urlStr) {
 		driver.get(urlStr);
+	}
+	
+	public void checkPopupPresentIfYesHandly(boolean acceptOrNot) {
+		WebDriverWait wait = new WebDriverWait(driver, 3 /*timeout in seconds*/);
+        if(wait.until(ExpectedConditions.alertIsPresent())==null){
+              System.out.println("alert was not present");
+        }
+        else
+        {
+         Alert alert = driver.switchTo().alert();
+         if(acceptOrNot) {
+        	 alert.accept();
+        	 System.out.println("alert was present and accepted");
+         }else {
+        	 alert.dismiss();
+        	 System.out.println("alert was present and rejected");
+         }
+        }
+	}
+	
+	public void clickElementUsingJavaScript(WebElement element,String elementName) {
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", element);
+		Reporter.log("click on "+elementName, true);
+	}
+	
+	public boolean checkClickableOrNot(String xpathString,String elementName) {
+		Reporter.log("====> checkClickableOrNot <====", true);
+		boolean elementClick=false;
+		WebElement element=fluentWaitCodeXpath(xpathString, elementName);
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        elementClick=true;
+		}catch(Exception e) {
+			Reporter.log(e.getLocalizedMessage());
+			Reporter.log("Element name : "+elementName);
+		}
+		
+		return elementClick;
+	}
+	
+	public boolean checkClickableOrNot(WebElement element,String elementName) {
+		Reporter.log("====> checkClickableOrNot <====", true);
+		boolean elementClick=false;
+		
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        elementClick=true;
+		}catch(Exception e) {
+			Reporter.log(e.getLocalizedMessage());
+			Reporter.log("Element name : "+elementName);
+			 elementClick=false;
+		}
+		
+		return elementClick;
 	}
 }

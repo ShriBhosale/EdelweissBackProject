@@ -2,6 +2,9 @@ package com.shreeya.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -12,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.shreeya.experiment.Report;
 
 public class Help extends SeleniumCoder{
 	WebDriver driver;
@@ -127,7 +131,7 @@ public class Help extends SeleniumCoder{
 
 	public String commpareTwoString(String applicationStr, String testDataStr) {
 		String result;
-		if(applicationStr.trim().equalsIgnoreCase(testDataStr)) {
+		if(applicationStr.trim().equalsIgnoreCase(testDataStr.trim())) {
 			result=applicationStr+"-PASS";
 			Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
 		}
@@ -207,6 +211,61 @@ public class Help extends SeleniumCoder{
 		
 		Reporter.log("Ans : "+ans, true);
 		return ans;
+	}
+	
+	public float removeCommoConvertIntoFloat(String number) {
+		float floatNo=0.0f;
+		boolean negativeValueFlag=false;
+		if(number.contains("(") && number.contains(")")) {
+			number=number.replace("(", "");
+			number=number.replace(")", "");
+		}
+		
+		if(number.contains(".")) {
+		String [] digitArray=number.split("\\.");
+		char [] charArray=digitArray[1].toCharArray();
+		if(charArray.length==1) {
+			number=number+"0";
+		}}
+		if (!number.matches(".*[a-z].*")) {
+		if(number.contains(","))
+			number=number.replace(",", "");
+		 
+		
+		if(!number.equalsIgnoreCase(""))
+		
+			floatNo=Float.valueOf(number);
+		
+		}
+		
+		return floatNo;
+	}
+	
+	public List<String> removeLetterForArrayList(List<String> inputList) {
+		List<String> output=new ArrayList<String>();
+		for(String input:inputList) {
+			if(!input.matches(".*[a-z].*")) {
+				if(!input.equalsIgnoreCase("")) {
+			if(input.contains("(") && input.contains(")")) {
+				input=input.replace("(", "");
+				input=input.replace(")", "");
+				output.add(input);
+			}
+			}
+			}
+		}
+		return output;
+	}
+	
+	
+	public List<Float> convertStringListToFloat(List<String> inputList) {
+		List<Float> floatList=new ArrayList<Float>();
+		for(String input:inputList) {
+			float floatNo=removeCommoConvertIntoFloat(input);
+			if(floatNo!=0.0)
+			floatList.add(floatNo);
+		}
+		return floatList;
 	}
 	
 	public String randomNo() {
@@ -361,9 +420,9 @@ public class Help extends SeleniumCoder{
 	public String elementPresent(WebElement element,String msg) {
 		String result="";
 		if(element!=null) {
-			result=msg+"-PASS";
+			result=msg+"is present-PASS";
 		}else {
-			result=msg+"-FAIL";
+			result=msg+"is not prese-FAIL";
 		}
 		return result;
 	}
@@ -371,7 +430,7 @@ public class Help extends SeleniumCoder{
 	public String elementPresent(String xpathStr,String elementName) {
 		WebElement element=fluentWaitCodeXpath(xpathStr, elementName);
 		String result="";
-		if(element==null) {
+		if(element!=null) {
 			result=elementName+"is present -PASS";
 		}else {
 			result=elementName+"is not present-FAIL";
@@ -403,7 +462,9 @@ public class Help extends SeleniumCoder{
 	public String removeHtmlReporter(String htmlStr) {
 		Reporter.log("=== removeHtmlReporter ===", true);
 		String ans="";
-		String [] array;
+		String [] array,extraArray;
+		if(htmlStr.contains("\n"))
+			htmlStr=htmlStr.replace("\n", "");
 		if(htmlStr.contains("<"))
 		{
 			array=htmlStr.split("<");
@@ -411,8 +472,9 @@ public class Help extends SeleniumCoder{
 				if(!(str.contains("<")||str.contains(">"))) 
 					ans=ans+" "+str.trim();
 				else if(str.contains(">")) {
-					array=str.split(">");
-					ans=ans+" "+array[1].trim();		
+					extraArray=str.split(">");
+					if(extraArray.length>1)
+						ans=ans+" "+extraArray[1].trim();		
 				}
 					
 			}
@@ -429,13 +491,101 @@ public class Help extends SeleniumCoder{
 		staticWait(1000);
 	}
 	
+	
+	public List<String> removeDuplicateValueArrayList(List<String> inputList) {
+		Reporter.log("==== duplicateValueArrayList =====", true);
+		List<String> newList=new ArrayList<String>();
+		for(String inputStr:inputList) {
+		if(!newList.contains(inputStr))
+			newList.add(inputStr);
+		}
+		return newList;
+	}
+	
+	public boolean checkDuplicatePresentOrNot(List<String> inputList) {
+		boolean duplicateFlag=false;
+		List<String> newList=removeDuplicateValueArrayList(inputList);
+		if(newList.size()<inputList.size()) {
+			duplicateFlag=true;
+		}
+		return duplicateFlag;
+	}
 	public static void main(String[] args) {
 		Help h=new Help();
 		String a=h.bigDataAddition("1,00,00,04,449.00", "11");
 		System.out.println("a : "+a);
 	}
 
+	public List<String> sortingString(boolean ascending,List<String> inputList) {
+		if(ascending) {
+			Collections.sort(inputList);
+		}else {
+			Collections.sort(inputList,Collections.reverseOrder());
+		}
+		return inputList;
+	}
 	
-
+	public List<Integer> sortingInt(boolean ascending,List<Integer> inputList) {
+		if(ascending) {
+			Collections.sort(inputList);
+		}else {
+			Collections.sort(inputList,Collections.reverseOrder());
+		}
+		return inputList;
+	}
+	
+	public List<String> sortingFloat(boolean ascending,List<Float> inputList) {
+		List<String> outputList=new ArrayList<String>();
+		if(ascending) {
+			Collections.sort(inputList);
+		}else {
+			Collections.sort(inputList,Collections.reverseOrder());
+		}
+		
+		for(Float input:inputList)
+			outputList.add(convertTwoDecimalFloat(input));
+		
+		return outputList;
+	}
+	
+	public String convertTwoDecimalFloat(float floatNo) {
+		String floatNoStr=String.valueOf(floatNo);
+		String [] decimalArray=floatNoStr.split("\\.");
+		char [] charArray=decimalArray[1].toCharArray();
+		if(charArray.length==1) {
+			floatNoStr=floatNoStr+"0";
+		}else {
+			floatNoStr=String.valueOf(floatNo);
+		}
+		
+		return floatNoStr;
+	}
+	
+	public boolean compareTwoList(List<String> ApplicationList,List<String> sortedList) {
+		Reporter.log("====> compareTwoList <===", true);
+		boolean sortedFlag=true;
+		
+		if(ApplicationList.size()==sortedList.size())
+		{
+			for(int i=0;i<ApplicationList.size();i++) {
+				if(!ApplicationList.get(i).replace(",", "").equalsIgnoreCase(sortedList.get(i))) {
+					sortedFlag=false;
+					break;
+				}
+			}
+		}
+		return sortedFlag;
+	}
+	
+	public int converStringInt(String numberStr) {
+		int number=-1;
+		try {
+			number=Integer.valueOf(numberStr);
+		}catch(NumberFormatException e) {
+			number=-1;
+		}
+		return number;
+	}
+	
 	
 }

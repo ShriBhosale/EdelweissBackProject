@@ -69,7 +69,7 @@ public class FundTransferProfile extends SeleniumCoder{
 	
 	public void redirectToProfile() {
 		Reporter.log("===> redirectToProfile <===", true);
-		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a",5,"Close Button (x)");
+		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a",15,"Close Button (x)");
 		if(closeButton!=null)
 		clickElement(closeButton, "Close order status popup");
 		profileImage=fluentWaitCodeXpath("//a[@id='caUser']", "Profile image");
@@ -125,12 +125,15 @@ public class FundTransferProfile extends SeleniumCoder{
 		detailList.add("@@> Verify pop up is getting displayed after clicking on Add new UPI id through profile=>bank details. <@@");
 		addNewUPILink();
 		popupTitle=fluentWaitCodeXpath("//h5[text()='Add New UPI ID']", "Popup title");
-		detailList.add(help.elementPresent(popupTitle, "Add new UPI id popup"));
+		if(popupTitle!=null)
+			detailList.add("Add new UPI id popup display");
+		detailList.add("Popup Titile :  "+help.elementPresent(popupTitle, "Add new UPI id popup"));
 		detailList.add(ScreenshortProvider.captureScreen(driver, "AddNewPopupUPIid"));
 	}
 	
 	public boolean fillAddNewUPIForm(String bankName,String upiStr,boolean failCase) {
 		Reporter.log("===> fillAddNewUPIForm  <===", true);
+		upiErrorMsg=null;
 		boolean verifyUPIIdButtonFlag=false;
 		bankAccountLabel=fluentWaitCodeXpath(driver, "//label[@title='"+bankName+"']//span[1]",bankName);
 		bankAccountRedionButton=fluentWaitCodeXpath("//span[text()='"+bankName+"']//preceding::input[1]",bankName+ "radio button");
@@ -153,6 +156,7 @@ public class FundTransferProfile extends SeleniumCoder{
 		staticWait(2000);	
 		upiErrorMsgLabel=fluentWaitCodeXpath("//span[@ng-bind='upiInvalidMsg']",100, "UPI error msg");
 		if(upiErrorMsgLabel!=null)
+			if(upiErrorMsgLabel.isDisplayed())
 			upiErrorMsg=fetchTextFromElement(upiErrorMsgLabel);
 		}
 		return verifyUPIIdButtonFlag;
@@ -162,7 +166,7 @@ public class FundTransferProfile extends SeleniumCoder{
 		Reporter.log("===> addNewUPIFormWithInvalid <===", true);
 		detailList.add("@@> Verify UPI id field by entering the invalid(incomplete ID) UPI id in add funds page and click on submit. <@@");
 		fillAddNewUPIForm("HDFC BANK LTD.", "ABC@", true);
-		detailList.add(upiErrorMsg+"-PASS");
+		detailList.add("Error msg : "+upiErrorMsg+"-PASS");
 		detailList.add(ScreenshortProvider.captureScreen(driver, "AddNewUPIFormWithInvalidInProfile"));
 	}
 	
@@ -196,9 +200,11 @@ public class FundTransferProfile extends SeleniumCoder{
 	}
 	
 	public void validUPIidWithDiffBank() {
-		Reporter.log("===> validUPIidWithDiffBank <===", true);
+		Reporter.log("===> validUPIidWithDiffBank1 <===", true);
 		detailList.add("@@> Verify when user enters UPI id such that the bank account selected and the UPI id entered contains different bank name and click on submit. <@@");
-		//common.checkThenBackFundTransfer();
+		common.checkThenBackFundTransfer();
+		redirectToProfile();
+		addNewUPILink();
 		fillAddNewUPIForm("Kotak Mahindra Bank", "qrtest1@hdfcbank", true);
 		detailList.add(ScreenshortProvider.captureScreen(driver, "ValidUPIidWithDiffBank"));
 		if(upiErrorMsg==null)
@@ -217,7 +223,7 @@ public class FundTransferProfile extends SeleniumCoder{
 	
 	public void profileExecution(FundTransferReport report) {
 		try {
-		Reporter.log("<b>===> profileExecution <====</b>");
+		Reporter.log("<b>=====@@> profileExecution <@@======</b>");
 		
 		  checkDematTradingAccountBankDetail();
 		  checkClickOnNewUPIid();

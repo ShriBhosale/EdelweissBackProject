@@ -32,6 +32,7 @@ public class FundTransferCommon extends SeleniumCoder {
 	private WebElement addNewUPIidLink;
 	private WebElement upiTextfield;
 	private WebElement redirectMsgLabel1;
+	private WebElement seeMarginBalance;
 	
 	
 	public FundTransferCommon(WebDriver driver) {
@@ -90,7 +91,7 @@ public class FundTransferCommon extends SeleniumCoder {
 		bankMap.put("axis", "AXIS BANK");
 		bankMap.put("yes", " Yes Bank");
 		bankMap.put("andhra","ANDHRA BANK");
-		bankMap.put("state", "State bank of India");
+		bankMap.put("state bank", "State bank of India");
 		
 		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
 			if(bankName.toLowerCase().contains(entry.getKey())) {
@@ -196,6 +197,7 @@ public class FundTransferCommon extends SeleniumCoder {
 		if(okButton!=null)
 		clickElement(okButton, "Ok button");
 		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
+		//enterLargeText(amount, amountToTransferTextField);
 		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
 		addFundforScreenshot=ScreenshortProvider.captureScreen(driver, "AddFundScreenshot");
 		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
@@ -228,6 +230,7 @@ public class FundTransferCommon extends SeleniumCoder {
 		bankMap.put("Kotak Mahindra Bank", "Kotak Mahindra");
 		bankMap.put("State bank of India", "STATEBANKOFINDIA");
 		bankMap.put("ICICI BANK LTD", "ICICI BANK LTD");
+		bankMap.put("ANDHRA BANK", "Andhra Bank");
 		
 		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
 			if(bank.toLowerCase().equalsIgnoreCase(entry.getKey())) {
@@ -255,7 +258,7 @@ public class FundTransferCommon extends SeleniumCoder {
 	}
 	
 	public void backFundTransferPage(){
-		
+		Reporter.log("===> backFundTransferPage <===", true);
 		staticWait(500);
 		boolean flag=true;
 		String currentUrl=driver.getCurrentUrl();
@@ -355,8 +358,24 @@ public class FundTransferCommon extends SeleniumCoder {
 		staticWait(1000);
 	}
 	
+	public void elementDisappear(String xpathStr) {
+		WebDriverWait wait = new WebDriverWait(driver, 8);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpathStr)));
+		staticWait(1000);
+	}
 	
 	
+	public String seeMarginClearCashBalance() {
+		Reporter.log("===> seeMarginClearCashBalance <===", true);
+		String seeMarginBalanceStr="";
+		do {
+		seeMarginBalance=fluentWaitCodeXpath("//*[@id='myModal']/div/div/div[3]/div[2]/div[4]/div/div[2]/div[1]/div[1]/label[2]/span", "See margin balance");
+		seeMarginBalanceStr=fetchTextFromElement(seeMarginBalance);
+		staticWait(100);
+		}while(seeMarginBalanceStr.equalsIgnoreCase(""));
+		Reporter.log("seeMarginBalanceStr : "+seeMarginBalanceStr, true);
+		return seeMarginBalanceStr;
+	}
 	
 	public static void main(String[] args) {
 		FundTransferCommon c=new FundTransferCommon();

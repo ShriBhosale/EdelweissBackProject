@@ -500,4 +500,23 @@ public class ExtendReporter {
 		htmlReport.addScreenshotMethod(driver, MyTestLauncher.reportFolderPath[2], "WatchList", orderNo);
 
 	}
+	
+	public void watchListExtraScenario(List<String> detailList) {
+		Reporter.log("<b><font color='Yellow'>====  watchListExtraScenario  ====</b></font>", true);
+		testCreation("WatchList");
+		print(detailList);
+	}
+	
+	public void watchListSorting(List<String> detailList) {
+		Reporter.log("<b><font color='Yellow'>====  watchListSorting  ====</b></font>", true);
+		testCreation("WatchListSort");
+		print(detailList);
+	}
+
+	public void watchListTestcaseRport(List<String> detailList) {
+		Reporter.log("<b><font color='Yellow'>====  watchListTestcaseRport  ====</b></font>", true);
+		testCreation("watchListTestcaseRport");
+		print(detailList);
+		
+	}
 }

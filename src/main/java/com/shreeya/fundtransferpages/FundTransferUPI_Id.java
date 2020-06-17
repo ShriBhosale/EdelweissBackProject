@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
 import com.shreeya.model.FundTransferModel;
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.DatePickers;
 import com.shreeya.util.Help;
 import com.shreeya.util.ScreenshortProvider;
@@ -118,6 +119,33 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 
 	private String transferStatusScreenshot;
 	
+	ConfigReader configReader;
+
+	private WebElement upiRadioButton;
+
+	private WebElement bankAccountLabel;
+
+	private WebElement bankRedionButton;
+
+	private WebElement bankLabel;
+
+	private WebElement upiRadioLabel;
+
+	private boolean timerLableFlag;
+
+	private WebElement upiTimerDoneMsg;
+
+	private String upiTimerDoneMsgStr;
+
+	private WebElement upiTimerDoneSubMsg;
+
+	private String upiTimerDoneSubMsgStr;
+
+	private String upiTimerDoneScreenshot;
+
+	private boolean upiTimerDonePageFlag;
+
+	private String upiTimerMsg;
 	
 	public FundTransferUPI_Id(WebDriver driver) {
 		super(driver);
@@ -129,6 +157,7 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		datePickers=new DatePickers(driver);
 		payment=new Payment(driver);
 		model=new FundTransferModel();
+		configReader=new ConfigReader();
 	}
 	
 	
@@ -147,12 +176,18 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	public void upiDropDown() {
 		Reporter.log("===> upiDropDown <===",true);
 		staticWait(500);
-		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='HDFC BANK LTD.']",150,"HDFC BANK LTD.");
-		if(bankAccountRedionButton.isSelected()==false)
-		clickElement(bankAccountRedionButton, "Bank acount radio button");
-		WebElement upiRadioButton = fluentWaitCodeXpath(driver, "//label[@for='upi']","UPI radio button");
-		if(upiRadioButton.isEnabled()==false)
-		clickElement(upiRadioButton, "UPI radio button");
+		bankRedionButton=fluentWaitCodeXpath("//span[text()='HDFC BANK LTD.']//preceding::input[1]", "Bank Radio button");
+		bankLabel=fluentWaitCodeXpath(driver, "//span[text()='HDFC BANK LTD.']",150,"HDFC BANK LTD.");
+		if(bankRedionButton.isSelected()==false) {
+			
+		clickElement(bankLabel, "Bank acount radio button");
+		}
+		 upiRadioLabel = fluentWaitCodeXpath(driver, "//label[@for='upi']","UPI radio button");
+		upiRadioButton=fluentWaitCodeXpath("//input[@gtmdir-text='Payment mode | UPI']", 30, "UPI radio button");
+		
+			if(upiRadioButton.isSelected()==false)
+		clickElement(upiRadioLabel, "UPI radio button");
+		
 		okButton=fluentWaitCodeXpath("//input[@value='OK']",10,"Ok button");
 		if(okButton!=null) {
 			clickElement(okButton , "Ok button");
@@ -263,18 +298,21 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	
 	public void eCollectBank() {
 		Reporter.log("===> eCollectBank <===", true);
+		String bankName=configReader.configReaderFM("UpieCollectBank");
+		if(!bankName.equalsIgnoreCase("No")) {
 		detailList.add("@@> Verify in case of eCollect bank when user selects eCollect option. <@@");
-		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='AXIS BANK']",150,"AXIS BANK");
+		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",150,bankName);
 		clickElement(bankAccountRedionButton, "Bank acount radio button");
 		eCollectRadioButton=fluentWaitCodeXpath("//label[text()='eCollect']", "eCollect paymode");
 		clickElement(eCollectRadioButton, "eCollect paymode");
-		eCollectWarning=fluentWaitCodeXpath("//span[text()='AXIS BANK']//following::span[8]", "eCollect warning msg");
+		eCollectWarning=fluentWaitCodeXpath("//span[text()='"+bankName+"']//following::span[8]", "eCollect warning msg");
 		detailList.add("Waning msg : "+fetchTextFromElement(eCollectWarning));
 		neftLabel=fluentWaitCodeXpath("//Label[@class='ntimps']", "neft Label");
 		neftStr=fetchTextFromElement(neftLabel);
 		detailList.add(help.commpareTwoString(neftStr, "Add our bank account and transfer funds through NEFT/RTGS/IMPS"));
 		eCollectBankDetail();
 		detailList.add(ScreenshortProvider.captureScreen(driver, "eCollectBank"));
+		}
 	}
 	
 	public void eCollectBankDetail() {
@@ -287,8 +325,8 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	
 	public void redriectToUPIServicesPage() {
 		Reporter.log("===> redriectToUPIServicesPage <==", true);
-		detailList.add("@@> Verify when user initiate the UPI request and does not complete it within the specified time(5 min). <@@");
-		//upiDropDown();
+		//detailList.add("@@> Verify when user initiate the UPI request and does not complete it within the specified time(5 min). <@@");
+		upiDropDown();
 		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
 		clearAndSendKey(amountToTransferTextField, "200", "Amount To Transfer TextField");
 		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
@@ -305,6 +343,7 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 			}
 		}
 		detailList.add(ScreenshortProvider.captureScreen(driver, "redriectToUPIService"));
+		fundTransferCommon.backFundTransferPage();
 	}
 	
 	public void selectAnotherBank() {
@@ -385,15 +424,36 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		fundTransferCommon.checkThenBackFundTransfer();
 		fundTransferCommon.fillFormForUPI("HDFC BANK LTD.", "60", "");
 		staticWait(4000);
+		fundTransferCommon.elementDisappear("//a[text()='TRANSFER STATUS']//preceding::a[text()='Add Funds']");
 		detailList.add(verifyPayAmountWithAmout("60"));
 		detailList.add(ScreenshortProvider.captureScreen(driver, "UPITimer"));
 		do {
 			staticWait(5000);
 		paymentTimerLabel=fluentWaitCodeXpath("//p[text()='Approve the payment within']//following::p[1]", 30, "payment timer");
+		if(paymentTimerLabel.isDisplayed()) {
+			timerLableFlag=true;
+		}else {
+			detailList.add("5 minite timer is complete-PASS");
+			detailList.add(ScreenshortProvider.captureScreen(driver, "UPITimerDone"));
+			upiTimerDoneMsg=fluentWaitCodeXpath("//label[@class='redirectInfo']",30,"UPI timer done");
+			if(upiTimerDoneMsg!=null) {
+				//need to check xpath
+				//detailList.add(fetchTextFromElement(upiLableTradeMsg));
+			upiTimerDoneSubMsg=fluentWaitCodeXpath("//label[@class='redirectInfo']//following::label[1]", "UPI timer done sumsg");
+			if(upiTimerDoneSubMsg !=null)
+				detailList.add(fetchTextFromElement(upiTimerDoneSubMsg));
+			
+			}
+			staticWait(1000);
+			upiTimerDonePageFlag=true;
+			break;
+		}
+		Reporter.log("paymentTimerLabel : "+paymentTimerLabel, true);
 		paymentTimer=fetchTextFromElement(paymentTimerLabel);	
 		Reporter.log(paymentTimer, true);
 		
-		}while(!paymentTimer.equalsIgnoreCase("00.00")&& paymentTimerLabel!=null);
+		}while(!paymentTimer.equalsIgnoreCase("00.00")&& timerLableFlag);
+		if(upiTimerDonePageFlag==false) {
 		upiLableTradeMsg=fluentWaitCodeXpath("//span[text()='UPI ID']//following::span[1]", "upiLableTradeMsg");
 		retryButton=fluentWaitCodeXpath("//a[text()='Retry']", "retry button");
 		clickElementWithOutChecking(retryButton, "Retry button");
@@ -403,6 +463,9 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		detailList.add(transferStatusScreenshot);
 		detailList.add(Payment.iciciFundtransferStatus);
 		detailList.add(Payment.iciciFundtransferRemark);
+		}else {
+			fundTransferCommon.backFundTransferPage();
+		}
 	}
 	
 	public String verifyPayAmount(String amount,String msg) {
@@ -419,16 +482,22 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	
 	public void upi_idExecution(FundTransferReport report) {
 		detailList=new ArrayList<String>();
-		Reporter.log("===> UPI_idExecution <===", true);
+		Reporter.log("<b>========@@> UPI_idExecution <@@========</b>", true);
+		configReader.fundTransferConfig();
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']",10,"fundTransferTab");
 		if(fundTransferTab!=null) {
 			clickElement(fundTransferTab, "FundTransferTab");
 		}
-		/*
-		 * primaryUPIId(); redriectToUPIServicesPage(); upiIdTag(); eCollectBank();
-		 * deleteUPIExecution();
-		 */
-		 /* historyStatusChecking(); */
+		
+		
+		  primaryUPIId(); 
+		  redriectToUPIServicesPage(); 
+		  upiIdTag();
+		  eCollectBank();
+		  deleteUPIExecution();
+		  
+		  historyStatusChecking();
+		 
 		upiTimerPage();
 		report.upi_idReport(detailList);
 		

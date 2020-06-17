@@ -67,6 +67,8 @@ public class FundTransferPage extends SeleniumCoder {
 
 	private String addFundScreenshot;
 
+	private WebElement paymentModeLabel;
+
 	public static String addFundAmountStr;
 	public FundTransferPage() {
 		
@@ -182,8 +184,19 @@ public class FundTransferPage extends SeleniumCoder {
 			
 	}
 	
+	public void checkAndClickAddFundTab() {
+		/*
+		 * paymentModeLabel=fluentWaitCodeXpath("//label[text()='Payment Mode']"
+		 * ,10,"payment mode"); if(paymentModeLabel==null) {
+		 */
+			addFundTab=fluentWaitCodeXpath("//a[text()='TRANSFER STATUS']//preceding::a[text()='Add Funds']", "Add fund Tab");
+			clickElement(addFundTab, "Add fund tab");
+			/* } */
+	}
+	
 	public String bankAccountSelect(FundTransferModel model){
 		staticWait(4000);
+		checkAndClickAddFundTab();
 		String bankName=fundTransferCommon.bankNameGiver(model.getBank());
 		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
 		if(bankAccountRedionButton.isSelected()==false)
@@ -235,11 +248,11 @@ public class FundTransferPage extends SeleniumCoder {
 		report.fundTransferReport(detailList,model,optionAfterTransfer);
 	}
 
-	public void fundTransferexecute(FundTransferModel model,FundTransferReport report) {
+	public void fundTransferexecute(FundTransferModel model,FundTransferReport report,String seeMarginScreenshot) {
 		Reporter.log("===> fundTransferexecute <====", true);
 		detailList=new ArrayList<String>();
-		
-		//fundTransfer(model, report, "See Margin");
+		detailList.add(seeMarginScreenshot);
+		fundTransfer(model, report, "See Margin");
 		
 		fundTransfer(model, report, "Place order");
 	}

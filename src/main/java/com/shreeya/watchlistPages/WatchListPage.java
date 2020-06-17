@@ -221,39 +221,7 @@ public class WatchListPage extends SeleniumCoder {
 		 */
 	}
 
-	public void selectExchange(String segement, String step) {
-
-		staticWait(500);
-
-		nseRadioButton = fluentWaitCodeXpathCheckElement(driver,
-				"//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/label[2]/label[1]/div/input", 20,
-				"NSE Radio button");
-		bseRadioButton = fluentWaitCodeXpathCheckElement(driver,
-				"//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/label[2]/label[2]/div/input", 20,
-				"BSE Radio button");
-		if (step.equalsIgnoreCase("AddScript")) {
-			nseRadioButton = fluentWaitCodeXpathCheckElement(driver,
-					"//*[@id=\"addScripPopup\"]/div/div/div[2]/div/div/div/label[2]/label[1]/div/input", 20,
-					"NSE Radio button");
-			bseRadioButton = fluentWaitCodeXpathCheckElement(driver,
-					"//*[@id=\"addScripPopup\"]/div/div/div[2]/div/div/div/label[2]/label[2]/div/input", 20,
-					"BSE Radio button");
-		}
-		if (nseRadioButton != null || bseRadioButton != null) {
-			if (segement.equalsIgnoreCase("NSE"))
-				clickElement(nseRadioButton, "NSE Radio button");
-			else if (segement.equalsIgnoreCase("BSE"))
-				clickElement(bseRadioButton, "BSE Radio button");
-		} else if (nseRadioButton != null) {
-			errorList.add("NSE radio button not present");
-			clickElement(bseRadioButton, "BSE Radio button");
-		} else if (bseRadioButton != null) {
-			errorList.add("BSE radio button not present");
-			clickElement(nseRadioButton, "NSE Radio button");
-		}
-
-	}
-
+	
 	public void deleteWatchList(WatchListModel model) {
 
 		/*
@@ -294,7 +262,7 @@ public class WatchListPage extends SeleniumCoder {
 
 	}
 
-	public void addScriptExecution(WatchListModel model) throws InterruptedException {
+	public void addScriptExecution(WatchListModel model){
 		/*
 		 * String [] scriptArray=scriptNames(scriptNames); String []
 		 * exchangeArray=scriptNames(exchanges);
@@ -319,6 +287,7 @@ public class WatchListPage extends SeleniumCoder {
 	}
 
 	public void addScript(WatchListModel model, String step) {
+		List<String> errList=new ArrayList<String>();
 		verifyScriptArray = help.commaSeparater(model.getVerifyScript());
 		String xpathString = "no xpath for script";
 		String dropdownOptionStr = null;
@@ -364,7 +333,17 @@ public class WatchListPage extends SeleniumCoder {
 			
 			clickElement(dropdownOptionStr, model.getScriptName() + "Dropdown option");
 		}
-		selectExchange(model.getExchange(), step);
+		errList=watchListCommon.selectExchange(model.getExchange(), step,errorList);
+		Reporter.log("errList.size() : "+errList.size(), true);
+		/*
+		 * for(String errStr:errList) { Reporter.log(errStr,true);
+		 * errorList.add(errStr); }
+		 */
+		//please check after
+		/*
+		 * for(int i=0;i<errList.size();i++) { Reporter.log(errList.get(i),true);
+		 * errorList.add(errList.get(i)); }
+		 */
 		clickElement("//h4[text()='" + text + "']//following::button[2]", "Add Script button");
 		staticWait(500);
 		// clickElement("//button[text()='Ok']", "OK button");
@@ -442,10 +421,7 @@ public class WatchListPage extends SeleniumCoder {
 		scriptNameArray = help.commaSeparater(model.getVerifyScript());
 		int scriptCount = scriptNameArray.length + 2;
 		for (int i = 2; i < scriptCount; i++) {
-			scriptNameLabel = fluentWaitCodeXpath(
-					"//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i
-							+ "]/div[1]/div[1]/a",
-					"Script Name");
+			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i+ "]/div[1]/div[1]/a","Script Name");
 			scriptName = fetchTextFromElement(scriptNameLabel);
 			if (scriptName.contains(scriptNameArray[scriptNameArray.length - 1])) {
 				Reporter.log("Script : " + scriptArray[scriptArray.length - 1]);
@@ -649,7 +625,7 @@ public class WatchListPage extends SeleniumCoder {
 
 	
 	public Map<String, List<String>> watchListExecution(WatchListModel model, ExtendReporter reporter)
-			throws InterruptedException, IOException {
+			 {
 		rowStartCount = 0;
 		// model.setScriptName(model.getFullScriptName());
 		List<String> stepsList = watchListKeyword.keywordProccess(model.getPredefineWatchList());

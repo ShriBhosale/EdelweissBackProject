@@ -59,6 +59,8 @@ public class PredefineWatchList extends SeleniumCoder{
 	Help help;
 	String predifineWatchMsg;
 	String errorMsg;
+
+	private int numberScript;
 	
 	public static String [] orderDetailArray;
 	
@@ -209,12 +211,25 @@ public class PredefineWatchList extends SeleniumCoder{
 		clickElement(watchListOptionxpath, watchListName+" option ");
 	}
 	
-	public int compareNoScriptAndNoScriptLable() {
+	public int predefineWatchListScript() {
+		int numberScript=0;
+		do {
 		List<WebElement> predefineScript=multipleElementLocator("//div[@class='ed-td ed-stock text-left']", "Scripts");
-		int numberScript=predefineScript.size();
+		 numberScript=predefineScript.size();
+		 staticWait(100);
+		}while(numberScript==0);
+		return numberScript;
+	}
+	
+	public int compareNoScriptAndNoScriptLable() {
+		Reporter.log("====> compareNoScriptAndNoScriptLable <====", true);
+		
+		numberScript=predefineWatchListScript();
+		Reporter.log("numberScript : "+numberScript, true);
 		WebElement predifineWatchMsgLabel=fluentWaitCodeXpath("//span[text()='Your watchlist has ']", "Predefine WatchList massage");
 		predifineWatchMsg=fetchTextFromElement(predifineWatchMsgLabel);
 		predifineWatchMsg=removeExtrahmtlCode(predifineWatchMsg);
+		Reporter.log("predifineWatchMsg : "+predifineWatchMsg, true);
 		errorMsg=predifineWatchMsg;
 		String [] numberScriptArray=errorMsg.split(" ");
 		int totalScript=Integer.valueOf(numberScriptArray[3]);
@@ -225,6 +240,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			errorMsg=errorMsg+"-FAIL";
 			predefineWatchListDetail.add(errorMsg);
 		}
+		Reporter.log("numberScript : "+numberScript, true);
 		return numberScript;
 	}
 	
@@ -276,9 +292,11 @@ public class PredefineWatchList extends SeleniumCoder{
 			
 			model.setWatchListName(predefineWatchList);
 		predefineWatchListDetail.add("PredefineWatchList Name : "+model.getWatchListName());
-		clickOnPredefineWatchList(model);
-		int totalScript=compareNoScriptAndNoScriptLable();
 		
+		clickOnPredefineWatchList(model);
+		staticWait(2000);
+		int totalScript=compareNoScriptAndNoScriptLable();
+		Reporter.log("Outside : totalScript : "+totalScript, true); 
 		//String [] scriptCountArray=watchListPage.predifineWatchMsg.split(" ");
 		int noScript=totalScript;
 		for(int i=2;i<noScript;i++) {
@@ -292,7 +310,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 		Reporter.log("noScript : "+noScript,true);
 		Reporter.log("PredefineWatchList : scriptName : "+scriptName, true);
-		predefineWatchListDetail.add("Script Name : "+elementsTextFilter(scriptName));
+		predefineWatchListDetail.add("Script Name : "+help.removeHtmlReporter(scriptName));
 		
 		exchangeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/a/span/small", "Exchange");
 		predefineWatchListDetail.add("Exchange : "+fetchTextFromElement(exchangeLabel));

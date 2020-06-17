@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.Help;
 import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.SeleniumCoder;
@@ -45,14 +46,15 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 	private WebElement addNewUPIidLink;
 	private WebElement upiError;
 	
-	
+	ConfigReader configReader;
 	
 	public FundTransferUPITextfield(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		help=new Help();
 		detailList=new ArrayList<String>();
-		fundTransferCommon=new FundTransferCommon();
+		fundTransferCommon=new FundTransferCommon(driver);
+		configReader=new ConfigReader();
 	}
 	
 	public void elementlocate() {
@@ -175,7 +177,7 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 			clearAndSendKey(amountToTransferTextField,amount, "Amount textfield");
 			submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 			clickElement(submitButton, "Submit button");
-			staticWait(90000);
+			staticWait(2000);
 			//upiServicePageLabel=elementLocateBytag("h5");
 			detailList.add(ScreenshortProvider.captureScreen(driver, "UPIServicePageNotExpected"));
 			upiServicePageLabel=elementLocateBytag("h5");
@@ -222,6 +224,7 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 	
 	public void fillUpiTextfield(String upiId,boolean primaryUPIid) {
 		Reporter.log("===> fillUpiTextfield <===", true);
+		configReader.fundTransferConfig();
 		upiDropdownButton=fluentWaitCodeXpath("//label[@for='upi']//following::button[1]",10,"UPI dropdown button");
 		if(upiDropdownButton.isDisplayed()==false) {
 		upiTextfield=fluentWaitCodeXpath("//input[@id='upiIdTxt']", "UPI textfield");
@@ -247,9 +250,10 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		}
 	}
 	
-	public void eCollectBankVerification(String bankName) {
+	public void eCollectBankVerification() {
 		Reporter.log("===> eCollectBankVerification <==", true);
-		
+		String bankName=configReader.configReaderFM("eCollectBank");
+		if(!bankName.equalsIgnoreCase("No")) {
 		detailList.add("@@> Verify in case user's bank is ecollect bank. <@@");
 		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
 		clickElement(bankAccountRedionButton, "Bank acount radio button");
@@ -263,25 +267,32 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 				detailList.add("UPI Payment Option already selected-FAIL");
 			}
 		}
-		
+		}
 	}
 	
 	
 	public void UPITextfieldExecution(FundTransferReport report) {
 		detailList=new ArrayList<String>();
-		Reporter.log("===> UPITextfieldExecution <===", true);
+		configReader.fundTransferConfig();
+		Reporter.log("<b>=====@@> UPITextfieldExecution <@@=====</b>", true);
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']",10,"fundTransferTab");
 		if(fundTransferTab!=null) {
 			clickElement(fundTransferTab, "FundTransferTab");
 		}
-		elementlocate();
-		checkGuidlinText();
-		redirectToUPICreationStepPage();
-		closeUPIStepCreationPage();
-		enterInvalidUPIid();
-		enterValidUPIid();
-		enterDiffBankUPIid();
-		eCollectBankVerification("HDFC BANK LTD.");
+		
+		
+		
+		  elementlocate(); 
+		  checkGuidlinText();
+		  redirectToUPICreationStepPage();
+		  closeUPIStepCreationPage(); 
+		  enterInvalidUPIid();
+		  
+		  enterValidUPIid();
+		  enterDiffBankUPIid();
+		 
+		 
+		eCollectBankVerification();
 		report.upiTextfieldReport(detailList);
 	}
 }

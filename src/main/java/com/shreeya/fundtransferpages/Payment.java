@@ -80,6 +80,10 @@ public class Payment extends SeleniumCoder{
 	
 	private WebElement errorMsgLabel;
 	private String transferStatusPageScreenshot;
+	private WebElement otpTextfield;
+	private WebElement verifyButton;
+	private WebElement errorMsgLable;
+	private String errorMsg;
 	
 	public static String iciciFundtransferStatus;
 	public static String iciciFundtransferRemark;
@@ -89,7 +93,7 @@ public class Payment extends SeleniumCoder{
 		super(driver);
 		this.driver=driver;
 		help=new Help();
-		fundTransferCommon=new FundTransferCommon();
+		fundTransferCommon=new FundTransferCommon(driver);
 		detailList=new ArrayList<String>();
 		dateFunction=new DateFunction();
 		placeOrder=new PlaceOrder(driver);
@@ -102,16 +106,9 @@ public class Payment extends SeleniumCoder{
 	public void paymentForICICI(FundTransferModel model,String optionAfterTransfer) {
 		Reporter.log("===> paymentForICICI <===", true);
 		detailList.add(ScreenshortProvider.captureScreen(driver, "NativeICICIBank"));
-		if(model.getAccountType().equalsIgnoreCase("branchfree")) {
-			baranchFreeRadioButton=fluentWaitCodeXpath("//input[@title='b2 - branchfree banking A/c']", "Baranch free radio button");
-			clickElement(baranchFreeRadioButton, "Baranch free radio button");
-		}
-		userIdTextField=fluentWaitCodeXpath("//input[@title='User Id']", "UserId Textfield");
-		clearAndSendKey(userIdTextField, model.getUserName(), "UserId Textfield");
-		passwordTextField=fluentWaitCodeXpath("//input[@title='Password']", "Password textfield");
-		clearAndSendKey(passwordTextField, model.getPassword(),  "Password textfield");
-		loginButton=fluentWaitCodeXpath("//input[@class='login_button']", "Login Button");
-		clickElement(loginButton, "Login button");
+		
+		
+		loginICICBank(model.getUserName(), model.getPassword(), model.getAccountType(),false);
 		staticWait(200);
 		remarksTextfield=fluentWaitCodeXpath("//input[@title='Remark']", "Remark textfield");
 		clearAndSendKey(remarksTextfield, model.getRemarks(), "Remark textfield");
@@ -119,6 +116,25 @@ public class Payment extends SeleniumCoder{
 		clearAndSendKey(debitCardNo, model.getDebitCardNo(),"Debit cardNo textfield");
 		payButton=fluentWaitCodeXpath("//input[@value='Pay']", "Pay Button");
 		clickElement(payButton, "Pay Button");
+	}
+	
+	public String loginICICBank(String userId,String password,String accountType,boolean failOrNot) {
+		Reporter.log("===> loginICICBank <===", true);
+		if(accountType.equalsIgnoreCase("branchfree")) {
+			baranchFreeRadioButton=fluentWaitCodeXpath("//input[@title='b2 - branchfree banking A/c']", "Baranch free radio button");
+			clickElement(baranchFreeRadioButton, "Baranch free radio button");
+		}
+		userIdTextField=fluentWaitCodeXpath("//input[@title='User Id']", "UserId Textfield");
+		clearAndSendKey(userIdTextField,userId, "UserId Textfield");
+		passwordTextField=fluentWaitCodeXpath("//input[@title='Password']", "Password textfield");
+		clearAndSendKey(passwordTextField,password,  "Password textfield");
+		loginButton=fluentWaitCodeXpath("//input[@class='login_button']", "Login Button");
+		clickElement(loginButton, "Login button");
+		if(failOrNot) {
+			errorMsgLable=fluentWaitCodeXpath("", "");
+					errorMsg=fetchTextFromElement(errorMsgLabel);
+		}
+		return errorMsg;
 	}
 	
 	public List<String> atomPayment(String accountNo,FundTransferModel model,String optionAfterTransfer,Boolean failureOrSuccess) {
@@ -136,7 +152,7 @@ public class Payment extends SeleniumCoder{
 		if(!accountNo.equalsIgnoreCase("No")) {
 			browserPopup(true);
 		
-		fundTransferResult(accountNo, model,"Atom",optionAfterTransfer);
+		fundTransferResult(accountNo, model,"Atom",optionAfterTransfer,failureOrSuccess);
 		}
 		return detailList;
 	}
@@ -154,7 +170,7 @@ public class Payment extends SeleniumCoder{
 		successButtonRazor=fluentWaitCodeXpath("//button[text()='Success']", "Razor Success button");
 		clickElement(successButtonRazor, "Razor Success button");
 		 }
-		fundTransferResult(accountNo, model,"Razor",optionAfterTransfer);
+		fundTransferResult(accountNo, model,"Razor",optionAfterTransfer,failureOrSuccess);
 	}
 	
 	
@@ -191,10 +207,13 @@ public class Payment extends SeleniumCoder{
 	
 	
 	
-	public void fundTransferResult(String accountNo,FundTransferModel model,String transferMode,String optionAfterTransfer) {
+	public void fundTransferResult(String accountNo,FundTransferModel model,String transferMode,String optionAfterTransfer,Boolean failureOrSuccess) {
 		Reporter.log("===> fundTransferResult <===", true);
 		staticWait(2000);
-		fundTransferSccessfullyMsg=fluentWaitCodeXpath("//label[@class='successInfo']//label", "fund transfer successful msg");
+		if(failureOrSuccess)
+			fundTransferSccessfullyMsg=fluentWaitCodeXpath("//label[@class='successInfo']//label", "fund transfer successful msg");
+		else
+			fundTransferFailMsg=fluentWaitCodeXpath("//label[text()='Fund transfer failed']", "Fund transfer failed label");
 		if(fundTransferSccessfullyMsg!=null) {
 			fundTransferPagePASS(accountNo, model,optionAfterTransfer);
 		}else {
@@ -202,13 +221,23 @@ public class Payment extends SeleniumCoder{
 		}
 	}
 	
-	public String enterKotakCredential(String crnStr,String pinStr,Boolean confirmOrNot) {
+	public String enterKotakCredential(String crnStr,String pinStr,String otpStr,Boolean confirmOrNot) {
 		crnNoTextfield=fluentWaitCodeXpath("//input[@id='crn']", "crnNoTextfield");
 		clearAndSendKey(crnNoTextfield, crnStr,"crnNoTextfield");
 		mPinTextfield=fluentWaitCodeXpath("//input[@id='pswd']", "mPinTextfield");
 		clearAndSendKey(mPinTextfield, pinStr,"mPinTextfield");
+		
 		secureLoginButton=fluentWaitCodeXpath("//a[@id='secure-login01']", "Secure Login button");
 		clickElement(secureLoginButton, "Secure Login button");
+		screenshotStr=ScreenshortProvider.captureScreen(driver, "KotakOTPPage");
+		//browserPopup(true);
+		//checkPopupPresentIfYesHandly(true);
+		otpTextfield=fluentWaitCodeXpath("//input[@type='password']",100, "OTP textfield");
+		if(otpTextfield!=null) {
+			clearAndSendKey(otpTextfield, otpStr, "OTP textfield");
+			verifyButton=fluentWaitCodeXpath("//a[text()='Verify']", "verify button");
+			clickElement(verifyButton, "Verify button");
+		}
 		screenshotStr=ScreenshortProvider.captureScreen(driver, "KotakConfirmationPage");
 		confirmButton=fluentWaitCodeXpath("//h3[text()='Transaction Details']//preceding::a[@id='next-step2']", "confirm Button");
 		cancelButton=fluentWaitCodeXpath("//h3[text()='Transaction Details']//preceding::a[@id='cancelEnable']", "Cancel Button");
@@ -227,10 +256,10 @@ public class Payment extends SeleniumCoder{
 	private void payementForKotak(FundTransferModel model,String accountNo,String optionAfterTransfer) {
 		Reporter.log("===> payementForKotak <====", true);
 		detailList.add("Transcation mode : Native-PASS");
-		enterKotakCredential(model.getUserName(),model.getPassword(),true);
+		enterKotakCredential(model.getUserName(),model.getPassword(),"123456",true);
 		detailList.add(screenshotStr);
 		//model.setBank("Kotak Mahindra");
-		fundTransferResult(accountNo, model,"Native",optionAfterTransfer);
+		fundTransferResult(accountNo, model,"Native",optionAfterTransfer,true);
 	}
 	
 	public void fundTransferPagePASS(String accountNo,FundTransferModel model,String optionAfterTransfer) {
@@ -435,11 +464,11 @@ public class Payment extends SeleniumCoder{
 	}
 	
 	public void compareBalanceWithSeeMargin(String amount,String result) {
-		Reporter.log("===> addFundTransferAmount <===", true);
+		Reporter.log("===> compareBalanceWithSeeMargin <===", true);
 		detailList.add(ScreenshortProvider.captureScreen(driver, "SeeMarginTabCompareBalance"));
-		seeMarginBalance=fluentWaitCodeXpath("//*[@id='myModal']/div/div/div[3]/div[2]/div[4]/div/div[2]/div[1]/div[2]/div/div[2]/div[2]/label/span", "See margin balance");
-		String seeMarginUpdateBalance=fetchTextFromElement(seeMarginBalance);
-		String addAmount=help.bigDataAddition(FundTransferBankExecution.seeMarginBalanceStr, amount);
+		
+		String seeMarginUpdateBalance=fundTransferCommon.seeMarginClearCashBalance();
+		String addAmount=help.bigDataAddition(FundTransferBankExecution.seeMarginBalanceString, amount);
 		
 		
 		 if(result.equalsIgnoreCase("PASS"))

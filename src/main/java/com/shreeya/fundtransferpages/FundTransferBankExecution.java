@@ -14,6 +14,7 @@ import com.shreeya.MyTestLauncher;
 import com.shreeya.model.FundTransferModel;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
+import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.SeleniumCoder;
 
 public class FundTransferBankExecution extends SeleniumCoder{
@@ -28,9 +29,11 @@ public class FundTransferBankExecution extends SeleniumCoder{
 	String [] reportArray;
 	WebElement seeMarginTab;
 	String errorMsg;
-	public static String seeMarginBalanceStr;
+	public static String seeMarginBalanceString;
 	FundTransferReport report;
 	private WebElement seeMarginBalance;
+	FundTransferCommon common;
+	private String seeMarBalScreenshot;
 	
 	public FundTransferBankExecution(WebDriver driver){
 		super(driver);
@@ -39,35 +42,28 @@ public class FundTransferBankExecution extends SeleniumCoder{
 		csvFundTransferIterator=csvReader.FundTransferDataProvider();
 		fundTranferPage=new FundTransferPage(driver);
 		folderPathArray=MyTestLauncher.reportFolderPath;
-		
+		common=new FundTransferCommon(driver);
 	}
 	
-	public String seeMarginClearCashBalance() {
-		String seeMarginBalanceStr="";
-		do {
-		seeMarginBalance=fluentWaitCodeXpath("//*[@id='myModal']/div/div/div[3]/div[2]/div[4]/div/div[2]/div[1]/div[2]/div/div[2]/div[2]/label/span", "See margin balance");
-		seeMarginBalanceStr=fetchTextFromElement(seeMarginBalance);
-		staticWait(100);
-		}while(seeMarginBalance==null);
-		return seeMarginBalanceStr;
-	}
+	
 	
 	public void fundTransferExecute(FundTransferReport report) {
+		Reporter.log("<b>=======@@>  fundTransferExecute <@@=======</b>", true);
 		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
 		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
 		 clickElement(seeMarginTab, "See margin tab");
-		 seeMarginBalanceStr=seeMarginClearCashBalance();
+		 seeMarginBalanceString=common.seeMarginClearCashBalance();
 		
-		
+		 seeMarBalScreenshot=ScreenshortProvider.captureScreen(driver, "SeeMarginBeforeExecution");
 		
 		
 		  while(csvFundTransferIterator.hasNext()){
 			  
 			  clickElement("//a[text()='Fund Transfer']", "Fund Transfer Tab");
 		  fundTransferModel=csvFundTransferIterator.next();
-		  Reporter.log("<a><font color='Yellow'>=========@@@@ FundTransfer_"+fundTransferModel.getReferNo()+" @@@@========</font></a>", true);
+		  
 		  try {
-		  fundTranferPage.fundTransferexecute(fundTransferModel,report);
+		  fundTranferPage.fundTransferexecute(fundTransferModel,report,seeMarBalScreenshot);
 		  }catch(ElementNotInteractableException e) {
 			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
 			  backFundTransferPage();

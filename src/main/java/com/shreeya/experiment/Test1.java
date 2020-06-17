@@ -1,13 +1,19 @@
 package com.shreeya.experiment;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Test1 {
 	
+	
+	
+	
 	public static void main(String[] args) {
-		int i=0;
-		do {
-		System.out.println(i++);	
-		}while(i<10);
+		
+		String intStr="-20";
+		float fNo=Float.valueOf(intStr);
+		System.out.println(fNo);
+		
 	}
 }
