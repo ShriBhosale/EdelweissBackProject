@@ -202,10 +202,10 @@ public class WatchListSorting extends SeleniumCoder{
 	
 	public ExtendReporter sortingScenarioExecute(String segment,ExtendReporter report) {
 		Reporter.log("<b>====> sortingScenarioExecute <=====</b>", true);
-		common.redirectToWatchListModule();
+		common.redirectToWatchListModule(true);
 		if(segment.equalsIgnoreCase("Equity")) {
-			watchListName="my";
-			common.watchListtabNotFound("my", "check","BSE");
+			watchListName="MarketWatch";
+			common.watchListtabNotFound("MarketWatch", "check","BSE");
 			
 			  lastTradePriceSorting(watchListName); 
 			  volumeSorting(watchListName);

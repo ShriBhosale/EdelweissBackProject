@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.fundtransferpages.FundTransferCommon;
 import com.shreeya.model.WatchListModel;
 import com.shreeya.orderdetailpages.OrderDetail;
 import com.shreeya.util.ExtendReporter;
@@ -47,6 +49,7 @@ public class WatchListPage extends SeleniumCoder {
 	WebElement addScriptDropDownOption;
 	WebElement createButton;
 	WebElement cancelButton;
+	
 		public static String createWatchListPath;
 	public static String deleteWatchListPath;
 	public static List<String> exchangeList;
@@ -84,10 +87,27 @@ public class WatchListPage extends SeleniumCoder {
 	WatchListStepVerify watchListStepVerify;
 	WatchListCommon watchListCommon;
 	WatchListQuotePage watchListCodePage;
+	
 	OrderDetail orderDetail;
 	Help help;
 
 	String[] verfiyArray = { "verify", "verifyCount" };
+
+	private String createButtonMsg;
+
+	private WebElement deleteWatchListButton;
+
+	private WebElement okDeleteButton;
+
+	private String text;
+
+	private String xpathString;
+
+	private WebElement addScriptPopupTitle;
+
+	private WebElement popupErrorMsg;
+
+	private WebElement tradeButton;
 	private static int count = 0;
 
 	public WatchListPage(WebDriver driver) {
@@ -106,12 +126,14 @@ public class WatchListPage extends SeleniumCoder {
 		help = new Help();
 		orderDetailArray = null;
 		watchListCodePage=new WatchListQuotePage(driver);
+
 	}
 
 	public WatchListPage() {
 	}
 
 	public void checkWatchListTextfield(WatchListModel model) {
+		Reporter.log("=====> checkWatchListTextfield <=====", true);
 		errorList=new ArrayList<String>();
 		newWatchListTab = fluentWaitCodeXpath("//span[text()='New Watchlist']", "New Watchlist tab");
 		clickUsingAction(newWatchListTab, "New Watch list tab");
@@ -125,11 +147,15 @@ public class WatchListPage extends SeleniumCoder {
 		}
 		clearAndSendKey(watchListNameTextfield, "", "WatchListName Textfield");
 		createButton=fluentWaitCodeXpath("//button[text()='Create']", "Create button");
+		if(createButton.isEnabled()==false) {
+			createButtonMsg="Please enter wathclist name-PASS";
+		}
+		checkClickableOrNot(createButton,  "Create button");
 		if(createButton.isDisplayed()) {
 			errorList.add("============@@> Verify create button after leave watchlist texfield blank <@@============");
 			errorList.add(ScreenshortProvider.captureScreen(driver, "blankTextfieldWithCreateButton"));
 			clearAndSendKey(watchListNameTextfield, "Watchlist","WatchList textfield");
-			errorList.add("Please enter wathclist name-FAIL");
+			errorList.add(createButtonMsg);
 			errorList.add(ScreenshortProvider.captureScreen(driver, "writeTextfieldWithCreateButton"));
 			clearTextfield(watchListNameTextfield,"WatchList textfield");
 			if(createButton.isDisplayed()) {
@@ -147,7 +173,7 @@ public class WatchListPage extends SeleniumCoder {
 			model.setWatchListName(noWatchName);
 			errorList.add("============@@> Verify User can create watchList using only number <@@============");
 			
-			createWatchList(model);
+			createWatchList(model,false);
 			errorList.add(ScreenshortProvider.captureScreen(driver, "AfterAdding"+noWatchName+"Watchlist"));
 			String watchListName=watchListCommon.pageVerify(model, "WatchListTestField");
 			errorList.add("WatchList name : "+help.commpareTwoString(watchListName, noWatchName));
@@ -157,7 +183,7 @@ public class WatchListPage extends SeleniumCoder {
 		clickElement(createButton, "Create buttons");
 		}
 	}
-	public void createWatchList(WatchListModel model){
+	public void createWatchList(WatchListModel model,boolean duplicateOrNot){
 
 		count++;
 		Reporter.log(model.toString(), true);
@@ -188,13 +214,13 @@ public class WatchListPage extends SeleniumCoder {
 			// Watchlist tab");
 			staticWait(2000);
 			
-			newWatchListTab = fluentWaitCodeXpath("//span[text()='New Watchlist']", "New Watchlist tab");
-
-			// newWatchListTab=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/ul/li[1]/a/span[2]",
-			// "New Watchlist tab");
-			// clickElement(newWatchListTab, "New Watch list tab");
-			clickUsingAction(newWatchListTab, "New Watch list tab");
-			staticWait(3000);
+			/*
+			 * newWatchListTab = fluentWaitCodeXpath("//span[text()='New Watchlist']",
+			 * "New Watchlist tab"); clickUsingAction(newWatchListTab,
+			 * "New Watch list tab");
+			 */
+			watchListCommon.clickNewWatchListButton();
+			//staticWait(3000);
 			watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]","WatchListName Textfield");
 
 			if (watchListNameTextfield == null) {
@@ -211,7 +237,10 @@ public class WatchListPage extends SeleniumCoder {
 			}
 			clickElement("//button[text()='Create']", "Create buttons");
 			model.setWatchListName(watchListName);
-			addScript(model, "create");
+			if(duplicateOrNot)
+				addScript(model, "createDuplicate");
+			else
+				addScript(model, "create");
 			watchListCommon.pageVerify(model, "Create");
 		}
 		/*
@@ -233,8 +262,7 @@ public class WatchListPage extends SeleniumCoder {
 		staticWait(500);
 		errorList.add("Delete watchList");
 		errorList.add("WatchList Name : " + model.getWatchListName());
-		String deleteButtonxpath = "//span[text()='New Watchlist']//following::li//a[text()='"
-				+ model.getWatchListName() + "']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
+		String deleteButtonxpath = "//a[text()='"+ model.getWatchListName() + "']//following::span[@data-target='#deletePopup'][1]";
 		String defaultWatchxpath = "//span[text()='New Watchlist']//following::li//a[text()='"
 				+ model.getWatchListName() + "']//following::ul//li//span[@class='fa fa-star']";
 		defaultWatchList = fluentWaitCodeXpath(defaultWatchxpath, 30, "Default WatchList tab");
@@ -252,8 +280,10 @@ public class WatchListPage extends SeleniumCoder {
 					deleteOption = "not present";
 
 			}
-			clickElement("//button[text()='Delete']", "delete button");
-			clickElement("//button[text()='Ok']", "Ok button");
+			deleteWatchListButton=fluentWaitCodeXpath("//button[text()='Delete']",200, "delete button");
+			clickElement(deleteWatchListButton, "delete button");
+			okDeleteButton=fluentWaitCodeXpath("//button[text()='Ok']",200, "Ok button");
+			clickElement(okDeleteButton, "Ok button");
 			errorList.add(model.getWatchListName() + " watchList deleted sccessfully....." + "-Check");
 		}
 
@@ -287,12 +317,13 @@ public class WatchListPage extends SeleniumCoder {
 	}
 
 	public void addScript(WatchListModel model, String step) {
+		Reporter.log("====> add Script ====>", true);
 		List<String> errList=new ArrayList<String>();
 		verifyScriptArray = help.commaSeparater(model.getVerifyScript());
 		String xpathString = "no xpath for script";
 		String dropdownOptionStr = null;
 		String text = null;
-		if (step.equalsIgnoreCase("Create")) {
+		if (step.equalsIgnoreCase("Create")||step.equalsIgnoreCase("createDuplicate")) {
 		if (model.getExchange().equalsIgnoreCase("NCDEX") || model.getExchange().equalsIgnoreCase("MCX")) {
 			dropdownOptionStr = "//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/div/ul[1]/li/a[text()='"
 					+ model.getScriptName() + " (" + model.getExchange() + ")" + "']";
@@ -306,8 +337,9 @@ public class WatchListPage extends SeleniumCoder {
 		
 			text = "Add a Scrip to " + model.getWatchListName();
 			xpathString = "//h4[text()='" + text + "']//following::input[3]";
+			Reporter.log("xpath string: "+xpathString+" create");
 
-		} else if (step.equalsIgnoreCase("AddScript")) {
+		} else if (step.equalsIgnoreCase("AddScript")||step.equalsIgnoreCase("duplicateAddScript")) {
 
 			if (model.getExchange().equalsIgnoreCase("NCDEX") || model.getExchange().equalsIgnoreCase("MCX")) {
 				text = "Add a Scrip to ";
@@ -317,16 +349,24 @@ public class WatchListPage extends SeleniumCoder {
 				dropdownOptionStr = "//*[@id='addScripPopup']/div/div/div[2]/div/div/div/div/ul/li[1]/a[text()='"+ model.getScriptName() + "']";
 			}
 			xpathString = "//h4[text()='" + text + "']//following::input";
+			Reporter.log("xpath string: "+xpathString+" AddScript");
 		}
 		staticWait(600);
 		addScriptTextfield = fluentWaitCodeXpath(xpathString, "Add Script textfield");
-		staticWait(600);
+		staticWait(1200);
 		if (model.getExchange().equalsIgnoreCase("NCDEX") || model.getExchange().equalsIgnoreCase("MCX")) {
 			clearAndSendKey(addScriptTextfield, model.getScriptName(), "Add Script textfield");
 		} else {
-			clearAndSendKey(addScriptTextfield, model.getScriptName(), "Add Script textfield");
+			try {
+				//addScriptTextfield.click();
+			//clearAndSendKey(addScriptTextfield, model.getScriptName(), "Add Script textfield");
+			//explicityWaitSendKey(xpathString, "Add Script textfield",model.getScriptName());
+				senkeyJavaScript(addScriptTextfield, model.getScriptName());
+			}catch (ElementNotInteractableException e) {
+				explicityWaitSendKey("//label[text()='Name Your Watchlist']//following::input[2]", "Add Script textfield",model.getScriptName());
+			}
 		}
-		addScriptDropDownOption=fluentWaitCodeXpath(dropdownOptionStr, "Script dropdown Option");
+		addScriptDropDownOption=fluentWaitCodeXpath(dropdownOptionStr,200,"Script dropdown Option");
 		try {
 		clickElement(addScriptDropDownOption, model.getScriptName() + "Dropdown option");
 		}catch(StaleElementReferenceException e) {
@@ -344,14 +384,25 @@ public class WatchListPage extends SeleniumCoder {
 		 * for(int i=0;i<errList.size();i++) { Reporter.log(errList.get(i),true);
 		 * errorList.add(errList.get(i)); }
 		 */
-		clickElement("//h4[text()='" + text + "']//following::button[2]", "Add Script button");
+		addScriptButton=fluentWaitCodeXpath("//h4[text()='" + text + "']//following::button[2]", "Add Script button");
+		clickElement(addScriptButton, "Add Script button");
 		staticWait(500);
 		// clickElement("//button[text()='Ok']", "OK button");
 		okButton = fluentWaitCodeXpath("//button[text()='Ok']", 40, "Ok button");
 		if (okButton != null) {
+			popupErrorMsg=fluentWaitCodeXpath("//button[text()='Ok']//preceding::p[1]",30,"Popup error msg");
+			if(popupErrorMsg!=null) {
+				if(step.equalsIgnoreCase("Create")) {
+					
+					errorList.add(help.commpareTwoString(fetchTextFromElement(popupErrorMsg), " Watchlist Name Already Exists!"));
+				}else {
+					errorList.add(help.commpareTwoString(fetchTextFromElement(popupErrorMsg), " You are trying to add a symbol which already exists in your watchlist."));
+				}
+			errorList.add(ScreenshortProvider.captureScreen(driver, "duplicateMsg"));
+			}
 			clickElement(okButton, "Ok button");
 		} else {
-			if (step.equalsIgnoreCase("addScript")) {
+			if (step.equalsIgnoreCase("addScript")||step.equalsIgnoreCase("duplicateAddScript")) {
 				errorList.add("Trading Sysmbol : " + verifyScriptArray[0]);
 				errorMsg = model.getScriptName()
 						+ " script already present. User should not be allowed to add duplicate script.-PASS";
@@ -368,6 +419,7 @@ public class WatchListPage extends SeleniumCoder {
 			staticWait(50);
 			driver.navigate().refresh();
 		}
+		
 	}
 
 	public void verifyCode(WatchListModel model, String verifyNo, int rowStartCount) {
@@ -421,7 +473,7 @@ public class WatchListPage extends SeleniumCoder {
 		scriptNameArray = help.commaSeparater(model.getVerifyScript());
 		int scriptCount = scriptNameArray.length + 2;
 		for (int i = 2; i < scriptCount; i++) {
-			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i+ "]/div[1]/div[1]/a","Script Name");
+			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a","Script Name");
 			scriptName = fetchTextFromElement(scriptNameLabel);
 			if (scriptName.contains(scriptNameArray[scriptNameArray.length - 1])) {
 				Reporter.log("Script : " + scriptArray[scriptArray.length - 1]);
@@ -431,13 +483,11 @@ public class WatchListPage extends SeleniumCoder {
 
 				// errorList.add("TradingSysmbol : "+scriptNameArray[scriptNameArray.length-1]);
 
-				String scriptBox = "//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i
-						+ "]/div[1]/div[1]/div[1]/input";
+				String scriptBox = "//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div/div[1]/div[1]/input";
 
 				scriptCheckBox = fluentWaitCodeXpath(scriptBox, "Script checkBox");
 				if (scriptCheckBox == null) {
-					scriptBox = "//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i
-							+ "]/div[1]/div[1]/div[2]/input";
+					scriptBox = "//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/div[2]/input";
 					scriptCheckBox = fluentWaitCodeXpath(scriptBox, "Script checkBox");
 				}
 				clickElement(scriptCheckBox, "ScriptCheckBox");
@@ -448,11 +498,11 @@ public class WatchListPage extends SeleniumCoder {
 		if (scriptNameArray.length == 1) {
 			errorList.add("You can't delete beacause this watchList contain only single script -" + "PASS");
 		} else {
-			deleteButton = fluentWaitCodeXpath("//a[text()='Delete Scrip']", "Delete Button");
+			deleteButton = fluentWaitCodeXpath("//a[text()='Delete Scrip']",200,"Delete Button");
 			clickElement(deleteButton, "Delete Button");
-			popupDeleteButton = fluentWaitCodeXpath("//button[text()='Delete']", "popup Delete Button");
+			popupDeleteButton = fluentWaitCodeXpath("//button[text()='Delete']",200,"popup Delete Button");
 			clickElement(popupDeleteButton, "popup Delete Button");
-			deleleokButton = fluentWaitCodeXpath("//button[text()='Ok']", "Ok button");
+			deleleokButton = fluentWaitCodeXpath("//button[text()='Ok']",200,"Ok button");
 			clickElement(deleleokButton, "Ok button");
 			watchListCommon.pageVerify(model, "AddScript");
 			errorList.add(ScreenshortProvider.captureScreen(driver, "AfterScriptDelete"));
@@ -546,45 +596,71 @@ public class WatchListPage extends SeleniumCoder {
 			clickElement(addScriptButton, "Add script button");
 		} catch (ElementClickInterceptedException e) {
 			staticWait(600);
+			if (model.getExchange().equalsIgnoreCase("NCDEX") || model.getExchange().equalsIgnoreCase("MCX")) {
+				text = "Add a Scrip to ";
+				
+			} else {
+				text = "Add a Scrip to " + model.getWatchListName().toUpperCase();
+				
+			}
+			xpathString = "//h4[text()='" + text + "']";
+			addScriptPopupTitle=fluentWaitCodeXpath(xpathString, "add script popup title");
+			if(addScriptPopupTitle==null) {
 			addScriptButton = fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add script button");
 			clickElement(addScriptButton, "Add script button");
+			}
 		}
-		addScript(model, "addScript");
+		addScript(model, "duplicateAddScript");
 
 	}
 
 	private List<String> tradingWatchList(WatchListModel model) {
 		Reporter.log("=============> tradingWatchList <============", true);
 		
-		
 		errorList = new ArrayList<String>();
 		watchListCommon.pageVerify(model, "Trading");
 		String tradeButtonxpath;
 		// predefineWatchListDetail=new ArrayList<String>();
 		// clickOnPredefineWatchList(model);
-		String scriptName = help.tradeXpath(help.removeFutureFromScript(model.getScriptName()));
-		if (model.getScriptName().contains("Future")) {
-			tradeButtonxpath = "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname='"+ help.removeFutureFromScript(model.getScriptName()) + "']";
-		} else {
-			if (model.getExchange().equalsIgnoreCase("MCX") || model.getExchange().equalsIgnoreCase("NCDEX")) {
-				tradeButtonxpath = "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname='"+ help.removeFutureFromScript(model.getScriptName()) + "']";
-			} else {
-				tradeButtonxpath = "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "
-						+ help.removeFutureFromScript(model.getScriptName()) + " ']";
+		/*
+		 * String scriptName =
+		 * help.tradeXpath(help.removeFutureFromScript(model.getScriptName())); if
+		 * (model.getScriptName().contains("Future")) { tradeButtonxpath =
+		 * "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname='"+
+		 * help.removeFutureFromScript(model.getScriptName()) + "']"; } else { if
+		 * (model.getExchange().equalsIgnoreCase("MCX") ||
+		 * model.getExchange().equalsIgnoreCase("NCDEX")) { tradeButtonxpath =
+		 * "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname='"+
+		 * help.removeFutureFromScript(model.getScriptName()) + "']"; } else {
+		 * tradeButtonxpath =
+		 * "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' " +
+		 * help.removeFutureFromScript(model.getScriptName()) + " ']"; } } try {
+		 * 
+		 * WebElement tradeButton = fluentWaitCodeXpath(tradeButtonxpath, 30,
+		 * "Trading button"); if (tradeButton == null) {
+		 * 
+		 * tradeButtonxpath =
+		 * "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' " +
+		 * scriptName + " ']"; tradeButton = fluentWaitCodeXpath(tradeButtonxpath,
+		 * "Trading button"); } clickElement(tradeButton, model.getScriptName() +
+		 * " Trade button");
+		 */
+		
+		scriptNameArray = help.commaSeparater(model.getVerifyScript());
+		int scriptCount = scriptNameArray.length + 2;
+		for (int i = 2; i < scriptCount; i++) {
+			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a","Script Name");
+			scriptName = fetchTextFromElement(scriptNameLabel);
+			if (scriptName.contains(scriptNameArray[scriptNameArray.length - 1])) {
+				Reporter.log("Script : " + scriptArray[scriptArray.length - 1]);
+				tradeButton=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[11]/a", "trade button");
+				clickElement(tradeButton, "ScriptCheckBox");
+				break;
 			}
+
 		}
-		try {
-
-			WebElement tradeButton = fluentWaitCodeXpath(tradeButtonxpath, 30, "Trading button");
-			if (tradeButton == null) {
-
-				tradeButtonxpath = "//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' " + scriptName
-						+ " ']";
-				tradeButton = fluentWaitCodeXpath(tradeButtonxpath, "Trading button");
-			}
-			clickElement(tradeButton, model.getScriptName() + " Trade button");
 			orderPlaceSearchTextField = fluentWaitCodeXpath("//input[@id='tocsearch']", "Order Place Textfield");
-			scriptNametext = fetchTextFromElement(orderPlaceSearchTextField);
+			scriptNametext =getValueFromAttribute(orderPlaceSearchTextField, "value", "Place order textfield");
 			Reporter.log("orderPlaceSearchTextField : " + scriptNametext, true);
 			String orderPageScreenshot=predefineWatchList.placeOrder(model);
 			errorList.add(orderPageScreenshot);
@@ -603,10 +679,10 @@ public class WatchListPage extends SeleniumCoder {
 				errorList = orderDetail.commodityorderDetail(model);
 			}
 
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			/*
+			 * } catch (InterruptedException e) { // TODO Auto-generated catch block
+			 * e.printStackTrace(); }
+			 */
 
 		errorList.add(ScreenshortProvider.captureScreen(driver, "watchList"));
 		closeButton = fluentWaitCodeXpath(driver, "//*[@id='myModal']/div/div/div[1]/a", 5, "Close Button (x)");
@@ -625,7 +701,7 @@ public class WatchListPage extends SeleniumCoder {
 
 	
 	public Map<String, List<String>> watchListExecution(WatchListModel model, ExtendReporter reporter)
-			 {
+	{
 		rowStartCount = 0;
 		// model.setScriptName(model.getFullScriptName());
 		List<String> stepsList = watchListKeyword.keywordProccess(model.getPredefineWatchList());
@@ -636,11 +712,7 @@ public class WatchListPage extends SeleniumCoder {
 		boolean newRowFlag = true;
 		rowStartCount++;
 		Reporter.log("Row Start count ======>> " + rowStartCount, true);
-		/*
-		 * model.setWatchListName("Auto3"); model.setExchange("BSE");
-		 * model.setScriptName("Tata Consumer Products Ltd");
-		 */
-
+		watchListCommon.checkCureentPageWatchListOrNot();
 		for (String steps : stepsList) {
 
 			verfiyArray = verifyNo(steps);
@@ -649,7 +721,7 @@ public class WatchListPage extends SeleniumCoder {
 			switch (steps) {
 
 			case "Create":
-				createWatchList(model);
+				createWatchList(model,false);
 				break;
 
 			case "Delete":
@@ -668,6 +740,9 @@ public class WatchListPage extends SeleniumCoder {
 				break;
 			case "DeleteScript":
 				deleteScript(model);
+				break;
+			case "CreateDuplicate":
+				createWatchList(model,true);
 				break;
 			case "DuplicateScript":
 				duplicateScript(model);

@@ -34,6 +34,7 @@ public class WatchListExecution extends SeleniumCoder{
 	WatchListPage watchListPage;
 	WatchListReport watchListReport;
 	ReportWatchlist watchListReport1;
+	WatchListCommon common;
 	public WatchListExecution(WebDriver driver){
 		super(driver);
 		CsvReaderCode csvReader=new CsvReaderCode();
@@ -42,25 +43,22 @@ public class WatchListExecution extends SeleniumCoder{
 		this.driver=driver;
 		watchListReport=new WatchListReport();
 		watchListReport1=new ReportWatchlist();
+		common=new WatchListCommon(driver);
 	}
 	
 	public ExtendReporter watchListExecute(ExtendReporter reporter)  {
 		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']", "Close popup button");
 		clickElement(closePopupButton,  "Close popup button");
-		hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
-		WebElement watchlistTitle=fluentWaitCodeXpath("//h3[text()='Watchlist']",30, "WatchList title");
-		if(watchlistTitle==null) {
-			hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
-		}
+		common.redirectToWatchListModule(true);
 		
-		pageRefresh();
+		
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
 			List<String> watchListDetail=new ArrayList<String>();
 			Map<String,List<String>> verfiyMap=new HashMap<String,List<String>>();
 			try {
-				Reporter.log("<h2>ExcelRow"+model.getReferNo()+" Start Execution</h2>", true);
-				Reporter.log("<h2>"+model.toString()+"</h2>", true);
+				Reporter.log("<b>ExcelRow"+model.getReferNo()+" Start Execution</b>", true);
+				Reporter.log("<b>"+model.toString()+"</b>", true);
 				verfiyMap=watchListPage.watchListExecution(model,reporter);
 			}catch(NullPointerException e) {
 				reporter=continueExecution(reporter,model,driver);

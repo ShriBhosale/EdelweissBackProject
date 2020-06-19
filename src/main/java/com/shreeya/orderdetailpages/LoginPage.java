@@ -106,7 +106,7 @@ public class LoginPage extends SeleniumCoder {
 				Reporter.log("Before userId", true);
 				Reporter.log("LoginModel data " + loginModelObject.toString(), true);
 				
-				userIdTextField = fluentWaitCodeId(driver, "userID", 50);
+				userIdTextField = fluentWaitCodeId(driver, "userID", 100);
 				
 				Reporter.log("After locate userId", true);
 			} catch (TimeoutException e) {

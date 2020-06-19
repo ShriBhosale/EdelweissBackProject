@@ -105,6 +105,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	}
 	
 	public void checkDeleteOptionForWatchList(String watchListName) {
+		Reporter.log("=====> checkDeleteOptionForWatchList <=====", true);
 		common.watchListtabNotFound(watchListName, "check", configReader.configReaderWL("Exchange"));
 		detailList.add(ScreenshortProvider.captureScreen(driver, watchListName+"DeleteOptionPresentOrNot"));
 		String xpath="//*[@id='contentCntr']/div/div/div[1]/ul/li/a[text()='"+watchListName+"']//following::ul[@class='action-button hidden-xs']";
@@ -116,17 +117,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		
 		
 	}
-	public void clickNewWatchListButton() {
-		Reporter.log("===> clickNewWatchListButton <===", true);
-		int newWatchListTabCount=0;
-		do {
-			newWatchListTabCount++;
-			newWatchListTab=fluentWaitCodeXpath("//span[text()='New Watchlist']", "New watchList tab");	
-			clickUsingAction(newWatchListTab, "New watchList tab");
-			staticWait(1000);
-			createWatchListPopupTitle=fluentWaitCodeXpath("//h4[text()='Create a Watchlist']//following::a[1]",20, "create watchList popup title");
-		}while(createWatchListPopupTitle!=null && newWatchListTabCount==5);
-	}
+	
 	
 	public String enterWatchListTextfield(String watchListName) {
 		Reporter.log("===> enterWatchListTextfield <===", true);
@@ -174,7 +165,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	
 	public void watchListCreate(String watchListName,String step,boolean clickCancelOrNot,boolean watchListDeleteOrNot) {
 		Reporter.log("===> watchListCreate <===", true);
-		clickNewWatchListButton();
+		common.clickNewWatchListButton();
 		enterWatchListTextfield(watchListName);
 		
 		cancelButtonEnableStr=elementEnableOrNot("//h4[text()='Create a Watchlist']//following::a[1]","Cancel button");
@@ -400,8 +391,9 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	public ExtendReporter watchListExtraScenarioExecute(String segment,ExtendReporter reporter) {
 		Reporter.log("<b>=====@@> watchListExtraScenarioExecute <@@=====</b>", true);
 		configReader.watchListConfig();
-		common.redirectToWatchListModule();
-		watchListTab(segment);
+		common.redirectToWatchListModule(true);
+		//watchListTab(segment);
+		
 		
 		
 		  watchListCreate("ABC3", "Create", true,false); checkWatchListCancelButton();
@@ -412,24 +404,17 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		  
 		  watchListCreate("watch@L", "Create", false,true);
 		  createSpecialCharWatchList("watch@L");
-		 
-		  watchListCreate("wat12L", "Create",false,true); 
+		  
+		  watchListCreate("wat12L", "Create",false,true);
 		  createNumberInBetWatchList("wat12L");
-		  
-		  
-	
+
 		  checkDelScrButOneScriptPresent("Auto10"); addScript("Auto10", "AddScript");
 		  common.deleteScript("Auto10", tradingSymbolArray, "deleteScript", "NSE");
 		  deleteMultipleScript();
-			  
-			  
-			  
+
 		  watchListCreate("Nowat", "No Scrip", false, false);
 		  withoutScripCreateWatchList(); printAddScriptButton();
-			  
-			 
-		
-		
+
 		checkDeleteOptionForDeviceAndPredefineWatchList(segment);
 		checkDuplicateScripPresentOrNot(segment);
 		reporter.watchListExtraScenario(detailList);

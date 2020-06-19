@@ -44,7 +44,7 @@ public class WatchListTestcase extends SeleniumCoder{
 		predefineWatchListNameList=new ArrayList<String>();
 		userDefineWatchListNameList=new ArrayList<String>();
 		List<String> watchListNameList=multipleElementsTextProvider("//a[@class='ng-binding']", "WatchList Name");
-		watchListNameList=help.removeDuplicateValueArrayList(watchListNameList);
+		watchListNameList=help.removeDuplicateValueArrayList(help.removeHtmlTags(watchListNameList));
 		for(String watchListName:watchListNameList) {
 			if((watchListName.equalsIgnoreCase("Nifty 50")||watchListName.equalsIgnoreCase("Sensex"))&&(segment.equalsIgnoreCase("Equity"))) {
 				predefineWatchListNameList.add(watchListName);
@@ -54,14 +54,14 @@ public class WatchListTestcase extends SeleniumCoder{
 				userDefineWatchListNameList.add(watchListName);
 			}
 		}
-		detailList.add("User created watchlist ");
+		detailList.add("<u>User created watchlist</u>");
 		for(String userDefineStr:userDefineWatchListNameList)
 			detailList.add(userDefineStr);
 		if(segment.equalsIgnoreCase("Equity")) {
-		detailList.add("Device Watchlist ");
+		detailList.add("<u>Device Watchlist</u>");
 		for(String deviceWatchList:deviceWatchListNameList)
 			detailList.add(deviceWatchList);
-		detailList.add("Predefined Watchlist");
+		detailList.add("<u>Predefined Watchlist</u>");
 		for(String predefineWatchList: predefineWatchListNameList)
 			detailList.add(predefineWatchList);
 		}
@@ -101,9 +101,12 @@ public class WatchListTestcase extends SeleniumCoder{
 			noOfScripStr=fetchTextFromElement("//span[@class='count ng-scope']",300,"No of script label");
 			scriptList=multipleElementLocator("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div[1]/div[1]/a", "Script list");
 			scriptCount=String.valueOf(scriptList.size());
-			
+			if(!scriptCount.equalsIgnoreCase("0"))
 			detailList.add(watchListNameStr+" : "+help.testStrContainInAppliStr(help.removeHtmlReporter(noOfScripStr), scriptCount));
-			detailList.add(ScreenshortProvider.captureScreen(driver, watchListNameStr+"noScript"));
+			else {
+				detailList.add(watchListNameStr+" : "+help.commpareTwoString(help.removeHtmlReporter(noOfScripStr), "Your WatchList doesnt have any scrips"));
+			}
+			detailList.add(ScreenshortProvider.captureScreen(driver, watchListNameStr));
 		}
 		
 		
@@ -123,7 +126,7 @@ public class WatchListTestcase extends SeleniumCoder{
 	
 	public ExtendReporter watchListTestcaseExecute(String segment,ExtendReporter repoter) {
 		Reporter.log("<b>======@@> watchListTestcaseExecute <@@===========<</b>", true);
-		common.redirectToWatchListModule();
+		common.redirectToWatchListModule(true);
 		checkWatchListPresence(segment);
 		checkAllScriptHaveTradeButton(segment, "pm");
 		checkNoOfScripInEveryWatchList(segment);

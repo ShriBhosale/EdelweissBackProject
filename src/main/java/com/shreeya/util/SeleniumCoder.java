@@ -53,9 +53,9 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	public void sendKey(WebElement element, String msg, String elementName){
 		/* Thread.sleep(2000); */
-
-		element.sendKeys(msg);
 		System.out.println("elementName : " + elementName + " msg : " + msg);
+		element.sendKeys(msg);
+		
 
 	}
 
@@ -142,24 +142,20 @@ public class SeleniumCoder extends ExceptionHandler {
 			element.sendKeys(msg);
 			Reporter.log("element : "+elementName+" msg : "+msg, true);
 		} catch (ElementNotInteractableException e1) {
-			elementNameError = elementName;
-			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
-			try {
-			elementNotInteractableExceptionHandling(element, elementName,msg);
 			
-			}catch(ElementNotInteractableException e) {
-				StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
-			Reporter.log("<b>Exception location : </b>", true);
-			for(StackTraceElement st:locaString) {
-				if(st.toString().contains("com.shreeya")) {
-					Reporter.log("<br>"+st.toString(), true);
-				}
-			}
-			}
-			
-			
-		}catch (StaleElementReferenceException e) {
+			  elementNameError = elementName;
+			  Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true); try
+			  { elementNotInteractableExceptionHandling(element, elementName,msg);
+			  
+			  }catch(ElementNotInteractableException e) { StackTraceElement []
+			  locaString=e.getStackTrace(); Reporter.log("<b>Exception Name : </b>" +
+			  e.toString() + "<br><b>Element Name : </b>" + elementName,true);
+			  Reporter.log("<b>Exception location : </b>", true); for(StackTraceElement
+			  st:locaString) { if(st.toString().contains("com.shreeya")) {
+			  Reporter.log("<br>"+st.toString(), true); } } }
+			  
+			  
+			 }catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName,true);
@@ -659,12 +655,9 @@ public class SeleniumCoder extends ExceptionHandler {
 	public void explicityWaitMethod(WebElement element, String elementName,String msg) {
 		if(!msg.equalsIgnoreCase("No")) {
 		WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
-		wait.until(ExpectedConditions.visibilityOf(element));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
 		wait.until(ExpectedConditions.textToBePresentInElementValue(element, msg));
 		}else {
 			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
-			wait.until(ExpectedConditions.visibilityOf(element));
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 		}
 		Reporter.log(elementName + " is selected already...", true);
@@ -1011,6 +1004,16 @@ public class SeleniumCoder extends ExceptionHandler {
 					Reporter.log("<br>"+st.toString(), true);
 				}
 			}
+		}catch(StaleElementReferenceException e) {
+			handlyStaleElementsException(xpathString);
+			StackTraceElement [] locaString=e.getStackTrace();
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
+			Reporter.log("<b>Exception location : </b>", true);
+			for(StackTraceElement st:locaString) {
+				if(st.toString().contains("com.shreeya")) {
+					Reporter.log("<br>"+st.toString(), true);
+				}
+			}
 		}
 		return element;
 	}
@@ -1286,5 +1289,41 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 		
 		return elementClick;
+	}
+	
+	public void checkElementPresentOrNotThenClick(String xpathStr,String elementName,int maxTime) {
+		Reporter.log("===== checkElementPresentOrNotThenClick =====", true);
+		int counter=0;
+		WebElement element;
+		do {
+			counter++;
+			staticWait(2000);
+		 element=fluentWaitCodeXpath(xpathStr,maxTime,elementName);
+		if(element.isEnabled()) {
+			Reporter.log(elementName+" is enable", true);
+			clickElement(element, elementName);
+		}
+		}while(element.isEnabled()==false && counter<8);
+	}
+	
+	public void explicityWaitSendKey(String xpathStr,String elementName,String msg) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebElement element = wait.until(
+		        ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathStr)));
+		element.clear();
+		element.sendKeys(msg);
+		staticWait(1000);
+	}
+	
+	public void senkeyJavaScript(WebElement element,String msg) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		//jse.executeScript("arguments[0].value='"+msg+"';", element);
+		element.sendKeys(msg);
+	}
+	
+	public void handlyStaleElementsException(String xpathStr) {
+		Reporter.log("=====> handlyStaleElements  <=====", true);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathStr)));	
 	}
 }

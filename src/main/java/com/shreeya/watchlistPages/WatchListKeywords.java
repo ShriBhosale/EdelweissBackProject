@@ -14,17 +14,21 @@ public class WatchListKeywords {
 		List<String> normalWatchList = new ArrayList<String>();
 
 		
+		
+		
 		  normalWatchList.add("Create"); 
 		  normalWatchList.add("AddScript");
 		  normalWatchList.add("Verfiy_1");
+		 
 		  
-		  normalWatchList.add("TradingWithWatchList"); 
+		  normalWatchList.add("TradingWithWatchList");
 		  normalWatchList.add("Verfiy_2");
+		 
 		  
 		  normalWatchList.add("QuotePage"); 
 		  normalWatchList.add("Verfiy_3");
 		  
-		  normalWatchList.add("Create"); 
+		  normalWatchList.add("CreateDuplicate"); 
 		  normalWatchList.add("DuplicateScript");
 		  normalWatchList.add("Verfiy_4");
 		  

@@ -48,7 +48,15 @@ public class BrowserLaunch {
 
 		 //driver.get("https://www.google.com/");
 		//driver.get("https://ewuat.edelbusiness.in/ewhtml/");
-		driver.get("https://ewuat.edelbusiness.in");
+		//driver.get("https://ewuat.edelbusiness.in");
+		//watchLsit only
+		driver.get("https://ewuat.edelbusiness.in/delta/");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		Reporter.log("After browser : "+driver, true);

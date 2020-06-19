@@ -180,6 +180,14 @@ public class Help extends SeleniumCoder{
 				result=applicationStr+"-FAIL";
 				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
 			}
+		}else {
+			if(testDataStr.equalsIgnoreCase(applicationStr)) {
+				result=applicationStr+"-PASS";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+			}else {
+				result=applicationStr+"-FAIL";
+				Reporter.log("Application text : "+applicationStr+"\nTest data text : "+testDataStr+"\nResult : "+result, true);
+			}
 		}
 		return result;
 	}
@@ -478,9 +486,11 @@ public class Help extends SeleniumCoder{
 				}
 					
 			}
+			htmlStr=ans;
 		}
-		Reporter.log("ans : "+ans, true);
-		return ans;
+		
+		Reporter.log("ans : "+htmlStr, true);
+		return htmlStr;
 	}
 	
 	public void elementDisappear(String xpath,String elememntName,int timeOutSecount) {
@@ -496,7 +506,7 @@ public class Help extends SeleniumCoder{
 		Reporter.log("==== duplicateValueArrayList =====", true);
 		List<String> newList=new ArrayList<String>();
 		for(String inputStr:inputList) {
-		if(!newList.contains(inputStr))
+		if(!newList.contains(inputStr.trim()))
 			newList.add(inputStr);
 		}
 		return newList;
@@ -587,5 +597,11 @@ public class Help extends SeleniumCoder{
 		return number;
 	}
 	
-	
+	public List<String> removeHtmlTags(List<String> inputList) {
+		List<String> ouputList=new ArrayList<String>();
+		for(String input:inputList) {
+			ouputList.add(removeHtmlReporter(input));
+		}
+		return ouputList;
+	}
 }

@@ -76,7 +76,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	
 	public PredefineWatchList() {}
 	
-	public String placeOrder(WatchListModel model) throws InterruptedException {
+	public String placeOrder(WatchListModel model)  {
 		String amoFlag=configReader.configReader("amoFlag");
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
 			buyButton=fluentWaitCodeXpath("//a[text()='Buy']","Buy button");
@@ -87,7 +87,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			}
 		
 			String screenshot=ScreenshortProvider.captureScreen(driver, "OrderPlacementPage");
-			Thread.sleep(1000);
+			staticWait(1000);
 			productType(model.getProductType(),model.getExchange());
 			qtyTextfield(model.getQty(),model.getExchange());
 			priceTextField(model.getOrderPrice(), model.getExchange());
