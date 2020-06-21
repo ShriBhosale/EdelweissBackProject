@@ -35,10 +35,17 @@ public class WatchListModel {
 	@CsvBindByName(column="PredefineWatchList")
 	private String predefineWatchList;
 
+	@CsvBindByName(column="FullScriptName")
+	private String fullScriptName;
 
 	public WatchListModel() {}
+	
+	
+
+
 	public WatchListModel(String referNo, String watchListName, String scriptName, String exchange, String verifyScript,
-			String orderType, String orderPrice, String productType, String qty, String predefineWatchList) {
+			String orderType, String orderPrice, String productType, String qty, String predefineWatchList,
+			String fullScriptName) {
 		super();
 		this.referNo = referNo;
 		this.watchListName = watchListName;
@@ -50,7 +57,9 @@ public class WatchListModel {
 		this.productType = productType;
 		this.qty = qty;
 		this.predefineWatchList = predefineWatchList;
+		this.fullScriptName = fullScriptName;
 	}
+
 
 
 
@@ -154,13 +163,31 @@ public class WatchListModel {
 	}
 
 
+
+
+	public String getFullScriptName() {
+		return fullScriptName;
+	}
+
+
+
+
+	public void setFullScriptName(String fullScriptName) {
+		this.fullScriptName = fullScriptName;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "WatchListModel [referNo=" + referNo + ", watchListName=" + watchListName + ", scriptName=" + scriptName
 				+ ", exchange=" + exchange + ", verifyScript=" + verifyScript + ", orderType=" + orderType
 				+ ", orderPrice=" + orderPrice + ", productType=" + productType + ", qty=" + qty
-				+ ", predefineWatchList=" + predefineWatchList + "]";
+				+ ", predefineWatchList=" + predefineWatchList + ", fullScriptName=" + fullScriptName + "]";
 	}
+
+	
 
 	
 		

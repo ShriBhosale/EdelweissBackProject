@@ -1,4 +1,4 @@
-package com.shreeya.orderdetailpages;
+package com.shreeya.commonpage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.model.OrderPlaceModel;
 import com.shreeya.model.WatchListModel;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.Help;
 import com.shreeya.util.HelperCode;
 import com.shreeya.util.SeleniumCoder;
 
-public class OrderDetail extends SeleniumCoder {
+public class CommonOrderDetail extends SeleniumCoder {
 
 	WebDriver driver;
 	private WebElement buyAndSell;
@@ -57,15 +58,15 @@ public class OrderDetail extends SeleniumCoder {
 	Help help;
 	String orderPriceStr;
 	
-	public OrderDetail(WebDriver driver) {
+	public CommonOrderDetail(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		help=new Help();
 	}
 
-	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet,WatchListModel model) {
+	public String[] orderDetailProvider(WebDriver driver, String action,String orderNoSheet,OrderPlaceModel model)  {
 		Reporter.log("*<==== orderDetailProvider Method Start ====>*",true);
-		String [] verifyScriptArray= help.commaSeparater(model.getVerifyScript());
+		/* String [] verifyScriptArray= help.commaSeparater(model.getVerifyScript()); */
 		Reporter.log("===<<<<<*** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" ***>>>>>===>",true);
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
@@ -132,8 +133,8 @@ public class OrderDetail extends SeleniumCoder {
 		buyAndSell = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']","Buy or Sell");
 		orderDetailList[3] ="Order action : "+fetchTextFromElement(buyAndSell,"Buy or Sell");
 		tradingSymbol =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']","Trading symbol");
-		String [] fullScriptArray=help.commaSeparater(model.getFullScriptName());
-		orderDetailList[4] = "Script Name : "+help.commpareTwoString(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(fullScriptArray[fullScriptArray.length-1]));
+		
+		orderDetailList[4] = "Script Name : "+checkScriptName(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(model.getScriptName()));
 		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']","Product type");
 		
 		orderDetailList[5] = "Product : "+help.commpareTwoString(fetchTextFromElement(productType,"Product type"),model.getProductType());
@@ -248,7 +249,7 @@ public class OrderDetail extends SeleniumCoder {
 		
 	}
 	
-	public void afterRefreshPage(WebDriver driver) {
+	public void afterRefreshPage(WebDriver driver){
 		
 		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
 		orderStatusLink=fluentWaitCodeXpath(driver, "//a[text()='Order Status' and @class='toc-tab-link']","Order Status Tab");
@@ -310,6 +311,14 @@ public class OrderDetail extends SeleniumCoder {
 			scriptName="Hdfc Bank Ltd.";
 		}
 		return scriptName;
+	}
+	
+	public String checkScriptName(String applicationStr,String testDataStr) {
+		if(applicationStr.contains("Ltd")) {
+			applicationStr=applicationStr.replace("Ltd", "");
+		}
+		
+		return help.commpareTwoString(applicationStr,testDataStr);
 	}
 
 }

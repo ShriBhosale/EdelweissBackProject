@@ -1,12 +1,12 @@
 package com.shreeya.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -34,26 +34,28 @@ public class SeleniumCoder extends ExceptionHandler {
 	WebDriver driver = null;
 
 	ExtendReporter report = new ExtendReporter();
-	int maximumDelay = 100;
+	int maximumDelay = 120;
 	private long explicityWaitCount = 20;
 	public static String elementNameError = "no element";
 	Help help;
+	ConfigReader configReader;
 
 	public SeleniumCoder(WebDriver driver) {
 
 		this.driver = driver;
 		help=new Help();
+		configReader=new ConfigReader();
 	}
 	
 	public SeleniumCoder() {
 		
 	}
 
-	public void sendKey(WebElement element, String msg, String elementName) throws InterruptedException {
+	public void sendKey(WebElement element, String msg, String elementName){
 		/* Thread.sleep(2000); */
-
-		element.sendKeys(msg);
 		System.out.println("elementName : " + elementName + " msg : " + msg);
+		element.sendKeys(msg);
+		
 
 	}
 
@@ -88,7 +90,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -107,7 +109,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -140,27 +142,23 @@ public class SeleniumCoder extends ExceptionHandler {
 			element.sendKeys(msg);
 			Reporter.log("element : "+elementName+" msg : "+msg, true);
 		} catch (ElementNotInteractableException e1) {
+			
+			  elementNameError = elementName;
+			  Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true); try
+			  { elementNotInteractableExceptionHandling(element, elementName,msg);
+			  
+			  }catch(ElementNotInteractableException e) { StackTraceElement []
+			  locaString=e.getStackTrace(); Reporter.log("<b>Exception Name : </b>" +
+			  e.toString() + "<br><b>Element Name : </b>" + elementName,true);
+			  Reporter.log("<b>Exception location : </b>", true); for(StackTraceElement
+			  st:locaString) { if(st.toString().contains("com.shreeya")) {
+			  Reporter.log("<br>"+st.toString(), true); } } }
+			  
+			  
+			 }catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
-			try {
-			elementNotInteractableExceptionHandling(element, elementName,msg);
-			
-			}catch(ElementNotInteractableException e) {
-				StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
-			Reporter.log("<b>Exception location : </b>", true);
-			for(StackTraceElement st:locaString) {
-				if(st.toString().contains("com.shreeya")) {
-					Reporter.log("<br>"+st.toString(), true);
-				}
-			}
-			}
-			
-			
-		}catch (StaleElementReferenceException e) {
-			elementNameError = elementName;
-			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
-			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName,true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
@@ -213,7 +211,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		} catch (TimeoutException e) {
 			Reporter.log("fluentWaitMethodID", true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -239,16 +237,45 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public String fetchTextFromElement(WebElement element) {
+		Reporter.log("===> fetchTextFromElement <===", true);
 		String elementText = "no element text";
 		try {
 			elementText = element.getAttribute("innerHTML");
-			
-
+			Reporter.log("elementText : "+elementText, true);
 		} catch (Exception e) {
 			
 			Reporter.log(e.getMessage(), true);
 		}
-		return elementText;
+		return elementText.trim();
+	}
+	
+	public String fetchTextFromElement(String xpath,String elementName) {
+		Reporter.log("===> fetchTextFromElement <===", true);
+		WebElement element=fluentWaitCodeXpath(xpath, elementName);
+		String elementText = "no element text";
+		try {
+			elementText = element.getAttribute("innerHTML");
+			Reporter.log("elementText : "+elementText, true);
+		} catch (Exception e) {
+			
+			Reporter.log(e.getMessage(), true);
+		}
+		return elementText.trim();
+	}
+	
+	public String fetchTextFromElement(String xpath,int maxTime,String elementName) {
+		Reporter.log("===> fetchTextFromElement <===", true);
+		WebElement element=fluentWaitCodeXpath(xpath,maxTime,elementName);
+		
+		String elementText = "no element text";
+		try {
+			elementText = element.getAttribute("innerHTML");
+			Reporter.log("elementText : "+elementText, true);
+		} catch (Exception e) {
+			
+			Reporter.log(e.getMessage(), true);
+		}
+		return elementText.trim();
 	}
 
 	public boolean elementPresentOrNot(WebDriver driver, String xpathString, String attributeForXpath,
@@ -319,7 +346,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -360,7 +387,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -372,7 +399,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -384,7 +411,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -396,7 +423,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -409,26 +436,25 @@ public class SeleniumCoder extends ExceptionHandler {
 
 	}
 
-	public WebElement fluentWaitCodeXpath(WebDriver driver, final String xpathString, int maxWaitTime,String elementName) {
+	public WebElement fluentWaitCodeXpath(WebDriver driver, final String xpathString, int maxWaitTime,final String elementName) {
 		WebElement element=null;
 		try {
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(maxWaitTime, TimeUnit.SECONDS)
 				.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
-
+		
 		 element = wait.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver driver) {
 				// WebElement searchTextField =driver.findElement(By.name("q"));
 				WebElement element = driver.findElement(By.xpath(xpathString));
 				if (element.isEnabled()) {
-					System.out.println("Element Found");
-
+					Reporter.log(elementName+" found", true);
 				}
 				return element;
 			}
 
 		});
 
-		
+		 
 		}catch(TimeoutException e) {
 			StackTraceElement [] locaString=e.getStackTrace();
 			elementNameError=elementName;
@@ -461,14 +487,23 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 
 	public void hoverAndClickOption(WebDriver driver, String parentElementStr, String childElementStr) {
-		Reporter.log("Click on Buy/Sell button and click on place order link", true);
+		staticWait(500);
+		Reporter.log("== hoverAndClickOption ==", true);
 		WebElement childElement = null;
 		WebElement parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
 		Actions action = new Actions(driver);
 		action.moveToElement(parentElement).click().perform();
 		childElement = fluentWaitCodeXpath(driver, childElementStr, "Child Element");
-
+		if(childElement.isDisplayed()) {
+			Reporter.log("Child element is display", true);
 		childElement.click();
+		
+		}else {
+			Reporter.log("Child element is not display", true);
+			 parentElement = fluentWaitCodeXpath(driver, parentElementStr, "ParentElement");
+			 action = new Actions(driver);
+			 action.moveToElement(parentElement).click().perform();
+		}
 	}
 
 	protected List<WebElement> FluentWaitForElementList(final String xapthString, final WebDriver driverI) {
@@ -542,7 +577,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -570,7 +605,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -586,7 +621,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e1.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e1.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e1.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -600,7 +635,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			Reporter.log(elementName + " is selected already...", true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -620,12 +655,9 @@ public class SeleniumCoder extends ExceptionHandler {
 	public void explicityWaitMethod(WebElement element, String elementName,String msg) {
 		if(!msg.equalsIgnoreCase("No")) {
 		WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
-		wait.until(ExpectedConditions.visibilityOf(element));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
 		wait.until(ExpectedConditions.textToBePresentInElementValue(element, msg));
 		}else {
 			WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
-			wait.until(ExpectedConditions.visibilityOf(element));
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 		}
 		Reporter.log(elementName + " is selected already...", true);
@@ -652,8 +684,8 @@ public class SeleniumCoder extends ExceptionHandler {
 		}
 	}
 	
-	public void clickElement(String xpathString, String elementName) {
-		staticWait(500);
+	public void clickElement(String xpathString, String elementName) throws ElementClickInterceptedException {
+		staticWait(1000);
 		
 		WebElement element=fluentWaitCodeXpath(driver, xpathString, elementName);
 		try {
@@ -676,7 +708,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -693,7 +725,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -723,7 +755,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			
 			}catch(ElementNotInteractableException e) {
 				StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -736,7 +768,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		}catch (StaleElementReferenceException e) {
 			elementNameError = elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
-			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + "<br><b>Element Name : </b>" + elementName,true);
 			StackTraceElement [] locaString=e.getStackTrace();
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
@@ -776,7 +808,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -788,7 +820,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -800,7 +832,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -812,7 +844,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -902,23 +934,42 @@ public class SeleniumCoder extends ExceptionHandler {
 	}
 	
 	public List<WebElement> multipleElementLocator(String xpathString,String groupNameElement){
+		Reporter.log("*** multipleElementLocator ***", true);
 		staticWait(2000);
-		Reporter.log("multipleElementLocator : "+groupNameElement, true);
+		Reporter.log("groupNameElement : "+groupNameElement, true);
 		List<WebElement> elements=driver.findElements(By.xpath(xpathString));
 		return elements;
 		
 	}
 	
 	public List<String> multipleElementsTextProvider(String xpathString,String groupNameElement) {
-		Reporter.log("multipleElementsTextProvider : "+groupNameElement, true);
+		Reporter.log("*** multipleElementsTextProvider ***"+groupNameElement, true);
 		List<String> elementStringList=new ArrayList<String>();
 		List<WebElement> elements=multipleElementLocator(xpathString,groupNameElement);
-		Reporter.log("multipleElementsTextProvider : elementsList length : "+elements.size(), true);
+		Reporter.log("elementsList length : "+elements.size(), true);
 		for(WebElement element:elements) {
 			String elementString=fetchTextFromElement(element);
-			Reporter.log("multipleElementsTextProvider : elementString : "+elementString, true);
-			if(!elementString.equalsIgnoreCase("Click here"))
+			Reporter.log("elementString : "+elementString, true);
+			if(!elementString.equalsIgnoreCase("Click here")) 
 			elementStringList.add(elementString);
+			
+		}
+		
+		return elementStringList;
+	}
+	
+	public List<String> multipleElementsTextProviderFilter(String xpathString,String groupNameElement) {
+		Reporter.log("*** multipleElementsTextProvider ***"+groupNameElement, true);
+		List<String> elementStringList=new ArrayList<String>();
+		List<WebElement> elements=multipleElementLocator(xpathString,groupNameElement);
+		Reporter.log("elementsList length : "+elements.size(), true);
+		for(WebElement element:elements) {
+			String elementString=fetchTextFromElement(element);
+			Reporter.log("elementString : "+elementString, true);
+			if(!elementString.equalsIgnoreCase("Click here")) {
+				elementString=help.removeHtmlReporter(elementString);
+			elementStringList.add(elementString);
+			}
 		}
 		
 		return elementStringList;
@@ -946,7 +997,17 @@ public class SeleniumCoder extends ExceptionHandler {
 		
 		}catch(TimeoutException e) {
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
+			Reporter.log("<b>Exception location : </b>", true);
+			for(StackTraceElement st:locaString) {
+				if(st.toString().contains("com.shreeya")) {
+					Reporter.log("<br>"+st.toString(), true);
+				}
+			}
+		}catch(StaleElementReferenceException e) {
+			handlyStaleElementsException(xpathString);
+			StackTraceElement [] locaString=e.getStackTrace();
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -982,7 +1043,7 @@ public class SeleniumCoder extends ExceptionHandler {
 			elementNameError=elementName;
 			
 			StackTraceElement [] locaString=e.getStackTrace();
-			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName);
+			Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
 			Reporter.log("<b>Exception location : </b>", true);
 			for(StackTraceElement st:locaString) {
 				if(st.toString().contains("com.shreeya")) {
@@ -1000,7 +1061,8 @@ public class SeleniumCoder extends ExceptionHandler {
 	
 	public void staticWait(int timeout) {
 		try {
-			Thread.sleep(timeout);
+			int gobalWait=Integer.valueOf(configReader.configReader("StaticWait"));
+			Thread.sleep(timeout+gobalWait);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1080,7 +1142,9 @@ public class SeleniumCoder extends ExceptionHandler {
 	
 	public void clickUsingAction(WebElement element,String elementName) {
 		Actions action=new Actions(driver);
-		action.moveToElement(element).click().build().perform();
+		action.moveToElement(element).build().perform();
+		staticWait(500);
+		action.click(element).build().perform();
 		Reporter.log(elementName+" click", true);
 	}
 	
@@ -1101,4 +1165,207 @@ public class SeleniumCoder extends ExceptionHandler {
 			}
 		}
 	}
+	
+	public String currentUrl() {
+		staticWait(100);
+		String currentUrl=driver.getCurrentUrl();
+		Reporter.log("Cureent Url : "+currentUrl, true);
+		return currentUrl;
+	}
+	
+	public void clearTextfield(WebElement element,String elementName) {
+		
+		element.clear();
+		Reporter.log(elementName+" clear textfield", true);
+		
+	}
+	
+	public void pageRefresh() {
+		driver.navigate().refresh();
+	}
+	
+	public String getValueFromAttribute(WebElement element,String attributeName,String elementName) {
+		
+		String elementStr=element.getAttribute(attributeName);
+		if(elementStr==null||elementStr.equalsIgnoreCase("")) {
+			elementStr=element.getText();
+		}
+		Reporter.log("Element Name : "+elementName+"  Attribute name : "+attributeName+"  Element str : "+elementStr,true);
+		return elementStr;
+	}
+	
+	public String removeHtmlText(String text) {
+		String msg="";
+		if(text.contains("\n"))
+			text=text.replace("\n", "").trim();
+		String [] textArray=text.split("<");
+		 //msg=textArray[0];
+		for(String textStr:textArray) {
+		 textArray=textStr.trim().split(">");
+		 Reporter.log(textStr, true);
+		 msg=msg+" "+textArray[textArray.length-1];
+		}
+		Reporter.log("removeHtmlText msg : "+msg, true);
+		return msg;
+	}
+	
+	public WebElement elementLocateBytag(String tagName) {
+		WebElement element=null;
+		do {
+		staticWait(20);
+		element=driver.findElement(By.tagName(tagName));
+		Reporter.log("elementLocateBytag do while", true);
+		}while(element==null);
+		return element;
+	}
+	
+	public void redirectGivenUrl(String url) {
+		Reporter.log("Hit this Url : "+url);
+		driver.get(url);
+	}
+	
+	protected void closeBrowser() {
+
+		driver.close();
+		
+	}
+	
+	public void moveGivenUrl(String urlStr) {
+		driver.get(urlStr);
+	}
+	
+	public void checkPopupPresentIfYesHandly(boolean acceptOrNot) {
+		WebDriverWait wait = new WebDriverWait(driver, 3 /*timeout in seconds*/);
+        if(wait.until(ExpectedConditions.alertIsPresent())==null){
+              System.out.println("alert was not present");
+        }
+        else
+        {
+         Alert alert = driver.switchTo().alert();
+         if(acceptOrNot) {
+        	 alert.accept();
+        	 System.out.println("alert was present and accepted");
+         }else {
+        	 alert.dismiss();
+        	 System.out.println("alert was present and rejected");
+         }
+        }
+	}
+	
+	public void clickElementUsingJavaScript(WebElement element,String elementName) {
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", element);
+		Reporter.log("click on "+elementName, true);
+	}
+	
+	public boolean checkClickableOrNot(String xpathString,String elementName) {
+		Reporter.log("====> checkClickableOrNot <====", true);
+		boolean elementClick=false;
+		WebElement element=fluentWaitCodeXpath(xpathString, elementName);
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        elementClick=true;
+		}catch(Exception e) {
+			Reporter.log(e.getLocalizedMessage());
+			Reporter.log("Element name : "+elementName);
+		}
+		
+		return elementClick;
+	}
+	
+	public boolean checkClickableOrNot(WebElement element,String elementName) {
+		Reporter.log("====> checkClickableOrNot <====", true);
+		boolean elementClick=false;
+		
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, 2);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        elementClick=true;
+		}catch(Exception e) {
+			Reporter.log(e.getLocalizedMessage());
+			Reporter.log("Element name : "+elementName);
+			 elementClick=false;
+		}
+		
+		return elementClick;
+	}
+	
+	public void checkElementPresentOrNotThenClick(String xpathStr,String elementName,int maxTime) {
+		Reporter.log("===== checkElementPresentOrNotThenClick =====", true);
+		int counter=0;
+		WebElement element;
+		do {
+			counter++;
+			staticWait(2000);
+		 element=fluentWaitCodeXpath(xpathStr,maxTime,elementName);
+		if(element.isEnabled()) {
+			Reporter.log(elementName+" is enable", true);
+			clickElement(element, elementName);
+		}
+		}while(element.isEnabled()==false && counter<8);
+	}
+	
+	public void explicityWaitSendKey(String xpathStr,String elementName,String msg) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebElement element = wait.until(
+		        ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathStr)));
+		element.clear();
+		element.sendKeys(msg);
+		staticWait(1000);
+	}
+	
+	public void senkeyJavaScript(WebElement element,String msg) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		//jse.executeScript("arguments[0].value='"+msg+"';", element);
+		element.sendKeys(msg);
+	}
+	
+	public void handlyStaleElementsException(String xpathStr) {
+		Reporter.log("=====> handlyStaleElements  <=====", true);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathStr)));	
+	}
+	
+	 public boolean waitForNewWindow(WebDriver driver, int timeout){
+         boolean flag = false;
+         int counter = 0;
+         while(!flag){
+             try {
+                 Set<String> winId = driver.getWindowHandles();
+                 if(winId.size() > 1){
+                     flag = true;
+                     return flag;
+                 }
+                 Thread.sleep(1000);
+                 counter++;
+                 if(counter > timeout){
+                     return flag;
+                 }
+             } catch (Exception e) {
+                 System.out.println(e.getMessage());
+                 return false;
+             }
+         }
+         return flag;
+     }
+	 
+	 public void waitTillNewTabUpload(String xpathStr,String elementName,int timeout,int timeoutForElemement) {
+		 Reporter.log("=====> waitTillNewTabUpload  <======", true);
+		 boolean newTabOpenFlag=false;
+		 newTabOpenFlag=waitForNewWindow(driver, timeout);
+		
+		 WebElement element;
+		 if(newTabOpenFlag) {
+			 switchTab(2);
+			 element=fluentWaitCodeXpath(xpathStr,timeoutForElemement,elementName);
+			 if(element!=null) {
+				 if(element.isDisplayed()) {
+					 Reporter.log(elementName+"tab open", true);
+				 }
+			 }else {
+				 Reporter.log(elementName+"tab not open", true);
+			 }
+		 }
+	 }
 }

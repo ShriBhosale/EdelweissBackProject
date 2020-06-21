@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.shreeya.fundtransferpages.FundTransferExecution;
+import com.shreeya.fundtransferpages.FundTransferBankExecution;
 import com.shreeya.model.LoginModel;
 import com.shreeya.mypositionspages.MyPositionsExecution;
 import com.shreeya.seemarginpages.SeeMarginExecution;

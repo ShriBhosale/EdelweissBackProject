@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.PageRanges;
+
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +34,8 @@ public class WatchListExecution extends SeleniumCoder{
 	WatchListPage watchListPage;
 	WatchListReport watchListReport;
 	ReportWatchlist watchListReport1;
-	public WatchListExecution(WebDriver driver) throws IOException {
+	WatchListCommon common;
+	public WatchListExecution(WebDriver driver){
 		super(driver);
 		CsvReaderCode csvReader=new CsvReaderCode();
 		csvLoginTestIterator=csvReader.WatchListTestDataProvider();
@@ -40,18 +43,22 @@ public class WatchListExecution extends SeleniumCoder{
 		this.driver=driver;
 		watchListReport=new WatchListReport();
 		watchListReport1=new ReportWatchlist();
+		common=new WatchListCommon(driver);
 	}
 	
-	public void watchListExecute() throws InterruptedException, IOException {
+	public ExtendReporter watchListExecute(ExtendReporter reporter)  {
 		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']", "Close popup button");
 		clickElement(closePopupButton,  "Close popup button");
-		hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
-		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "WatchList", 0);
+		common.redirectToWatchListModule(true);
+		
+		
 		while(csvLoginTestIterator.hasNext()){
 			model=csvLoginTestIterator.next();
 			List<String> watchListDetail=new ArrayList<String>();
 			Map<String,List<String>> verfiyMap=new HashMap<String,List<String>>();
 			try {
+				Reporter.log("<b>ExcelRow"+model.getReferNo()+" Start Execution</b>", true);
+				Reporter.log("<b>"+model.toString()+"</b>", true);
 				verfiyMap=watchListPage.watchListExecution(model,reporter);
 			}catch(NullPointerException e) {
 				reporter=continueExecution(reporter,model,driver);
@@ -72,7 +79,7 @@ public class WatchListExecution extends SeleniumCoder{
 			watchListReport1.report(model,reporter,verfiyMap);
 			 
 		}
-		reporter.logFlush();
+		return reporter;
 	}
 
 	private ExtendReporter continueExecution(ExtendReporter htmlReport,WatchListModel mdoel,WebDriver driver) {

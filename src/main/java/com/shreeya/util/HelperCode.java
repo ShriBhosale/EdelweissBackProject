@@ -11,11 +11,9 @@ import org.testng.Reporter;
 
 import com.shreeya.FunctionKeyword;
 import com.shreeya.MyTestLauncher;
-import com.shreeya.FunctionKeyword;
 import com.shreeya.model.TestDataModel;
+import com.shreeya.model.WatchListModel;
 import com.shreeya.orderdetailpages.OrderDetail;
-
-import net.bytebuddy.description.modifier.SynchronizationState;
 
 public class HelperCode {
 	private String reportPathString;
@@ -37,8 +35,9 @@ public class HelperCode {
 	static String outputFolderPath="Main output folder not generated in HelperCode";
 	static int executionCount=0;
 	String testDataPath;
+	WatchListModel modelW;
 	public HelperCode() {
-
+		modelW=new WatchListModel();
 	}
 
 	public String nestIdProvider(String strForNestId) {
@@ -158,7 +157,7 @@ public class HelperCode {
 		 FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0],"ScenarioData",15);
 		}
 		OrderDetail orderDetailObj = new OrderDetail(driver);
-		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo());
+		orderDetailArray = orderDetailObj.orderDetailProvider(driver, action,model.getOrderNo(),modelW);
 		
 		Reporter.log("OutSide orderDetailProvider method......",true);
 		orderDetailArray[0] = String.valueOf(orderNo);
