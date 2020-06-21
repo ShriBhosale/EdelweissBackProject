@@ -132,8 +132,8 @@ public class OrderDetail extends SeleniumCoder {
 		buyAndSell = fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='action ng-binding']","Buy or Sell");
 		orderDetailList[3] ="Order action : "+fetchTextFromElement(buyAndSell,"Buy or Sell");
 		tradingSymbol =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='comp-name ng-binding']","Trading symbol");
-		
-		orderDetailList[4] = "Script Name : "+help.commpareTwoString(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(model.getScriptName()));
+		String [] fullScriptArray=help.commaSeparater(model.getFullScriptName());
+		orderDetailList[4] = "Script Name : "+help.commpareTwoString(fetchTextFromElement(tradingSymbol,"Trading symbol"),scriptName(fullScriptArray[fullScriptArray.length-1]));
 		productType =fluentWaitCodeXpath(driver,"//div[@class='table-row ng-scope'][1]//parent::span[@class='mis ng-binding']","Product type");
 		
 		orderDetailList[5] = "Product : "+help.commpareTwoString(fetchTextFromElement(productType,"Product type"),model.getProductType());

@@ -64,6 +64,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	
 	List<String> addScriptList;
 	private WebElement delAndDefaStartOptInWatchList;
+	private WebElement createButton;
 	
 
 	public WatchListExtraScenario(WebDriver driver) {
@@ -386,7 +387,93 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		}
 	}
 	
+	public void checkMaxNoCharacterAllowInWatchListText() {
+		Reporter.log("=====> checkMaxNoCharacterAllowInWatchListText <=====", true);
+		Reporter.log("@@> Verify Lenth of watchlist name <@@");
+		common.clickNewWatchListButton();
+		enterWatchListTextfield("watchListNameMaximum");
+		char [] charArray=enterWatchListName.toCharArray();
+		if(charArray.length==15)
+			detailList.add("Maximum 15 letter are allow in watchList name textfield-PASS");
+		else
+			detailList.add("Greater then 15 letter are allow in watchList name textfield-FAIL");
+	}
 	
+	public void checkCreateButtonInitialy() {
+		Reporter.log("=====> checkCreateButtonInitialy <=====", true);
+		detailList.add("@@> verify initially in dialogue box Create button is disabled  <@@");
+		common.clickNewWatchListButton();
+		createButton=fluentWaitCodeXpath("//button[text()='Create']", "Create button");
+		if(createButton.isEnabled()==false) {
+			detailList.add("Please enter wathclist name-PASS");
+		}else {
+			detailList.add("initialy create button is enable-FAIL");
+		}
+		
+	}
+	
+	public void checkCreateButtonWhenBlankWatchLitText() {
+		Reporter.log("=====> checkCreateButtonWhenBlankWatchLitText <====", true);
+		detailList.add("@@> verify in dialogue box Create button is disabled when Watchlist name field is blank <@@");
+		enterWatchListTextfield("watchList");
+		watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]",200,"WatchListName Textfield");
+		clearTextfield(watchListNameTextfield,"WatchListName Textfield");
+		createButton=fluentWaitCodeXpath("//button[text()='Create']", "Create button");
+		if(createButton.isEnabled()==false) {
+			detailList.add("Please enter wathclist name-PASS");
+		}else {
+			detailList.add("watchList name field is blank still it is enable-FAIL");
+		}
+		detailList.add(ScreenshortProvider.captureScreen(driver, "blankWatchListTextfield"));
+	}
+	
+	public void checkWithSpaceInBetween() {
+		Reporter.log("=====> checkWithSpaceInBetween <=====", true);
+		detailList.add("@@> Verify Space is allowed in b/w char in Name field <@@");
+		watchListCreate("bank watchList", "Create", false, true);
+		Reporter.log("watchListResult : "+watchListResult,true);
+		if(watchListResult.contains("PASS")) {
+			String [] array=help.separater(watchListResult, "-");
+			detailList.add("WatchList name : "+array[0]);
+			detailList.add("In between space is allow in watchList name-PASS");
+		}else {
+			detailList.add("In between space is not allow in watchList-FAIL");
+		}
+		
+		detailList.add(watchListPresentScreenshot);
+	}
+	
+	public void multipleTimeSpaceInWatchListName() {
+		Reporter.log("=====> multipleTimeSpaceInWatchListName  <====", true);
+		detailList.add("@@> Verify Space is allowed multiple times in b/w char in Name field <@@");
+		watchListCreate("a ba wat list", "Create", false, true);
+		Reporter.log("watchListResult : "+watchListResult,true);
+		if(watchListResult.contains("PASS")) {
+			String [] array=help.separater(watchListResult, "-");
+			detailList.add("WatchList name : "+array[0]);
+			detailList.add("We can enter space multiple time in watchList name-FAIL");
+		}else {
+			detailList.add("We can not enter space multiple time in watchList name-PASS");
+		}
+		
+		detailList.add(watchListPresentScreenshot);
+	}
+	
+	public void checkInitialSpaceInWatchListName() {
+		Reporter.log("=====> checkInitialSpaceInWatchListName  <====", true);
+		detailList.add("@@> Verify initially Space is allowed in Name field <@@");
+		watchListCreate("  watch", "Create",false, true);
+		Reporter.log("watchListResult : "+watchListResult,true);
+		if(watchListResult.contains("PASS")) {
+			String [] array=help.separater(watchListResult, "-");
+			detailList.add("WatchList name : "+array[0]);
+			detailList.add("Inital space allow in watchList Name-FAIL");
+		}else {
+			detailList.add("Inital space is not allow in watchList and watchList create but without intial space-PASS");
+		}
+		
+		detailList.add(watchListPresentScreenshot);
+	}
 	
 	public ExtendReporter watchListExtraScenarioExecute(String segment,ExtendReporter reporter) {
 		Reporter.log("<b>=====@@> watchListExtraScenarioExecute <@@=====</b>", true);
@@ -413,10 +500,14 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		  deleteMultipleScript();
 
 		  watchListCreate("Nowat", "No Scrip", false, false);
-		  withoutScripCreateWatchList(); printAddScriptButton();
+		  withoutScripCreateWatchList();
+		  printAddScriptButton();
 
 		checkDeleteOptionForDeviceAndPredefineWatchList(segment);
 		checkDuplicateScripPresentOrNot(segment);
+		checkMaxNoCharacterAllowInWatchListText();
+		checkCreateButtonInitialy();
+		checkCreateButtonWhenBlankWatchLitText();
 		reporter.watchListExtraScenario(detailList);
 		 
 		return reporter;

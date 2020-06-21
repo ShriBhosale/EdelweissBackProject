@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
+import org.yaml.snakeyaml.representer.Represent;
 
 import com.shreeya.model.WatchListModel;
 import com.shreeya.util.Help;
@@ -68,6 +69,8 @@ public class WatchListQuotePage extends SeleniumCoder {
 	private String changeNo;
 
 	private String persentageNo;
+
+	private WebElement ltpQuoteLabel;
 	
 	public WatchListQuotePage(WebDriver driver) {
 		super(driver);
@@ -79,6 +82,7 @@ public class WatchListQuotePage extends SeleniumCoder {
 	}
 	
 	public List<String> equityCodePageVerification(List<String> codePageDetailList,WatchListModel model) {
+		Reporter.log("=====> equityCodePageVerification <=====", true);
 		verifyScriptArray=help.commaSeparater(model.getVerifyScript());
 		String [] fullScriptNameArray=help.commaSeparater(model.getFullScriptName());
 		staticWait(500);
@@ -105,7 +109,7 @@ public class WatchListQuotePage extends SeleniumCoder {
 		if(fetchTextFromElement(exchangeLabelCode).contains("F&"))
 		{
 			String [] array=fetchTextFromElement(exchangeLabelCode).split("amp;");
-			codePageDetailList.add("Exchange :  "+help.commpareTwoString(array[0], exchangeStr));
+			codePageDetailList.add("Exchange :  "+help.commpareTwoString(array[0]+array[0], exchangeStr));
 		}else {
 		codePageDetailList.add("Exchange :  "+help.commpareTwoString(fetchTextFromElement(exchangeLabelCode), exchangeStr));
 		}
@@ -231,11 +235,13 @@ public class WatchListQuotePage extends SeleniumCoder {
 			int noScript = Integer.valueOf(noOfScript[1]);
 			int matchScirptNo = 0;
 			int scriptNo=0;
+			String scriptForClick=verifyScriptArray[verifyScriptArray.length - 1];
 			for (int i = 2; i < noScript + 2; i++) {
 				String tradingSymbolString = "//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 				tradingSymbolLabel = fluentWaitCodeXpath(tradingSymbolString, "Script Name");
 				tradingSymbolstr = fetchTextFromElement(tradingSymbolLabel);
-				if (tradingSymbolstr.contains(verifyScriptArray[verifyScriptArray.length - 1])) {
+				Reporter.log("click script : "+scriptForClick, true);
+				if (tradingSymbolstr.contains(scriptForClick)) {
 					
 					scriptNo=i;
 					
@@ -245,9 +251,9 @@ public class WatchListQuotePage extends SeleniumCoder {
 			
 			scriptDetailList=fetchLTPAndChangePersentage(scriptNo);
 			clickElement(tradingSymbolLabel, "Trading symbol link");
-			switchTab(2);
-			codePageDetailList.add("WatchList Name : "+model.getWatchListName());
 			
+			codePageDetailList.add("WatchList Name : "+model.getWatchListName());
+			waitTillNewTabUpload("//a[text()='helpdesk@edelweiss.in']", scriptForClick+" Quote ", 100,300);
 			if (model.getExchange().equalsIgnoreCase("NCDEX") || model.getExchange().equalsIgnoreCase("MCX")) {
 				codePageDetailList=commodityCodePageVerfication(codePageDetailList, model);
 			}else {
@@ -272,14 +278,21 @@ public class WatchListQuotePage extends SeleniumCoder {
 		
 		public void checkLTPAndChangePersentage(List<String> scriptDetailList,List<String> codePageDetailList,String exchange) {
 			Reporter.log("====> checkLTPAndChangePersentage <====", true);
+			staticWait(1000);
+			Reporter.log("Exchange : "+exchange, true);
+			exchange="BSE";
 			List<String> quoteDetailList=new ArrayList<String>();
 			if(exchange.equalsIgnoreCase("NSE") || exchange.equalsIgnoreCase("BSE")) {
 			
-			quoteDetailList.add(fetchTextFromElement("//*[@id=\"eqQuotes\"]/section/div[1]/div[2]/div[1]/div[1]/label[1]/span[2]",300,"LTp Quote"));
-			quoteDetailList.add(fetchTextFromElement("//*[@id=\"eqQuotes\"]/section/div[1]/div[2]/div[1]/div[1]/label[2]",300,"Change no"));
-			quoteDetailList.add(fetchTextFromElement("//*[@id=\"eqQuotes\"]/section/div[1]/div[2]/div[1]/div[1]/label[3]",300,"Persentage"));
-			}
+			ltpQuote=fetchTextFromElement("//*[@id='eqQuotes']/section/div[1]/div[2]/div[1]/div[1]/label[1]",500,"LTp Quote");
 			
+			quoteDetailList.add(help.removeHtmlReporter(ltpQuote).replace(" ", ""));
+			quoteDetailList.add(fetchTextFromElement("//*[@id='eqQuotes']/section/div[1]/div[2]/div[1]/div[1]/label[3]",500,"Persentage").replace("%",""));
+			quoteDetailList.add(fetchTextFromElement("//*[@id='eqQuotes']/section/div[1]/div[2]/div[1]/div[1]/label[2]",500,"Change no"));
+			
+			}
+			Reporter.log("quoteDetailList size : "+quoteDetailList.size()+" scriptDetailList size : "+scriptDetailList.size(), true);
+			Reporter.log("codePageDetailList  size : "+codePageDetailList.size(),true);
 			codePageDetailList.add("LTP : "+help.commpareTwoString(quoteDetailList.get(0), scriptDetailList.get(0)));
 			Reporter.log(quoteDetailList.get(1), true);
 			Reporter.log(quoteDetailList.get(2), true);

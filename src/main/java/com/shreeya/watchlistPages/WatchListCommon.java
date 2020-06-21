@@ -56,6 +56,7 @@ public class WatchListCommon extends SeleniumCoder{
 	private WebElement createWatchListPopupTitle;
 	private WebElement watchListTitle;
 	private WebElement popupErrorMsg;
+	private WebElement addScriptTitle;
 	
 	public static List<String> deleteScriptArray;
 	
@@ -573,10 +574,10 @@ public class WatchListCommon extends SeleniumCoder{
 			newWatchListTab=fluentWaitCodeXpath("//span[text()='New Watchlist']", "New watchList tab");	
 			clickUsingAction(newWatchListTab, "New watchList tab");
 			staticWait(3000);
-			createWatchListPopupTitle=fluentWaitCodeXpath("//h4[text()='Create a Watchlist']//following::a[1]",20, "create watchList popup title");
+			createWatchListPopupTitle=fluentWaitCodeXpath("//h4[text()='Create a Watchlist']",20, "create watchList popup title");
 			if(createWatchListPopupTitle.isDisplayed())
 				createWatchPopupFlag=true;
-			Reporter.log("click on newWatchList", true);
+			Reporter.log("click on newWatchList createWatchPopupFlag : "+createWatchPopupFlag, true);
 		}while(createWatchPopupFlag==false && newWatchListTabCount<10);
 	}
 	
@@ -594,10 +595,33 @@ public class WatchListCommon extends SeleniumCoder{
 			popupErrorMsg=fluentWaitCodeXpath("//button[text()='Ok']//preceding::p[1]",30,"Popup error msg");
 		
 		if(step.equalsIgnoreCase("duplicateAddScript")) 
-			errorList.add(help.commpareTwoString(fetchTextFromElement(popupErrorMsg), " You are trying to add a symbol which already exists in your watchlist."));
+			errorMsgList.add(help.commpareTwoString(help.removeHtmlReporter(fetchTextFromElement(popupErrorMsg)).trim(), "You are trying to add a symbol which already exists in your watchlist."));
 		else if(step.equalsIgnoreCase("createDuplicate"))
-			errorList.add(help.commpareTwoString(fetchTextFromElement(popupErrorMsg), " Watchlist Name Already Exists!"));
+			errorMsgList.add(help.commpareTwoString(help.removeHtmlReporter(fetchTextFromElement(popupErrorMsg)).trim(), "Watchlist Name Already Exists!"));
+		
+		clickElement(okButton, "Ok button");
 		}
 		
+	}
+	
+	
+	public boolean checkAddScriptDialogBox(String exchange,String watchListName,String scriptName) {
+		Reporter.log("====> checkAddScriptDiaglogBox <====", true);
+		staticWait(500);
+		boolean addScriptDialogFlag=false;
+		if (exchange.equalsIgnoreCase("NCDEX") || exchange.equalsIgnoreCase("MCX")) {
+			text = "Add a Scrip to ";
+			dropdownOptionStr = "//*[@id='addScripPopup']/div/div/div[2]/div/div/div/div/ul[1]/li/a[text()='"+scriptName+ " (" + exchange+ ")" + "']";
+		} else {
+			text = "Add a Scrip to " + watchListName.toUpperCase();
+			dropdownOptionStr = "//*[@id='addScripPopup']/div/div/div[2]/div/div/div/div/ul/li[1]/a[text()='"+ scriptName+ "']";
+		}
+		xpathString = "//h4[text()='" + text + "']//following::input";
+		addScriptTitle=fluentWaitCodeXpath(xpathString, "add Script title");
+		if(addScriptTitle!=null) {
+			if(addScriptTitle.isDisplayed())
+				addScriptDialogFlag=true;
+		}
+		return addScriptDialogFlag;
 	}
 }

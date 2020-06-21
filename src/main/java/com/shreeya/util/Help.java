@@ -471,6 +471,8 @@ public class Help extends SeleniumCoder{
 		Reporter.log("=== removeHtmlReporter ===", true);
 		String ans="";
 		String [] array,extraArray;
+		if(htmlStr.contains("₹"))
+			htmlStr=htmlStr.replace("₹", "");
 		if(htmlStr.contains("\n"))
 			htmlStr=htmlStr.replace("\n", "");
 		if(htmlStr.contains("<"))

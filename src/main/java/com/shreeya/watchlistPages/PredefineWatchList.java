@@ -163,7 +163,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		clickOnPredefineWatchList(model);
 		String scriptName=model.getScriptName().trim().replace(" ", "  ");
 		String tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+model.getScriptName()+" ']";
-		try {
+		
 			WebElement tradeButton=fluentWaitCodeXpath(tradeButtonxpath,30,"Trading button");
 			if(tradeButton==null) {
 				 tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+scriptName+" ']";
@@ -176,10 +176,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			 screenshot=placeOrder(model);
 			orderDetailArray=orderDetail.orderDetailProvider(driver, "New", "NO order sheet",model);
 			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		predefineWatchListDetail.add(screenshot);
 		for(String orderDetail:orderDetailArray) {
 			if(!(orderDetail.equalsIgnoreCase("no id")||orderDetail.contains("no")||

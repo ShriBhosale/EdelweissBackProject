@@ -1326,4 +1326,46 @@ public class SeleniumCoder extends ExceptionHandler {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathStr)));	
 	}
+	
+	 public boolean waitForNewWindow(WebDriver driver, int timeout){
+         boolean flag = false;
+         int counter = 0;
+         while(!flag){
+             try {
+                 Set<String> winId = driver.getWindowHandles();
+                 if(winId.size() > 1){
+                     flag = true;
+                     return flag;
+                 }
+                 Thread.sleep(1000);
+                 counter++;
+                 if(counter > timeout){
+                     return flag;
+                 }
+             } catch (Exception e) {
+                 System.out.println(e.getMessage());
+                 return false;
+             }
+         }
+         return flag;
+     }
+	 
+	 public void waitTillNewTabUpload(String xpathStr,String elementName,int timeout,int timeoutForElemement) {
+		 Reporter.log("=====> waitTillNewTabUpload  <======", true);
+		 boolean newTabOpenFlag=false;
+		 newTabOpenFlag=waitForNewWindow(driver, timeout);
+		
+		 WebElement element;
+		 if(newTabOpenFlag) {
+			 switchTab(2);
+			 element=fluentWaitCodeXpath(xpathStr,timeoutForElemement,elementName);
+			 if(element!=null) {
+				 if(element.isDisplayed()) {
+					 Reporter.log(elementName+"tab open", true);
+				 }
+			 }else {
+				 Reporter.log(elementName+"tab not open", true);
+			 }
+		 }
+	 }
 }

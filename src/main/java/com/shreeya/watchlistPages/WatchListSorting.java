@@ -200,20 +200,37 @@ public class WatchListSorting extends SeleniumCoder{
 		sorting(watchListName, sortingButton, gropXpath, "Symbol", "String");
 	}
 	
+	public void bidPriceSorting(String watchListName) {
+		Reporter.log("====> bidPriceSorting <====", true);
+		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[5]/span/div/i";
+		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[5]/span[1]";
+		sorting(watchListName, sortingButton, gropXpath, "BidPrice", "String");
+	}
+	
+	public void askPriceSorting(String watchListName) {
+		Reporter.log("====> askPriceSorting <====", true);
+		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[6]/span/div/i";
+		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[6]/span[1]";
+		sorting(watchListName, sortingButton, gropXpath, "AskPrice", "String");
+	}
+	
 	public ExtendReporter sortingScenarioExecute(String segment,ExtendReporter report) {
 		Reporter.log("<b>====> sortingScenarioExecute <=====</b>", true);
 		common.redirectToWatchListModule(true);
 		if(segment.equalsIgnoreCase("Equity")) {
 			watchListName="MarketWatch";
 			common.watchListtabNotFound("MarketWatch", "check","BSE");
-			
+			tradingSymbolSorting(watchListName);
 			  lastTradePriceSorting(watchListName); 
+			  ChangePercentageSorting(watchListName);
 			  volumeSorting(watchListName);
+			  bidPriceSorting(watchListName);
+			  askPriceSorting(watchListName);
 			  lowPriceSorting(watchListName); 
 			  hightPriceSorting(watchListName);
 			 
-			ChangePercentageSorting(watchListName);
-			tradingSymbolSorting(watchListName);
+			
+			
 		}
 		report.watchListSorting(detailList);
 		return report;
