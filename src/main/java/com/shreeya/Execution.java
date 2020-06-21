@@ -16,6 +16,7 @@ import com.shreeya.model.TestDataModel;
 import com.shreeya.orderdetailpages.LoginPage;
 import com.shreeya.orderdetailpages.OrderAction;
 import com.shreeya.util.ApacheCode;
+import com.shreeya.util.BrowserLaunch;
 import com.shreeya.util.FolderStructure;
 import com.shreeya.util.HelperCode;
 
@@ -27,6 +28,7 @@ public class Execution {
 	HelperCode helperObject;
 	TestDataModel testDataObject;
 	
+	
 	public static String folderPath[]=null;
 	public static ApacheCode apacheCodeObj;
 	
@@ -35,8 +37,10 @@ public class Execution {
 	@BeforeTest
 	public void executionBefore() throws IOException {
 		Reporter.log("Execution Before ", true);
-		login=new LoginPage();
-		orderActioObj=new OrderAction();
+		BrowserLaunch launch=new BrowserLaunch();
+		driver=launch.browserLaunch("Normal");
+		login=new LoginPage(driver);
+		orderActioObj=new OrderAction(driver);
 		testDataObject=new TestDataModel();
 		helperObject=new HelperCode();
 		
@@ -68,7 +72,7 @@ public class Execution {
 			Reporter.log("Login Data ====> "+loginModelObj.toString(),true);
 			if(referenceNo.equals(loginModelObj.getReferNo())) {
 				try {
-					driver = login.loginExecution("Normal",loginModelObj);
+				//	login.loginExecution("Normal",loginModelObj);
 					//driver=orderActioObj.orderActionStart(driver,loginModelObj);
 					terminateExecution(driver);
 				} catch (InterruptedException e) { // TODO Auto-generated catch block

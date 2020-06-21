@@ -1,24 +1,116 @@
 package com.shreeya.fundtransferpages;
 
 import java.io.IOException;
+import java.util.Iterator;
 
+import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
-import com.shreeya.model.LoginModel;
-import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
+import com.shreeya.model.FundTransferModel;
+import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.ExtendReporter;
 import com.shreeya.util.SeleniumCoder;
 
 public class FundTransferExecution extends SeleniumCoder{
 
 	WebDriver driver;
 	private WebElement fundTransferTab;
+	Iterator<FundTransferModel> csvFundTransferIterator;
+	FundTransferModel fundTransferModel;
+	FundTransferPage fundTranferPage;
+	ExtendReporter report;
+	String [] folderPathArray;
+	String [] reportArray;
+	WebElement seeMarginTab;
+	String errorMsg;
 	
-	public void fundTransferExecute(LoginModel loginModel) throws InterruptedException, IOException {
-		LoginPage loginPage=new LoginPage();
-		driver=loginPage.loginExecution("normal", loginModel);
-		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']");
-		clickElement(fundTransferTab, "Fund Transfer Tab");
+	public FundTransferExecution(WebDriver driver) throws IOException {
+		super(driver);
+		this.driver=driver;
+		CsvReaderCode csvReader=new CsvReaderCode();
+		csvFundTransferIterator=csvReader.FundTransferDataProvider();
+		report=new ExtendReporter();
+		folderPathArray=MyTestLauncher.reportFolderPath;
 		
 	}
+	
+	public void fundTransferExecute() throws InterruptedException, IOException {
+		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
+		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
+		fundTranferPage=new FundTransferPage(driver);
+		
+		
+		
+		  while(csvFundTransferIterator.hasNext()){
+			  
+			  clickElement("//a[text()='Fund Transfer']", "Fund Transfer Tab");
+		  fundTransferModel=csvFundTransferIterator.next();
+		  Reporter.log("<a><font color='Yellow'>=========@@@@ FundTransfer_\"+fundTransferModel.getReferNo()+\" @@@@========</font></a>", true);
+		  try {
+		  fundTranferPage.fundTransferexecute(fundTransferModel);
+		  }catch(ElementNotInteractableException e) {
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  backFundTransferPage();
+			  continue;
+		  }catch(NullPointerException e) {
+			 
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  backFundTransferPage();
+			  continue;
+		  }catch(TimeoutException e) {
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  backFundTransferPage();
+			  continue;
+		  }
+		  fundTransferReport(fundTransferModel.getReferNo(),errorMsg,"PASS");
+		  backFundTransferPage();
+		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
+		  clickElement(seeMarginTab, "See Margin Tab");
+		  
+		  }
+		 
+		  outputFileClose();
+		
+		Thread.sleep(3000);
+	}
+	
+	public void fundTransferReport(String referNo,String errorMsg,String result) throws IOException {
+		int referenceNo=Integer.valueOf(referNo);
+		if(referenceNo==1) {
+			MyTestLauncher.folderCreationObj.copyFile(folderPathArray[0],"FundTransfer");
+			FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0],"FundTransfer",4);
+		}
+		String reportPath=report.reporter(driver, "FundTransfer", folderPathArray, referNo,errorMsg);
+		String screenShotStr=report.captureScreen(driver, folderPathArray[2], "FundTransfer", referenceNo);
+		String [] reportArray= {"No",result,reportPath,screenShotStr};
+		FunctionKeyword.apacheCodeObj.outputFileWriter(reportArray, referenceNo,6);
+	}
+	
+	public void outputFileClose() throws IOException {
+		FunctionKeyword.apacheCodeObj.outputExcelFileClose(MyTestLauncher.reportFolderPath[0]);
+	}
+	
+	
+	
+	public void backFundTransferPage() throws InterruptedException {
+		boolean flag=true;
+		String currentUrl=driver.getCurrentUrl();
+		driver.navigate().back();
+		if(flag) {
+		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
+		/*
+		 * fundTransferTab=fluentWaitCodeXpath(driver,
+		 * "//a[text()='Fund Transfer']","fundTransferTab");
+		 * clickElement(fundTransferTab, "Fund transfer tab");
+		 */
+		}
+		}
+	
+	
 }

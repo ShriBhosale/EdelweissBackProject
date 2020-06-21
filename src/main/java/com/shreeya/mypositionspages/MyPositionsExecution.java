@@ -14,10 +14,18 @@ public class MyPositionsExecution extends SeleniumCoder {
 	WebDriver driver;
 	private WebElement myPositionsTab;
 	
-	public void myPositionsExecute(LoginModel loginModel) throws InterruptedException, IOException {
-		LoginPage loginPage=new LoginPage();
-		driver=loginPage.loginExecution("normal", loginModel);
-		myPositionsTab=fluentWaitCodeXpath(driver, "//*[@id=\"rightScroll\"]/div[1]/ul/li[3]/a");
+	
+	public MyPositionsExecution(WebDriver driver) {
+		super(driver);
+		this.driver = driver;
+		
+	}
+
+
+	public void myPositionsExecute() throws InterruptedException, IOException {
+
+
+		myPositionsTab=fluentWaitCodeXpath(driver, "//a[text()='Place Order']//following::a[text()='My Positions']","My Positions Tab");
 		clickElement(myPositionsTab, "My Position Tab");
 	}
 }

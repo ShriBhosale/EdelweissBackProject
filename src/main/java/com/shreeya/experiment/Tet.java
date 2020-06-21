@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
@@ -122,8 +123,41 @@ public class Tet {
 	}
 	
 	public static void main(String[] args) {
-		
+		TargetInvocation ti = new TargetInvocation();
+
+		// Get all methods of TargetInvocationClass:
+		Method[] m = TargetInvocation.class.getMethods();
+		try {
+			// Invoke the first method of the class:
+			m[0].invoke(ti);
+		}
+		catch(Exception e) {
+			// Print the wrapper exception:
+			System.out.println("Wrapper exception: " + e);
+
+			// Print the 'actual' exception:
+			System.out.println("Underlying exception: " + e.getCause());
+		}
 	}
 	
 	
+}
+class TargetInvocation{
+	public void foo() {
+		// Dividing by zero to intentionally throw an exception:
+		System.out.println(10 / 0);
+	}
+	
+	public void foo1() {
+		// Dividing by zero to intentionally throw an exception:
+		System.out.println(10 / 0);
+	}
+	public void foo2() {
+		// Dividing by zero to intentionally throw an exception:
+		System.out.println(10 / 0);
+	}
+	public void foo3() {
+		// Dividing by zero to intentionally throw an exception:
+		System.out.println(10 / 0);
+	}
 }

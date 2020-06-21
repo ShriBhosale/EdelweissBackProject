@@ -14,20 +14,20 @@ public class FolderStructure {
 	static String[] folderArray = { "no", "no" + "/HtmlReports",
 			"no" + "/Screenshots" };
 	ConfigReader configReader=new ConfigReader();
+	HelperCode helperObject;
+	
+	public FolderStructure() {
+		helperObject = new HelperCode();
+		timeStamp = helperObject.timeStampGenerator();
+	}
 	public String[] reportFolderCreator() throws IOException {
 		Reporter.log("Folder Structure creation method ", true);
 		Reporter.log("orderNo ===> "+orderNo, true);
-		
-		HelperCode helperObject = new HelperCode();
-		
 		String outputFile="FolderStructure not able give outputFile";
 		if(orderNo==0) {
-			timeStamp = helperObject.timeStampGenerator();
-			//copyFile(configReader.configReader("TestData")+".xlsx", "../WorkingE/Report" + timeStamp+"/OutputFile.xlsx");
-			//outputFile="../WorkingE/Report" + timeStamp+"/OutputFile.xlsx";
-	
-		//String reportFolderPath = "../WorkingE/Report" + timeStamp;
-			String reportFolderPath=reportPathProvider()+timeStamp;
+			
+			
+		String reportFolderPath=reportPathProvider()+timeStamp;
 		String subFolderPath= "../Report" + timeStamp;
 		folderArray[0]=reportFolderPath;
 		folderArray[1]=reportFolderPath + "/HtmlReports";
@@ -56,13 +56,13 @@ public class FolderStructure {
 		return pathArray;
 	}
 	
-	public String copyFile(String targetName) throws IOException {
+	public String copyFile(String targetName,String testDataPath) throws IOException {
 		
 		ConfigReader configReader=new ConfigReader();
-		File source = new File(configReader.configReader("TestData")+".xlsx");
-        File dest = new File(targetName+"/OutputFile.xlsx");
+		File source = new File(configReader.configReader("TestData")+"\\"+testDataPath+".xlsx");
+        File dest = new File(targetName+"/"+testDataPath+".xlsx");
 
-        File executeSource = new File(configReader.configReader("LoginData")+".txt");
+        File executeSource = new File(configReader.configReader("TestData")+"\\Execution.txt");
         File executeDest = new File(targetName+"/Executable.txt");
         
         FileUtils.copyFile(source, dest);
@@ -77,12 +77,14 @@ public class FolderStructure {
 	public String reportPathProvider() {
 		ConfigReader reader=new ConfigReader();
 		String reportPath=reader.configReader("Result");
-		Reporter.log("Report Path ======> "+reportPath,true);
-		String replaceStr=reportPath.replace("\\", "-");
-		String [] reportPathArray=replaceStr.split("-");
-		String path="../"+reportPathArray[reportPathArray.length-1]+"/Report";
 		
-		Reporter.log("Path ====> "+path, true);
+		  Reporter.log("Report Path ======> "+reportPath,true); String
+		  replaceStr=reportPath.replace("\\", "-"); String []
+		  reportPathArray=replaceStr.split("/"); String
+		  path="../"+reportPathArray[reportPathArray.length-1]+"/Report";
+		  
+		  Reporter.log("Path ====> "+path, true);
+		 
 		return path;
 	}
 

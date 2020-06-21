@@ -9,43 +9,58 @@ import java.util.Map;
 
 import org.testng.Reporter;
 import org.testng.TestNG;
-import org.testng.annotations.Test;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-import com.shreeya.model.LoginModel;
+import com.shreeya.model.ExecutionModel;
 import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.FolderStructure;
 
 public class MyTestLauncher {
-	public static ArrayList<LoginModel> loginData;
+	public static ArrayList<ExecutionModel> loginData;
+	public static FolderStructure folderCreationObj;
+	public static String [] reportFolderPath;
+	
+	public MyTestLauncher() throws IOException {
+		 folderCreationObj = new FolderStructure();
+		 reportFolderPath = folderCreationObj.reportFolderCreator();
+	}
 
 
+	
 	public static void main( String[] args ) throws IOException {
 		Reporter.log("================<< Execution Started >>================");
 		// TODO Auto-generated method stub
+		MyTestLauncher launcher=new MyTestLauncher();
 		CsvReaderCode csvReader = new CsvReaderCode(); 
 		loginData =csvReader.LoginFileReader();
-		Iterator<LoginModel> loginIteratior = loginData.iterator();
-		
-		
+		Iterator<ExecutionModel> loginIteratior = loginData.iterator();
 		XmlSuite suite = new XmlSuite();
-		suite.setName("TmpSuite");
+		suite.setName("TestNGReport");
 		suite.setParallel(XmlSuite.ParallelMode.TESTS);
 		suite.setThreadCount(2);
+		
 		int count=0;
 		 while(loginIteratior.hasNext()) {
-			 LoginModel loginModel = loginIteratior.next(); 
+			 ExecutionModel executionModel = loginIteratior.next(); 
+			 Reporter.log("MyTestLauncher "+executionModel.toString(), true);
 			 Map<String,String> testScenarioParameters = new HashMap<>();
-			 testScenarioParameters.put("Reference", loginModel.getReferNo());
-			 testScenarioParameters.put("UserId", loginModel.getUserId());
-			 testScenarioParameters.put("Pwd", loginModel.getPassword());
-			 testScenarioParameters.put("Yob", loginModel.getYob());
-			 testScenarioParameters.put("StartNo", loginModel.getStartingRowNo());
-			 testScenarioParameters.put("EndNo", loginModel.getEndRowNo());
-			 testScenarioParameters.put("Module", loginModel.getModule());
+			 testScenarioParameters.put("Reference", executionModel.getReferNo());
+			 testScenarioParameters.put("UserIdEQ", executionModel.getUserIdEQ());
+			 testScenarioParameters.put("PasswordEQ", executionModel.getPasswordEQ());
+			 testScenarioParameters.put("YobEQ", executionModel.getYobEQ());
+			 testScenarioParameters.put("UserIdCO", executionModel.getUserIdCO());
+			 testScenarioParameters.put("PasswordCO", executionModel.getPasswordCO());
+			 testScenarioParameters.put("YobCO", executionModel.getYobCO());
+			 testScenarioParameters.put("UserIdMI", executionModel.getUserIdMi());
+			 testScenarioParameters.put("PasswordMI", executionModel.getPasswordMI());
+			 testScenarioParameters.put("YobMI", executionModel.getYobMI());
+			 testScenarioParameters.put("Module", executionModel.getModule());
 		XmlTest test = new XmlTest(suite);
-		test.setName(loginModel.getReferNo());
+		Reporter.log("ReferNo=====> "+executionModel.getReferNo(),true);
+		test.setName("ServerLog_"+executionModel.getReferNo());
+		test.setVerbose(2);
 		test.setParameters(testScenarioParameters);
 		List<XmlClass> classes = new ArrayList<XmlClass>();
 		classes.add(new XmlClass(FunctionKeyword.class.getName()));
@@ -57,6 +72,8 @@ public class MyTestLauncher {
 		 TestNG tng = new TestNG();
 		 
 		 tng.setXmlSuites(suites);
+		 tng.setOutputDirectory(reportFolderPath[0]+"/SeverLog");
+		
 		 tng.run(); 
 		 
 	}

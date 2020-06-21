@@ -135,7 +135,7 @@ public class ApacheCode {
 			Reporter.log(c[i]+" count "+i);
 		}*/
 		
-		String abc=pathStr.substring(11);
+		String abc=pathStr.substring(12);
 		
 		abc=".."+abc;
 		Reporter.log(abc,true);
@@ -258,10 +258,10 @@ public class ApacheCode {
 	
 	}
 	
-	 public void outputFileWriterHeader(String folderPathString) throws IOException {
-		 int counter=15;
+	 public void outputFileWriterHeader(String folderPathString,String outputFileName,int counter) throws IOException {
+		// int counter=15;
 		 Reporter.log("Start Write in output excel file",true);
-		 InputStream inp = new FileInputStream(folderPathString+"/OutputFile.xlsx");
+		 InputStream inp = new FileInputStream(folderPathString+"/"+outputFileName+".xlsx");
 			String[] headerArray = {"Rejection Reason",
 					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 			wb= WorkbookFactory.create(inp);
@@ -282,30 +282,31 @@ public class ApacheCode {
 			//return fileOut;
 	 }
 	 
-	 public void outputFileWriter(String [] orderDetailArray,int rowNo) throws IOException {
+	 public void outputFileWriter(String [] orderDetailArray,int rowNo,int counter) throws IOException {
 		 try {
+			
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 Reporter.log("Writer Order detail with link in outputExcel",true);
-		 int counter=15;
+		 Reporter.log("Writer Order detail with link in outputExcel1",true);
+		 //int counter=15;
 		 String hyperLinkName = null;
 			Row row = outputsheet.getRow(rowNo);
 			Reporter.log("Row Object ====> "+row+"\nOutputSheet Object ====> "+outputsheet,true);
-			for(int i=14;i<orderDetailArray.length;i++)
+			for(int i=0;i<orderDetailArray.length;i++)
 			{
 			Cell cell = row.getCell(counter);
 			
 			if (cell == null)
 			    cell = row.createCell(counter);
 			
-			 if(i==16||i==17) {
+			 if(i==2||i==3) {
 				 
-				if(i==16)
+				if(i==2)
 					 hyperLinkName="HtmlReport";
-				 else if(i==17)
+				 else if(i==3)
 					 hyperLinkName="Screenshot";
 				 cell.setCellValue(hyperLinkName);
 				 Hyperlink href = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);

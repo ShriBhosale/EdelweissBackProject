@@ -34,7 +34,10 @@ public class NewOrderPage extends SeleniumCoder {
 	private WebElement productTypeRadioButton;
 	private WebElement bseLink;
 	
-	
+	public NewOrderPage(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+	}
 
 	public HashMap newOrderExecution(TestDataModel model,WebDriver driver,int orderNo) throws InterruptedException, IOException {
 		Reporter.log("<====@@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@===>",true);	
@@ -43,24 +46,24 @@ public class NewOrderPage extends SeleniumCoder {
 		String amoFlag=configReader.configReader("amoFlag");
 		HelperCode helperObject=new HelperCode();
 		CsvReaderCode csvReader=new CsvReaderCode();
-		OrderDetail orderDetail=new OrderDetail();
-		detail=new OrderDetail();
+		OrderDetail orderDetail=new OrderDetail(driver);
+		detail=new OrderDetail(driver);
 		//Thread.sleep(7000);
 		Reporter.log("New Order execution Started..........",true);
 		if(orderNo!=1) {
-			placeOrderButon=fluentWaitCodeXpath(driver,"//a[text()='Place Order']");
+			placeOrderButon=fluentWaitCodeXpath(driver,"//a[text()='Place Order']","Place order Link");
 			clickElement(placeOrderButon,"Place order Link");
 		}
 	
-		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']");
+		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']","Place Order Textfield");
 		sendKey(placeOrderTextField,model.getScript(),"Place Order Textfield");
 		//sendKeyClickOnDownArrow(placeOrderTextField,model.getScript());
 		/*Thread.sleep(3000);*/
 		if(model.getSegment().equalsIgnoreCase("NSE")) {
-		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
+		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]","NSE Link");
 		clickElement(nseLink,"NSE Link");
 		}else if(model.getSegment().equalsIgnoreCase("BSE")) {
-		bseLink=fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
+		bseLink=fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]","BSE Link");
 		clickElement(bseLink,"BSE Link");
 		}
 		
@@ -69,33 +72,38 @@ public class NewOrderPage extends SeleniumCoder {
 		//downErrorKeyEnter(placeOrderTextField);
 		/*Thread.sleep(2000);*/
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
-		buyButton=fluentWaitCodeXpath(driver,"//a[text()='Buy']");
+		buyButton=fluentWaitCodeXpath(driver,"//a[text()='Buy']","Buy button");
 		clickElement(buyButton,"Buy button");
 		}else if(model.getOrderType().equalsIgnoreCase("Sell")) {
-			buyButton=fluentWaitCodeXpath(driver, "//a[text()='Sell']");
+			buyButton=fluentWaitCodeXpath(driver, "//a[text()='Sell']","Sell button");
 			clickElement(buyButton,"Sell button");
 		}
 		/*Thread.sleep(4000);*/
 		
 		Thread.sleep(2000);
 		productType(driver, model.getProductType());
-		noOfSharesTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']");
+		noOfSharesTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='No. of Shares']","NO of shares textfield");
 		if(model.getScenario().equalsIgnoreCase("Partial Order")) {
 			clearAndSendKey(noOfSharesTextField,model.getQtyMod(),"No of shares Textfield (Mod Qty)");
 		}else
 		clearAndSendKey(noOfSharesTextField,model.getQty(),"No of shares Textfield ");
 		/*Thread.sleep(2000);*/
-		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
+		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']","Enter Price TextField");
 		sendKey(enterPriceTextField, model.getOrderPrice(),"Enter Price TextField");
 		
-		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
+		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]","OptionalFields Label");
 		clickElement(OptionalFieldsLabel,"OptionalFields Label");
 		/*Thread.sleep(1000);*/
 		
-		orderDetail.amoCheckbox(amoFlag, driver);
-		placeOrderButton=fluentWaitCodeXpath(driver,"//input[@value ='Place Order']");
+		orderDetail.amoCheckbox(amoFlag);
+		placeOrderButton=fluentWaitCodeXpath(driver,"//input[@value ='Place Order']","Place Order Button");
 		clickElement(placeOrderButton,"Place Order Button");
-		confirmButton=fluentWaitCodeXpath(driver,"//input[@value='Confirm']");
+		
+		try {
+		confirmButton=fluentWaitCodeXpath(driver,"//input[@value='Confirm']",30,"Place Order Button");
+		}catch(Exception e) {
+			clickElement(placeOrderButton,"Place Order Button");
+		}
 
 		//confirmButton=driver.findElement(By.xpath("//input[@value='Confirm']"));
 		clickElement(confirmButton,"Confirm Button");
@@ -111,13 +119,13 @@ public class NewOrderPage extends SeleniumCoder {
 	public void productType(WebDriver driver,String productTypeStr) {
 		Reporter.log("This is product type ====> "+productTypeStr,true);
 		if(productTypeStr.equalsIgnoreCase("CNC")) {
-			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']");
+			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Delivery CNC']", "CNS Product type");
 			selectRadioButton(productTypeRadioButton, "CNS Product type");
 		}else if(productTypeStr.equalsIgnoreCase("MTF")) {
-			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Margin Trading MTF']");
+			productTypeRadioButton=fluentWaitCodeXpath(driver,"//label[text()='Margin Trading MTF']", "MTF Product type");
 			selectRadioButton(productTypeRadioButton, "MTF Product type");
 		}else if(productTypeStr.endsWith("NRML")) {
-			productTypeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Delivery Plus -  NRML']");
+			productTypeRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Delivery Plus -  NRML']", "NRML Product type");
 			selectRadioButton(productTypeRadioButton, "NRML Product type");
 		}
 	}
