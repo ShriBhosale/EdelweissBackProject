@@ -9,8 +9,11 @@ import java.util.Properties;
 public class ConfigReader {
 	
 	 private Properties properties;
+	 private Properties propertiesFM;
+	 private Properties propertiesWL;
 	 private final String propertyFilePath= System.getProperty("user.dir")+"\\src\\main\\java\\com\\shreeya\\cofing.properties";
-	
+	 private final String fundTransferpropertyFilePath= System.getProperty("user.dir")+"\\src\\main\\java\\com\\shreeya\\fundtransferpages\\fundtransfercofing.properties";
+	 private final String watchListpropertyFilePath= System.getProperty("user.dir")+"\\src\\main\\java\\com\\shreeya\\watchlistPages\\WatchListConfig.properties";
 	public  ConfigReader(){
 		 BufferedReader reader;
 		 try {
@@ -29,13 +32,61 @@ public class ConfigReader {
 		 }
 	
 	public String configReader(String configName) {
-		return properties.getProperty(configName);
+		return properties.getProperty(configName).trim();
 		
 	}
+	
+	public void fundTransferConfig() {
+		BufferedReader reader;
+		 try {
+		 reader = new BufferedReader(new FileReader(fundTransferpropertyFilePath));
+		 propertiesFM = new Properties();
+		 try {
+		 propertiesFM.load(reader);
+		 reader.close();
+		 } catch (IOException e) {
+		 e.printStackTrace();
+		 }
+		 } catch (FileNotFoundException e) {
+		 e.printStackTrace();
+		 throw new RuntimeException("Configuration.properties not found at " + fundTransferpropertyFilePath);
+		 } 
+	}
+	
+	public void watchListConfig() {
+		BufferedReader reader;
+		 try {
+		 reader = new BufferedReader(new FileReader(watchListpropertyFilePath));
+		 propertiesWL = new Properties();
+		 try {
+		 propertiesWL.load(reader);
+		 reader.close();
+		 } catch (IOException e) {
+		 e.printStackTrace();
+		 }
+		 } catch (FileNotFoundException e) {
+		 e.printStackTrace();
+		 throw new RuntimeException("Configuration.properties not found at " + watchListpropertyFilePath);
+		 } 
+	}
+	
+
+	public String configReaderFM(String configName) {
+		return propertiesFM.getProperty(configName).trim();
+		
+	}
+	
+	public String configReaderWL(String configName) {
+		return propertiesWL.getProperty(configName).trim();
+		
+	}
+	
 
 	public static void main(String[] args) {
 	ConfigReader reader=new ConfigReader();
-	System.out.println(reader.configReader("amoFlag"));
+	reader.fundTransferConfig();
+	
+	System.out.println(reader.configReaderFM("AtomicBank"));
 
 	}
 

@@ -22,17 +22,30 @@ public class FundTransferModel {
 	private String debitCardNo;
 	@CsvBindByName(column="AccountType")
 	private String accountType;
+	@CsvBindByName(column="ExpireDate")
+	private String expireDate;
+	@CsvBindByName(column="CardSecurityCode")
+	private String cardSecurityCode;
+	@CsvBindByName(column="OTP")
+	private String otp;
+	@CsvBindByName(column = "OrderType")
+	private String orderType;
+	@CsvBindByName(column = "OrderPrice")
+	private String orderPrice;
+	@CsvBindByName(column = "ProductType")
+	private String productType;
+	@CsvBindByName(column = "Qty")
+	private String qty;
+	@CsvBindByName(column = "Exchange")
+	private String exchange;
+		
 	
-	@CsvBindByName(column="TranscationMode")
-	private String transcationMode;
-	
-	@CsvBindByName(column="Negative")
-	private String negative;
 	
 	
 	public FundTransferModel(String referNo, String bank, String paymentMode, String amount, String userName,
-			String password, String remarks, String debitCardNo, String accountType, String transcationMode,
-			String negative) {
+			String password, String remarks, String debitCardNo, String accountType, String expireDate,
+			String cardSecurityCode, String otp, String orderType, String orderPrice, String productType, String qty,
+			String exchange) {
 		super();
 		this.referNo = referNo;
 		this.bank = bank;
@@ -43,8 +56,14 @@ public class FundTransferModel {
 		this.remarks = remarks;
 		this.debitCardNo = debitCardNo;
 		this.accountType = accountType;
-		this.transcationMode = transcationMode;
-		this.negative = negative;
+		this.expireDate = expireDate;
+		this.cardSecurityCode = cardSecurityCode;
+		this.otp = otp;
+		this.orderType = orderType;
+		this.orderPrice = orderPrice;
+		this.productType = productType;
+		this.qty = qty;
+		this.exchange = exchange;
 	}
 	public FundTransferModel() {
 		super();
@@ -106,25 +125,64 @@ public class FundTransferModel {
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
-	public String getTranscationMode() {
-		return transcationMode;
+	public String getExpireDate() {
+		return expireDate;
 	}
-	public void setTranscationMode(String transcationMode) {
-		this.transcationMode = transcationMode;
+	public void setExpireDate(String expireDate) {
+		this.expireDate = expireDate;
 	}
-	public String getNegative() {
-		return negative;
+	public String getCardSecurityCode() {
+		return cardSecurityCode;
 	}
-	public void setNegative(String negative) {
-		this.negative = negative;
+	public void setCardSecurityCode(String cardSecurityCode) {
+		this.cardSecurityCode = cardSecurityCode;
+	}
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+	public String getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+	public String getOrderPrice() {
+		return orderPrice;
+	}
+	public void setOrderPrice(String orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+	public String getProductType() {
+		return productType;
+	}
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+	public String getQty() {
+		return qty;
+	}
+	public void setQty(String qty) {
+		this.qty = qty;
+	}
+	public String getExchange() {
+		return exchange;
+	}
+	public void setExchange(String exchange) {
+		this.exchange = exchange;
 	}
 	@Override
 	public String toString() {
 		return "FundTransferModel [referNo=" + referNo + ", bank=" + bank + ", paymentMode=" + paymentMode + ", amount="
 				+ amount + ", userName=" + userName + ", password=" + password + ", remarks=" + remarks
-				+ ", debitCardNo=" + debitCardNo + ", accountType=" + accountType + ", transcationMode="
-				+ transcationMode + ", negative=" + negative + "]";
+				+ ", debitCardNo=" + debitCardNo + ", accountType=" + accountType + ", expireDate=" + expireDate
+				+ ", cardSecurityCode=" + cardSecurityCode + ", otp=" + otp + ", orderType=" + orderType
+				+ ", orderPrice=" + orderPrice + ", productType=" + productType + ", qty=" + qty + ", exchange="
+				+ exchange + "]";
 	}
+	
 	
 	
 }

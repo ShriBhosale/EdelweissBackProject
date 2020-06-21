@@ -1,116 +1,62 @@
 package com.shreeya.fundtransferpages;
 
-import java.io.IOException;
-import java.util.Iterator;
+import java.util.List;
 
-import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
-import com.shreeya.FunctionKeyword;
 import com.shreeya.MyTestLauncher;
-import com.shreeya.model.FundTransferModel;
-import com.shreeya.util.CsvReaderCode;
-import com.shreeya.util.ExtendReporter;
+import com.shreeya.model.LatestLoginModel;
 import com.shreeya.util.SeleniumCoder;
 
 public class FundTransferExecution extends SeleniumCoder{
-
 	WebDriver driver;
-	private WebElement fundTransferTab;
-	Iterator<FundTransferModel> csvFundTransferIterator;
-	FundTransferModel fundTransferModel;
-	FundTransferPage fundTranferPage;
-	ExtendReporter report;
-	String [] folderPathArray;
-	String [] reportArray;
-	WebElement seeMarginTab;
-	String errorMsg;
-	
-	public FundTransferExecution(WebDriver driver) throws IOException {
+	List<String> keywordList;
+	FundTransferBankExecution fundTransferBankExecution;
+	FundTransferReport report;
+	FundTransferAmount FundTransferAmount;
+	FundTransferUPITextfield fundTransferUPITextfield;
+	FundTransferUPI_Id fundTransferUPI_Id;
+	FundTransferInternetBanking internetBanking;
+	FundTransferProfile profile;
+	public FundTransferExecution(WebDriver driver)
+	{
 		super(driver);
 		this.driver=driver;
-		CsvReaderCode csvReader=new CsvReaderCode();
-		csvFundTransferIterator=csvReader.FundTransferDataProvider();
-		report=new ExtendReporter();
-		folderPathArray=MyTestLauncher.reportFolderPath;
-		
+		fundTransferBankExecution=new FundTransferBankExecution(driver);
+		FundTransferAmount=new FundTransferAmount(driver);
+		report = new FundTransferReport(MyTestLauncher.reportFolderPath[1], "FundTransfer", 0);
+		fundTransferUPITextfield=new FundTransferUPITextfield(driver);
+		fundTransferUPI_Id=new FundTransferUPI_Id(driver);
+		internetBanking=new FundTransferInternetBanking(driver);
+		profile=new FundTransferProfile(driver);
 	}
-	
-	public void fundTransferExecute() throws InterruptedException, IOException {
-		fundTransferTab=fluentWaitCodeXpath(driver, "//a[text()='Fund Transfer']","fundTransferTab");
-		 seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
-		fundTranferPage=new FundTransferPage(driver);
-		
-		
-		
-		  while(csvFundTransferIterator.hasNext()){
-			  
-			  clickElement("//a[text()='Fund Transfer']", "Fund Transfer Tab");
-		  fundTransferModel=csvFundTransferIterator.next();
-		  Reporter.log("<a><font color='Yellow'>=========@@@@ FundTransfer_\"+fundTransferModel.getReferNo()+\" @@@@========</font></a>", true);
-		  try {
-		  fundTranferPage.fundTransferexecute(fundTransferModel);
-		  }catch(ElementNotInteractableException e) {
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
-			  backFundTransferPage();
-			  continue;
-		  }catch(NullPointerException e) {
-			 
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
-			  backFundTransferPage();
-			  continue;
-		  }catch(TimeoutException e) {
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
-			  backFundTransferPage();
-			  continue;
-		  }
-		  fundTransferReport(fundTransferModel.getReferNo(),errorMsg,"PASS");
-		  backFundTransferPage();
-		  seeMarginTab=fluentWaitCodeXpath(driver, "//a[text()='See Margin']","seeMarginTab");
-		  clickElement(seeMarginTab, "See Margin Tab");
-		  
-		  }
-		 
-		  outputFileClose();
-		
-		Thread.sleep(3000);
-	}
-	
-	public void fundTransferReport(String referNo,String errorMsg,String result) throws IOException {
-		int referenceNo=Integer.valueOf(referNo);
-		if(referenceNo==1) {
-			MyTestLauncher.folderCreationObj.copyFile(folderPathArray[0],"FundTransfer");
-			FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0],"FundTransfer",4);
+	public void fundTransferExecute(LatestLoginModel model) {
+		Reporter.log("<b><font color='Yellow'>=========@@@@ FundTransfer_"+model.getReferNo()+" @@@@========</font></b>", true);
+		FundTransferKeyword keyword=new FundTransferKeyword();
+		keywordList=keyword.keywordProvider();
+		for(String step:keywordList) {
+			switch(step) {
+			case "FundTransfer":
+				fundTransferBankExecution.fundTransferExecute(report);
+				break;
+			case "AmountTextfield":
+				FundTransferAmount.amountTextfieldExecute(report);
+				break;
+			case "UPITextfield":
+				fundTransferUPITextfield.UPITextfieldExecution(report);
+				break;
+			case "UPI_Id":
+				fundTransferUPI_Id.upi_idExecution(report);
+				break;
+			case "InternetBanking":
+				internetBanking.internetBankingExecute(report,model);
+				break;
+			case "Profile":
+				profile.profileExecution(report);
+				break;
+			}
 		}
-		String reportPath=report.reporter(driver, "FundTransfer", folderPathArray, referNo,errorMsg);
-		String screenShotStr=report.captureScreen(driver, folderPathArray[2], "FundTransfer", referenceNo);
-		String [] reportArray= {"No",result,reportPath,screenShotStr};
-		FunctionKeyword.apacheCodeObj.outputFileWriter(reportArray, referenceNo,6);
+		report.fundTransferLogFlush();
 	}
-	
-	public void outputFileClose() throws IOException {
-		FunctionKeyword.apacheCodeObj.outputExcelFileClose(MyTestLauncher.reportFolderPath[0]);
-	}
-	
-	
-	
-	public void backFundTransferPage() throws InterruptedException {
-		boolean flag=true;
-		String currentUrl=driver.getCurrentUrl();
-		driver.navigate().back();
-		if(flag) {
-		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
-		hoverAndClickOption(driver, "//*[@id='QuickSB']", "//*[@id='headerCntr']/nav/div/div[1]/div[2]/div[2]/ul/li[1]/div[1]/div/div[1]/ul/li/a/strong");
-		/*
-		 * fundTransferTab=fluentWaitCodeXpath(driver,
-		 * "//a[text()='Fund Transfer']","fundTransferTab");
-		 * clickElement(fundTransferTab, "Fund transfer tab");
-		 */
-		}
-		}
-	
-	
 }

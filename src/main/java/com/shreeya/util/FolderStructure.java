@@ -56,7 +56,7 @@ public class FolderStructure {
 		return pathArray;
 	}
 	
-	public String copyFile(String targetName,String testDataPath) throws IOException {
+	public String copyFile(String targetName,String testDataPath) {
 		
 		ConfigReader configReader=new ConfigReader();
 		File source = new File(configReader.configReader("TestData")+"\\"+testDataPath+".xlsx");
@@ -65,8 +65,14 @@ public class FolderStructure {
         File executeSource = new File(configReader.configReader("TestData")+"\\Execution.txt");
         File executeDest = new File(targetName+"/Executable.txt");
         
-        FileUtils.copyFile(source, dest);
-        FileUtils.copyFile(executeSource, executeDest);
+        try {
+			FileUtils.copyFile(source, dest);
+			 FileUtils.copyFile(executeSource, executeDest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
         Reporter.log("TestData File copy into output folder",true);
         Reporter.log("Output excel file : "+dest.toPath(),true);
         Reporter.log("Output excel file : "+executeDest.toPath(),true);

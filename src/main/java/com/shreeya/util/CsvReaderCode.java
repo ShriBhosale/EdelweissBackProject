@@ -35,7 +35,7 @@ public class CsvReaderCode {
 	CSVWriter writer;
 	HelperCode helperObject;
 
-	public CsvReaderCode() throws IOException  {
+	public CsvReaderCode() {
 		
 	}
 	
