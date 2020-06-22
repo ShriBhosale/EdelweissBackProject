@@ -483,7 +483,8 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		
 		
 		
-		  watchListCreate("ABC3", "Create", true,false); checkWatchListCancelButton();
+		  watchListCreate("ABC3", "Create", true,false);
+		  checkWatchListCancelButton();
 		  
 		  watchListCreate("Auto10", "Create", false,false);
 		  createAlphaNumericWatchList("Auto10");
