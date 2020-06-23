@@ -13,32 +13,27 @@ public class WatchListKeywords {
 		List<String> stepsList = new ArrayList<String>();
 		List<String> normalWatchList = new ArrayList<String>();
 
-		
-		
-		
-		  normalWatchList.add("Create"); 
-		  normalWatchList.add("AddScript");
-		  normalWatchList.add("Verfiy_1");
-		 
-		  
-		  normalWatchList.add("TradingWithWatchList");
-		  normalWatchList.add("Verfiy_2");
-		 
-		  
-		  normalWatchList.add("QuotePage"); 
-		  normalWatchList.add("Verfiy_3");
-		  
-		  normalWatchList.add("CreateDuplicate"); 
-		  normalWatchList.add("DuplicateScript");
-		  normalWatchList.add("Verfiy_4");
-		  
-		  normalWatchList.add("DeleteScript"); 
-		  normalWatchList.add("Delete");
-		  normalWatchList.add("Verfiy_5");
-		 
-		
-		normalWatchList.add("WatchListTextfield");
-		normalWatchList.add("Verfiy_6");
+		normalWatchList.add("Create");
+		normalWatchList.add("AddScript");
+		normalWatchList.add("Verfiy_1");
+
+		normalWatchList.add("TradingWithWatchList");
+		normalWatchList.add("Verfiy_2");
+
+		normalWatchList.add("QuotePage");
+		normalWatchList.add("Verfiy_3");
+
+		normalWatchList.add("CreateDuplicate");
+		normalWatchList.add("DuplicateScript");
+		normalWatchList.add("Verfiy_4");
+
+		normalWatchList.add("DeleteScript");
+		normalWatchList.add("Delete");
+		normalWatchList.add("Verfiy_5");
+
+		/*
+		 * normalWatchList.add("WatchListTextfield"); normalWatchList.add("Verfiy_6");
+		 */
 
 		List<String> predWatchList = new ArrayList<String>();
 

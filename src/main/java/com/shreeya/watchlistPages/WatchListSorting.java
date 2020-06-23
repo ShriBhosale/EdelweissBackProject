@@ -106,7 +106,18 @@ public class WatchListSorting extends SeleniumCoder{
 		 */
 		
 		ascendAndDscendButton=fluentWaitCodeXpath(sortButtonXpath, "Ascending and dscending button");
+		
 		clickElementUsingJavaScript(ascendAndDscendButton, "AscDscbutton");
+		String sortClassValue=getValueFromAttribute(ascendAndDscendButton, "class", "sort Class value");
+		if(ascendingOrNot) {
+			if(!sortClassValue.contains("-up")) {
+				clickElementUsingJavaScript(ascendAndDscendButton, "AscDscbutton");
+			}
+		}else {
+			if(!sortClassValue.contains("-down")) {
+				clickElementUsingJavaScript(ascendAndDscendButton, "AscDscbutton");
+			}
+		}
 		if(noTimeSorting==1) {
 			//discuss with abisheka and atriya
 			/*
@@ -126,6 +137,8 @@ public class WatchListSorting extends SeleniumCoder{
 			detailList.add(watchListName+" script are sorted by "+sorting+" on "+groupElementName+"-PASS");
 		else
 			detailList.add(watchListName+" script not are sorted by "+sorting+" on "+groupElementName+"-FAIL");
+		
+		detailList.add(ScreenshortProvider.captureScreen(driver, groupElementName));
 	}
 	
 	
@@ -133,13 +146,13 @@ public class WatchListSorting extends SeleniumCoder{
 	public void sorting(String watchListName,String sortButtonXpath,String groupElementXpath,String groupElementName,String typeElement) {
 		Reporter.log("====> sorting <====", true);
 		detailList.add("@@> Verify sorting of scrips when user selects "+groupElementName+". <@@");
-		checkSorting(watchListName, sortButtonXpath, groupElementXpath, groupElementName, typeElement, false,1);
+		checkSorting(watchListName, sortButtonXpath, groupElementXpath, groupElementName, typeElement, true,1);
 		
 		detailList.add("@@> Verify sorting of scrips when user selects "+groupElementName+" again. <@@");
-		checkSorting(watchListName, sortButtonXpath, groupElementXpath, groupElementName, typeElement, true,2);
+		checkSorting(watchListName, sortButtonXpath, groupElementXpath, groupElementName, typeElement, false,2);
 		
 		detailList.add("@@> Verify sorting of scrips when user selects "+groupElementName+" 3rd time. <@@");
-		checkSorting(watchListName, sortButtonXpath, groupElementXpath, groupElementName, typeElement, false, 3);
+		checkSorting(watchListName, sortButtonXpath, groupElementXpath, groupElementName, typeElement, true, 3);
 		fetchsortingMsg(groupElementName);
 	}
 	
@@ -154,49 +167,49 @@ public class WatchListSorting extends SeleniumCoder{
 			detailList.add(sortingMsg+"-PASS");
 		else
 			detailList.add(sortingMsg+"-FAIL");
-		detailList.add(ScreenshortProvider.captureScreen(driver, sortedOptin));
+		//detailList.add(ScreenshortProvider.captureScreen(driver, sortedOptin));
 		
 	}
 	
 	public void lastTradePriceSorting(String watchString){
 		Reporter.log("===> lastTradePriceSorting <===", true);
-		String lastTradePricexpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[1]/div/div[2]/span/div/i";
-		String lastPriceGropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div/div[2]/span";
+		String lastTradePricexpath="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[2]/span/div/i";
+		String lastPriceGropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div/div[2]/span";
 		sorting(watchListName, lastTradePricexpath, lastPriceGropXpath, "Last Trade Price (Rs.).", "float");
 	}
 	
 	public void volumeSorting(String watchListName) {
 		Reporter.log("====> volumeSorting <====", true);
-		String volumeSortingButton="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[1]/div/div[4]/span/div/i";
-		String volumeGropXpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div/div[4]/span";
+		String volumeSortingButton="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[4]/span/div/i";
+		String volumeGropXpath="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div/div[4]/span";
 		sorting(watchListName, volumeSortingButton, volumeGropXpath, "Volume", "float");
 	}
 	
 	public void lowPriceSorting(String watchListName) {
 		Reporter.log("====> lowPriceSorting <====", true);
-		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[1]/div/div[7]/span/div/i";
-		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div/div[7]/span";
+		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[7]/span/div/i";
+		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div/div[7]/span";
 		sorting(watchListName, sortingButton, gropXpath, "Low Price", "float");
 	}
 	
 	public void hightPriceSorting(String watchListName) {
 		Reporter.log("====> hightPriceSorting <====", true);
-		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[1]/div/div[8]/span/div/i";
-		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div/div[8]/span";
+		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[8]/span/div/i";
+		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div/div[8]/span";
 		sorting(watchListName, sortingButton, gropXpath, "High Price", "float");
 	}
 	
 	public void ChangePercentageSorting(String watchListName) {
 		Reporter.log("====> ChangePercentageSorting <====", true);
-		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[1]/div/div[3]/span/div/i";
-		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div[1]/div[3]/span[2]";
+		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[3]/span/div/i";
+		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[3]/span[2]";
 		sorting(watchListName, sortingButton, gropXpath, "Change Percentage", "float");
 	}
 	
 	public void tradingSymbolSorting(String watchListName) {
 		Reporter.log("====> tradingSymbolSorting <====", true);
-		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[1]/div/div[1]/span/div/i";
-		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div/div[1]/div[1]/a";
+		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[1]/span/div/i";
+		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[1]/a";
 		sorting(watchListName, sortingButton, gropXpath, "Symbol", "String");
 	}
 	
@@ -204,14 +217,14 @@ public class WatchListSorting extends SeleniumCoder{
 		Reporter.log("====> bidPriceSorting <====", true);
 		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[5]/span/div/i";
 		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[5]/span[1]";
-		sorting(watchListName, sortingButton, gropXpath, "BidPrice", "String");
+		sorting(watchListName, sortingButton, gropXpath, "Bid Price", "float");
 	}
 	
 	public void askPriceSorting(String watchListName) {
 		Reporter.log("====> askPriceSorting <====", true);
 		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[6]/span/div/i";
 		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[6]/span[1]";
-		sorting(watchListName, sortingButton, gropXpath, "AskPrice", "String");
+		sorting(watchListName, sortingButton, gropXpath, "Ask Price", "float");
 	}
 	
 	public ExtendReporter sortingScenarioExecute(String segment,ExtendReporter report) {
@@ -219,15 +232,16 @@ public class WatchListSorting extends SeleniumCoder{
 		common.redirectToWatchListModule(true);
 		if(segment.equalsIgnoreCase("Equity")) {
 			watchListName="MarketWatch";
-			common.watchListtabNotFound("MarketWatch", "check","BSE");
-			tradingSymbolSorting(watchListName);
-			  lastTradePriceSorting(watchListName); 
-			  ChangePercentageSorting(watchListName);
-			  volumeSorting(watchListName);
+			 common.watchListtabNotFound("MarketWatch", "check","BSE"); 
+			
+			  tradingSymbolSorting(watchListName); lastTradePriceSorting(watchListName);
+			  ChangePercentageSorting(watchListName); volumeSorting(watchListName);
+			 
 			  bidPriceSorting(watchListName);
 			  askPriceSorting(watchListName);
-			  lowPriceSorting(watchListName); 
-			  hightPriceSorting(watchListName);
+				
+			lowPriceSorting(watchListName); hightPriceSorting(watchListName);
+				 
 			 
 			
 			

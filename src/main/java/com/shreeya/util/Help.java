@@ -207,6 +207,23 @@ public class Help extends SeleniumCoder{
 		return number;
 	}
 	
+	public String digitCoverts(String number,String StrIgnore) {
+		if(number.contains(StrIgnore)) {
+			number=number.replace(StrIgnore, "");
+		}
+		if(number.contains(".")) {
+			String [] numberArray=number.split("\\.");
+			char [] digtiArray=numberArray[1].toCharArray();
+			if(digtiArray.length==1) {
+				number=number+"0";
+			}
+		}else {
+			number=number+".00";
+		}
+		number=commoRemove(number);
+		return number+StrIgnore;
+	}
+	
 	public String commoRemove(String number) {
 		String ans="";
 		char [] numberArray=number.toCharArray();
@@ -225,6 +242,8 @@ public class Help extends SeleniumCoder{
 	public float removeCommoConvertIntoFloat(String number) {
 		float floatNo=0.0f;
 		boolean negativeValueFlag=false;
+		
+		if (!number.matches(".*[a-z].*")) {
 		if(number.contains("(") && number.contains(")")) {
 			number=number.replace("(", "");
 			number=number.replace(")", "");
@@ -236,7 +255,7 @@ public class Help extends SeleniumCoder{
 		if(charArray.length==1) {
 			number=number+"0";
 		}}
-		if (!number.matches(".*[a-z].*")) {
+		
 		if(number.contains(","))
 			number=number.replace(",", "");
 		 
@@ -253,12 +272,16 @@ public class Help extends SeleniumCoder{
 	public List<String> removeLetterForArrayList(List<String> inputList) {
 		List<String> output=new ArrayList<String>();
 		for(String input:inputList) {
+			if(!input.equalsIgnoreCase("--")) {
 			if(!input.matches(".*[a-z].*")) {
 				if(!input.equalsIgnoreCase("")) {
 			if(input.contains("(") && input.contains(")")) {
 				input=input.replace("(", "");
 				input=input.replace(")", "");
 				output.add(input);
+			}else {
+				output.add(input);
+			}
 			}
 			}
 			}
@@ -270,9 +293,11 @@ public class Help extends SeleniumCoder{
 	public List<Float> convertStringListToFloat(List<String> inputList) {
 		List<Float> floatList=new ArrayList<Float>();
 		for(String input:inputList) {
+			if(!input.equalsIgnoreCase("--")) {
 			float floatNo=removeCommoConvertIntoFloat(input);
 			if(floatNo!=0.0)
 			floatList.add(floatNo);
+			}
 		}
 		return floatList;
 	}
@@ -606,5 +631,33 @@ public class Help extends SeleniumCoder{
 			ouputList.add(removeHtmlReporter(input));
 		}
 		return ouputList;
+	}
+
+	public String digitConvert(String number, String StrIgnore) {
+		if(number.contains(StrIgnore)) {
+			number=number.replace(StrIgnore, "");
+		}
+		if(number.contains(".")) {
+			String [] numberArray=number.split("\\.");
+			char [] digtiArray=numberArray[1].toCharArray();
+			if(digtiArray.length==1) {
+				number=number+"0";
+			}
+		}else {
+			number=number+".00";
+		}
+		number=commoRemove(number);
+		return number+StrIgnore;
+	}
+	
+	public boolean checkElementEnable(WebElement element,String check,String elementName) {
+		Reporter.log("===== checkElementEnable  =====", true);
+		String classValue=getValueFromAttribute(element, "class", elementName);
+		boolean containFoundFlag=false;
+		if(classValue.contains(check))
+			containFoundFlag=true;
+		
+		Reporter.log("containFoundFlag : "+containFoundFlag, true);
+		return containFoundFlag;
 	}
 }

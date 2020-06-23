@@ -62,9 +62,21 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	private WebElement addScriptCancelButton;
 	private String cancelButtonMsg;
 	
+	
 	List<String> addScriptList;
 	private WebElement delAndDefaStartOptInWatchList;
 	private WebElement createButton;
+	private String scriptNameConfig;
+	private String exchangeConfig;
+	private String tradingSymbolConfig;
+	private String addScriptNameConfig;
+	private String[] addScriptNameConfigArray;
+	private String addExchangeConfig;
+	private String[] addExchangeConfigArray;
+	private String addTradingSymbolEQ;
+	private String[] addTradingSymbolConfigArray;
+	private String addTradingSymbol;
+	private String enterWatchList;
 	
 
 	public WatchListExtraScenario(WebDriver driver) {
@@ -107,7 +119,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	
 	public void checkDeleteOptionForWatchList(String watchListName) {
 		Reporter.log("=====> checkDeleteOptionForWatchList <=====", true);
-		common.watchListtabNotFound(watchListName, "check", configReader.configReaderWL("Exchange"));
+		common.watchListtabNotFound(watchListName, "check", exchangeConfig);
 		detailList.add(ScreenshortProvider.captureScreen(driver, watchListName+"DeleteOptionPresentOrNot"));
 		String xpath="//*[@id='contentCntr']/div/div/div[1]/ul/li/a[text()='"+watchListName+"']//following::ul[@class='action-button hidden-xs']";
 		delAndDefaStartOptInWatchList=fluentWaitCodeXpath(xpath,20,"Delete and default option for watchList");
@@ -181,13 +193,13 @@ public class WatchListExtraScenario extends SeleniumCoder {
 			noScriptInWatchList(watchListName);
 		}else {
 			clickElement("//button[text()='Create']", "Create buttons");
-			common.addScript(enterWatchListName,configReader.configReaderWL("ScriptName"),configReader.configReaderWL("tradingSymbol"), configReader.configReaderWL("Exchange"), step, detailList);
+			common.addScript(enterWatchListName,scriptNameConfig,tradingSymbolConfig,exchangeConfig, step, detailList);
 		}
 		
 		 
 		checkWatchListPresentOrNot(enterWatchListName, step);
 		if(watchListDeleteOrNot)
-		common.deleteWatchList(enterWatchListName,configReader.configReaderWL("Exchange"));
+		common.deleteWatchList(enterWatchListName,exchangeConfig);
 	}
 	
 	public void noScriptInWatchList(String watchListName) {
@@ -199,12 +211,13 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		xpathString = "//h4[text()='" + text + "']//following::a[1]";
 		addScriptCancelButton=fluentWaitCodeXpath(xpathString, "Add script cancel button");
 		if(addScriptCancelButton.isEnabled()) {
+			staticWait(2000);
 			cancelButtonMsg="In Add script Dialog box cancel button is present and clickable-PASS";
 		clickElement(addScriptCancelButton, "Cancel script button");
 		}else {
 			cancelButtonMsg="In Add script Dialog box cancel button is present and disable-FAIL";
 		}
-		String ans=common.watchListtabNotFound(watchListName, "Checking", configReader.configReaderWL("Exchange"));
+		String ans=common.watchListtabNotFound(watchListName, "Checking",exchangeConfig);
 		Reporter.log("noScriptWatchList Name  : "+ans, true);
 		if(ans.equalsIgnoreCase("WatchList not found")) {
 			noScriptInWatchListAns="Without Script we can not create watchList-PASS";
@@ -214,13 +227,14 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	}
 	
 	public void checkAddScriptButton() {
-		addScriptList=common.checkAddScripButton("Nowat",configReader.configReaderWL("Exchange"),configReader.configReaderWL("ScriptName"), "Create");
+		addScriptList=common.checkAddScripButton("Nowat",exchangeConfig,scriptNameConfig, "Create");
 	}
 	
 	public void checkWatchListPresentOrNot(String watchListName,String step) {
 		Reporter.log("===> checkWatchListPresentOrNot <====", true);
 		if(watchListResult.contains("PASS")) {
-			String watchList=common.watchListtabNotFound(watchListName, step, configReader.configReaderWL("Exchange"));
+			String watchList=common.watchListtabNotFound(watchListName, step,exchangeConfig);
+			enterWatchList=watchList;
 			watchListResult=help.commpareTwoString(watchList, watchListName);
 			Reporter.log("<b>watchListResult : "+watchListResult+"</b>", true);
 		}
@@ -276,9 +290,9 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	
 	public void addScript(String watchListName,String step) {
 		Reporter.log("=====> addScript <=====");
-		scriptArray=help.commaSeparater(configReader.configReaderWL("AddScriptName"));
-		exchangeArray=help.commaSeparater(configReader.configReaderWL("AddExchange"));
-		tradingSymbolArray=help.commaSeparater(configReader.configReaderWL("AddTradingSymbol"));
+		scriptArray=addScriptNameConfigArray;
+		exchangeArray=addExchangeConfigArray;
+		tradingSymbolArray=addTradingSymbolConfigArray;
 		addScripButton=fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add Script button");
 		if(addScripButton!=null) {
 			if(addScripButton.isEnabled())
@@ -292,7 +306,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 			try {
 				clickElement(addScriptButton, "Add script button");
 			} catch (ElementClickInterceptedException e) {
-				
+				staticWait(2000);
 				text = "Add a Scrip to " +watchListName;
 				xpathString = "//h4[text()='" + text + "']//following::input[3]";
 				addScriptTitle=fluentWaitCodeXpath(xpathString,20, "Add script");
@@ -300,6 +314,7 @@ public class WatchListExtraScenario extends SeleniumCoder {
 				addScriptButton = fluentWaitCodeXpath("//a[text()='Add Scrip']", "Add script button");
 				clickElement(addScriptButton, "Add script button");
 				}
+				
 			}
 			
 			detailList=common.addScript(watchListName, scriptArray[i], tradingSymbolArray[i], exchangeArray[i], step, detailList);
@@ -382,17 +397,20 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		if(segment.equalsIgnoreCase("Equity")) {
 		Reporter.log("====> checkDuplicateScripPresentOrNot <====", true);
 		detailList.add("@@> Verify Preset Watchlist is available for creating duplicate symbols <@@");
-		detailList.add(common.checkDuplicateInWatchList("Nifty 50", "Checking", configReader.configReaderWL("Exchange")));
-		detailList.add(common.checkDuplicateInWatchList("Sensex", "Checking", configReader.configReaderWL("Exchange")));
+		detailList.add(common.checkDuplicateInWatchList("Nifty 50", "Checking", exchangeConfig));
+		detailList.add(common.checkDuplicateInWatchList("Sensex", "Checking", exchangeConfig));
 		}
 	}
 	
 	public void checkMaxNoCharacterAllowInWatchListText() {
 		Reporter.log("=====> checkMaxNoCharacterAllowInWatchListText <=====", true);
-		Reporter.log("@@> Verify Lenth of watchlist name <@@");
+		detailList.add("@@> Verify Lenth of watchlist name <@@");
 		common.clickNewWatchListButton();
 		enterWatchListTextfield("watchListNameMaximum");
+		detailList.add(ScreenshortProvider.captureScreen(driver, "MaxCharaterWatchList"));
 		char [] charArray=enterWatchListName.toCharArray();
+		detailList.add("WatchList name : watchListNameMaximum");
+		detailList.add("Enter watchList name : "+enterWatchListName);
 		if(charArray.length==15)
 			detailList.add("Maximum 15 letter are allow in watchList name textfield-PASS");
 		else
@@ -402,14 +420,17 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	public void checkCreateButtonInitialy() {
 		Reporter.log("=====> checkCreateButtonInitialy <=====", true);
 		detailList.add("@@> verify initially in dialogue box Create button is disabled  <@@");
+		pageRefresh();
+		staticWait(2000);
 		common.clickNewWatchListButton();
+		
 		createButton=fluentWaitCodeXpath("//button[text()='Create']", "Create button");
-		if(createButton.isEnabled()==false) {
-			detailList.add("Please enter wathclist name-PASS");
+		if(help.checkElementEnable(createButton, "wl-inactiveLink", "Create button")) {
+			detailList.add("Initialy create button is disable-PASS");
 		}else {
 			detailList.add("initialy create button is enable-FAIL");
 		}
-		
+		detailList.add(ScreenshortProvider.captureScreen(driver, "InitialWatchListTextfield"));
 	}
 	
 	public void checkCreateButtonWhenBlankWatchLitText() {
@@ -419,8 +440,8 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		watchListNameTextfield = fluentWaitCodeXpath("//label[text()='Name Your Watchlist']//following::input[1]",200,"WatchListName Textfield");
 		clearTextfield(watchListNameTextfield,"WatchListName Textfield");
 		createButton=fluentWaitCodeXpath("//button[text()='Create']", "Create button");
-		if(createButton.isEnabled()==false) {
-			detailList.add("Please enter wathclist name-PASS");
+		if(help.checkElementEnable(createButton, "wl-inactiveLink", "Create button")) {
+			detailList.add("Create button is disble because watchList textfield blank-PASS");
 		}else {
 			detailList.add("watchList name field is blank still it is enable-FAIL");
 		}
@@ -475,16 +496,93 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		detailList.add(watchListPresentScreenshot);
 	}
 	
+	public void inputProvider(String segment) {
+		if(segment.equalsIgnoreCase("Equity")) {
+			scriptNameConfig=configReader.configReaderWL("ScriptNameEQ");
+			exchangeConfig=configReader.configReaderWL("ExchangeEQ");
+			tradingSymbolConfig=configReader.configReaderWL("tradingSymbolEQ");
+			
+			addScriptNameConfig=configReader.configReaderWL("AddScriptNameEQ");
+			if(addScriptNameConfig.contains(","))
+				addScriptNameConfigArray=help.commaSeparater(addScriptNameConfig);
+			
+			addExchangeConfig=configReader.configReaderWL("AddExchangeEQ");
+			if(addExchangeConfig.contains(","))
+				addExchangeConfigArray=help.commaSeparater(addExchangeConfig);
+			
+			addTradingSymbol=configReader.configReaderWL("AddTradingSymbolEQ");
+			if(addTradingSymbol.contains(","))
+				addTradingSymbolConfigArray=help.commaSeparater(addTradingSymbol);
+			
+		}else {
+
+			scriptNameConfig=configReader.configReaderWL("ScriptNameCO");
+			exchangeConfig=configReader.configReaderWL("ExchangeCO");
+			tradingSymbolConfig=configReader.configReaderWL("tradingSymbolCO");
+			
+			addScriptNameConfig=configReader.configReaderWL("AddScriptNameCO");
+			if(addScriptNameConfig.contains(","))
+				addScriptNameConfigArray=help.commaSeparater(addScriptNameConfig);
+			
+			addExchangeConfig=configReader.configReaderWL("AddExchangeCO");
+			if(addExchangeConfig.contains(","))
+				addExchangeConfigArray=help.commaSeparater(addExchangeConfig);
+			
+			addTradingSymbol=configReader.configReaderWL("AddTradingSymbolCO");
+			if(addTradingSymbol.contains(","))
+				addTradingSymbolConfigArray=help.commaSeparater(addTradingSymbol);
+			
+		
+		}
+	}
+	
+	public void checkIntialSpaceAllowInWatchListTextfield(String watchListName) {
+		Reporter.log("=====> checkIntialSpaceAllowInWatchListTextfield <====", true);
+		detailList.add("@@> Verify initially Space is allowed in Name field <@@");
+		detailList.add("WatchList Name : "+watchListName);
+		if(enterWatchList.equalsIgnoreCase(watchListName))
+			detailList.add("WatchList textfield allow initially space-FAIL");
+		else
+			detailList.add("WatchList Textfield does not allow initially space-PASS");
+		detailList.add(watchListPresentScreenshot);
+	}
+	
+	public void checkInBetSpaceAllowInWatchListTextfield(String watchListName) {
+		Reporter.log("=====> checkInBetSpaceAllowInWatchListTextfield <====", true);
+		detailList.add("@@> Verify Space is allowed in b/w char in Name field <@@");
+		detailList.add("WatchList Name : "+watchListName);
+		if(watchListResult.contains("PASS"))
+			detailList.add("In between space allow in watchList-PASS");
+		else
+			detailList.add("In between space not allow in watchList-FAIL");
+		detailList.add(watchListPresentScreenshot);
+	}
+	
+	public void checkMultipleSpaceAllowInWatchListTexfield(String watchListName) {
+		Reporter.log("======> checkMultipleSpaceAllowInWatchListTexfield <=====", true);
+		detailList.add("@@> Verify Space is allowed multiple times in b/w char in Name field <@@");
+		detailList.add("WatchList Name : "+watchListName);
+		if(watchListResult.contains("PASS"))
+			detailList.add("Multiple time space allow in watchList-FAIL");
+		else
+			detailList.add("Multiple time space does not allow in watchList-PASS");
+		detailList.add(watchListPresentScreenshot);
+	}
+	
 	public ExtendReporter watchListExtraScenarioExecute(String segment,ExtendReporter reporter) {
 		Reporter.log("<b>=====@@> watchListExtraScenarioExecute <@@=====</b>", true);
 		configReader.watchListConfig();
+		inputProvider(segment);
 		common.redirectToWatchListModule(true);
-		//watchListTab(segment);
 		
-		
-		
-		  watchListCreate("ABC3", "Create", true,false);
+		  watchListTab(segment);
+		  
+		  
+		  
+		  
+		  watchListCreate("Watch Cancel", "Create", true,false);
 		  checkWatchListCancelButton();
+		  
 		  
 		  watchListCreate("Auto10", "Create", false,false);
 		  createAlphaNumericWatchList("Auto10");
@@ -495,20 +593,37 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		  
 		  watchListCreate("wat12L", "Create",false,true);
 		  createNumberInBetWatchList("wat12L");
-
+		  
 		  checkDelScrButOneScriptPresent("Auto10"); addScript("Auto10", "AddScript");
-		  common.deleteScript("Auto10", tradingSymbolArray, "deleteScript", "NSE");
-		  deleteMultipleScript();
-
+		  
+		  
+		  common.deleteScript("Auto10", addTradingSymbolConfigArray,
+		  "deleteScript","NSE"); deleteMultipleScript();
+		  
+		  
+		  watchListCreate("  bank Wat", "Create",false,true);
+		  checkIntialSpaceAllowInWatchListTextfield("  bank Wat");
+		  
+		  watchListCreate("bank WatchList", "Create",false,true);
+		  checkInBetSpaceAllowInWatchListTextfield("bank WatchList");
+		  
+		  watchListCreate("ABC Ba kk", "Create",false,true);
+		  checkMultipleSpaceAllowInWatchListTexfield("ABC Ba kk");
+		  
+		  
 		  watchListCreate("Nowat", "No Scrip", false, false);
-		  withoutScripCreateWatchList();
-		  printAddScriptButton();
-
-		checkDeleteOptionForDeviceAndPredefineWatchList(segment);
-		checkDuplicateScripPresentOrNot(segment);
-		checkMaxNoCharacterAllowInWatchListText();
+		  withoutScripCreateWatchList(); printAddScriptButton();
+		  
+		  checkDeleteOptionForDeviceAndPredefineWatchList(segment);
+		  checkDuplicateScripPresentOrNot(segment);
+		   
+		 
+		 checkMaxNoCharacterAllowInWatchListText();
+		
+		 
+		 
 		checkCreateButtonInitialy();
-		checkCreateButtonWhenBlankWatchLitText();
+		 checkCreateButtonWhenBlankWatchLitText();  
 		reporter.watchListExtraScenario(detailList);
 		 
 		return reporter;

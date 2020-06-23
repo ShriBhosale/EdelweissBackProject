@@ -186,9 +186,11 @@ public class WatchListPage extends SeleniumCoder {
 			}
 			clickElement("//button[text()='Create']", "Create buttons");
 			model.setWatchListName(watchListName);
-			if(duplicateOrNot)
+			
+			if(duplicateOrNot) {
+				errorList.add("WatchList Name : "+watchListName);
 				addScript(model, "createDuplicate");
-			else
+			}else
 				addScript(model, "create");
 			watchListCommon.pageVerify(model, "Create");
 		}
@@ -317,11 +319,12 @@ public class WatchListPage extends SeleniumCoder {
 			}
 		}
 		staticWait(500);
+		Reporter.log("DropDown xpath : "+dropdownOptionStr, true);
 		addScriptDropDownOption=fluentWaitCodeXpath(dropdownOptionStr,200,"Script dropdown Option");
 		try {
 		clickElement(addScriptDropDownOption, model.getScriptName() + "Dropdown option");
 		}catch(StaleElementReferenceException e) {
-			
+			Reporter.log("DropDown xpath : "+dropdownOptionStr, true);
 			clickElement(dropdownOptionStr, model.getScriptName() + "Dropdown option");
 		}
 		errList=watchListCommon.selectExchange(model.getExchange(), step,errorList);
@@ -560,6 +563,7 @@ public class WatchListPage extends SeleniumCoder {
 			clickElement(addScriptButton, "Add script button");
 			}
 		}
+		errorList.add("Script name : "+model.getScriptName());
 		addScript(model, "duplicateAddScript");
 
 	}

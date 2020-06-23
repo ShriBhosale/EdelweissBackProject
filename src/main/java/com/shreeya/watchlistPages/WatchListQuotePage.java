@@ -71,6 +71,8 @@ public class WatchListQuotePage extends SeleniumCoder {
 	private String persentageNo;
 
 	private WebElement ltpQuoteLabel;
+
+	private String ltpPersantage;
 	
 	public WatchListQuotePage(WebDriver driver) {
 		super(driver);
@@ -109,7 +111,7 @@ public class WatchListQuotePage extends SeleniumCoder {
 		if(fetchTextFromElement(exchangeLabelCode).contains("F&"))
 		{
 			String [] array=fetchTextFromElement(exchangeLabelCode).split("amp;");
-			codePageDetailList.add("Exchange :  "+help.commpareTwoString(array[0]+array[0], exchangeStr));
+			codePageDetailList.add("Exchange :  "+help.commpareTwoString(array[0]+array[1], exchangeStr));
 		}else {
 		codePageDetailList.add("Exchange :  "+help.commpareTwoString(fetchTextFromElement(exchangeLabelCode), exchangeStr));
 		}
@@ -271,7 +273,8 @@ public class WatchListQuotePage extends SeleniumCoder {
 			List<String> scriptDetailList=new ArrayList<String>();
 			LastPriceLable=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+scriptNo+"]/div[1]/div[2]/span", "Last price");
 			scriptDetailList.add(fetchTextFromElement(LastPriceLable));
-			scriptDetailList.add(fetchTextFromElement("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+scriptNo+"]/div[1]/div[3]/span[2]", "Persentage"));
+			ltpPersantage=help.digitConvert(fetchTextFromElement("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+scriptNo+"]/div[1]/div[3]/span[2]", "Persentage"),")");
+			scriptDetailList.add(ltpPersantage);
 			scriptDetailList.add(fetchTextFromElement("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+scriptNo+"]/div[1]/div[3]/span[1]", "Change count"));
 			return scriptDetailList;
 		}
@@ -296,15 +299,25 @@ public class WatchListQuotePage extends SeleniumCoder {
 			codePageDetailList.add("LTP : "+help.commpareTwoString(quoteDetailList.get(0), scriptDetailList.get(0)));
 			Reporter.log(quoteDetailList.get(1), true);
 			Reporter.log(quoteDetailList.get(2), true);
-			String [] changeArray=quoteDetailList.get(1).split("-");
-			String [] persentageArray=quoteDetailList.get(2).split("-");
+			
+			/*
+			 * String [] changeArray=quoteDetailList.get(1).split("-"); String []
+			 * persentageArray=quoteDetailList.get(2).split("-");
+			 */
+			
+			
 				if(help.commpareTwoString(quoteDetailList.get(1),scriptDetailList.get(1)).contains("PASS")) {
-					if(help.commpareTwoString(quoteDetailList.get(2),scriptDetailList.get(2)).contains("PASS")) {
-						
-						codePageDetailList.add("Change Persentage : "+changeArray[0]+persentageArray[0]+"-PASS");
-					}
+					
+					codePageDetailList.add("LTP change Persentage : "+quoteDetailList.get(1)+"-PASS");
 				}else {
-					codePageDetailList.add("Change Persentage : "+changeArray[0]+persentageArray[0]+"-FAIL");
+					codePageDetailList.add("LTP change Persentage : "+quoteDetailList.get(1)+"-FAIL");
+				}
+				if(help.commpareTwoString(quoteDetailList.get(2),scriptDetailList.get(2)).contains("PASS")) {
+						
+						codePageDetailList.add("LTP Change  :"+quoteDetailList.get(2)+"-PASS");
+					
+				}else {
+					codePageDetailList.add("LTP Change :"+quoteDetailList.get(2)+"-FAIL");
 				}
 				
 			

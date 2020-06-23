@@ -61,6 +61,20 @@ public class PredefineWatchList extends SeleniumCoder{
 	String errorMsg;
 
 	private int numberScript;
+
+	private String[] scriptNameArray;
+
+	private WebElement scriptNameLabel;
+
+	private WebElement tradeButton;
+
+	private String noOfScripStr;
+
+	private List<WebElement> scriptList;
+
+	private String scriptCount;
+
+	private int scriptCountInt;
 	
 	public static String [] orderDetailArray;
 	
@@ -161,15 +175,37 @@ public class PredefineWatchList extends SeleniumCoder{
 		String screenshot = null;
 		predefineWatchListDetail=new ArrayList<String>();
 		clickOnPredefineWatchList(model);
-		String scriptName=model.getScriptName().trim().replace(" ", "  ");
-		String tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+model.getScriptName()+" ']";
-		
-			WebElement tradeButton=fluentWaitCodeXpath(tradeButtonxpath,30,"Trading button");
-			if(tradeButton==null) {
-				 tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "+scriptName+" ']";
-				tradeButton=fluentWaitCodeXpath(tradeButtonxpath, "Trading button");
+		//String scriptName=model.getScriptName().trim().replace(" ", "  ");
+		/*
+		 * String
+		 * tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "
+		 * +model.getScriptName()+" ']";
+		 * 
+		 * WebElement
+		 * tradeButton=fluentWaitCodeXpath(tradeButtonxpath,30,"Trading button");
+		 * /if(tradeButton==null) {
+		 * tradeButtonxpath="//div[@class='ed-td hidden-xs text-right ed-action']//a[@toc-cname=' "
+		 * +scriptName+" ']"; tradeButton=fluentWaitCodeXpath(tradeButtonxpath,
+		 * "Trading button"); }
+		 * clickElement(tradeButton,model.getScriptName()+" Trade button");
+		 */
+		noOfScripStr=fetchTextFromElement("//span[@class='count ng-scope']",300,"No of script label");
+		scriptList=multipleElementLocator("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[1]/a", "Script list");
+		scriptCount=String.valueOf(scriptList.size());
+		Reporter.log("Script count : "+scriptCount, true);
+		scriptNameArray = help.commaSeparater(model.getVerifyScript());
+		 scriptCountInt = scriptList.size() + 2;
+		for (int i = 2; i < scriptCountInt; i++) {
+			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a","Script Name");
+			scriptName = fetchTextFromElement(scriptNameLabel);
+			if (scriptName.contains(scriptNameArray[scriptNameArray.length - 1])) {
+				Reporter.log("Script : " + scriptNameArray[scriptNameArray.length - 1]);
+				tradeButton=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[11]/a", "trade button");
+				clickElement(tradeButton, "ScriptCheckBox");
+				break;
 			}
-			clickElement(tradeButton,model.getScriptName()+" Trade button");
+
+		}
 			orderPlaceSearchTextField=fluentWaitCodeXpath("//input[@id='tocsearch']", "Order Place Textfield");
 			scriptNametext=fetchTextFromElement(orderPlaceSearchTextField);
 			Reporter.log("orderPlaceSearchTextField : "+scriptNametext , true);
@@ -253,10 +289,10 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 		predefineWatchListDetail.add("============@@> Verify "+watchListName+" Contain "+exchange+"  <@@============");
 		for(int i=2;i<noScript+2;i++) {
-			String exchangeXapth="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a/span/small";
+			String exchangeXapth="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a/span/small";
 			WebElement exchangeLabel=fluentWaitCodeXpath(exchangeXapth, "Exchange Label");
 			String exchangeStr=fetchTextFromElement(exchangeLabel);
-			tradingSymbolXpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
+			tradingSymbolXpath="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 			tradingSymbolLabel=fluentWaitCodeXpath(tradingSymbolXpath, "Trading symbol");
 			if(tradingSymbolLabel==null) {
 				int unMatchScriptNo=i-2;
@@ -264,7 +300,7 @@ public class PredefineWatchList extends SeleniumCoder{
 			}
 			if(!exchangeStr.equalsIgnoreCase(exchange)) {
 				
-				tradingSymbolXpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
+				tradingSymbolXpath="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 				tradingSymbolLabel=fluentWaitCodeXpath(tradingSymbolXpath, "Trading symbol");
 				tradingSymbolStr=elementsTextFilter(fetchTextFromElement(tradingSymbolLabel));
 				
@@ -297,7 +333,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		//String [] scriptCountArray=watchListPage.predifineWatchMsg.split(" ");
 		int noScript=totalScript;
 		for(int i=2;i<noScript;i++) {
-			String xpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
+			String xpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+i+"]/div[1]/div[1]/a";
 			WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
 			 scriptName=fetchTextFromElement(scriptLable);
 			if(i==3){
@@ -309,49 +345,49 @@ public class PredefineWatchList extends SeleniumCoder{
 		Reporter.log("PredefineWatchList : scriptName : "+scriptName, true);
 		predefineWatchListDetail.add("Script Name : "+help.removeHtmlReporter(scriptName));
 		
-		exchangeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/a/span/small", "Exchange");
+		exchangeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/a/span/small", "Exchange");
 		predefineWatchListDetail.add("Exchange : "+fetchTextFromElement(exchangeLabel));
 		
-		lastTradePriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[2]/span", "Last trade price");
+		lastTradePriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[2]/span", "Last trade price");
 		if(lastTradePriceLabel!=null) {
 			lastTradePriceText=fetchTextFromElement(lastTradePriceLabel);
 			predefineWatchListDetail.add("Last Traded Price : "+lastTradePriceText);
 		}
 		
-		changeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[3]/span", "change");
+		changeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[3]/span", "change");
 		if(changeLabel!=null) {
 			changeText=fetchTextFromElement(changeLabel);
 			predefineWatchListDetail.add("Change : "+changeText);
 		}
 		
-		volumeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[4]/span", "volume");
+		volumeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[4]/span", "volume");
 		if(volumeLabel!=null) {
 			volumeText=fetchTextFromElement(volumeLabel);
 			predefineWatchListDetail.add("Volume : "+volumeText);
 		}
-		bidPriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[5]/span", "Bid Price");
+		bidPriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[5]/span", "Bid Price");
 		if(bidPriceLabel!=null) {
 			bidPriceText=fetchTextFromElement(bidPriceLabel);
 			predefineWatchListDetail.add("Bid Price : "+bidPriceText);
 		}
-		askPriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[6]/span", "Ask Price");
+		askPriceLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[6]/span", "Ask Price");
 		if(askPriceLabel!=null) {
 			askPriceText=fetchTextFromElement(askPriceLabel);
 			predefineWatchListDetail.add("ask Price : "+askPriceText);
 		}
 		
-		lowLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[7]/span", "Low");
+		lowLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[7]/span", "Low");
 		if(lowLabel!=null) {
 			lowText=fetchTextFromElement(lowLabel);
 			predefineWatchListDetail.add("Low : "+lowText);
 		}
 		
-		hightabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[8]/span", "hight");
+		hightabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[8]/span", "hight");
 		if(hightabel!=null) {
 			hightText=fetchTextFromElement(hightabel);
 			predefineWatchListDetail.add("hight : "+hightText);
 		}
-		String xpath="//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[1]/a";
+		String xpath="//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+noScript+"]/div[1]/div[1]/a";
 		WebElement scriptLable=fluentWaitCodeXpath(xpath, "scriptLabel");
 		//clickElement(xpath, "Script link");
 		predefineWatchListDetail.add(ScreenshortProvider.captureScreen(driver, "WatchList"));

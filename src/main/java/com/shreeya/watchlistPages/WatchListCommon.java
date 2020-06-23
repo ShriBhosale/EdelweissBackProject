@@ -6,6 +6,8 @@ import java.util.concurrent.Semaphore;
 
 import javax.annotation.meta.Exhaustive;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -57,6 +59,8 @@ public class WatchListCommon extends SeleniumCoder{
 	private WebElement watchListTitle;
 	private WebElement popupErrorMsg;
 	private WebElement addScriptTitle;
+	private WebElement scriptLink;
+	private WebElement selectWatchListDropdown;
 	
 	public static List<String> deleteScriptArray;
 	
@@ -104,10 +108,12 @@ public class WatchListCommon extends SeleniumCoder{
 			if(addScriptButton.isDisplayed()==false) {
 				driver.navigate().refresh();
 				staticWait(1000);
-				SelectWatchListDropdown="//a[text()='Select Watchlist']";
-				if(SelectWatchListDropdown!=null) 
-					clickElement(SelectWatchListDropdown, "Select watchList button");
-				}else
+				selectWatchListDropdown=fluentWaitCodeXpath("//a[text()='Select Watchlist']", "Select watchList dropdown");
+				if(SelectWatchListDropdown!=null) {
+					if(selectWatchListDropdown.isDisplayed())
+					clickElement(selectWatchListDropdown, "Select watchList button");
+				}
+		}else
 				seletWatchListDropdownFlag=true;
 			
 		
@@ -119,10 +125,11 @@ public class WatchListCommon extends SeleniumCoder{
 		Reporter.log("=====> tabNotFound <====", true);
 		if(exchange.equalsIgnoreCase("NSE")||exchange.equalsIgnoreCase("BSE")||
 				exchange.equalsIgnoreCase("CDS")||exchange.equalsIgnoreCase("FNO")||exchange.equalsIgnoreCase("NFO")) {
-			SelectWatchListDropdown="//a[text()='Select Watchlist']";
-			if(SelectWatchListDropdown!=null) 
-				clickElement(SelectWatchListDropdown, "Select watchList button");
-			else
+			selectWatchListDropdown=fluentWaitCodeXpath("//a[text()='Select Watchlist']", "Select watchList dropdown");
+			if(selectWatchListDropdown!=null) {
+				if(selectWatchListDropdown.isDisplayed())
+				clickElement(selectWatchListDropdown, "Select watchList button");
+			}else
 				selectWatchListDropdownNotFound();
 		String watchListOptionxpath="//a[text()='"+watchListName+"']";
 		staticWait(500);
@@ -211,7 +218,7 @@ public class WatchListCommon extends SeleniumCoder{
 		String text = null;
 		if (step.equalsIgnoreCase("Create")) {
 		if (exchange.equalsIgnoreCase("NCDEX") || exchange.equalsIgnoreCase("MCX")) {
-			dropdownOptionStr = "//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/div/ul[1]/li/a[text()='"+scriptName + " (" + exchange + ")" + "']";
+			dropdownOptionStr = "//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/div/ul[1]/li/a[text()='"+tradingSymbol + " (" + exchange + ")" + "']";
 			Reporter.log("DropDown Xpath : "+dropdownOptionStr, true);
 		} else {
 			dropdownOptionStr = "//*[@id='watchlist']/div/div/div[2]/div[2]/div/div/div/ul/li/a[text()='"+scriptName + "']";
@@ -219,8 +226,8 @@ public class WatchListCommon extends SeleniumCoder{
 		}
 
 		
-			text = "Add a Scrip to " +watchListName;
-			xpathString = "//h4[text()='" + text + "']//following::input[3]";
+			text = "Add a Scrip to " +watchListName.trim();
+			xpathString = "//h4[text()='" + text + "']//following::input[2]";
 
 		} else if (step.equalsIgnoreCase("AddScript")) {
 
@@ -234,6 +241,7 @@ public class WatchListCommon extends SeleniumCoder{
 			xpathString = "//h4[text()='" + text + "']//following::input";
 		}
 		staticWait(600);
+		Reporter.log("addScript textfield xpath : "+xpathString, true);
 		addScriptTextfield = fluentWaitCodeXpath(xpathString, "Add Script textfield");
 		staticWait(600);
 		if (exchange.equalsIgnoreCase("NCDEX") || exchange.equalsIgnoreCase("MCX")) {
@@ -278,10 +286,11 @@ public class WatchListCommon extends SeleniumCoder{
 		
 		return errorList;
 	}
-	public List<String> selectExchange(String segement, String step,List<String> errorList) {
-
+	public List<String> selectExchange(String exchange, String step,List<String> errorList) {
+		Reporter.log("=====> selectExchange <=====", true);
+		Reporter.log("exchange : "+exchange, true);
 		staticWait(500);
-
+		if(exchange.equalsIgnoreCase("NSE")||exchange.equalsIgnoreCase("BSE")) {
 		nseRadioButton = fluentWaitCodeXpathCheckElement(driver,
 				"//*[@id=\"watchlist\"]/div/div/div[2]/div[2]/div/div/label[2]/label[1]/div/input", 20,
 				"NSE Radio button");
@@ -297,9 +306,9 @@ public class WatchListCommon extends SeleniumCoder{
 					"BSE Radio button");
 		}
 		if (nseRadioButton != null || bseRadioButton != null) {
-			if (segement.equalsIgnoreCase("NSE"))
+			if (exchange.equalsIgnoreCase("NSE"))
 				clickElement(nseRadioButton, "NSE Radio button");
-			else if (segement.equalsIgnoreCase("BSE"))
+			else if (exchange.equalsIgnoreCase("BSE"))
 				clickElement(bseRadioButton, "BSE Radio button");
 		} else if (nseRadioButton != null) {
 			errorList.add("NSE radio button not present");
@@ -308,21 +317,22 @@ public class WatchListCommon extends SeleniumCoder{
 			errorList.add("BSE radio button not present");
 			clickElement(nseRadioButton, "NSE Radio button");
 		}
+		}
 			return errorList;
 	}
 	
 	public void deleteWatchList(String watchListName,String exchange) {
 
 		if (exchange.equalsIgnoreCase("NSE") ||exchange.equalsIgnoreCase("BSE")|| exchange.equalsIgnoreCase("CDS")||exchange.equalsIgnoreCase("FNO")) {
-			watchListtabNotFound(watchListName, "abc",exchange);
+			watchListtabNotFound(watchListName.trim(), "abc",exchange);
 		staticWait(500);
 		errorList.add("Delete watchList");
 		errorList.add("WatchList Name : " +watchListName);
-		String deleteButtonxpath = "//span[text()='New Watchlist']//following::li//a[text()='"+ watchListName + "']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
-		String defaultWatchxpath = "//span[text()='New Watchlist']//following::li//a[text()='"+watchListName + "']//following::ul//li//span[@class='fa fa-star']";
+		String deleteButtonxpath = "//span[text()='New Watchlist']//following::li//a[text()='"+ watchListName.trim() + "']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
+		String defaultWatchxpath = "//span[text()='New Watchlist']//following::li//a[text()='"+watchListName.trim() + "']//following::ul//li//span[@class='fa fa-star']";
 		defaultWatchList = fluentWaitCodeXpath(defaultWatchxpath, 30, "Default WatchList tab");
 		if (defaultWatchList != null) {
-			errorMsg = "Error msg : " + watchListName + " watchList is default watchList you cannot delete"+ "-PASS";
+			errorMsg = "Error msg : " + watchListName.trim() + " watchList is default watchList you cannot delete"+ "-PASS";
 			errorList.add(errorMsg);
 		} else {
 			try {
@@ -358,10 +368,11 @@ public class WatchListCommon extends SeleniumCoder{
 	public void selectTradingSymbol(String tradingSymbol) {
 		Reporter.log("======== selectTradingSymbol ========", true);
 		String noOfScript=fetchTextFromElement("//a[text()='Add Scrip']//preceding::span[1]//strong", "Script name");
+		
 		String [] scriptArray=help.separater(noOfScript, " ");
 		scriptCount=Integer.valueOf(scriptArray[0]);
 		for (int i = 2; i < scriptCount+2; i++) {
-			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i+ "]/div[1]/div[1]/a","Script Name");
+			scriptNameLabel = fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[" + i+ "]/div[1]/div[1]/a","Script Name");
 			scriptName = fetchTextFromElement(scriptNameLabel);
 			if (scriptName.contains(tradingSymbol)) {
 				Reporter.log("Script : " +tradingSymbol);
@@ -370,12 +381,11 @@ public class WatchListCommon extends SeleniumCoder{
 
 				// errorList.add("TradingSysmbol : "+scriptNameArray[scriptNameArray.length-1]);
 
-				String scriptBox = "//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" +i+ "]/div[1]/div[1]/div[1]/input";
+				String scriptBox = "//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[" +i+ "]/div[1]/div[1]/div[1]/input";
 
 				scriptCheckBox = fluentWaitCodeXpath(scriptBox, "Script checkBox");
 				if (scriptCheckBox == null) {
-					scriptBox = "//*[@id='contentCntr']/div/div/div[1]/div[4]/div/div/div/div/div[2]/div[" + i
-							+ "]/div[1]/div[1]/div[2]/input";
+					scriptBox = "//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[" +i+ "]/div[1]/div[1]/div[2]/input";
 					scriptCheckBox = fluentWaitCodeXpath(scriptBox, "Script checkBox");
 				}
 				clickElement(scriptCheckBox, "ScriptCheckBox");
@@ -466,7 +476,7 @@ public class WatchListCommon extends SeleniumCoder{
 
 		
 			text = "Add a Scrip to " +watchListName;
-			xpathString = "//h4[text()='" + text + "']//following::input[3]";
+			xpathString = "//h4[text()='" + text + "']//following::input[2]";
 
 		} else if (step.equalsIgnoreCase("AddScript")) {
 
@@ -493,7 +503,7 @@ public class WatchListCommon extends SeleniumCoder{
 		
 		//xpathString = "//h4[text()='" + text + "']//following::input";
 		staticWait(600);
-		Reporter.log("<b> addScriptTextfield xpath: "+xpathString+"</b>", true);
+		Reporter.log(" addScriptTextfield xpath: "+xpathString, true);
 		addScriptTextfield = fluentWaitCodeXpath(xpathString, "Add Script textfield");
 		staticWait(600);
 		if (exchange.equalsIgnoreCase("NCDEX") || exchange.equalsIgnoreCase("MCX")) {
@@ -528,7 +538,7 @@ public class WatchListCommon extends SeleniumCoder{
 	public String checkDuplicateInWatchList(String watchListName,String step,String exchange) {
 		watchListtabNotFound(watchListName, step, exchange);
 		List<String> scriptNameTextList=new ArrayList<String>();
-		List<String> scripNameList=multipleElementsTextProvider("//*[@id=\"contentCntr\"]/div/div/div[1]/div[4]/div/div/div/div/div/div/div/div[1]/a", "Script name");
+		List<String> scripNameList=multipleElementsTextProvider("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div/div/div/div[1]/a", "Script name");
 		for(String scrip:scripNameList) {
 			scriptNameTextList.add(help.removeHtmlReporter(scrip));
 		}
@@ -549,7 +559,12 @@ public class WatchListCommon extends SeleniumCoder{
 		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']",50, "Close popup button");
 		if(closePopupButton!=null)
 		clickElement(closePopupButton,  "Close popup button");
+		try {
 		hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
+		}catch(ElementNotInteractableException e) {
+			help.pageRefresh();
+			hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
+		}
 		WebElement watchlistTitle=fluentWaitCodeXpath("//h3[text()='Watchlist']",30, "WatchList title");
 		if(watchlistTitle==null) {
 			hoverAndClickOption("//*[@id='QuickSB']", "//li//a[text()='My Watchlist']");
@@ -599,7 +614,9 @@ public class WatchListCommon extends SeleniumCoder{
 		else if(step.equalsIgnoreCase("createDuplicate"))
 			errorMsgList.add(help.commpareTwoString(help.removeHtmlReporter(fetchTextFromElement(popupErrorMsg)).trim(), "Watchlist Name Already Exists!"));
 		
+		errorMsgList.add(ScreenshortProvider.captureScreen(driver, step));
 		clickElement(okButton, "Ok button");
+		
 		}
 		
 	}
@@ -623,5 +640,30 @@ public class WatchListCommon extends SeleniumCoder{
 				addScriptDialogFlag=true;
 		}
 		return addScriptDialogFlag;
+	}
+	
+	public boolean checkScriptAddOrNot(String tradeSymbol,List<String> detailList) {
+		Reporter.log("=====> checkScriptAddOrNot <=====", true);
+		boolean scriptPresentFlg=false;
+		Reporter.log("TradeSymbol : "+tradeSymbol, true);
+		
+		detailList.add(ScreenshortProvider.captureScreen(driver,tradeSymbol+"verify"));
+		
+		
+		List<String> scriptNameList=multipleElementsTextProvider("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[1]/a", "Script name");
+		
+		for(String scriptNameStr:scriptNameList)
+		{
+			if(scriptNameStr.contains(tradeSymbol)) {
+				scriptPresentFlg=true;
+				break;
+			}
+		}
+		
+		if(scriptPresentFlg)
+			detailList.add(tradeSymbol+" is present.");
+		else
+			detailList.add(tradeSymbol+" is not present.");
+		return scriptPresentFlg;
 	}
 }

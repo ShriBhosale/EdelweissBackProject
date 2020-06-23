@@ -95,7 +95,10 @@ public class ReportWatchlist extends ExtendReporter{
 				test.log(Status.PASS, result[0]);
 			}else if(detailList.get(i).contains("FAIL")) {
 				result=help.separater(detailList.get(i),"-");
-				test.log(Status.FAIL,result[0]);
+				if(result.length>2)
+					test.log(Status.FAIL,result[0]+result[1]);
+				else
+					test.log(Status.FAIL,result[0]);
 			}
 			else {
 				test.log(Status.INFO,detailList.get(i));
