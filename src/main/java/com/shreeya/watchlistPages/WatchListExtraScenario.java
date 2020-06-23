@@ -77,6 +77,9 @@ public class WatchListExtraScenario extends SeleniumCoder {
 	private String[] addTradingSymbolConfigArray;
 	private String addTradingSymbol;
 	private String enterWatchList;
+	private String cancelButtonClose;
+	private String afterClickCancelScreenshot;
+	private String[] deleteInfoArray;
 	
 
 	public WatchListExtraScenario(WebDriver driver) {
@@ -193,14 +196,17 @@ public class WatchListExtraScenario extends SeleniumCoder {
 			noScriptInWatchList(watchListName);
 		}else {
 			clickElement("//button[text()='Create']", "Create buttons");
+			
 			common.addScript(enterWatchListName,scriptNameConfig,tradingSymbolConfig,exchangeConfig, step, detailList);
 		}
 		
 		 
 		checkWatchListPresentOrNot(enterWatchListName, step);
 		if(watchListDeleteOrNot)
-		common.deleteWatchList(enterWatchListName,exchangeConfig);
+		common.deleteWatchList(enterWatchListName,exchangeConfig,false);
 	}
+	
+	
 	
 	public void noScriptInWatchList(String watchListName) {
 		Reporter.log("====> noScriptInWatchList <====", true);
@@ -214,6 +220,12 @@ public class WatchListExtraScenario extends SeleniumCoder {
 			staticWait(2000);
 			cancelButtonMsg="In Add script Dialog box cancel button is present and clickable-PASS";
 		clickElement(addScriptCancelButton, "Cancel script button");
+		if(addScriptCancelButton!=null)
+			cancelButtonClose="Add scrip dialogue box get close-PASS";
+		else
+			cancelButtonClose="Add scrip dialogue box is not close-FAIL";
+		
+		afterClickCancelScreenshot=ScreenshortProvider.captureScreen(driver, "AfterClickOnCancelButton");
 		}else {
 			cancelButtonMsg="In Add script Dialog box cancel button is present and disable-FAIL";
 		}
@@ -341,9 +353,9 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		detailList.add("WatchList name : "+watchListName);
 		deleteScriptButtonChecker();
 		if(deleteScriptButtonEnableFlag==false)
-			detailList.add("Delete Script button is disable-PASS");
+			detailList.add("Delete Script button is not present-PASS");
 		else
-			detailList.add("Delete script button is enable-FAIL");
+			detailList.add("Delete script button is present-FAIL");
 		
 	}
 	
@@ -369,6 +381,9 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		detailList.add(creWatchWitoutScriptScreenshot);
 		detailList.add("@@> verify in add scrip dialogue box Cancel button is present <@@");
 		detailList.add(cancelButtonMsg);
+		detailList.add("@@> Verify when user clicks on cancel button <@@");
+		detailList.add(cancelButtonClose);
+		detailList.add(afterClickCancelScreenshot);
 	}
 	
 	public void printAddScriptButton() {
@@ -576,57 +591,67 @@ public class WatchListExtraScenario extends SeleniumCoder {
 		common.redirectToWatchListModule(true);
 		
 		  watchListTab(segment);
-		  
-		  
-		  
-		  
+
 		  watchListCreate("Watch Cancel", "Create", true,false);
-		  checkWatchListCancelButton();
+			  checkWatchListCancelButton();
+			 
 		  
 		  
 		  watchListCreate("Auto10", "Create", false,false);
 		  createAlphaNumericWatchList("Auto10");
 		  
 		  
-		  watchListCreate("watch@L", "Create", false,true);
-		  createSpecialCharWatchList("watch@L");
-		  
-		  watchListCreate("wat12L", "Create",false,true);
-		  createNumberInBetWatchList("wat12L");
-		  
-		  checkDelScrButOneScriptPresent("Auto10"); addScript("Auto10", "AddScript");
-		  
-		  
-		  common.deleteScript("Auto10", addTradingSymbolConfigArray,
-		  "deleteScript","NSE"); deleteMultipleScript();
+			
+			  watchListCreate("watch@L", "Create", false,true);
+			  createSpecialCharWatchList("watch@L");
+			  
+			  watchListCreate("wat12L", "Create",false,true);
+			  createNumberInBetWatchList("wat12L");
+			  
+			  checkDelScrButOneScriptPresent("Auto10"); addScript("Auto10", "AddScript");
+			 
 		  
 		  
-		  watchListCreate("  bank Wat", "Create",false,true);
-		  checkIntialSpaceAllowInWatchListTextfield("  bank Wat");
+		  common.deleteScript("Auto10", addTradingSymbolConfigArray,"deleteScript","NSE"); deleteMultipleScript();
+		  checkCancelButtonInWatchListDeletePopup("Auto10");
 		  
-		  watchListCreate("bank WatchList", "Create",false,true);
-		  checkInBetSpaceAllowInWatchListTextfield("bank WatchList");
-		  
-		  watchListCreate("ABC Ba kk", "Create",false,true);
-		  checkMultipleSpaceAllowInWatchListTexfield("ABC Ba kk");
-		  
-		  
-		  watchListCreate("Nowat", "No Scrip", false, false);
-		  withoutScripCreateWatchList(); printAddScriptButton();
-		  
-		  checkDeleteOptionForDeviceAndPredefineWatchList(segment);
-		  checkDuplicateScripPresentOrNot(segment);
-		   
-		 
-		 checkMaxNoCharacterAllowInWatchListText();
-		
-		 
-		 
-		checkCreateButtonInitialy();
-		 checkCreateButtonWhenBlankWatchLitText();  
+			
+			  watchListCreate("  bank Wat", "Create",false,true);
+			  checkIntialSpaceAllowInWatchListTextfield("  bank Wat");
+			  
+			  watchListCreate("bank WatchList", "Create",false,true);
+			  checkInBetSpaceAllowInWatchListTextfield("bank WatchList");
+			  
+			  watchListCreate("ABC Ba kk", "Create",false,true);
+			  checkMultipleSpaceAllowInWatchListTexfield("ABC Ba kk");
+			  
+			  
+			  watchListCreate("Nowat", "No Scrip", false, false);
+			  withoutScripCreateWatchList(); printAddScriptButton();
+			  
+			  checkDeleteOptionForDeviceAndPredefineWatchList(segment);
+			  checkDuplicateScripPresentOrNot(segment);
+			  
+			  
+			  checkMaxNoCharacterAllowInWatchListText();
+			  
+			  
+			  
+			  checkCreateButtonInitialy(); checkCreateButtonWhenBlankWatchLitText();
+			 
 		reporter.watchListExtraScenario(detailList);
 		 
 		return reporter;
+	}
+
+	private void checkCancelButtonInWatchListDeletePopup(String watchListName) {
+		Reporter.log("=====> checkCancelButtonInWatchListDeletePopup <====", true);
+		common.deleteWatchList(watchListName, exchangeConfig, true);
+		deleteInfoArray=WatchListCommon.deleteWatchListArray;
+		detailList.add("@@> Verify when user clicks on cancel button <@@");
+		detailList.add(deleteInfoArray[0]);
+		detailList.add(deleteInfoArray[1]);
+		detailList.add(deleteInfoArray[2]);
 	}
 	
 	

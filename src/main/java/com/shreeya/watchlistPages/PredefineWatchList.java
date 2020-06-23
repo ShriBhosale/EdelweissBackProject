@@ -189,6 +189,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		 * "Trading button"); }
 		 * clickElement(tradeButton,model.getScriptName()+" Trade button");
 		 */
+		staticWait(2000);
 		noOfScripStr=fetchTextFromElement("//span[@class='count ng-scope']",300,"No of script label");
 		scriptList=multipleElementLocator("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[1]/a", "Script list");
 		scriptCount=String.valueOf(scriptList.size());

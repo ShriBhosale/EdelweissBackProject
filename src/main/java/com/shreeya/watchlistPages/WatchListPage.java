@@ -108,6 +108,8 @@ public class WatchListPage extends SeleniumCoder {
 	private WebElement popupErrorMsg;
 
 	private WebElement tradeButton;
+
+	private String deleteWatchListPopupMsg;
 	private static int count = 0;
 
 	public WatchListPage(WebDriver driver) {
@@ -231,6 +233,8 @@ public class WatchListPage extends SeleniumCoder {
 					deleteOption = "not present";
 
 			}
+			
+			
 			deleteWatchListButton=fluentWaitCodeXpath("//button[text()='Delete']",200, "delete button");
 			clickElement(deleteWatchListButton, "delete button");
 			okDeleteButton=fluentWaitCodeXpath("//button[text()='Ok']",200, "Ok button");

@@ -34,6 +34,7 @@ public class PlaceOrder extends SeleniumCoder {
 	}
 	
 	public String orderPlace(OrderPlaceModel model) {
+		Reporter.log("====> orderPlace <====", true);
 		String amoFlag=configReader.configReader("amoFlag");
 		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']","Place Order Textfield");
 		sendKey(placeOrderTextField,model.getScriptName(),"Place Order Textfield");

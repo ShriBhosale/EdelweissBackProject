@@ -61,6 +61,9 @@ public class WatchListCommon extends SeleniumCoder{
 	private WebElement addScriptTitle;
 	private WebElement scriptLink;
 	private WebElement selectWatchListDropdown;
+	private String deleteWatchListPopupMsg;
+	private WebElement deleteCancelButton;
+	public static String[] deleteWatchListArray;
 	
 	public static List<String> deleteScriptArray;
 	
@@ -244,6 +247,7 @@ public class WatchListCommon extends SeleniumCoder{
 		Reporter.log("addScript textfield xpath : "+xpathString, true);
 		addScriptTextfield = fluentWaitCodeXpath(xpathString, "Add Script textfield");
 		staticWait(600);
+		
 		if (exchange.equalsIgnoreCase("NCDEX") || exchange.equalsIgnoreCase("MCX")) {
 			clearAndSendKey(addScriptTextfield, scriptName, "Add Script textfield");
 		} else {
@@ -321,8 +325,8 @@ public class WatchListCommon extends SeleniumCoder{
 			return errorList;
 	}
 	
-	public void deleteWatchList(String watchListName,String exchange) {
-
+	public void deleteWatchList(String watchListName,String exchange,boolean cancelOrNot) {
+		deleteWatchListArray=new String[4];
 		if (exchange.equalsIgnoreCase("NSE") ||exchange.equalsIgnoreCase("BSE")|| exchange.equalsIgnoreCase("CDS")||exchange.equalsIgnoreCase("FNO")) {
 			watchListtabNotFound(watchListName.trim(), "abc",exchange);
 		staticWait(500);
@@ -330,7 +334,7 @@ public class WatchListCommon extends SeleniumCoder{
 		errorList.add("WatchList Name : " +watchListName);
 		String deleteButtonxpath = "//span[text()='New Watchlist']//following::li//a[text()='"+ watchListName.trim() + "']//following::ul//li//span[@class='fa fa-trash-o ng-scope']";
 		String defaultWatchxpath = "//span[text()='New Watchlist']//following::li//a[text()='"+watchListName.trim() + "']//following::ul//li//span[@class='fa fa-star']";
-		defaultWatchList = fluentWaitCodeXpath(defaultWatchxpath, 30, "Default WatchList tab");
+		defaultWatchList = fluentWaitCodeXpath(defaultWatchxpath, 0, "Default WatchList tab");
 		if (defaultWatchList != null) {
 			errorMsg = "Error msg : " + watchListName.trim() + " watchList is default watchList you cannot delete"+ "-PASS";
 			errorList.add(errorMsg);
@@ -344,10 +348,26 @@ public class WatchListCommon extends SeleniumCoder{
 					deleteOption = "not present";
 
 			}
+			
+			deleteWatchListPopupMsg=help.removeHtmlReporter(fetchTextFromElement("//button[text()='Delete']//preceding::p[1]", "Delete watchList popup msg"));
+			Reporter.log("Delete popup msg : "+deleteWatchListPopupMsg,true);
+			if(deleteWatchListPopupMsg.contains(watchListName))
+				deleteWatchListArray[0]="Delete popup msg : "+deleteWatchListPopupMsg+"-PASS";
+			else
+				deleteWatchListArray[0]="Delete popup msg : "+deleteWatchListPopupMsg+"-FAIL";
+			
 			staticWait(1000);
+			deleteWatchListArray[2]=ScreenshortProvider.captureScreen(driver, "watchListDeletePopup");
 			/*deleteWatchListButton=fluentWaitCodeXpath("//button[text()='Delete']",200,"delete watchList button");
 			clickElement(deleteWatchListButton, "delete button");*/
-			
+			deleteCancelButton=fluentWaitCodeXpath("//button[text()='Delete']//following::a[1]", "Delete cancel button");
+			if(cancelOrNot) {
+				clickElement(deleteCancelButton, "Delete cancel button");
+				if(watchListtabNotFound(watchListName, "check", exchange).contains(watchListName))
+					deleteWatchListArray[1]=watchListName+" is not delete-PASS";
+				else
+					deleteWatchListArray[1]=watchListName+" is delete-FAIL";
+			}else {
 			checkElementPresentOrNotThenClick("//button[text()='Delete']", "delete watchList button", 200);
 			staticWait(2000);
 			/*okButtonDelete=fluentWaitCodeXpath("//button[text()='Ok']", 200,  "Ok button");
@@ -355,6 +375,7 @@ public class WatchListCommon extends SeleniumCoder{
 			
 			checkElementPresentOrNotThenClick("//button[text()='Ok']", "Ok button", 200);
 			errorList.add(watchListName+ " watchList deleted sccessfully....." + "-Check");
+			}
 		}
 
 		errorList.add(ScreenshortProvider.captureScreen(driver, "AFterDeleteWatchList"));
@@ -666,4 +687,6 @@ public class WatchListCommon extends SeleniumCoder{
 			detailList.add(tradeSymbol+" is not present.");
 		return scriptPresentFlg;
 	}
+	
+	
 }
