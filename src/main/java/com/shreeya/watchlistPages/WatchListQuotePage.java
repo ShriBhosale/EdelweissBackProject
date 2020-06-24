@@ -253,7 +253,7 @@ public class WatchListQuotePage extends SeleniumCoder {
 			
 			scriptDetailList=fetchLTPAndChangePersentage(scriptNo);
 			clickElement(tradingSymbolLabel, "Trading symbol link");
-			
+			staticWait(4000);
 			codePageDetailList.add("WatchList Name : "+model.getWatchListName());
 			waitTillNewTabUpload("//a[text()='helpdesk@edelweiss.in']", scriptForClick+" Quote ", 100,300);
 			if (model.getExchange().equalsIgnoreCase("NCDEX") || model.getExchange().equalsIgnoreCase("MCX")) {
@@ -270,6 +270,7 @@ public class WatchListQuotePage extends SeleniumCoder {
 		
 		public List<String> fetchLTPAndChangePersentage(int scriptNo) {
 			Reporter.log("====> fetchLTPAndChangePersentage <===", true);
+			staticWait(1000);
 			List<String> scriptDetailList=new ArrayList<String>();
 			LastPriceLable=fluentWaitCodeXpath("//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div["+scriptNo+"]/div[1]/div[2]/span", "Last price");
 			scriptDetailList.add(fetchTextFromElement(LastPriceLable));

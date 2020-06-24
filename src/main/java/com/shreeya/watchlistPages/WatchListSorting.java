@@ -199,7 +199,7 @@ public class WatchListSorting extends SeleniumCoder{
 		sorting(watchListName, sortingButton, gropXpath, "High Price", "float");
 	}
 	
-	public void ChangePercentageSorting(String watchListName) {
+	public void changePercentageSorting(String watchListName) {
 		Reporter.log("====> ChangePercentageSorting <====", true);
 		String sortingButton="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[1]/div/div[3]/span/div/i";
 		String gropXpath="//*[@id=\"contentCntr\"]/div/div/div[1]/div[3]/div/div/div/div/div[2]/div/div[1]/div[3]/span[2]";
@@ -232,19 +232,24 @@ public class WatchListSorting extends SeleniumCoder{
 		common.redirectToWatchListModule(true);
 		if(segment.equalsIgnoreCase("Equity")) {
 			watchListName="MarketWatch";
-			 common.watchListtabNotFound("MarketWatch", "check","BSE"); 
 			
-			  tradingSymbolSorting(watchListName); lastTradePriceSorting(watchListName);
-			  ChangePercentageSorting(watchListName); volumeSorting(watchListName);
+			  common.watchListtabNotFound("MarketWatch", "check","BSE");
+			  
+			  tradingSymbolSorting(watchListName);
+				 lastTradePriceSorting(watchListName); 
 			 
-			  bidPriceSorting(watchListName);
-			  askPriceSorting(watchListName);
+			  changePercentageSorting(watchListName);
 				
-			lowPriceSorting(watchListName); hightPriceSorting(watchListName);
+				
+				  volumeSorting(watchListName);
+				  
+				  bidPriceSorting(watchListName); 
+				  askPriceSorting(watchListName);
+				  
+				  lowPriceSorting(watchListName);
+				  hightPriceSorting(watchListName);
 				 
-			 
-			
-			
+
 		}
 		report.watchListSorting(detailList);
 		return report;

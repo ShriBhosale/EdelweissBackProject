@@ -320,6 +320,7 @@ public class PredefineWatchList extends SeleniumCoder{
 	}
 	
 	public List<String> clickAnyOption(WatchListModel model) {
+		Reporter.log("====> clickAnyOption  <=====", true);
 		predefineWatchListArray=help.commaSeparater(model.getWatchListName());
 		
 		for(String predefineWatchList:predefineWatchListArray) {
@@ -346,7 +347,7 @@ public class PredefineWatchList extends SeleniumCoder{
 		Reporter.log("PredefineWatchList : scriptName : "+scriptName, true);
 		//String [] scriptArray=help.removeHtmlReporter(scriptName)
 		String [] scriptArray=help.removeHtmlAndSeparateWithChara(scriptName, " ");
-		predefineWatchListDetail.add("Script Name : "+scriptArray[0]);
+		predefineWatchListDetail.add("Script Name : "+scriptArray[1]);
 		
 		exchangeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/a/span/small", "Exchange");
 		predefineWatchListDetail.add("Exchange : "+fetchTextFromElement(exchangeLabel));

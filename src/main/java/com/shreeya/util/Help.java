@@ -557,24 +557,31 @@ public class Help extends SeleniumCoder{
 	}
 
 	public List<String> sortingString(boolean ascending,List<String> inputList) {
+		Reporter.log("=====> sortingString <=====", true);
 		if(ascending) {
 			Collections.sort(inputList);
 		}else {
 			Collections.sort(inputList,Collections.reverseOrder());
 		}
+		for(String input:inputList)
+			Reporter.log(input, true);
 		return inputList;
 	}
 	
 	public List<Integer> sortingInt(boolean ascending,List<Integer> inputList) {
+		Reporter.log("=====> sortingInt <=====", true);
 		if(ascending) {
 			Collections.sort(inputList);
 		}else {
 			Collections.sort(inputList,Collections.reverseOrder());
 		}
+		for(int input:inputList)
+			Reporter.log(String.valueOf(input), true);
 		return inputList;
 	}
 	
 	public List<String> sortingFloat(boolean ascending,List<Float> inputList) {
+		Reporter.log("=====> sortingFloat <=====", true);
 		List<String> outputList=new ArrayList<String>();
 		if(ascending) {
 			Collections.sort(inputList);
@@ -582,9 +589,10 @@ public class Help extends SeleniumCoder{
 			Collections.sort(inputList,Collections.reverseOrder());
 		}
 		
-		for(Float input:inputList)
+		for(Float input:inputList) {
+			Reporter.log(convertTwoDecimalFloat(input), true);
 			outputList.add(convertTwoDecimalFloat(input));
-		
+		}
 		return outputList;
 	}
 	
@@ -608,13 +616,27 @@ public class Help extends SeleniumCoder{
 		if(ApplicationList.size()==sortedList.size())
 		{
 			for(int i=0;i<ApplicationList.size();i++) {
-				if(!ApplicationList.get(i).replace(",", "").equalsIgnoreCase(sortedList.get(i))) {
+				if(!commonConvertInDigit(ApplicationList.get(i)).equalsIgnoreCase(sortedList.get(i))) {
 					sortedFlag=false;
 					break;
 				}
 			}
 		}
 		return sortedFlag;
+	}
+	
+	public String commonConvertInDigit(String number) {
+		Reporter.log("=====> commonConvertInDigit  <=====", true);
+		if(number.contains(","))
+			number=number.replace(",", "");
+		if(number.contains(".")) {
+			String [] numberArray=number.split("\\.");
+			char [] digtiArray=numberArray[1].toCharArray();
+			if(digtiArray.length==1) {
+				number=number+"0";
+			}
+		}
+		return number;
 	}
 	
 	public int converStringInt(String numberStr) {
