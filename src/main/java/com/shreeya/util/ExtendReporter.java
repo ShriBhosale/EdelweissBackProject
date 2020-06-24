@@ -519,4 +519,11 @@ public class ExtendReporter {
 		print(detailList);
 		
 	}
+	
+	public void alertRport(List<String> detailList) {
+		Reporter.log("<b><font color='Yellow'>====  alertRport  ====</b></font>", true);
+		testCreation("alertRport");
+		print(detailList);
+		
+	}
 }

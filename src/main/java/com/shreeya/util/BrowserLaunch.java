@@ -47,10 +47,10 @@ public class BrowserLaunch {
 		driver.manage().timeouts().pageLoadTimeout(150, TimeUnit.SECONDS);
 
 		 //driver.get("https://www.google.com/");
-		//driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
 		//driver.get("https://ewuat.edelbusiness.in");
 		//watchLsit only
-		driver.get("https://ewuat.edelbusiness.in/delta/");
+		//driver.get("https://ewuat.edelbusiness.in/delta/");
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {

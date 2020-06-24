@@ -697,18 +697,21 @@ public class Help extends SeleniumCoder{
 	
 	public void checkEnterProperMsgInTextfield(String xpath,String elementName,String msg) {
 		Reporter.log("=====> checkEnterProperMsgInTextfield <====", true);
+		staticWait(500);
 		 textfieldElement=fluentWaitCodeXpath(xpath, elementName);
 		 boolean validMsgPrintOrNot=false;
 		  int count=0;
 		 do {
 			 count++;
-			 clearTextfield(textfieldElement, elementName);
+			 clearAndSendKey(textfieldElement,msg,elementName);
 		 	enterMsgInTextfield=getValueFromAttribute(textfieldElement, "value", elementName);
+		 	staticWait(200);
+		 	clickElement("//span[text()='"+enterMsgInTextfield.trim()+"']", elementName);
 		 	if(!msg.equalsIgnoreCase(enterMsgInTextfield)) {
-			clearTextfield(textfieldElement, elementName);
+		 		clearAndSendKey(textfieldElement,msg,elementName);
 			validMsgPrintOrNot=true;
 		 	}
-		 }while(validMsgPrintOrNot==false && count<3);
+		 }while(validMsgPrintOrNot==true && count<3);
 	}
 	
 	public String [] removeHtmlAndSeparateWithChara(String htmlStr,String stringSeparate) {
@@ -717,5 +720,10 @@ public class Help extends SeleniumCoder{
 		String [] array=separater(remvoeHtmlStr,stringSeparate);
 		Reporter.log(remvoeHtmlStr, true);
 		return array;
+	}
+
+	public String xpathMaker(String xpath) {
+		Reporter.log(xpath, true);
+		return xpath;
 	}
 }
