@@ -1453,5 +1453,15 @@ public class SeleniumCoder extends ExceptionHandler {
 		 }
 	 }
 	 
+	 public String getValueFromAttribute(String xpathStr,String attributeName,String elementName) {
+			Reporter.log("*** getValueFromAttribute ***", true);
+			WebElement element=fluentWaitCodeXpath(xpathStr, elementName);
+			String elementStr=element.getAttribute(attributeName);
+			if(elementStr==null||elementStr.equalsIgnoreCase("")) {
+				elementStr=element.getText();
+			}
+			Reporter.log("Element Name : "+elementName+"  Attribute name : "+attributeName+"  Element str : "+elementStr,true);
+			return elementStr;
+		}
 	 
 }
