@@ -344,7 +344,9 @@ public class PredefineWatchList extends SeleniumCoder{
 		}
 		Reporter.log("noScript : "+noScript,true);
 		Reporter.log("PredefineWatchList : scriptName : "+scriptName, true);
-		predefineWatchListDetail.add("Script Name : "+help.removeHtmlReporter(scriptName));
+		//String [] scriptArray=help.removeHtmlReporter(scriptName)
+		String [] scriptArray=help.removeHtmlAndSeparateWithChara(scriptName, " ");
+		predefineWatchListDetail.add("Script Name : "+scriptArray[0]);
 		
 		exchangeLabel=fluentWaitCodeXpath("//*[@id='contentCntr']/div/div/div[1]/div[3]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/a/span/small", "Exchange");
 		predefineWatchListDetail.add("Exchange : "+fetchTextFromElement(exchangeLabel));

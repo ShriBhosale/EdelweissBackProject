@@ -19,6 +19,8 @@ import com.shreeya.experiment.Report;
 
 public class Help extends SeleniumCoder{
 	WebDriver driver;
+	private String enterMsgInTextfield;
+	private WebElement textfieldElement;
 	
 	public Help(){}
 	
@@ -659,5 +661,39 @@ public class Help extends SeleniumCoder{
 		
 		Reporter.log("containFoundFlag : "+containFoundFlag, true);
 		return containFoundFlag;
+	}
+	
+	
+	public void enterTextfieldAndSelectOption(String textfieldXpath,String elementName) {
+		Reporter.log("=====> enterTextfieldAndSelectOption <=====", true);
+		WebElement textfieldElement=fluentWaitCodeXpath(textfieldXpath, elementName);
+		String enterText=getValueFromAttribute(textfieldElement, "value", elementName);
+		String dropdownXpath="//span[text()='"+enterText.trim()+"']";
+		WebElement dropdown=fluentWaitCodeXpath(dropdownXpath, "dropdownClick");
+		clickElement(dropdown, "dropdownClick");
+	}
+	
+	public void checkEnterProperMsgInTextfield(String xpath,String elementName,String msg) {
+		Reporter.log("=====> checkEnterProperMsgInTextfield <====", true);
+		 textfieldElement=fluentWaitCodeXpath(xpath, elementName);
+		 boolean validMsgPrintOrNot=false;
+		  int count=0;
+		 do {
+			 count++;
+			 clearTextfield(textfieldElement, elementName);
+		 	enterMsgInTextfield=getValueFromAttribute(textfieldElement, "value", elementName);
+		 	if(!msg.equalsIgnoreCase(enterMsgInTextfield)) {
+			clearTextfield(textfieldElement, elementName);
+			validMsgPrintOrNot=true;
+		 	}
+		 }while(validMsgPrintOrNot==false && count<3);
+	}
+	
+	public String [] removeHtmlAndSeparateWithChara(String htmlStr,String stringSeparate) {
+		Reporter.log("====> removeHtmlAndSeparateWithChara <====", true);
+		String remvoeHtmlStr=removeHtmlReporter(htmlStr);
+		String [] array=separater(remvoeHtmlStr,stringSeparate);
+		Reporter.log(remvoeHtmlStr, true);
+		return array;
 	}
 }

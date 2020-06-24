@@ -20,6 +20,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.shreeya.alertandnotification.AlertAndNotificationExecution;
 import com.shreeya.fundtransferpages.FundTransferBankExecution;
 import com.shreeya.fundtransferpages.FundTransferExecution;
 import com.shreeya.model.LatestLoginModel;
@@ -65,6 +66,7 @@ public class FunctionKeyword {
 	public static FolderStructure folderCreationObj;
 	LatestLoginModel latestLoginModel;
 	private String segmentStr;
+	AlertAndNotificationExecution alertAndNotificationExecution;
 
 	@BeforeSuite
 	public void beforeSuite() throws IOException {
@@ -205,8 +207,9 @@ public class FunctionKeyword {
 				Reporter.log("Watchlist Module", true);
 				break;
 				
-			case "alertAndnotification":
-				
+			case "alertandnotification":
+				AlertAndNotificationExecution alertAndNotificationExecution=new AlertAndNotificationExecution(driver);
+				alertAndNotificationExecution.alertAndNotificationExecute(segmentStr);
 				break;
 			case "logout":
 				if(skipScenario==false)

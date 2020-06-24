@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import com.shreeya.model.AlertAndNotificationModel;
 import com.shreeya.util.Help;
@@ -27,6 +28,8 @@ public class AlertAndNotificationPage extends SeleniumCoder{
 	String stockOptionSelectionStr;
 	
 	Help help;
+
+	private String selectStockTextfieldText;
 	
 	public AlertAndNotificationPage(WebDriver driver) {
 		super(driver);
@@ -36,14 +39,23 @@ public class AlertAndNotificationPage extends SeleniumCoder{
 	
 
 	public void addAlter(AlertAndNotificationModel model,String action) {
-		hoverAndClickOption("//*[@id='QuickSB']", "//a[text()='My Alerts']");
+		Reporter.log("====> addAlter <====", true);
+		//hoverAndClickOption("//*[@id='QuickSB']", "//a[text()='My Alerts']");
 		addAlertButton=fluentWaitCodeXpath("//a[text()='Add Alert']", "Add alert button");
 		clickElement(addAlertButton, "Add alert button");
-		selectStockTextfield=fluentWaitCodeXpath("//input[@placeholder='Search stock or derivative contract']", "select Stock Textfield");
-		clearAndSendKey(selectStockTextfield, model.getStockName(), "select Stock Textfield");
+		/*
+		 * selectStockTextfield=
+		 * fluentWaitCodeXpath("//input[@placeholder='Search stock or derivative contract']"
+		 * , "select Stock Textfield"); clearAndSendKey(selectStockTextfield,
+		 * model.getStockName(), "select Stock Textfield");
+		 * selectStockTextfieldText=getValueFromAttribute(selectStockTextfield, "value",
+		 * "select Stock Textfield");
+		 */
+		help.checkEnterProperMsgInTextfield("//input[@placeholder='Search stock or derivative contract']", "select Stock Textfield", model.getStockName());
 		segmentSelection(model.getSegment());
-		stockOptionSelectionStr="//span[text()='"+model.getStockName()+"']";
+		stockOptionSelectionStr="//span[text()='"+selectStockTextfieldText.trim()+"']";
 		stockOptionSelection=fluentWaitCodeXpath(stockOptionSelectionStr, model.getStockName()+" option selected");
+		clickElement(stockOptionSelection, model.getStockName()+" option selected");
 		valueIsDropdownSelection(model.getValueIs());
 		valueTextfield=fluentWaitCodeXpath("//input[@id='value']", "Value textfield");
 		clearAndSendKey(valueTextfield, model.getValue(), "Value textfield");
@@ -70,10 +82,10 @@ public class AlertAndNotificationPage extends SeleniumCoder{
 		valuesIsDropdown=fluentWaitCodeXpath("//button[text()='Greater than or Equal to']", "Value is dropdown");
 		clickElement(valuesIsDropdown, "Value is dropdown");
 		if(valueIs.toLowerCase().contains("less")) {
-			valueIsDropdownOption=fluentWaitCodeXpath("//button[text()='Greater than or Equal to']//following::a[1] ", "Less than or Equal to option");
+			valueIsDropdownOption=fluentWaitCodeXpath("//button[text()='Greater than or Equal to']//following::a[1]", "Less than or Equal to option");
 			clickElement(valueIsDropdownOption, "Less than or Equal to option");
-		}else if(valueIs.toLowerCase().contains("Greater")) {
-			valueIsDropdownOption=fluentWaitCodeXpath("//button[text()='Greater than or Equal to']//following::a[2] ", "Greater than or Equal to option");
+		}else if(valueIs.toLowerCase().contains("greater")) {
+			valueIsDropdownOption=fluentWaitCodeXpath("//button[text()='Greater than or Equal to']//following::a[2]", "Greater than or Equal to option");
 			clickElement(valueIsDropdownOption, "Greater than or Equal to option");
 		}
 	}

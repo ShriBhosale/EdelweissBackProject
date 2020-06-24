@@ -1,14 +1,38 @@
 package com.shreeya.alertandnotification;
 
-public class AlertAndNotificationExecution {
+import java.util.Iterator;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
+
+import com.shreeya.model.AlertAndNotificationModel;
+import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.SeleniumCoder;
+
+public class AlertAndNotificationExecution extends SeleniumCoder{
 	
+	WebDriver driver;
+	AlertAndNotificationPage alertAndNotificationPage;
+	CsvReaderCode csvReader;
+	AlertAndNotificationModel model;
+	Iterator<AlertAndNotificationModel> iterator;
+	AlterAndNotificationCommon common;
 	
-	
-	public AlertAndNotificationExecution() {
-		
+	public AlertAndNotificationExecution(WebDriver driver) {
+		super(driver);
+		this.driver=driver;
+		csvReader=new CsvReaderCode();
+		alertAndNotificationPage=new AlertAndNotificationPage(driver);
+		common=new AlterAndNotificationCommon(driver);
 	}
 
-	public void alertAndNotificationExecute() {
-		
+	public void alertAndNotificationExecute(String segment) {
+		Reporter.log("=====> alertAndNotificationExecute <=====", true);
+		iterator=csvReader.alertAndNotificationTestDataProvider();
+		common.redirectToAlterAndNotificationModule(true);
+		while(iterator.hasNext()) {
+			model=iterator.next();
+			alertAndNotificationPage.alertExecution(model);
+		}
 	}
 }

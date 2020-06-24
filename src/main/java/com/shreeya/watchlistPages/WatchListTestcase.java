@@ -180,6 +180,7 @@ public class WatchListTestcase extends SeleniumCoder{
 	public ExtendReporter watchListTestcaseExecute(String segment,ExtendReporter repoter) {
 		Reporter.log("<b>======@@> watchListTestcaseExecute <@@===========<</b>", true);
 		config.watchListConfig();
+		staticWait(1000);
 		common.redirectToWatchListModule(true);
 		checkWatchListPresence(segment);
 		
