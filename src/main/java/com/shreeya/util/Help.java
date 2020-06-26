@@ -21,13 +21,13 @@ public class Help extends SeleniumCoder{
 	WebDriver driver;
 	private String enterMsgInTextfield;
 	private WebElement textfieldElement;
-	
+	ConfigReader config;
 	public Help(){}
 	
 	public Help(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
-		
+		config=new ConfigReader();
 	}
 
 	public String [] commaSeparater(String scriptName) {

@@ -34,7 +34,7 @@ public class AlertAndNotificationPage extends SeleniumCoder{
 	public AlertAndNotificationPage(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
-		help=new Help();
+		help=new Help(driver);
 	}
 	
 
@@ -106,6 +106,7 @@ public class AlertAndNotificationPage extends SeleniumCoder{
 	}
 	
 	public void alertExecution(AlertAndNotificationModel model) {
+		Reporter.log("====> alertExecution <====", true);
 		AlertAndNotificationKeyword keywordObj=new AlertAndNotificationKeyword();
 		List<String> keywordList=keywordObj.keywordExecution();
 		for(String keyword:keywordList) {
