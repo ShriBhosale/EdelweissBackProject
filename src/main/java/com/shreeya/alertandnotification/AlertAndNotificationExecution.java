@@ -35,12 +35,12 @@ public class AlertAndNotificationExecution extends SeleniumCoder{
 		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.reportFolderPath[1], "Alert", 0);
 		iterator=csvReader.alertAndNotificationTestDataProvider();
 		common.redirectToAlterAndNotificationModule(true);
-		while(iterator.hasNext()) {
-			model=iterator.next();
+		/*while(iterator.hasNext()) {
+			model=iterator.next();*/
 			//alertAndNotificationPage.alertExecution(model);
-			reporter=alterTestCase.alterTestCaseExecution(segment, model,reporter);
-			
-		}
-		reporter.logFlush();
+			reporter=alterTestCase.alterTestCaseExecution(segment,reporter);
+			reporter.logFlush();
+			/* } */
+		
 	}
 }

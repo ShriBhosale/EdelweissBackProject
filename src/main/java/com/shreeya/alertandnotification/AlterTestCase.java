@@ -112,13 +112,15 @@ public class AlterTestCase extends SeleniumCoder{
 	
 	
 	
-	public ExtendReporter alterTestCaseExecution(String segment,AlertAndNotificationModel model,ExtendReporter reporter) {
+	public ExtendReporter alterTestCaseExecution(String segment,ExtendReporter reporter) {
 		Reporter.log("=====@@> alterTestCaseExecution <@@=====", true);
-		checkAlterList(model.getSegment());
-		checkAlterPopup(model.getStockName());
+		staticWait(300);
+		checkAlterList("NSE");
+		checkAlterPopup("Zee  Entertainment  Ent  Ltd");
 		checkGreaterThenAndEqualDropdown();
 		checkmodifyAlertPage();
-		checkDeleteCancelButton(model.getStockName());
+		checkDeleteCancelButton("Zee  Entertainment  Ent  Ltd");
+		Reporter.log("Reporter========> "+reporter, true);
 		reporter.alertRport(detaiList);
 		return reporter;
 	}

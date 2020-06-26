@@ -49,6 +49,7 @@ public class AlterAndNotificationCommon extends SeleniumCoder{
 		}
 		if(pageRefershOrNot)
 			pageRefresh();
+		staticWait(700);
 	}
 	
 	public String checkActiveOrNot(String xpathStr,String elementName) {

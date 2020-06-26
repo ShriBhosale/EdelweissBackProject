@@ -81,6 +81,7 @@ public class ExtendReporter {
 
 	public ExtentTest testCreation(String testName) {
 		Reporter.log("Extend Report Test Name : " + testName, true);
+		Reporter.log("Reporter========> "+report, true);
 		test = report.createTest(testName);
 		return test;
 	}
@@ -242,8 +243,7 @@ public class ExtendReporter {
 		Reporter.log("Extend Log Flush", true);
 		Reporter.log("Reporter path ===> " + reportPathString, true);
 		report.flush();
-		Reporter.log("Report Object ==================================================================> " + report,
-				true);
+		Reporter.log("Report Object ==================================================================> " + report,true);
 	}
 
 	public void errroMsg(String msg) {
@@ -264,6 +264,7 @@ public class ExtendReporter {
 	}
 
 	public void print(List<String> printList) {
+		
 		help = new Help();
 		int i = -1;
 		for (String msg : printList) {
@@ -522,7 +523,7 @@ public class ExtendReporter {
 	
 	public void alertRport(List<String> detailList) {
 		Reporter.log("<b><font color='Yellow'>====  alertRport  ====</b></font>", true);
-		testCreation("alertRport");
+		testCreation("AlertRport");
 		print(detailList);
 		
 	}

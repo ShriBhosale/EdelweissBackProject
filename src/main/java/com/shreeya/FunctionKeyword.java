@@ -239,7 +239,8 @@ public class FunctionKeyword {
 	public void terminateExecution(String module, WebDriver driver,String referNo) throws InterruptedException, IOException {
 		Reporter.log("FunctionKeyword : TerminateExecution",true);
 		if (driver != null) {
-			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer")||module.equalsIgnoreCase("login")||module.equalsIgnoreCase("watchlist"))) {
+			if (!(module.equalsIgnoreCase("orderdetail")||module.equalsIgnoreCase("fundtransfer")||
+					module.equalsIgnoreCase("login")||module.equalsIgnoreCase("watchlist")||module.equalsIgnoreCase("alertandnotification"))) {
 				ExtendReporter reporter = new ExtendReporter();
 				reporter.reporter(driver, module, MyTestLauncher.reportFolderPath,referNo);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);

@@ -13,9 +13,15 @@ import org.testng.annotations.Listeners;
 
 public class BrowserLaunch {
 	WebDriver driver = null;
+	ConfigReader config;
+	
+	public BrowserLaunch() {
+		config=new ConfigReader();
+	}
 
 	public WebDriver browserLaunch(String scenario) {
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\grid\\chromedriver.exe");
+	
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--incognito");
 
@@ -47,10 +53,11 @@ public class BrowserLaunch {
 		driver.manage().timeouts().pageLoadTimeout(150, TimeUnit.SECONDS);
 
 		 //driver.get("https://www.google.com/");
-		driver.get("https://ewuat.edelbusiness.in/ewhtml/");
+		//driver.get("https://ewuat.edelbusiness.in/ewhtml/");
 		//driver.get("https://ewuat.edelbusiness.in");
 		//watchLsit only
 		//driver.get("https://ewuat.edelbusiness.in/delta/");
+		driver.get(config.configReader("URL"));
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
