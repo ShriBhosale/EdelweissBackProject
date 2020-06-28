@@ -47,6 +47,7 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 	private WebElement upiError;
 	
 	ConfigReader configReader;
+	private WebElement bankAccountLabel;
 	
 	public FundTransferUPITextfield(WebDriver driver) {
 		super(driver);
@@ -60,7 +61,9 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 	public void elementlocate() {
 		upiRadioButton=fluentWaitCodeXpath(driver, "//label[@for='upi']","UPI radio button");
 		
-		
+		okButton=fluentWaitCodeXpath("//input[@value='OK']",10,"Ok button");
+		if(okButton!=null)
+			clickElement(okButton, "OK button");
 		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
 		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 	}
@@ -147,8 +150,14 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 	
 	public void upiExecution(String bankName,String amount,String upiId,boolean negative) {
 		Reporter.log("===> upiExecution <===");
-		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
-		clickElement(bankAccountRedionButton, "Bank acount radio button");
+		bankAccountLabel=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
+		bankAccountRedionButton=fluentWaitCodeXpath("//span[text()='"+bankName+"']//preceding::input[1]",bankName+ "radio button");
+		String selectedBankStr=getValueFromAttribute(bankAccountRedionButton, "gtmdir-text", "bank Radio button");
+		Reporter.log("bank selected bank : "+selectedBankStr, true);
+		if(!selectedBankStr.contains(bankName)) {
+			
+				clickElement(bankAccountLabel, bankName+"radio button");
+		}
 		upiRadioButton=fluentWaitCodeXpath(driver, "//label[@for='upi']","UPI radio button");
 		if(upiRadioButton.isSelected()==false)
 		clickElement(upiRadioButton, "UPI radio button");
@@ -177,11 +186,14 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 			clearAndSendKey(amountToTransferTextField,amount, "Amount textfield");
 			submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
 			clickElement(submitButton, "Submit button");
-			staticWait(2000);
+			staticWait(3000);
 			//upiServicePageLabel=elementLocateBytag("h5");
 			detailList.add(ScreenshortProvider.captureScreen(driver, "UPIServicePageNotExpected"));
-			upiServicePageLabel=elementLocateBytag("h5");
-			upiServiceProviderLabel=fetchTextFromElement(upiServicePageLabel);
+			/*
+			 * upiServicePageLabel=elementLocateBytag("h5");
+			 * upiServiceProviderLabel=fetchTextFromElement(upiServicePageLabel);
+			 */
+			upiServiceProviderLabel=fundTransferCommon.checkAmountInUpiServicesProviderPage();
 			errorChecker(negative);
 			if(negative) {
 				detailList.add("This error msg come after enter amount and click on submit button-FAIL");
@@ -198,7 +210,7 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		String errorMsg="";
 		upiError=fluentWaitCodeXpath("//input[@id='upiIdTxt']//following::span[@class='icom-alert-triangle ng-binding'][1]",50, "UPI error msg");
 		if(upiError==null) {
-			upiError=fluentWaitCodeXpath("//label[@for='upi']//following::span[3]", "UPI error msg");
+			upiError=fluentWaitCodeXpath("//label[@for='upi']//following::span[3]",50,"UPI error msg");
 		}
 		if(upiError!=null) {
 			if(upiError.isDisplayed()) {
@@ -283,10 +295,10 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		
 		
 		  elementlocate(); 
-		  checkGuidlinText();
-		  redirectToUPICreationStepPage();
-		  closeUPIStepCreationPage(); 
-		  enterInvalidUPIid();
+			/*
+			 * checkGuidlinText(); redirectToUPICreationStepPage();
+			 * closeUPIStepCreationPage(); enterInvalidUPIid();
+			 */
 		  
 		  enterValidUPIid();
 		  enterDiffBankUPIid();

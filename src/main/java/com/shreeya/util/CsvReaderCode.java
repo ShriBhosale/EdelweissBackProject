@@ -105,7 +105,8 @@ public class CsvReaderCode {
 	
 	public ArrayList<ExecutionModel> LoginFileReader() {
 		ConfigReader configReader=new ConfigReader();
-		String testDataPath=configReader.configReader("TestData")+"\\Execution";
+		//String testDataPath=configReader.configReader("TestData")+"\\Execution";
+		String testDataPath=configReader.configReader("LoginData");
 		CSVReader reader = null;
 		System.out.println("Login Test Data ======> "+testDataPath);
 		try {

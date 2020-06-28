@@ -23,7 +23,7 @@ public class FundTransferCommon extends SeleniumCoder {
 	private WebElement okButton;
 	private WebElement amountToTransferTextField;
 	private WebElement submitButton;
-	private String addFundforScreenshot;
+	
 	private WebElement bankAccountLabel;
 	private WebElement paymentModeLabel;
 	private WebElement upiRadioButton;
@@ -33,7 +33,14 @@ public class FundTransferCommon extends SeleniumCoder {
 	private WebElement upiTextfield;
 	private WebElement redirectMsgLabel1;
 	private WebElement seeMarginBalance;
-	
+	private WebElement upiServicePageLabel;
+	private String upiServiceProviderLabel;
+	private WebElement timerLabel;
+	private String errorMsg;
+	private WebElement errorMsgLabel;
+	public static String amountTextfieldErrorMsg;
+	public static String maxAmountEnter;
+	public static String addFundforScreenshot;
 	
 	public FundTransferCommon(WebDriver driver) {
 		super(driver);
@@ -92,6 +99,7 @@ public class FundTransferCommon extends SeleniumCoder {
 		bankMap.put("yes", " Yes Bank");
 		bankMap.put("andhra","ANDHRA BANK");
 		bankMap.put("state bank", "State bank of India");
+		bankMap.put("sbi", "SBI");
 		
 		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
 			if(bankName.toLowerCase().contains(entry.getKey())) {
@@ -172,7 +180,7 @@ public class FundTransferCommon extends SeleniumCoder {
 	}
 	
 	
-	public String submitAddFundForm(String bankName,String amount) {
+	public String submitAddFundForm(String bankName,String amount,boolean maxAmountEnterFlg) {
 		Reporter.log("===> submitAddFundForm <====", true);
 		String msg="No";
 		//String bankName="Kotak Mahindra Bank";
@@ -189,8 +197,13 @@ public class FundTransferCommon extends SeleniumCoder {
 		Reporter.log("After click on bank acount radio button", true);
 		staticWait(200);
 		internetBankingRadioButton=fluentWaitCodeXpath(driver, "//label[text()='Internet Banking']","internetBankingRadioButton");
-		if(internetBankingRadioButton==null)
+		if(internetBankingRadioButton==null) {
+			
+			
 			msg="Internet banking option not present...";
+		}
+		if(bankName.contains("HDFC")) 
+			clickElement(internetBankingRadioButton, "internetBankingRadioButton");
 		staticWait(1000);
 		Reporter.log("Before okButton.", true);
 		okButton=fluentWaitCodeXpath(driver, "//input[@value='OK']",10,"ok Button");
@@ -198,9 +211,27 @@ public class FundTransferCommon extends SeleniumCoder {
 		clickElement(okButton, "Ok button");
 		amountToTransferTextField=fluentWaitCodeName(driver, "amt", 20,"Amount To Transfer TextField");
 		//enterLargeText(amount, amountToTransferTextField);
-		clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
+		
+		/*
+		 * sendKeyUsingAction("//input[@name='amt']",
+		 * "Amount To Transfer TextField",amount);
+		 */ 
+		 
+		 
+		if(maxAmountEnterFlg)
+			maxAmountEnter=enterBigAmount("//input[@name='amt']", "Amount To Transfer TextField", amount);
+		else
+			 clearAndSendKey(amountToTransferTextField, amount, "Amount To Transfer TextField");
 		addFundforScreenshot=ScreenshortProvider.captureScreen(driver, "AddFundScreenshot");
+		errorMsgLabel=fluentWaitCodeXpath("//span[@ng-bind='errorAmtMessage']", "error msg");
+		if(errorMsgLabel!=null) {
+			if(errorMsgLabel.isDisplayed()) {
+		amountTextfieldErrorMsg=fetchTextFromElement(errorMsgLabel, "error msg");
+			}else
+				amountTextfieldErrorMsg="No";
+		}
 		submitButton=fluentWaitCodeXpath(driver, "//input[@value='Submit']","submit button");
+		if(amountTextfieldErrorMsg.equalsIgnoreCase("No"))
 		clickElement(submitButton, "Submit button");
 		return msg+"-"+addFundforScreenshot;
 	}
@@ -231,6 +262,7 @@ public class FundTransferCommon extends SeleniumCoder {
 		bankMap.put("State bank of India", "STATEBANKOFINDIA");
 		bankMap.put("ICICI BANK LTD", "ICICI BANK LTD");
 		bankMap.put("ANDHRA BANK", "Andhra Bank");
+		bankMap.put("SBI", "STATEBANKOFINDIA");
 		
 		for(Map.Entry<String,String> entry:bankMap.entrySet()) {
 			if(bank.toLowerCase().equalsIgnoreCase(entry.getKey())) {
@@ -375,6 +407,28 @@ public class FundTransferCommon extends SeleniumCoder {
 		}while(seeMarginBalanceStr.equalsIgnoreCase(""));
 		Reporter.log("seeMarginBalanceStr : "+seeMarginBalanceStr, true);
 		return seeMarginBalanceStr;
+	}
+	
+	public String checkAmountInUpiServicesProviderPage() {
+		Reporter.log("======> checkAmountInUpiServicesProviderPage <======", true);
+		int count=0;
+		do {
+		count++;
+		Reporter.log("counter ======> "+count, true);
+		upiServicePageLabel=elementLocateBytag("h5");
+		upiServiceProviderLabel=fetchTextFromElement(upiServicePageLabel);
+		if(!upiServiceProviderLabel.equalsIgnoreCase("To pay ₹   to Edelweiss")){
+			count=5;
+		}
+		}while(count<5);
+		return upiServiceProviderLabel;
+	}
+	
+	public void timerDone() {
+		Reporter.log("=======> timerDone <=======", true);
+		
+		timerLabel=fluentWaitCodeXpath("//p[@class='timer_clr ng-binding']", "timer");
+		
 	}
 	
 	public static void main(String[] args) {

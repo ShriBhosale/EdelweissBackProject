@@ -7,17 +7,16 @@ public class FundTransferKeyword {
 	
 	public List<String> keywordProvider() {
 		List<String> step=new ArrayList<String>();
-		
-		
+
+		  step.add("FundTransfer");
+		  step.add("AmountTextfield");
+			/*
+			 * step.add("UPITextfield"); step.add("UPI_Id");
+			 */
 		 
-		 
-		 step.add("FundTransfer");
-		 step.add("UPITextfield"); 
-		 step.add("AmountTextfield"); 
-		 step.add("UPI_Id");
-		//step.add("InternetBanking"); 
+		step.add("InternetBanking"); 
 			
-		// step.add("Profile"); 	  
+		/* step.add("Profile"); */	  
 			 
 		return step;
 	}

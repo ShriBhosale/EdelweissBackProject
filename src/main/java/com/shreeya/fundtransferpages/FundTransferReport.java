@@ -46,6 +46,7 @@ public class FundTransferReport extends ExtendReporter {
 	}
 
 	public void fundTransferReport(List<String> detailList,FundTransferModel model,String placeOrderSeeMargin) {
+		Reporter.log("=====> fundTransferReport <====", true);
 		testCreation(model.getBank()+"_"+placeOrderSeeMargin+"_"+model.getReferNo());
 		print(detailList);
 		

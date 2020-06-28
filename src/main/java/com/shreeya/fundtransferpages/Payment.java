@@ -149,7 +149,7 @@ public class Payment extends SeleniumCoder{
 		screenshotList.add(ScreenshortProvider.captureScreen(driver, "AtomPayment"));
 		completTransaction=fluentWaitCodeXpath("//input[@value='Click To Complete Transaction']", "Complete Transaction button");
 		clickElement(completTransaction, "Complete Transaction button");
-		if(!accountNo.equalsIgnoreCase("No")) {
+		if(!accountNo.equalsIgnoreCase("No")||(model.getBank().equalsIgnoreCase("ICICI BANK LTD"))) {
 			browserPopup(true);
 		
 		fundTransferResult(accountNo, model,"Atom",optionAfterTransfer,failureOrSuccess);
@@ -234,9 +234,11 @@ public class Payment extends SeleniumCoder{
 		//checkPopupPresentIfYesHandly(true);
 		otpTextfield=fluentWaitCodeXpath("//input[@type='password']",100, "OTP textfield");
 		if(otpTextfield!=null) {
-			clearAndSendKey(otpTextfield, otpStr, "OTP textfield");
-			verifyButton=fluentWaitCodeXpath("//a[text()='Verify']", "verify button");
-			clickElement(verifyButton, "Verify button");
+			if(otpTextfield.isDisplayed()) {
+				clearAndSendKey(otpTextfield, otpStr, "OTP textfield");
+				verifyButton=fluentWaitCodeXpath("//a[text()='Verify']", "verify button");
+				clickElement(verifyButton, "Verify button");
+			}
 		}
 		screenshotStr=ScreenshortProvider.captureScreen(driver, "KotakConfirmationPage");
 		confirmButton=fluentWaitCodeXpath("//h3[text()='Transaction Details']//preceding::a[@id='next-step2']", "confirm Button");
@@ -301,6 +303,9 @@ public class Payment extends SeleniumCoder{
 		}else if(redirectOption.equalsIgnoreCase("Place order")) {
 			 placeOrderButton= fluentWaitCodeXpath("//div[@class='impsBankDetails detSuces']//following::a[text()='Place an Order']" , "Place order button");
 			 clickElement(placeOrderButton, "Place order button");
+			 if(model.getBank().equalsIgnoreCase("SBI")) {
+				 model.setBank("State Bank of India");
+			 }
 			 OrderPlaceModel orderPlaceModel=new OrderPlaceModel(model.getReferNo(), model.getBank(), model.getExchange(), model.getOrderType(), model.getOrderPrice(), model.getProductType(), model.getQty());
 			 orderDetialScreenshot=placeOrder.orderPlace(orderPlaceModel);
 			 detailList.add("<@@ Order Placement Report @@>");

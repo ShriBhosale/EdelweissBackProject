@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.shreeya.alertandnotification.AlterAndNotificationCommon;
 import com.shreeya.experiment.Report;
 
 public class Help extends SeleniumCoder{
@@ -22,12 +23,16 @@ public class Help extends SeleniumCoder{
 	private String enterMsgInTextfield;
 	private WebElement textfieldElement;
 	ConfigReader config;
+	private WebElement nseOption;
+	private WebElement bseOption;
+
 	public Help(){}
 	
 	public Help(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		config=new ConfigReader();
+		
 	}
 
 	public String [] commaSeparater(String scriptName) {
@@ -673,7 +678,7 @@ public class Help extends SeleniumCoder{
 		clickElement(dropdown, "dropdownClick");
 	}
 	
-	public void checkEnterProperMsgInTextfield(String xpath,String elementName,String msg) {
+	public void checkEnterProperMsgInTextfield(String xpath,String elementName,String msg,String segmentName) {
 		Reporter.log("=====> checkEnterProperMsgInTextfield <====", true);
 		staticWait(500);
 		 textfieldElement=fluentWaitCodeXpath(xpath, elementName);
@@ -683,13 +688,25 @@ public class Help extends SeleniumCoder{
 			 count++;
 			 clearAndSendKey(textfieldElement,msg,elementName);
 		 	enterMsgInTextfield=getValueFromAttribute(textfieldElement, "value", elementName);
+		 	segmentSelection(segmentName);
 		 	staticWait(200);
+		 	Reporter.log("dropDown option : "+"//span[text()='"+enterMsgInTextfield.trim()+"']", true);
 		 	clickElement("//span[text()='"+enterMsgInTextfield.trim()+"']", elementName);
 		 	if(!msg.equalsIgnoreCase(enterMsgInTextfield)) {
 		 		clearAndSendKey(textfieldElement,msg,elementName);
 			validMsgPrintOrNot=true;
 		 	}
 		 }while(validMsgPrintOrNot==true && count<3);
+	}
+	
+	public void segmentSelection(String segmentName) {
+		nseOption=fluentWaitCodeXpath("//*[@id=\"alertsModal\"]/div/div/form/div[2]/div/div/div/div/div/div/div/div/div/div[1]/ul/li[1]/a", "NSE segment");
+		bseOption=fluentWaitCodeXpath("//*[@id=\"alertsModal\"]/div/div/form/div[2]/div/div/div/div/div/div/div/div/div/div[1]/ul/li[2]/a", "BSE segment");
+		if(segmentName.equalsIgnoreCase("NSE")) {
+			
+		}else if(segmentName.equalsIgnoreCase("BSE")) {
+			clickElement(bseOption, "BSE segement");
+		}
 	}
 	
 	public String [] removeHtmlAndSeparateWithChara(String htmlStr,String stringSeparate) {
@@ -703,5 +720,16 @@ public class Help extends SeleniumCoder{
 	public String xpathMaker(String xpath) {
 		Reporter.log(xpath, true);
 		return xpath;
+	}
+	
+	public String checkScripName(String scripName) {
+		Reporter.log("====> checkScripName <====", true);
+		if(scripName.equalsIgnoreCase("Aditya Birla Capital Ltd"))
+			scripName="Aditya  Birla  Capital  Ltd.";
+		else if(scripName.equalsIgnoreCase("Tata Consultancy Services Ltd"))
+			scripName="Tata  Consultancy  Services  Ltd.";
+		else if(scripName.equalsIgnoreCase("TCS20JULFUT"))
+			scripName="Tata  Consultancy  Serv  Lt";
+		return scripName;
 	}
 }

@@ -1,5 +1,6 @@
 package com.shreeya.util;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -688,6 +689,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	public void clickByActionClass(WebElement element,String elementName) {
 		Reporter.log("====  clickByActionClass =====", true);
 		Actions action=new Actions(driver);
+		staticWait(1000);
 		action.moveToElement(element).click().perform();
 	}
 	
@@ -1463,5 +1465,59 @@ public class SeleniumCoder extends ExceptionHandler {
 			Reporter.log("Element Name : "+elementName+"  Attribute name : "+attributeName+"  Element str : "+elementStr,true);
 			return elementStr;
 		}
+	 
+	 public void sendKeyUsingAction(String xpathString,String elementName,String msg) {
+		 Reporter.log("======> sendKeyUsingAction  <======", true);
+		 WebElement element=fluentWaitCodeXpath(xpathString, elementName);
+		 Actions action=new Actions(driver);
+		 action.sendKeys(msg).perform();
+		 
+	 }
+	 
+	 public String enterBigAmount(String xpathString,String elementName,String msg) {
+		 Reporter.log("======> enterBigAmount  <======", true);
+		 int count=0;
+		 String enterMsg="No enter msg";
+		
+		
+		 do{
+			 WebElement element=fluentWaitCodeXpath(xpathString, elementName);
+			 if(element!=null) {
+			 count++;
+			 element.sendKeys(msg);
+			 staticWait(200);
+			 enterMsg=getValueFromAttribute(xpathString, "value", elementName);
+			 
+			 element.sendKeys(msg);
+			 }
+		 }while((!enterMsg.equalsIgnoreCase(msg))&&count<2);
+		 
+		 Reporter.log("MsgWant to enter : "+msg, true);
+		 return enterMsg;
+	 }
+	 
+	 public boolean convertNumber(String testNumber,String applicationNumber) {
+		 Reporter.log(">>> Test data value is grerter then application value <<<", true);
+		 if(testNumber.contains(","))
+			 testNumber=testNumber.replace(",", "");
+		 if(applicationNumber.contains(",")) 
+			 applicationNumber=applicationNumber.replace(",", "");
+		 if(applicationNumber.contains(".")) {
+			 String [] array=applicationNumber.split("\\.");
+			 applicationNumber=array[0];
+		 }
+		 long l1=Long.valueOf(testNumber);
+		 long l2=Long.valueOf(applicationNumber);
+		 boolean flag=false;
+		 if(l1>l2)
+			 flag=true;
+		 return flag;
+			 
+	 }
+	 
+	 public String makeXpath(String xpathString) {
+		 Reporter.log(xpathString, true);
+		 return xpathString;
+	 }
 	 
 }

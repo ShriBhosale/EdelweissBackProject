@@ -69,6 +69,8 @@ public class FundTransferPage extends SeleniumCoder {
 
 	private WebElement paymentModeLabel;
 
+	private WebElement bankAccountLabel;
+
 	public static String addFundAmountStr;
 	public FundTransferPage() {
 		
@@ -198,9 +200,14 @@ public class FundTransferPage extends SeleniumCoder {
 		staticWait(4000);
 		checkAndClickAddFundTab();
 		String bankName=fundTransferCommon.bankNameGiver(model.getBank());
-		bankAccountRedionButton=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
-		if(bankAccountRedionButton.isSelected()==false)
-			clickElement(bankAccountRedionButton, bankName+" Radio button");
+		bankAccountLabel=fluentWaitCodeXpath(driver, "//span[text()='"+bankName+"']",bankName);
+		bankAccountRedionButton=fluentWaitCodeXpath("//span[text()='"+bankName+"']//preceding::input[1]",bankName+ "radio button");
+		String selectedBankStr=getValueFromAttribute(bankAccountRedionButton, "gtmdir-text", "bank Radio button");
+		Reporter.log("bank selected bank : "+selectedBankStr, true);
+		if(!selectedBankStr.contains(bankName)) {
+			
+				clickElement(bankAccountLabel, bankName+"radio button");
+		}
 		accountNoLabel=fluentWaitCodeXpath("//span[text()='"+bankName+"']//following::span[1]", "account no");
 		
 		model.setBank(bankName);

@@ -37,7 +37,7 @@ public class AlertAndNotificationExecution extends SeleniumCoder{
 		common.redirectToAlterAndNotificationModule(true);
 		while(iterator.hasNext()) {
 			model=iterator.next();
-			alertAndNotificationPage.alertExecution(model);
+			alertAndNotificationPage.alertExecution(model,reporter);
 			//reporter=alterTestCase.alterTestCaseExecution(segment,reporter);
 			
 			 } 

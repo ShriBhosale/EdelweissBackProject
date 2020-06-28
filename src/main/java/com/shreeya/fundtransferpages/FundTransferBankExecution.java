@@ -65,16 +65,16 @@ public class FundTransferBankExecution extends SeleniumCoder{
 		  try {
 		  fundTranferPage.fundTransferexecute(fundTransferModel,report,seeMarBalScreenshot);
 		  }catch(ElementNotInteractableException e) {
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL",report);
 			  backFundTransferPage();
 			  continue;
 		  }catch(NullPointerException e) {
 			 
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL",report);
 			  backFundTransferPage();
 			  continue;
 		  }catch(TimeoutException e) {
-			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL");
+			  fundTransferReport(fundTransferModel.getReferNo(),elementNameError,"FAIL",report);
 			  backFundTransferPage();
 			  continue;
 		  }
@@ -93,13 +93,16 @@ public class FundTransferBankExecution extends SeleniumCoder{
 		staticWait(3000);
 	}
 	
-	public void fundTransferReport(String referNo,String errorMsg,String result) {
+	public void fundTransferReport(String referNo,String errorMsg,String result,ExtendReporter report) {
+		Reporter.log("====> fundTransferReport <====", true);
 		errorMsg="no";
 		int referenceNo=Integer.valueOf(referNo);
 		if(referenceNo==1) {
 			MyTestLauncher.folderCreationObj.copyFile(folderPathArray[0],"FundTransfer");
 			FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0],"FundTransfer",4);
 		}
+		Reporter.log("report============================> "+report, true);
+		Reporter.log("errorMsg==========================> "+errorMsg, true);
 		String reportPath=report.reporter(driver, "FundTransfer", folderPathArray, referNo,errorMsg);
 		String screenShotStr=report.captureScreen(driver, folderPathArray[2], "FundTransfer", referenceNo);
 		String [] reportArray= {"No",result,reportPath,screenShotStr};

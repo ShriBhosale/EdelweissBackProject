@@ -19,24 +19,24 @@ public class AlertAndNotificationModel {
 	@CsvBindByName(column = "Segment")
 	private String segment;
 	
-	@CsvBindByName(column = "Qty")
-	private String qty;
+	@CsvBindByName(column = "ModifyValule")
+	private String modifyValule;
 	
-	@CsvBindByName(column = "ProductType")
-	private String productType;
-
+	
+	
+	
+	
 	public AlertAndNotificationModel(String referNo, String stockName, String valueIs, String value, String segment,
-			String qty, String productType) {
+			String modifyValule) {
 		super();
 		this.referNo = referNo;
 		this.stockName = stockName;
 		this.valueIs = valueIs;
 		this.value = value;
 		this.segment = segment;
-		this.qty = qty;
-		this.productType = productType;
+		this.modifyValule = modifyValule;
 	}
-	
+
 	public AlertAndNotificationModel() {}
 
 	public String getReferNo() {
@@ -78,29 +78,23 @@ public class AlertAndNotificationModel {
 	public void setSegment(String segment) {
 		this.segment = segment;
 	}
+	
+	
 
-	public String getQty() {
-		return qty;
+	public String getModifyValule() {
+		return modifyValule;
 	}
 
-	public void setQty(String qty) {
-		this.qty = qty;
-	}
-
-	public String getProductType() {
-		return productType;
-	}
-
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setModifyValule(String modifyValule) {
+		this.modifyValule = modifyValule;
 	}
 
 	@Override
 	public String toString() {
 		return "AlertAndNotificationModel [referNo=" + referNo + ", stockName=" + stockName + ", valueIs=" + valueIs
-				+ ", value=" + value + ", segment=" + segment + ", qty=" + qty + ", productType=" + productType + "]";
+				+ ", value=" + value + ", segment=" + segment + ", modifyValule=" + modifyValule + "]";
 	}
-	
+
 	
 
 }

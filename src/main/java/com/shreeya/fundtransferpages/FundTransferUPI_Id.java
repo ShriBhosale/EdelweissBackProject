@@ -356,7 +356,7 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		detailList.add("@@> Verify historical data is available when user selects the calendar date accordingly. <@@");
 		String dateTo="3-June-2020";
 		String dateFrom="4-June-2020";
-		transferStatusLabel=fluentWaitCodeXpath("//h5[text()='Transfer Status']", "Transfer status label");
+		transferStatusLabel=fluentWaitCodeXpath("//h5[text()='Transfer Status']",50, "Transfer status label");
 		if(transferStatusLabel==null) {
 			transferStatusTab=fluentWaitCodeXpath("//a[text()='TRANSFER STATUS']", "Transfer Status Tab");
 			clickElement(transferStatusTab, "Transfer Status Tab");
@@ -471,7 +471,7 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 	public String verifyPayAmount(String amount,String msg) {
 		String result;
 		String [] payArray=help.separater(msg, " ");
-		if(amount.equalsIgnoreCase(payArray[4])) {
+		if(msg.contains(amount)) {
 			result=msg+"-PASS";
 		}else {
 			result=msg+"-FAIL";
@@ -491,12 +491,12 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		
 		
 		  primaryUPIId(); 
-		  redriectToUPIServicesPage(); 
-		  upiIdTag();
-		  eCollectBank();
-		  deleteUPIExecution();
-		  
-		  historyStatusChecking();
+			/*
+			 * redriectToUPIServicesPage(); upiIdTag(); eCollectBank();
+			 * deleteUPIExecution();
+			 * 
+			 * historyStatusChecking();
+			 */
 		 
 		upiTimerPage();
 		report.upi_idReport(detailList);

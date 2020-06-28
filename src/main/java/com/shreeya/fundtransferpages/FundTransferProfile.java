@@ -228,8 +228,8 @@ public class FundTransferProfile extends SeleniumCoder{
 		  checkDematTradingAccountBankDetail();
 		  checkClickOnNewUPIid();
 		  addNewUPIFormWithInvalid();
-		  
-		  closeAddNewUPIForm(); 
+		  //hdfc bank was not add here
+		 // closeAddNewUPIForm(); 
 		  addNewUPIFormWithvalid();
 		 
 		validUPIidWithDiffBank();

@@ -47,7 +47,7 @@ public class LoginBankAccoutCloseDriver extends SeleniumCoder {
 		//common.backFundTransferPage();
 		accountNoLabel = fluentWaitCodeXpath("//span[text()='ICICI BANK LTD']//following::span[1]","ICIC bank accountNo");
 		accountNoStr=fetchTextFromElement(accountNoLabel);
-		common.submitAddFundForm("ICICI BANK LTD", "101");
+		common.submitAddFundForm("ICICI BANK LTD", "101",false);
 		transferModeStr=common.checkingTransferMode();
 		
 		/*

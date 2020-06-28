@@ -12,8 +12,10 @@ public class AlertAndNotificationKeyword {
 	
 	public List<String> keywordExecution() {
 		keywordList.add("addAlert");
+		keywordList.add("testCase");
 		keywordList.add("modifyAlert");
 		keywordList.add("deleteAlert");
+		keywordList.add("report");
 		return keywordList;
 	}
 }
