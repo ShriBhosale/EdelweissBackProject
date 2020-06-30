@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,6 +26,7 @@ public class Help extends SeleniumCoder{
 	ConfigReader config;
 	private WebElement nseOption;
 	private WebElement bseOption;
+	private WebElement closePopupButton;
 
 	public Help(){}
 	
@@ -732,4 +734,27 @@ public class Help extends SeleniumCoder{
 			scripName="Tata  Consultancy  Serv  Lt";
 		return scripName;
 	}
+	
+	public void redirectToOrderDetailTabModule(boolean pageRefershOrNot) {
+		Reporter.log("====> redirectToOrderDetailTabModule <====", true);
+		staticWait(1000);
+		closePopupButton = fluentWaitCodeXpath("//a[@class='ed-icon i-close lg']",50, "Close popup button");
+		if(closePopupButton!=null)
+		clickElement(closePopupButton,  "Close popup button");
+		try {
+		hoverAndClickOption("//*[@id='QuickSB']", "//a//strong[text()='Place Order']");
+		}catch(ElementNotInteractableException e) {
+			help.pageRefresh();
+			hoverAndClickOption("//*[@id='QuickSB']", "//a//strong[text()='Place Order']");
+		}
+		WebElement placeOrderTitle=fluentWaitCodeXpath("//a[text()='Place Order']",30, "place Order title");
+		if(placeOrderTitle==null) {
+			hoverAndClickOption("//*[@id='QuickSB']", "//a//strong[text()='Place Order']");
+		}
+		if(pageRefershOrNot)
+			pageRefresh();
+		staticWait(700);
+	}
+	
+	
 }

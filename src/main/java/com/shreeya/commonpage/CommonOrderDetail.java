@@ -263,10 +263,10 @@ public class CommonOrderDetail extends SeleniumCoder {
 	 * Reporter.log(element); } }
 	 */
 	
-	public ArrayList<String> commodityorderDetail(WatchListModel model) {
+	public ArrayList<String> commodityorderDetail(OrderPlaceModel model) {
 		ArrayList<String> orderDetailList=new ArrayList<String>();
-		String [] fullScriptName=help.commaSeparater(model.getFullScriptName());
-		String [] verifyScriptName=help.commaSeparater(model.getVerifyScript());
+		//String [] fullScriptName=help.commaSeparater(model.getFullScriptName());
+		//String [] verifyScriptName=help.commaSeparater(model.getVerifyScript());
 		/*orderLogsLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/a", "Order Logs link");
 		clickElement(orderLogsLabel,  "Order Logs link");*/
 		orderStatusLink=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[5]/div/span[1]", "Order status");
@@ -295,9 +295,9 @@ public class CommonOrderDetail extends SeleniumCoder {
 		orderDetailList.add("User id : "+fetchTextFromElement(userIdLabelCo));
 		scriptNameLabel=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[2]/div/span[1]", "Script Name");
 		
-		orderDetailList.add("Script Name : "+help.commpareTwoString(fetchTextFromElement(scriptNameLabel),fullScriptName[fullScriptName.length-1]));
+		//orderDetailList.add("Script Name : "+help.commpareTwoString(fetchTextFromElement(scriptNameLabel),fullScriptName[fullScriptName.length-1]));
 		tradingSymbol=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[2]/div/span[2]", "Trading Symbol");
-		help.commpareTwoString(fetchTextFromElement(tradingSymbol),verifyScriptName[verifyScriptName.length-1]);
+		//help.commpareTwoString(fetchTextFromElement(tradingSymbol),verifyScriptName[verifyScriptName.length-1]);
 		orderDetailList.add("Trading symbol : "+fetchTextFromElement(tradingSymbol));
 		productType=fluentWaitCodeXpath("//*[@id='rightScroll1']/div[5]/div[1]/div[2]/div[4]/div/span[2]", "Product type");
 		orderDetailList.add("Product type : "+help.commpareTwoString(fetchTextFromElement(productType), model.getProductType()));
@@ -320,5 +320,7 @@ public class CommonOrderDetail extends SeleniumCoder {
 		
 		return help.commpareTwoString(applicationStr,testDataStr);
 	}
+	
+	
 
 }

@@ -167,10 +167,15 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		detailList.add("@@> Verify Primary ID which is set as default is displayed in drop down. <@@");
 		upiDropDown();
 		detailList.add(ScreenshortProvider.captureScreen(driver, "PrimaryUPI_id"));
+		upiTextfield=fluentWaitCodeXpath("//input[@id='upiIdTxt']", "UPI textfield");
+		if(elementPresentOrNot(upiTextfield)==false) {
 		upiDropDowntext=getValueFromAttribute(upiDropdownButton, "value", "UPI dropdow button");
 		upiDropdownBelowLabel=fluentWaitCodeXpath("//label[@for='upi']//following::p[1]", "UPI dropdown below label");
 		detailList.add(help.commpareTwoString(fetchTextFromElement(upiDropdownBelowLabel),"PRIMARY ID"));
 		detailList.add("Primary UPI id : "+upiDropDowntext);
+		}else {
+			detailList.add("primaryUPIId upi id is not present-FAIL");
+		}
 	}
 	
 	public void upiDropDown() {
@@ -333,7 +338,10 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		clickElement(submitButton, "submit button");
 		upiServicePageLabel=elementLocateBytag("h5");
 		upiServiceProviderLabel=fetchTextFromElement(upiServicePageLabel);
+		if(!UPITextfieldObj.errorChecker(false).equalsIgnoreCase(""))
 		detailList.add(UPITextfieldObj.errorChecker(false));
+		
+			
 		if(false) {
 			detailList.add("This error msg come after enter amount and click on submit button-FAIL");
 		}else {
@@ -429,8 +437,12 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		detailList.add(ScreenshortProvider.captureScreen(driver, "UPITimer"));
 		do {
 			staticWait(5000);
+			retryButton = fluentWaitCodeXpath("//a[text()='Retry']",30, "Retry button");
+			if(elementPresentOrNot(retryButton))
+				clickElement(retryButton, "Retry button");
 		paymentTimerLabel=fluentWaitCodeXpath("//p[text()='Approve the payment within']//following::p[1]", 30, "payment timer");
-		if(paymentTimerLabel.isDisplayed()) {
+		
+		if(elementPresentOrNot(paymentTimerLabel)) {
 			timerLableFlag=true;
 		}else {
 			detailList.add("5 minite timer is complete-PASS");
@@ -491,12 +503,13 @@ public class FundTransferUPI_Id extends SeleniumCoder{
 		
 		
 		  primaryUPIId(); 
-			/*
-			 * redriectToUPIServicesPage(); upiIdTag(); eCollectBank();
-			 * deleteUPIExecution();
-			 * 
-			 * historyStatusChecking();
-			 */
+			
+			  redriectToUPIServicesPage();
+			  upiIdTag(); eCollectBank();
+			  deleteUPIExecution();
+			  
+			  historyStatusChecking();
+			 
 		 
 		upiTimerPage();
 		report.upi_idReport(detailList);

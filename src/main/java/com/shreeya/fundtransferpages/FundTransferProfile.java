@@ -106,8 +106,12 @@ public class FundTransferProfile extends SeleniumCoder{
 	}
 	
 	public void addNewUPILink() {
+		Reporter.log("======> addNewUPILink <=====", true);
 		staticWait(1000);
 		screenshotWithElement("//h5[text()='Advisor Details']", "Advisor detail Label", "AddNewUPILable");
+		closeAddNewUpiPopup=fluentWaitCodeXpath("//*[@id='addNewUpiId']/div/div/div[1]/a",50, "close add new upi popup");
+		if(elementPresentOrNot(closeAddNewUpiPopup))
+			clickElement(closeAddNewUpiPopup, "close add new upi popup");
 		addNewUPIIdLink=fluentWaitCodeXpath("//a[@gtmdir-label='Add New UPI ID']", "add new UPI id");
 		clickElement(addNewUPIIdLink, "Add new UPI id link");
 		upiIdTitle=fluentWaitCodeXpath("//h5[text()='Add New UPI ID']",60, "Add upi title");
@@ -228,8 +232,8 @@ public class FundTransferProfile extends SeleniumCoder{
 		  checkDematTradingAccountBankDetail();
 		  checkClickOnNewUPIid();
 		  addNewUPIFormWithInvalid();
-		  //hdfc bank was not add here
-		 // closeAddNewUPIForm(); 
+		 
+		  closeAddNewUPIForm(); 
 		  addNewUPIFormWithvalid();
 		 
 		validUPIidWithDiffBank();

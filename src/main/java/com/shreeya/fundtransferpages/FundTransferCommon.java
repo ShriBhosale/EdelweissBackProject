@@ -362,6 +362,7 @@ public class FundTransferCommon extends SeleniumCoder {
 	}
 	
 	public void upiTextfiedOrDropdown(String upiId) {
+		Reporter.log("=====> upiTextfiedOrDropdown <====", true);
 		upiDropdownButton=fluentWaitCodeXpath("//label[@for='upi']//following::button[1]",10,"UPI dropdown button");
 		if(upiId.equalsIgnoreCase("")) {
 			

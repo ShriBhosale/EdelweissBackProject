@@ -22,12 +22,25 @@ public class AlertAndNotificationModel {
 	@CsvBindByName(column = "ModifyValule")
 	private String modifyValule;
 	
+	@CsvBindByName(column = "ModifyValueIs")
+	private String modifyValueIs;
+	
+	@CsvBindByName(column = "TickSize")
+	private String tickSize;
+	
+	@CsvBindByName(column = "ProductType")
+	private String productType;
 	
 	
+	@CsvBindByName(column = "Qty")
+	private String qty;
 	
 	
+
+	
+
 	public AlertAndNotificationModel(String referNo, String stockName, String valueIs, String value, String segment,
-			String modifyValule) {
+			String modifyValule, String modifyValueIs, String tickSize, String productType, String qty) {
 		super();
 		this.referNo = referNo;
 		this.stockName = stockName;
@@ -35,6 +48,10 @@ public class AlertAndNotificationModel {
 		this.value = value;
 		this.segment = segment;
 		this.modifyValule = modifyValule;
+		this.modifyValueIs = modifyValueIs;
+		this.tickSize = tickSize;
+		this.productType = productType;
+		this.qty = qty;
 	}
 
 	public AlertAndNotificationModel() {}
@@ -89,10 +106,43 @@ public class AlertAndNotificationModel {
 		this.modifyValule = modifyValule;
 	}
 
+	public String getTickSize() {
+		return tickSize;
+	}
+
+	public void setTickSize(String tickSize) {
+		this.tickSize = tickSize;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getQty() {
+		return qty;
+	}
+
+	public void setQty(String qty) {
+		this.qty = qty;
+	}
+
+	public String getModifyValueIs() {
+		return modifyValueIs;
+	}
+
+	public void setModifyValueIs(String modifyValueIs) {
+		this.modifyValueIs = modifyValueIs;
+	}
+
 	@Override
 	public String toString() {
 		return "AlertAndNotificationModel [referNo=" + referNo + ", stockName=" + stockName + ", valueIs=" + valueIs
-				+ ", value=" + value + ", segment=" + segment + ", modifyValule=" + modifyValule + "]";
+				+ ", value=" + value + ", segment=" + segment + ", modifyValule=" + modifyValule + ", modifyValueIs="
+				+ modifyValueIs + ", tickSize=" + tickSize + ", productType=" + productType + ", qty=" + qty + "]";
 	}
 
 	

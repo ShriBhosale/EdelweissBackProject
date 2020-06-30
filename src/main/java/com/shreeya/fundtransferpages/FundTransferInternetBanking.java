@@ -432,11 +432,11 @@ public class FundTransferInternetBanking extends SeleniumCoder {
 		  verifyFundTransferTabs(); bankNameAccountNoDisplay();
 		  checkAmountAfterTwoDecimal();
 		 
-		  //dont
+		  //dont citi bank not present
 		// checkRedirectBankMsg();
 		  
-			
-		 cancelFundTransferFromBankDetailPage();
+			//Kotak login not work 
+		 //cancelFundTransferFromBankDetailPage();
 		 checkRetryInUnsuccessfullyTransaction();
 			 
 		 

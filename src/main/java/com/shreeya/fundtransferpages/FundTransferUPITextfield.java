@@ -291,14 +291,13 @@ public class FundTransferUPITextfield extends SeleniumCoder{
 		if(fundTransferTab!=null) {
 			clickElement(fundTransferTab, "FundTransferTab");
 		}
-		
-		
-		
 		  elementlocate(); 
-			/*
-			 * checkGuidlinText(); redirectToUPICreationStepPage();
-			 * closeUPIStepCreationPage(); enterInvalidUPIid();
-			 */
+			
+			  checkGuidlinText(); 
+			  redirectToUPICreationStepPage();
+			  closeUPIStepCreationPage();
+			  enterInvalidUPIid();
+			 
 		  
 		  enterValidUPIid();
 		  enterDiffBankUPIid();

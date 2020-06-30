@@ -25,6 +25,9 @@ public class PlaceOrder extends SeleniumCoder {
 	private WebElement placeOrderTextField;
 	private WebElement bseLink;
 	private WebElement nseLink;
+	private WebElement dropDownOption;
+	private WebElement mcxLink;
+	private WebElement ncdxLink;
 	
 	public PlaceOrder(WebDriver driver) {
 		super(driver);
@@ -36,9 +39,9 @@ public class PlaceOrder extends SeleniumCoder {
 	public String orderPlace(OrderPlaceModel model) {
 		Reporter.log("====> orderPlace <====", true);
 		String amoFlag=configReader.configReader("amoFlag");
-		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']","Place Order Textfield");
+		placeOrderTextField=fluentWaitCodeXpath(driver,"//a[text()='Place Order']//following::input","Place Order Textfield");
 		sendKey(placeOrderTextField,model.getScriptName(),"Place Order Textfield");
-		clickOnExchageScript(model.getExchange());
+		clickOnExchageScript(model.getExchange(),model.getScriptName());
 		if(model.getOrderType().equalsIgnoreCase("Buy")) {
 			buyButton=fluentWaitCodeXpath("//a[text()='Buy']","Buy button");
 			clickElement(buyButton,"Buy button");
@@ -118,13 +121,24 @@ public class PlaceOrder extends SeleniumCoder {
 		}
 	}
 	
-	public void clickOnExchageScript(String exchange) {
+	public void clickOnExchageScript(String exchange,String scriptName) {
+		Reporter.log("====> clickOnExchageScript <=====", true);
 		if(exchange.equalsIgnoreCase("NSE")) {
 			nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]","NSE Link");
 			clickElement(nseLink,"NSE Link");
 			}else if(exchange.equalsIgnoreCase("BSE")) {
 			bseLink=fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[2]/a/span[2]","BSE Link");
 			clickElement(bseLink,"BSE Link");
+			}else if(exchange.equalsIgnoreCase("CDS")||exchange.equalsIgnoreCase("NFO")) {
+				dropDownOption=fluentWaitCodeXpath(makeXpath("//span[text()='"+scriptName+"']"),scriptName+"dropDown option");
+				if(elementPresentOrNot(dropDownOption))
+					clickElement(dropDownOption,scriptName+"dropDown option");
+			}else if(exchange.equalsIgnoreCase("MCX")) {
+				mcxLink=fluentWaitCodeXpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li/a/span[2]", "MCX link");
+				clickElement(mcxLink, "Mcx link");
+			}else if(exchange.equalsIgnoreCase("NCDEX")) {
+				ncdxLink=fluentWaitCodeXpath("//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li/a/span[2]", "NCDX link");
+				clickElement(ncdxLink, "ncdx link");
 			}
 	}
 }

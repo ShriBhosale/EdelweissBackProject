@@ -55,6 +55,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	public void sendKey(WebElement element, String msg, String elementName){
 		/* Thread.sleep(2000); */
 		System.out.println("elementName : " + elementName + " msg : " + msg);
+		if(element.isDisplayed())
 		element.sendKeys(msg);
 		
 
@@ -228,7 +229,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		String elementText = "no element text";
 		try {
 			elementText = element.getAttribute("innerHTML");
-			Reporter.log(elementName + " : " + elementText, true);
+			Reporter.log(elementName + " : " + elementText.replace("\n", ""), true);
 
 		} catch (Exception e) {
 			Reporter.log(elementName + " not found", true);
@@ -242,7 +243,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		String elementText = "no element text";
 		try {
 			elementText = element.getAttribute("innerHTML");
-			Reporter.log("elementText : "+elementText, true);
+			Reporter.log("elementText : "+elementText.replace("\n", ""), true);
 		} catch (Exception e) {
 			
 			Reporter.log(e.getMessage(), true);
@@ -256,7 +257,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		String elementText = "no element text";
 		try {
 			elementText = element.getAttribute("innerHTML");
-			Reporter.log("elementText : "+elementText, true);
+			Reporter.log("elementText : "+elementText.replace("\n", ""), true);
 		} catch (Exception e) {
 			
 			Reporter.log(e.getMessage(), true);
@@ -689,7 +690,7 @@ public class SeleniumCoder extends ExceptionHandler {
 	public void clickByActionClass(WebElement element,String elementName) {
 		Reporter.log("====  clickByActionClass =====", true);
 		Actions action=new Actions(driver);
-		staticWait(1000);
+		staticWait(3000);
 		action.moveToElement(element).click().perform();
 	}
 	
@@ -1034,7 +1035,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		Reporter.log("elementsList length : "+elements.size(), true);
 		for(WebElement element:elements) {
 			String elementString=fetchTextFromElement(element);
-			Reporter.log("elementString : "+elementString, true);
+			Reporter.log("elementString : "+elementString.replace("\n", ""), true);
 			if(!elementString.equalsIgnoreCase("Click here")) 
 			elementStringList.add(elementString);
 			
@@ -1050,7 +1051,7 @@ public class SeleniumCoder extends ExceptionHandler {
 		Reporter.log("elementsList length : "+elements.size(), true);
 		for(WebElement element:elements) {
 			String elementString=fetchTextFromElement(element);
-			Reporter.log("elementString : "+elementString, true);
+			Reporter.log("elementString : "+elementString.replace("\n", ""), true);
 			if(!elementString.equalsIgnoreCase("Click here")) {
 				elementString=help.removeHtmlReporter(elementString);
 			elementStringList.add(elementString);
@@ -1520,4 +1521,74 @@ public class SeleniumCoder extends ExceptionHandler {
 		 return xpathString;
 	 }
 	 
+	 public void doubleclickElement(WebElement element, String elementName)  {
+			staticWait(500);
+			try {
+				if (element.isEnabled() == true) {
+					element.click();
+					element.click();
+					Reporter.log(elementName + " Click ", true);
+				} else {
+					Reporter.log(elementName + " no present", true);
+					WebDriverWait wait = new WebDriverWait(driver, explicityWaitCount);
+					Reporter.log("Checking element visible or not " + elementName, true);
+					wait.until(ExpectedConditions.visibilityOf(element));
+					Reporter.log("Checking element clickable or not " + elementName, true);
+					wait.until(ExpectedConditions.elementToBeClickable(element));
+					Reporter.log("After explicityWait : " + elementName, true);
+					element.click();
+				}
+			} catch (ElementNotInteractableException e) {
+				staticWait(700);
+				System.out.println("Convert driver into javascript than click on element  " + elementName);
+				elementNameError=elementName;
+				Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
+				StackTraceElement [] locaString=e.getStackTrace();
+				Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
+				Reporter.log("<b>Exception location : </b>", true);
+				for(StackTraceElement st:locaString) {
+					if(st.toString().contains("com.shreeya")) {
+						Reporter.log("<br>"+st.toString(), true);
+					}
+				}
+				try {
+				elementNotInteractableExceptionHandling(element, elementName);
+				}catch(ElementClickInterceptedException e1) {
+					staticWait(3000);
+				}
+				element.click();
+			} catch (TimeoutException e) {
+				Reporter.log("TimeoutException for this  " + elementName, true);
+				ExtendReporter reporter = new ExtendReporter();
+				elementNameError=elementName;
+				Reporter.log("SeleniumCoder:ElementNameError : "+elementNameError, true);
+				StackTraceElement [] locaString=e.getStackTrace();
+				Reporter.log("<b>Exception Name : </b>" + e.toString() + "<br><b>Element Name : </b>" + elementName,true);
+				Reporter.log("<b>Exception location : </b>", true);
+				for(StackTraceElement st:locaString) {
+					if(st.toString().contains("com.shreeya")) {
+						Reporter.log("<br>"+st.toString(), true);
+					}
+				}
+			} /*
+				 * catch(NullPointerException e) { elementNameError=elementName;
+				 * 
+				 * StackTraceElement [] locaString=e.getStackTrace();
+				 * Reporter.log("<b>Exception Name : </b>" + e.toString() +
+				 * "<br><b>Element Name : </b>" + elementName);
+				 * Reporter.log("<b>Exception location : </b>", true); for(StackTraceElement
+				 * st:locaString) { if(st.toString().contains("com.shreeya")) {
+				 * Reporter.log("<br>"+st.toString(), true); } } }
+				 */
+
+		}
+	 
+	 public boolean elementPresentOrNot(WebElement element) {
+		 boolean elementPresentFlg=false;
+		 if(element!=null) {
+			 if(element.isDisplayed())
+				 elementPresentFlg=true;
+		 }
+		 return elementPresentFlg;
+	 }
 }

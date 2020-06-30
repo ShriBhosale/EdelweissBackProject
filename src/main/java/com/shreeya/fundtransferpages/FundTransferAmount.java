@@ -197,7 +197,7 @@ public class FundTransferAmount extends SeleniumCoder{
 		blankAmountTextfield();
 		checkAmountTextfieldGuidText();
 		enterAmountLessFifty();
-		enterAmountGreaterthanOneMillion();
+		//enterAmountGreaterthanOneMillion();
 		verifyQickSelectAmount();
 		clickQickSelectOption();
 		qickSelectAndEnter();

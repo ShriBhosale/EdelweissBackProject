@@ -37,10 +37,13 @@ public class AlertAndNotificationExecution extends SeleniumCoder{
 		common.redirectToAlterAndNotificationModule(true);
 		while(iterator.hasNext()) {
 			model=iterator.next();
-			alertAndNotificationPage.alertExecution(model,reporter);
-			//reporter=alterTestCase.alterTestCaseExecution(segment,reporter);
-			
-			 } 
+			if(segment.equalsIgnoreCase("Commodity")) {
+				if(model.getSegment().equalsIgnoreCase("NCDEX")||model.getSegment().equalsIgnoreCase("MCX"))
+					alertAndNotificationPage.alertExecution(model,reporter,segment);
+			 }else {
+				 alertAndNotificationPage.alertExecution(model,reporter,segment);
+			 }
 		reporter.logFlush();
+		}
 	}
 }

@@ -7,6 +7,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
 
+import com.shreeya.commonpage.CommonOrderDetail;
+import com.shreeya.commonpage.PlaceOrder;
+import com.shreeya.model.AlertAndNotificationModel;
+import com.shreeya.model.LatestLoginModel;
+import com.shreeya.model.OrderPlaceModel;
+import com.shreeya.orderdetailpages.LoginPage;
+import com.shreeya.util.BrowserLaunch;
+import com.shreeya.util.ConfigReader;
 import com.shreeya.util.Help;
 import com.shreeya.util.ScreenshortProvider;
 import com.shreeya.util.SeleniumCoder;
@@ -29,13 +37,21 @@ public class AlterAndNotificationCommon extends SeleniumCoder{
 	private String valueLabel;
 	private String valueIsLabel;
 	private String checkBoxClass;
+	private String applicationValue;
 	
 	public static String[] deletArray;
+	ConfigReader configReader;
+	PlaceOrder placeOrder;
+	CommonOrderDetail orderDetail;
 
 	public AlterAndNotificationCommon(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
 		help=new Help(driver);
+		configReader=new ConfigReader();
+		configReader.alertConfig();
+		placeOrder=new PlaceOrder(driver);
+		orderDetail=new CommonOrderDetail(driver);
 	}
 	
 	public void redirectToAlterAndNotificationModule(boolean pageRefershOrNot) {
@@ -100,6 +116,7 @@ public class AlterAndNotificationCommon extends SeleniumCoder{
 	public void afterDelete(String scripName,boolean cancelOrNot) {
 		Reporter.log("======> afterDelete <======", true);
 		scripName=help.checkScripName(scripName);
+		deletArray[3]=help.removeHtmlReporter(fetchTextFromElement("//label[@class='mbMsg ng-binding']", "Delete Msg"));
 		deletArray[2]=ScreenshortProvider.captureScreen(driver, "AlertDeletePopup");
 		int scripNo=scriptIndex(scripName);
 		int count=0;
@@ -122,18 +139,35 @@ public class AlterAndNotificationCommon extends SeleniumCoder{
 		}while(alterTitle==null && count >5);
 	}
 	
+	public void clickDelete(String scripName) {
+		int i=0;
+		scripNo=scriptIndex(scripName);
+		if(scripNo!=0) {
+		do {
+			i++;
+			Reporter.log("clickDelete "+i);
+			checkBoxXpath=help.xpathMaker("//*[@id=\"allRecosAccord\"]/tbody/tr["+scripNo+"]/td[1]/a[1]/label");
+			scriptCheckBox=fluentWaitCodeXpath(checkBoxXpath, scripName+" check box");
+			//clickElement(scriptCheckBox, "script checkbox");
+			staticWait(5000);
+			checkBoxClass=getValueFromAttribute("//*[@id=\"checkme0\"]", "class", "checkBox");
+			//if(!checkBoxClass.contains("ng-not-empty")) {
+				i=5;
+			clickByActionClass(scriptCheckBox, "script checkbox");
+			//}
+		}while(i<5);
+		}else {
+			Reporter.log(scripName+" script not present.", true);
+		}
+	}
+	
 	
 	public void deleteAlert(String scripName,boolean cancelOrNot) {
 		Reporter.log("=====> deleteAlert <=====", true);
-		deletArray=new String[3];
-		scripNo=scriptIndex(scripName);
-		checkBoxXpath=help.xpathMaker("//*[@id=\"allRecosAccord\"]/tbody/tr["+scripNo+"]/td[1]/a[1]/label");
-		scriptCheckBox=fluentWaitCodeXpath(checkBoxXpath, scripName+" check box");
-		//clickElement(scriptCheckBox, "script checkbox");
-		staticWait(1000);
-		checkBoxClass=getValueFromAttribute("//*[@id=\"checkme0\"]", "class", "checkBox");
-		if(!checkBoxClass.contains("ng-not-empty"))
-		clickByActionClass(scriptCheckBox, "script checkbox");
+		deletArray=new String[5];
+		
+		clickDelete(scripName);
+		staticWait(3000);
 		clickElement("//a[text()='Delete Alert']", "Delete button");
 		deletePopupMsg=fluentWaitCodeXpath("//input[@value='Cancel']//preceding::label[1]", "Delete popup msg");
 		deletArray[0]=fetchTextFromElement(deletePopupMsg);
@@ -170,10 +204,44 @@ public class AlterAndNotificationCommon extends SeleniumCoder{
 			ltpNoLabel=fetchTextFromElement(makeXpath("//*[@id=\"allRecosAccord\"]/tbody/tr["+scripCount+"]/td[2]/label[1]"), scripName+" ltp no");
 			valueLabel=fetchTextFromElement(makeXpath("//*[@id=\"allRecosAccord\"]/tbody/tr["+scripCount+"]/td[5]/label[1]"), "value");
 			valueIsLabel=fetchTextFromElement(makeXpath("//*[@id=\"allRecosAccord\"]/tbody/tr["+scripCount+"]/td[5]/label[2]"), "value is");
-			
+			if(valueLabel.contains("≤"))
+				applicationValue=help.removeHtmlReporter(valueLabel).replace("≤", "").trim();
+			else if(valueLabel.contains("≥"))
+				applicationValue=help.removeHtmlReporter(valueLabel).replace("≥", "").trim();
 			detailList.add("LTP : "+ltpNoLabel);
-			detailList.add("Value : "+help.commpareTwoString(help.removeHtmlReporter(valueLabel).replace("≤", ""), value));
+			detailList.add("Value : "+help.commpareTwoString(applicationValue, value));
 			detailList.add("Value is : "+help.commpareTwoString(valueIsLabel, valueIs));
 		}
+	}
+	
+	
+	
+	public String placeOrderWithDiffUserId(String segment,AlertAndNotificationModel model) {
+		Reporter.log("======> placeOrderWithDiffUserId <======",true);
+		BrowserLaunch launch=new BrowserLaunch();
+		WebDriver driver=launch.browserLaunch("");
+		String status="no";
+		LoginPage login=new LoginPage(driver);
+		LatestLoginModel loginModelObject;
+		if(segment.equalsIgnoreCase("Equity")) {
+		 loginModelObject=new LatestLoginModel(1, configReader.configReaderAN("UserIdEQ"), 
+				configReader.configReaderAN("PasswordEQ"),  configReader.configReaderAN("YobEQ"), "Alert",segment);
+		}else {
+			 loginModelObject=new LatestLoginModel(1, configReader.configReaderAN("UserIdCo"), 
+					configReader.configReaderAN("PasswordCo"),  configReader.configReaderAN("YobCo"), "Alert",segment);
+		}
+		login.loginExecution("", loginModelObject);
+		OrderPlaceModel orderPlaceModel=new OrderPlaceModel(model.getReferNo(), model.getStockName(), model.getSegment(), "Sell", model.getValue(), model.getProductType(), model.getQty());
+		String orderDetailScreenshot=placeOrder.orderPlace(orderPlaceModel);
+		if(segment.equalsIgnoreCase("Equity")) {
+		String [] orderDetailArray=orderDetail.orderDetailProvider(driver, "new", "1", orderPlaceModel);
+		status=orderDetailArray[2];
+		}else {
+			List<String> orderDetailList=orderDetail.commodityorderDetail(orderPlaceModel);
+			status=orderDetailList.get(0);
+		}
+		driver.close();
+		return status;
+			
 	}
 }
