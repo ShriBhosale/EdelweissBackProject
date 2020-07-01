@@ -151,6 +151,7 @@ public class HelperCode {
 			CsvReaderCode reader=new CsvReaderCode();
 			noRowInTestData1=reader.noRowInTestData();
 			FolderStructure folderStructureObject=new FolderStructure();
+			Reporter.log("folderStructureObject =====================> "+folderStructureObject, true);
 			folderStructureObject.copyFile(folderPathArray[0]);
 		 //excelWriter=new ApacheCode(folderPathArray[0]);
 		 FunctionKeyword.apacheCodeObj.outputFileWriterHeader(folderPathArray[0]);
@@ -231,7 +232,7 @@ public class HelperCode {
 			if(excelFileClose==false) {
 				
 				//FunctionKeyword.apacheCodeObj.closeExcelWriting();
-				FunctionKeyword.apacheCodeObj.outputExcelFileClose(outputFolderPath);
+				//FunctionKeyword.apacheCodeObj.outputExcelFileClose(outputFolderPath);=================================================================================>
 		excelFileClose=true;
 			}
 		}

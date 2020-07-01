@@ -456,4 +456,14 @@ public class SeleniumCoder {
 		
 	}
 	
+	
+	public boolean elementPresentOrNot(WebElement element) {
+		boolean elementFlg=false;
+		if(element!=null) {
+			if(element.isDisplayed())
+				elementFlg=true;
+		}
+		return elementFlg;
+	}
+	
 }

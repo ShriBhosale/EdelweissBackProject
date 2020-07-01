@@ -89,9 +89,9 @@ public class FunctionKeyword {
 		Reporter.log(
 				"Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
 		folderPath = folderCreationObj.reportFolderCreator();
-		//apacheCodeObj = new ApacheCode(folderPath[0]);
+		apacheCodeObj = new ApacheCode(folderPath[0]);
 
-		// apacheCodeObj.outputFileWriterHeader(folderPath[0]);
+		//apacheCodeObj.outputFileWriterHeader(folderPath[0]);
 
 	}
 
@@ -211,7 +211,7 @@ public class FunctionKeyword {
 		// apacheCodeObj.closeExcelWriting();
 		driver.close();
 		Reporter.log("Folder Path ====> " + folderPath[0], true);
-		apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		apacheCodeObj.outputExcelFileClose();
 
 	}
 

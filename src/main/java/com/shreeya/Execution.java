@@ -107,7 +107,7 @@ public class Execution {
 	public void endExecution() throws IOException {
 		//apacheCodeObj.closeExcelWriting();
 		Reporter.log("Folder Path ====> "+folderPath[0], true);
-		apacheCodeObj.outputExcelFileClose(folderPath[0]);
+		apacheCodeObj.outputExcelFileClose();
 	}
 	
 	public void orderDetailExecution() {

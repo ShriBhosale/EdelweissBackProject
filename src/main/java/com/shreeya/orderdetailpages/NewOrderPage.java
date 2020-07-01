@@ -55,15 +55,17 @@ public class NewOrderPage extends SeleniumCoder {
 			clickElement(placeOrderButon,"Place order Link");
 		}
 	
-		placeOrderTextField=fluentWaitCodeXpath(driver,"//*[@id='tocsearch']");
-		sendKey(placeOrderTextField,model.getScript(),"Place Order Textfield");
+		placeOrderTextField=fluentWaitCodeXpath(driver,"//a[text()='Place Order']//following::input");
+		if(elementPresentOrNot(placeOrderTextField))
+		clearAndSendKey(placeOrderTextField,model.getScript(),"Place Order Textfield");
+		
 		//sendKeyClickOnDownArrow(placeOrderTextField,model.getScript());
 		/*Thread.sleep(3000);*/
 		if(model.getSegment().equalsIgnoreCase("NSE")) {
-		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
+		nseLink=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
 		clickElement(nseLink,"NSE Link");
 		}else if(model.getSegment().equalsIgnoreCase("BSE")) {
-		bseLink=fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[1]/a/span[2]");
+		bseLink=fluentWaitCodeXpath(driver, "//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[1]/div[1]/div/div/div/div[1]/div/div/ul/li[2]/a/span[2]");
 		clickElement(bseLink,"BSE Link");
 		}
 		
@@ -91,7 +93,7 @@ public class NewOrderPage extends SeleniumCoder {
 		enterPriceTextField=fluentWaitCodeXpath(driver,"//input[@placeholder='Enter Price']");
 		sendKey(enterPriceTextField, model.getOrderPrice(),"Enter Price TextField");
 		
-		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
+		OptionalFieldsLabel=fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
 		clickElement(OptionalFieldsLabel,"OptionalFields Label");
 		/*Thread.sleep(1000);*/
 		

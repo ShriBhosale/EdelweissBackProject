@@ -180,8 +180,9 @@ public class ExtendReporter {
 		
 		Reporter.log("Extend Log Flush",true);
 		Reporter.log("Reporter path ===> "+reportPathString,true);
-		report.flush();
 		Reporter.log("Report Object ==================================================================> "+report,true);
+		report.flush();
+		
 	}
 
 	

@@ -40,7 +40,9 @@ public class ModOrderPage extends SeleniumCoder {
 	}
 
 	public HashMap<WebDriver,String> modExecution(TestDataModel model, WebDriver driver,int orderNo,String newOrderStatus) throws InterruptedException, IOException {
+		Reporter.log("===============> modExecution <=================", true);
 		Reporter.log("<===@@@ OrderNo in Sheet "+model.getOrderNo()+" Action : "+model.getAction()+" @@@@===>",true);
+		
 		HashMap<WebDriver,String> mapObject=new HashMap<WebDriver,String>();
 		CsvReaderCode csvReader=new CsvReaderCode();
 		HelperCode helperObject=new HelperCode();
@@ -77,9 +79,10 @@ public class ModOrderPage extends SeleniumCoder {
 				clickElement(cnsRadioButton,"CNC Radio Button");
 		}
 
-		OptionalFieldsLabel =fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
+		OptionalFieldsLabel =fluentWaitCodeXpath(driver,"//*[@id=\"myModal\"]/div/div/div[3]/div[2]/div[1]/div/div[2]/div/form/div[2]/div[3]/div[1]/div[1]");
 		clickElement(OptionalFieldsLabel,"Optional Fields Label");
 		//Thread.sleep(2000);
+		
 		detail.amoCheckbox(amoFlag, driver);
 		placeOrderButton =fluentWaitCodeXpath(driver,"//input[@value ='Place Order']");
 		clickElement(placeOrderButton,"Place Order Button");

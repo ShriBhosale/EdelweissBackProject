@@ -32,6 +32,7 @@ public class ApacheCode {
 	public static FileOutputStream fileOut=null;
 
 	HelperCode helper=new HelperCode();
+	public static  String ouputFilePath;
 	
 
 	public ApacheCode(String folderPathString) throws EncryptedDocumentException, IOException {
@@ -261,7 +262,8 @@ public class ApacheCode {
 	 public void outputFileWriterHeader(String folderPathString) throws IOException {
 		 int counter=15;
 		 Reporter.log("Start Write in output excel file",true);
-		 InputStream inp = new FileInputStream(folderPathString+"/OutputFile.xlsx");
+		 ouputFilePath=folderPathString+"/OutputFile.xlsx";
+		 InputStream inp = new FileInputStream(ouputFilePath);
 			String[] headerArray = {"Rejection Reason",
 					"ScriptResult Pass/fail", "Report link", "Screenshot link" };
 			wb= WorkbookFactory.create(inp);
@@ -322,12 +324,12 @@ public class ApacheCode {
 			 
 			
 			counter++;
+			
 			}
 			
 	 }
-	 public void outputExcelFileClose(String folderPathString) throws IOException {
-			fileOut = new FileOutputStream(folderPathString+"/OutputFile.xlsx");
-			
+	 public void outputExcelFileClose() throws IOException {
+			fileOut = new FileOutputStream(ouputFilePath);
 			wb.write(fileOut);
 			fileOut.close();
 		}
