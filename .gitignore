@@ -1,8 +1,2 @@
 /target/
-
-*.class
-
-*.json
-*.html
-*.xml
-
+%.html
