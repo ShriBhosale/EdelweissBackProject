@@ -80,10 +80,10 @@ public class OrderAction extends SeleniumCoder{
 				
 				if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
 				partialOrderOb.partialOrderExecution(model, orderNo,loginModel);
-				partialOrderOb.orderDetail(driver, model,orderNo);
+				partialOrderOb.orderDetail(driver,model,orderNo);
 				model = csvTestDataModelIterator.next();
-				orderNo++;
-				orderNo++;
+				//orderNo++;
+				//orderNo++;
 			}else 
 				Reporter.log("Partial Order but new order status rejected",true);
 				continue;

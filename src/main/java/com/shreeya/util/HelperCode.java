@@ -92,7 +92,7 @@ public class HelperCode {
 			if (orderDetail[2].equalsIgnoreCase("cancelled")) {
 				resultString[0] = "PASS";
 			}
-		}else if(orderDetail[1].equalsIgnoreCase("Partial Order")) {
+		}else if(orderDetail[1].equalsIgnoreCase("Partial Order")||orderDetail[1].equalsIgnoreCase("Buy Partial Order")) {
 			if(orderDetail[2].equalsIgnoreCase("complete")||orderDetail[2].equalsIgnoreCase("open"));
 			{
 				resultString[0] = "PASS";
@@ -127,10 +127,11 @@ public class HelperCode {
 			Reporter.log("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus,true);
 		
 			Reporter.log("New order status =====> "+newOrderStatus,true);
-		report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
+			if(!action.trim().equalsIgnoreCase("Buy Partial Order"))
+				report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
 		report.testCreation("Order Detail " + orderNo);
 		
-		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")))){
+		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")||newOrderStatus.equalsIgnoreCase("complete")))){
 			
 				reportFlag=true;
 			
@@ -181,7 +182,8 @@ public class HelperCode {
 		pathArray = screenShotAndReportPath(driver, report,folderPathArray[2],model.getScenario(),orderNo);
 		orderDetailArray[16] = pathArray[0];
 		orderDetailArray[17] = pathArray[1];
-		report.logFlush();
+		if(!(action.equalsIgnoreCase("Partial Order")&& newOrderStatus.equalsIgnoreCase("Open")))
+			report.logFlush();
 		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);
 		//excelWriter.excelWriter(orderDetailArray, orderNo);
 		for(String orderDetail:orderDetailArray)
@@ -192,6 +194,7 @@ public class HelperCode {
 		else {
 		report.errroMsg("New order reject");
 		orderDetailArray[2]="New order reject1";
+		if(!(action.equalsIgnoreCase("Partial Order")&& newOrderStatus.equalsIgnoreCase("complete")))
 		report.logFlush();
 		
 		FunctionKeyword.apacheCodeObj.outputFileWriter(orderDetailArray, orderNo);

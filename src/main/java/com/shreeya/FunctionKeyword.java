@@ -46,7 +46,7 @@ public class FunctionKeyword {
 	HelperCode helperObject;
 	TestDataModel testDataObject;
 	MasterTestModel masterTestmodel;
-
+	ExtendReporter reporter;
 	private String step;
 
 	public static String folderPath[] = null;
@@ -84,7 +84,7 @@ public class FunctionKeyword {
 		orderActioObj = new OrderAction(driver);
 		testDataObject = new TestDataModel();
 		helperObject = new HelperCode();
-
+		 reporter=new ExtendReporter();
 		FolderStructure folderCreationObj = new FolderStructure();
 		Reporter.log(
 				"Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
@@ -186,10 +186,11 @@ public class FunctionKeyword {
 	}
 
 	public void terminateExecution(String module, WebDriver driver) throws InterruptedException, IOException {
-
+		Reporter.log("terminateExecution", true);
+		reporter.captureScreen(driver, folderPath[1], "LastScreenshot",1);
 		if (driver != null) {
 			if (!module.equalsIgnoreCase("orderdetail")) {
-				ExtendReporter reporter = new ExtendReporter();
+				//ExtendReporter reporter = new ExtendReporter();
 				reporter.reporter(driver, module, folderPath);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}

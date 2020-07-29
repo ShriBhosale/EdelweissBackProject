@@ -18,7 +18,7 @@ import com.shreeya.util.BrowserLaunch;
 import com.shreeya.util.ConfigReader;
 import com.shreeya.util.CsvReaderCode;
 import com.shreeya.util.ExtendReporter;
-import com.shreeya.util.FolderStructure;
+import com.shreeya.util.Help;
 import com.shreeya.util.SeleniumCoder;
 
 public class LoginPage extends SeleniumCoder {
@@ -50,12 +50,14 @@ public class LoginPage extends SeleniumCoder {
 	private WebElement editButton;
 	static Logger log = Logger.getLogger(LoginPage.class.getName());
 	BrowserLaunch browserLunch;
-
+	Help help;
+	public static String userId,password,yob;
 	public LoginPage(WebDriver driver) {
-
+		
 		super(driver);
+		Reporter.log("Login Page construtor", true);
 		this.driver = driver;
-
+		help=new Help();
 	}
 
 	public void loginExecution(String scenario, LoginModel loginModelObject) throws InterruptedException, IOException {
@@ -78,10 +80,40 @@ public class LoginPage extends SeleniumCoder {
 		}
 		// return driver;
 	}
+	
+	public String dataScenarioWise(String scenario,String input) {
+		String output="No";
+		String [] array=help.commonSeparater(input);
+		if(array.length>2) {
+			array[1]=array[2];
+		}
+		if(scenario.equalsIgnoreCase("Partial Order")) {
+			if(array.length>1) 
+			output=array[1];
+			else
+				output=array[0];	
+		}else
+				output=array[0];
+		
+			
+		return output;
+	}
+	
+	public void loginData(String scenario, LoginModel loginModelObject) {
+		Reporter.log("====> loginData <====", true);
+		if(!scenario.equalsIgnoreCase("Partial Order")) {
+		userId=loginModelObject.getUserId();
+		password= loginModelObject.getPassword();
+		yob= loginModelObject.getYob();
+		}
+		loginModelObject.setUserId(dataScenarioWise(scenario,userId));
+		loginModelObject.setPassword(dataScenarioWise(scenario,password));
+		loginModelObject.setYob(dataScenarioWise(scenario,yob));
+	}
 
 	public void loginCodeExecution(String scenario, LoginModel loginModelObject)
 			throws InterruptedException, IOException {
-
+		loginData(scenario, loginModelObject);
 		Reporter.log("LoginPage : loginExecution ", true);
 		clickOnLoginButton(driver);
 

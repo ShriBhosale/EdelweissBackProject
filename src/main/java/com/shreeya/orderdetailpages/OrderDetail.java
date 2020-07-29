@@ -51,10 +51,10 @@ public class OrderDetail extends SeleniumCoder {
 		Reporter.log("===<<<<<*** OrderNo in Sheet "+orderNoSheet+" Action : "+action+" ***>>>>>===>",true);
 		boolean rejectionFlag=false;
 		HelperCode helper = new HelperCode();
-		String[] orderDetailList = { "no id", "no Action", "no Status", "no Order Action", "no Trading Symbol",
-				"no Product Type", "no Order Price", "no Order Type", "no User id", "no Exchange", "no Validity",
-				"no Nest Id","no qty","Partial Qty","Rejection Reason",
-				"ScriptResult", "Report link", "Screenshot link1"};
+		String[] orderDetailList = { "no id0", "no Action1", "no Status2", "no Order Action3", "no Trading Symbol4",
+				"no Product Type5", "no Order Price6", "no Order Type7", "no User id8", "no Exchange9", "no Validity10",
+				"no Nest Id11","no qty12","Partial Qty13","No rejection Reason",
+				"ScriptResult15", "Report link16", "Screenshot link117"};
 		Thread.sleep(3000);
 		if(action.equalsIgnoreCase("Partial Order")) {
 			Reporter.log("Partial Order\nRefresh page",true);
@@ -64,8 +64,8 @@ public class OrderDetail extends SeleniumCoder {
 		try {
 		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
 		
-
-		clickElement(detailsTab,"Details tab");
+		
+			clickElement(detailsTab,"Details tab");
 		}catch(StaleElementReferenceException e) {
 			Thread.sleep(3000);
 			detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
@@ -144,7 +144,8 @@ public class OrderDetail extends SeleniumCoder {
 			//orderDetailList[11]=fetchTextFromElement(orderInfoList.get(7));
 			orderDetailList[14]=fetchTextFromElement(orderInfoList.get(6),"Rejection Reasone");
 		}
-		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")))) {
+		if(!(orderDetailList[2].equalsIgnoreCase("Complete")||(orderDetailList[2].equalsIgnoreCase("Rejected"))||
+				(orderDetailList[2].equalsIgnoreCase("Cancelled"))||(action.equalsIgnoreCase("Partial Order")||(action.equalsIgnoreCase("Buy Partial Order"))))) {
 		try {
 			qtyLabel = fluentWaitCodeXpath(driver,"//*[@id=\"ordertree\"]/ul/li[1]/span[3]/span[5]/span");
 			orderDetailList[12]=fetchTextFromElement(qtyLabel,"Order Qty");
@@ -169,7 +170,7 @@ public class OrderDetail extends SeleniumCoder {
 			Reporter.log("Row Nestid string ===> "+rowNestIdString,true);
 			orderDetailList[11] = helper.removeExtraString(rowNestIdString,"|");
 			Reporter.log("Nest id : "+orderDetailList[11], true);
-			 if(action.equalsIgnoreCase("Partial Order")) {
+			 if(action.equalsIgnoreCase("Partial Order")||action.equalsIgnoreCase("Buy Partial Order")) {
 				
 				 qtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[2]");
 				 
@@ -186,8 +187,10 @@ public class OrderDetail extends SeleniumCoder {
 		}
 		Thread.sleep(4000);
 		 //uncoment in partial order scenario 2 below line
-		 //partialQtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
-		/* orderDetailList[13]=fetchTextFromElement(partialQtyLabel); */
+		if(action.equalsIgnoreCase("Partial Order")||action.equalsIgnoreCase("Buy Partial Order")) {
+		 partialQtyLabel=fluentWaitCodeXpath(driver, "//*[@id='rightScroll1']/div[6]/div[1]/div[2]/div[4]/div/span[2]/span[1]");
+		 orderDetailList[13]=fetchTextFromElement(partialQtyLabel,"Partial Qty"); 
+		}
 		Reporter.log("Nest id : "+orderDetailList[11],true);
 		Reporter.log("Inside orderDetailProvider method......",true);
 		return orderDetailList;

@@ -156,6 +156,7 @@ public class ExtendReporter {
 			test.log(Status.INFO, "Order Price :: "+orderDetailArray[6]);
 			test.log(Status.INFO, "Order Qty :: "+orderDetailArray[12]);
 			}
+		
 		test.log(Status.INFO, "Order Type :: "+orderDetailArray[7]);
 		test.log(Status.INFO, "User id :: "+orderDetailArray[8]);
 		test.log(Status.INFO, "Exchange : "+orderDetailArray[9]);

@@ -92,7 +92,7 @@ public class TestLaunch {
 			if(model.getScenario().equalsIgnoreCase("Partial Order")){
 					if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
 				partialOrderOb.partialOrderExecution(model, orderNo,loginModel);
-				partialOrderOb.orderDetail(driver1, model,orderNo);
+				partialOrderOb.orderDetail(driver,model,orderNo);
 				model = csvTestDataModelIterator.next();
 				orderNo++;
 				orderNo++;
