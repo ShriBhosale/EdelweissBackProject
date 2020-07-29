@@ -15,5 +15,13 @@ public class Help {
 			
 		return inputArray;
 	}
+	
+	public String replaceActualPath(String path) {
+		Reporter.log("replaceActualPath", true);
+		Reporter.log("Old Path name : "+path, true);
+		path.replace("../WorkingE2", "E:\\EdelweissProject\\WorkingE2");
+		Reporter.log("New Path name : "+path, true);
+		return path;
+	}
 
 }

@@ -61,6 +61,7 @@ public class OrderDetail extends SeleniumCoder {
 			driver.navigate().refresh();
 			afterRefreshPage(driver);
 		}
+		Thread.sleep(6000);
 		try {
 		detailsTab = fluentWaitCodeXpath(driver,"//*[@id=\"rightScroll1\"]/div[6]/div[1]/div[2]/div[7]/div/a");
 		
@@ -73,12 +74,23 @@ public class OrderDetail extends SeleniumCoder {
 			Reporter.log("Click on 2nd time details button",true);
 			Thread.sleep(2000);
 		}
+		Reporter.log("After detail tab click", true);
 		ConfigReader configReader=new ConfigReader();
 		String amoFlag=configReader.configReader("amoFlag");
-		Thread.sleep(3000);
+		Thread.sleep(6000);
 		if(action.equalsIgnoreCase("Mod")) {
 			Reporter.log("Action : "+action,true);
-			List<WebElement> statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
+			List<WebElement> statusList=null;
+			Thread.sleep(6000);
+			try {
+			 statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
+			}catch (StaleElementReferenceException e) {
+				Reporter.log("StaleElement for statuslist", true);
+				Thread.sleep(6000);
+				statusList=driver.findElements(By.xpath("//span[@class='order-name ng-binding ng-scope']"));
+			}
+				
+			
 			Thread.sleep(6000);
 			for(WebElement statusElement:statusList) {
 				Reporter.log(fetchTextFromElement(statusElement,"Mod Status"),true);

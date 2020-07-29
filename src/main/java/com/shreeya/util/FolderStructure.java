@@ -56,7 +56,7 @@ public class FolderStructure {
 	public String copyFile(String targetName) throws IOException {
 		
 		ConfigReader configReader=new ConfigReader();
-		File source = new File(configReader.configReader("TestData")+"\\ScenarioData.xlsx");
+		File source = new File(configReader.configReader("TestData")+"\\ScenarioData1.xlsx");
         File dest = new File(targetName+"/OutputFile.xlsx");
 
         File executeSource = new File(configReader.configReader("TestData")+"\\Execution.txt");

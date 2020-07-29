@@ -47,7 +47,7 @@ public class CsvReaderCode {
 
 	public Iterator<TestDataModel> testDataProvider() {
 		ConfigReader configReader=new ConfigReader();
-		String testDataPath=configReader.configReader("TestData")+"\\ScenarioData";
+		String testDataPath=configReader.configReader("TestData")+"\\ScenarioData1";
 		CSVReader reader = null;
 		System.out.println("Test Data ======> "+testDataPath);
 		try {

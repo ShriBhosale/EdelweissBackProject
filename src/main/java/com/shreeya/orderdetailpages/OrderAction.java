@@ -27,7 +27,7 @@ public class OrderAction extends SeleniumCoder{
 	ExtendReporter reporter;
 	String [] orderDetailArray;
 	//CSVWriter writer;
-	private String newOrderStatus="rejected";
+	private String newOrderStatus="Open";
 	NewOrderPage newOrder;
 	ModOrderPage modOrder;
 	CxlOrderPage cxlOrder;
@@ -61,6 +61,7 @@ public class OrderAction extends SeleniumCoder{
 		Reporter.log(loginModel.toString(),true);
 		while (csvTestDataModelIterator.hasNext() &&(driver!=null)) {
 			model = csvTestDataModelIterator.next();
+			Reporter.log("Test Data=====================================>>>>>>>>>>>>>>>>>>>>>>>>>> "+model, true);
 			orderNo++;
 			int startExecution=Integer.valueOf(loginModel.getStartingRowNo());
 			int endExecution=Integer.valueOf(loginModel.getEndRowNo());
@@ -81,7 +82,7 @@ public class OrderAction extends SeleniumCoder{
 				if(!newOrderStatus.equalsIgnoreCase("rejected")||newOrderStatus.equalsIgnoreCase("put order req received")){
 				partialOrderOb.partialOrderExecution(model, orderNo,loginModel);
 				partialOrderOb.orderDetail(driver,model,orderNo);
-				model = csvTestDataModelIterator.next();
+				//model = csvTestDataModelIterator.next();
 				//orderNo++;
 				//orderNo++;
 			}else 

@@ -3,7 +3,7 @@
 <suite thread-count="2" name="Failed suite [TmpSuite]" parallel="tests">
   <test thread-count="2" name="1(failed)" parallel="tests">
     <parameter name="StartNo" value="1"/>
-    <parameter name="EndNo" value="2"/>
+    <parameter name="EndNo" value="5"/>
     <parameter name="Reference" value="1"/>
     <parameter name="UserId" value="Sanjay15,60003800"/>
     <parameter name="Pwd" value="abc123,abc123"/>

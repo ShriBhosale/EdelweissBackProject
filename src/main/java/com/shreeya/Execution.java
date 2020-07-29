@@ -29,7 +29,7 @@ public class Execution {
 	TestDataModel testDataObject;
 	
 	
-	public static String folderPath[]=null;
+	//public static String MyTestLauncher.folderPath[]=null;
 	public static ApacheCode apacheCodeObj;
 	
 	
@@ -46,10 +46,10 @@ public class Execution {
 		
 		FolderStructure folderCreationObj=new FolderStructure();
 		Reporter.log("Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
-		folderPath=folderCreationObj.reportFolderCreator();
-		apacheCodeObj=new ApacheCode(folderPath[0]);
+		MyTestLauncher.folderPath=folderCreationObj.reportFolderCreator();
+		apacheCodeObj=new ApacheCode(MyTestLauncher.folderPath[0]);
 		
-		//apacheCodeObj.outputFileWriterHeader(folderPath[0]);
+		//apacheCodeObj.outputFileWriterHeader(MyTestLauncher.folderPath[0]);
 		 
 	}
 	
@@ -106,7 +106,7 @@ public class Execution {
 	@AfterTest
 	public void endExecution() throws IOException {
 		//apacheCodeObj.closeExcelWriting();
-		Reporter.log("Folder Path ====> "+folderPath[0], true);
+		Reporter.log("Folder Path ====> "+MyTestLauncher.folderPath, true);
 		apacheCodeObj.outputExcelFileClose();
 	}
 	

@@ -9,25 +9,31 @@ import java.util.Map;
 
 import org.testng.Reporter;
 import org.testng.TestNG;
-import org.testng.annotations.Test;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
 import com.shreeya.model.LoginModel;
 import com.shreeya.util.CsvReaderCode;
+import com.shreeya.util.FolderStructure;
+import com.shreeya.util.Help;
 
 public class MyTestLauncher {
 	public static ArrayList<LoginModel> loginData;
+	public static String[] folderPath;
+	static Help help=new Help();
 
 
 	public static void main( String[] args ) throws IOException {
 		Reporter.log("================<< Execution Started >>================");
 		// TODO Auto-generated method stub
+		
 		CsvReaderCode csvReader = new CsvReaderCode(); 
 		loginData =csvReader.LoginFileReader();
 		Iterator<LoginModel> loginIteratior = loginData.iterator();
+		FolderStructure folderCreationObj = new FolderStructure();
 		
+		folderPath = folderCreationObj.reportFolderCreator();
 		
 		XmlSuite suite = new XmlSuite();
 		suite.setName("TmpSuite");
@@ -58,6 +64,7 @@ public class MyTestLauncher {
 		 TestNG tng = new TestNG();
 		 
 		 tng.setXmlSuites(suites);
+		tng.setOutputDirectory(help.replaceActualPath(folderPath[0])+"\\TestNg");
 		 tng.run(); 
 		 
 	}

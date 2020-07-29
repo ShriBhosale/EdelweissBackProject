@@ -15,6 +15,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
 import com.shreeya.experiment.Report;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.model.TestDataModel;
@@ -200,10 +201,10 @@ public class ExtendReporter {
 		Reporter.log("Abnormal Error Handly",true);
 		HelperCode helperCode=new HelperCode();
 		int timestamp=Integer.valueOf(helperCode.timeStampGenerator());
-		ExtendReporter report=new  ExtendReporter(FunctionKeyword.folderPath[0],"Abnormal Termination",timestamp); 
+		ExtendReporter report=new  ExtendReporter(MyTestLauncher.folderPath[0],"Abnormal Termination",timestamp); 
 		report.testCreation("Abnormal Termination");
 		report.errroMsg("Abnormal Termination");
-		String screenshotPath=report.addScreenshotMethod(driver,FunctionKeyword.folderPath[2],"Abnormal Termination",1);
+		String screenshotPath=report.addScreenshotMethod(driver,MyTestLauncher.folderPath[2],"Abnormal Termination",1);
 		report.logFlush();
 		driver.close();
 		Reporter.log("Driver close",true);
@@ -228,7 +229,7 @@ public class ExtendReporter {
 	public void loginReport(WebDriver driver,ExtendReporter extend,LoginTestModel loginModelObject,String loginErrorStr) throws IOException {
 		extend.testCreation(loginModelObject.getTestScenario()+"_"+loginModelObject.getReference_no());
 		int orderNo=Integer.valueOf(loginModelObject.getReference_no());
-		extend.addScreenshotMethodInfo(driver, FunctionKeyword.folderPath[2],"LoginError",orderNo);
+		extend.addScreenshotMethodInfo(driver, MyTestLauncher.folderPath[2],"LoginError",orderNo);
 		extend.errroMsg("User Id : "+loginModelObject.getUser_Id());
 		extend.errroMsg("Password : "+loginModelObject.getPassword());
 		extend.errroMsg("Yob : "+loginModelObject.getYob());

@@ -49,7 +49,7 @@ public class FunctionKeyword {
 	ExtendReporter reporter;
 	private String step;
 
-	public static String folderPath[] = null;
+	//public static String MyTestLauncher.folderPath[] = null;
 	public static ApacheCode apacheCodeObj;
 
 
@@ -85,13 +85,10 @@ public class FunctionKeyword {
 		testDataObject = new TestDataModel();
 		helperObject = new HelperCode();
 		 reporter=new ExtendReporter();
-		FolderStructure folderCreationObj = new FolderStructure();
-		Reporter.log(
-				"Above folder Creation============================================================================&^*&^&*^&8686868688>>>>>>");
-		folderPath = folderCreationObj.reportFolderCreator();
-		apacheCodeObj = new ApacheCode(folderPath[0]);
+		
+		apacheCodeObj = new ApacheCode(MyTestLauncher.folderPath[0]);
 
-		//apacheCodeObj.outputFileWriterHeader(folderPath[0]);
+		//apacheCodeObj.outputFileWriterHeader(MyTestLauncher.folderPath[0]);
 
 	}
 
@@ -187,11 +184,11 @@ public class FunctionKeyword {
 
 	public void terminateExecution(String module, WebDriver driver) throws InterruptedException, IOException {
 		Reporter.log("terminateExecution", true);
-		reporter.captureScreen(driver, folderPath[1], "LastScreenshot",1);
+		reporter.captureScreen(driver, MyTestLauncher.folderPath[1], "LastScreenshot",1);
 		if (driver != null) {
 			if (!module.equalsIgnoreCase("orderdetail")) {
 				//ExtendReporter reporter = new ExtendReporter();
-				reporter.reporter(driver, module, folderPath);
+				reporter.reporter(driver, module, MyTestLauncher.folderPath);
 				helperObject.outputProcessor(driver, "newOrder", 0, "Terminate", testDataObject, 0);
 			}
 			login.logout(driver);
@@ -211,7 +208,7 @@ public class FunctionKeyword {
 	public void endExecution() throws IOException {
 		// apacheCodeObj.closeExcelWriting();
 		driver.close();
-		Reporter.log("Folder Path ====> " + folderPath[0], true);
+		Reporter.log("Folder Path ====> " + MyTestLauncher.folderPath[0], true);
 		apacheCodeObj.outputExcelFileClose();
 
 	}

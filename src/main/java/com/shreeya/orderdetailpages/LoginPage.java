@@ -12,6 +12,7 @@ import org.testng.Reporter;
 
 import com.opencsv.CSVWriter;
 import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
 import com.shreeya.model.LoginModel;
 import com.shreeya.model.LoginTestModel;
 import com.shreeya.util.BrowserLaunch;
@@ -66,7 +67,7 @@ public class LoginPage extends SeleniumCoder {
 		if (!loginModelObject.getModule().equalsIgnoreCase("login")) {
 			loginCodeExecution(scenario, loginModelObject);
 		} else {
-			ExtendReporter extend = new ExtendReporter(FunctionKeyword.folderPath[1], "LoginRegression", 0);
+			ExtendReporter extend = new ExtendReporter(MyTestLauncher.folderPath[1], "LoginRegression", 0);
 			CsvReaderCode csvReader = new CsvReaderCode();
 			Iterator<LoginTestModel> csvLoginTestIterator = csvReader.loginTestDataProvider();
 			while (csvLoginTestIterator.hasNext()) {
@@ -384,7 +385,7 @@ public class LoginPage extends SeleniumCoder {
 
 			extend.loginReport(driver, extend, loginModelObject, loginErrorStr);
 
-			Reporter.log("Folder path ===> " + FunctionKeyword.folderPath[0], true);
+			Reporter.log("Folder path ===> " + MyTestLauncher.folderPath[0], true);
 			closeLoginFrame = fluentWaitCodeXpath(driver,
 					"//button[@class='close ng-scope']");
 			clickElement(closeLoginFrame, "Login Detail Frame close button");

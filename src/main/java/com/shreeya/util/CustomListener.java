@@ -8,6 +8,7 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 
 import com.shreeya.FunctionKeyword;
+import com.shreeya.MyTestLauncher;
 import com.shreeya.orderdetailpages.LoginPage;
 
 public class CustomListener extends SeleniumCoder implements ITestListener {
@@ -22,12 +23,12 @@ public class CustomListener extends SeleniumCoder implements ITestListener {
 		HelperCode helperObject=new HelperCode();
 		int timeStamp=Integer.valueOf(helperObject.timeStampGenerator());
 		Reporter.log("<========================@@@@@@@@@@@@@ Test Get Fail @@@@@@@@@@@=====================>", true);
-		ExtendReporter reporter=new ExtendReporter(FunctionKeyword.folderPath[1],"AbnormalTermination",timeStamp);
+		ExtendReporter reporter=new ExtendReporter(MyTestLauncher.folderPath[1],"AbnormalTermination",timeStamp);
 		reporter.testCreation("Abnormal Termination");
 		reporter.errorFail("Abnormal Termination");
 		
 		try {
-			reporter.addScreenshotMethod(driver, FunctionKeyword.folderPath[2], "AbnormalTermination", 0);
+			reporter.addScreenshotMethod(driver, MyTestLauncher.folderPath[2], "AbnormalTermination", 0);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
