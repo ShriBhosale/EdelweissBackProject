@@ -127,9 +127,13 @@ public class HelperCode {
 			Reporter.log("Action ======>  "+action+"\nNewOrderStatus =====>  "+newOrderStatus,true);
 		
 			Reporter.log("New order status =====> "+newOrderStatus,true);
-			if(!action.trim().equalsIgnoreCase("Buy Partial Order"))
+			if(!action.trim().equalsIgnoreCase("Buy Partial Order")) {
 				report = new ExtendReporter(folderPathArray[1],model.getScenario(),orderNo);
-		report.testCreation("Order Detail " + orderNo);
+				report.testCreation("Order Detail " + orderNo);
+			}else {
+				int testNo=orderNo+1;
+				report.testCreation("Partial Order " + testNo);
+			}
 		
 		if((action.equalsIgnoreCase("Mod")||action.equalsIgnoreCase("Cxl"))&&((newOrderStatus.equalsIgnoreCase("Open")||newOrderStatus.equalsIgnoreCase("after market order req received")||newOrderStatus.equalsIgnoreCase("complete")))){
 			

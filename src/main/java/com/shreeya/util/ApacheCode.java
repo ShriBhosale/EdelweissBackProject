@@ -292,9 +292,11 @@ public class ApacheCode {
 			e.printStackTrace();
 		}
 		 Reporter.log("Writer Order detail with link in outputExcel",true);
+		 Row row = outputsheet.getRow(rowNo);
 		 int counter=15;
+		 if(!orderDetailArray[1].equalsIgnoreCase("Buy Partial Order")) {
 		 String hyperLinkName = null;
-			Row row = outputsheet.getRow(rowNo);
+			
 			Reporter.log("Row Object ====> "+row+"\nOutputSheet Object ====> "+outputsheet,true);
 			for(int i=14;i<orderDetailArray.length;i++)
 			{
@@ -324,7 +326,16 @@ public class ApacheCode {
 			 
 			
 			counter++;
-			
+			}
+			}else {
+				Cell cell = row.getCell(19);
+				if (cell == null)
+				    cell = row.createCell(19);
+				cell.setCellValue("PartialOrderScreenshot");
+				 Hyperlink href = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
+					Reporter.log("HyperLink Path ======> "+pathStrProcces(orderDetailArray[17]),true);
+				 href.setAddress(pathStrProcces(orderDetailArray[17]));
+					cell.setHyperlink(href);
 			}
 			
 	 }
