@@ -1,5 +1,6 @@
 package com.shreeya.util;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +15,7 @@ public class BrowserLaunch {
 	WebDriver driver = null;
 
 	public WebDriver browserLaunch(String scenario) throws MalformedURLException {
+		killChromeDriverBackgroundInstances();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\grid\\chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--incognito");
@@ -50,6 +52,15 @@ public class BrowserLaunch {
 		driver.manage().deleteAllCookies();
 		Reporter.log("Browser Launch", true);
 		return driver;
+	}
+	
+	public void killChromeDriverBackgroundInstances() {
+		try {
+			Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

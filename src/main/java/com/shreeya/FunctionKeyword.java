@@ -76,8 +76,7 @@ public class FunctionKeyword {
 
 	@BeforeTest
 	public void executionBefore() throws IOException {
-
-		Reporter.log("Execution Before ", true);
+		Reporter.log(" FunctionaKeyword : Execution Before ", true);
 		BrowserLaunch browserLunch = new BrowserLaunch();
 		driver = browserLunch.browserLaunch("Normal");
 		login = new LoginPage(driver);
@@ -85,7 +84,8 @@ public class FunctionKeyword {
 		testDataObject = new TestDataModel();
 		helperObject = new HelperCode();
 		 reporter=new ExtendReporter();
-		
+		Reporter.log("ABC!!!!!!!!!!!!!!!!!!!!", 2);
+		Reporter.log("XYZ!!!!!!!!!!!!!!!!!!!!", 1);
 		apacheCodeObj = new ApacheCode(MyTestLauncher.folderPath[0]);
 
 		//apacheCodeObj.outputFileWriterHeader(MyTestLauncher.folderPath[0]);

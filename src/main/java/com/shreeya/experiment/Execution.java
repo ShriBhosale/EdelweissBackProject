@@ -1,33 +1,46 @@
 package com.shreeya.experiment;
 
-import org.testng.Reporter;
+import java.io.IOException;
+import java.util.List;
 
-import com.shreeya.util.FolderStructure;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.shreeya.util.SeleniumCoder;
 
 public class Execution {
 	
-	static String path="E:\\EdelweissProject\\WorkingE";
 	
-	public String generateRelativePath(String path) {
-		path=path.replace("\\", "-");
-		String [] pathArray=path.split("-");
-		for(String pathString:pathArray) {
-			System.out.println(pathString);
-		}
-		String relativePath="../"+pathArray[pathArray.length-1]+"/Report";
-		System.out.println(relativePath);
-		return relativePath;
+	List<WebElement> webElemets=null;
+	Report log;
+	@BeforeTest
+	public void beforeTest() {
+		 log=new Report();
+		log.printLog("Before test  will be execute", true);
 	}
 	
-	public void abc() {
-		Reporter.log("Hello shreeya I am from execution ",true);
-	}
-	public static void main(String[] args) {
-		FolderStructure folder=new FolderStructure();
-		Execution e=new Execution();
-		folder.createFolderForFailReport(e.generateRelativePath(path));
+	@BeforeMethod
+	public void beforeTestMethod() {
+		log.printLog("Before test method will be execute", true);
 		
 	}
+	@Test
+	public  void testMethod() throws IOException, InterruptedException {
+		log.printLog("shreeya",false);
+	}
 	
-
+	@AfterMethod
+	public void AfterMethodTest() {
+		log.printLog("After test method", true);
+	}
+	@AfterTest
+	public void afterTest() {
+		log.printLog("After test  will be execute", true);
+	}
 }

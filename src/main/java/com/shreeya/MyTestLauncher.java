@@ -27,7 +27,7 @@ public class MyTestLauncher {
 	public static void main( String[] args ) throws IOException {
 		Reporter.log("================<< Execution Started >>================");
 		// TODO Auto-generated method stub
-		
+		Reporter.log("Shreeya bhosale",true);
 		CsvReaderCode csvReader = new CsvReaderCode(); 
 		loginData =csvReader.LoginFileReader();
 		Iterator<LoginModel> loginIteratior = loginData.iterator();
@@ -55,7 +55,8 @@ public class MyTestLauncher {
 		test.setName(loginModel.getReferNo());
 		test.setParameters(testScenarioParameters);
 		List<XmlClass> classes = new ArrayList<XmlClass>();
-		classes.add(new XmlClass(FunctionKeyword.class.getName()));
+		//classes.add(new XmlClass(FunctionKeyword.class.getName()));
+		classes.add(new XmlClass(Execution.class.getName()));
 		test.setXmlClasses(classes) ;
 		 }
 		 List<XmlSuite> suites = new ArrayList<XmlSuite>();

@@ -37,7 +37,7 @@ public class SeleniumCoder {
 
 	static Logger log = Logger.getLogger(SeleniumCoder.class.getName());
 	 WebDriver driver=null;
-	
+	 List<WebElement> webElemets=null;
 	ExtendReporter report=new ExtendReporter();
 	int maximumDelay=100;
 	private long explicityWaitCount=20;
@@ -349,30 +349,7 @@ public class SeleniumCoder {
 		childElement.click();
 	}
 	
-	protected List<WebElement> FluentWaitForElementList(final String xapthString,final WebDriver driverI) 
-    {
-        final WebDriver driver=driverI;
-        FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(driver);
-        fluentWait.withTimeout(maximumDelay, TimeUnit.SECONDS);
-        fluentWait.pollingEvery(3, TimeUnit.SECONDS);
-        fluentWait.ignoring(NoSuchElementException.class);
-        
-
-        List<WebElement> list= fluentWait.until(new Function<WebDriver,List<WebElement>>()
-                {
-                    public List<WebElement> apply(WebDriver input) {
-                        // TODO Auto-generated method stub
-                        List<WebElement> list = driver.findElements(By.xpath(xapthString));
-
-                        if(list.size() > 0)
-                            throw new NoSuchElementException("List is not loaded");
-                        else
-                            return list;
-                    }
-
-                });
-        return list;
-    }
+	
 
 	public  WebElement fluentWaitCodeId(WebDriver driver,final String idString,int maxDelay) {
 		// Waiting 30 seconds for an element to be present on the page, checking
@@ -464,6 +441,71 @@ public class SeleniumCoder {
 				elementFlg=true;
 		}
 		return elementFlg;
+	}
+	
+	public void staticWait(int wait) {
+		try {
+			Thread.sleep(wait);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void waitTime(int waitTimeSecond) {
+		try {
+			Thread.sleep(waitTimeSecond*1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<WebElement> FluentWaitForElementList(int waitTimeSecond,int pullingTimeSecond,String xpath) throws InterruptedException {
+		Reporter.log("FluentWaitForElementList", true);
+		int counter=0;
+		int total=0;
+		boolean elementsFlag=false;
+		int noIteration=iteration(waitTimeSecond, pullingTimeSecond);
+		if(noIteration>-1) {
+		do {
+			counter++;
+			waitTime(pullingTimeSecond);
+			webElemets=locateElemets(xpath);
+			if(!webElemets.isEmpty()) {
+				elementsFlag=true;
+				break;
+			}
+			total+=pullingTimeSecond;
+		}while(counter<noIteration);
+		 System.out.println("Counter ====> "+counter);
+		if(elementsFlag) {
+			for(WebElement element:webElemets) 
+				System.out.println(element.getText());
+		}else
+			System.out.println("Elements not locate :(");
+		System.out.println("Total time : "+total);	
+		}else {
+			System.out.println("PullingTime : "+pullingTimeSecond+"\nWaitTime : "+waitTimeSecond+"\nwait time must to greater then pulling time");
+		}
+		return webElemets;
+	}
+	
+	public int iteration(int waitTimeSecond,int pullingTimeSecond) {
+		int iterationCount=-1;
+		if(pullingTimeSecond<waitTimeSecond)
+			iterationCount=waitTimeSecond/pullingTimeSecond;
+		return iterationCount;
+	}
+	
+	public List<WebElement> locateElemets(String xpath) {
+		
+		try {
+			webElemets=driver.findElements(By.xpath(xpath));
+		}catch (TimeoutException e) {
+			// TODO: handle exception
+		}
+		return webElemets;
 	}
 	
 }
